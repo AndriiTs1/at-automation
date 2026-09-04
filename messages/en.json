@@ -1,0 +1,149 @@
+{
+  "Metadata": {
+    "title": "AT Automation",
+    "description": "Business process automation for companies in Ticino and across Switzerland — from task analysis to full solution implementation."
+  },
+  "Header": {
+    "logoAlt": "Company logo",
+    "languageSwitcherLabel": "Switch language",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "cta": "Discuss your project"
+  },
+  "Hero": {
+    "eyebrow": "Business automation",
+    "headlineLine1": "Your business.",
+    "headlineLine2": "One system.",
+    "subhead": "Custom software that connects your clients, orders, inventory, finances and everyday workflows.",
+    "ctaPrimary": "Try the live demo",
+    "ctaSecondary": "Discuss your project",
+    "trustLine": "Interactive demo · No registration · Sample data",
+    "sideLabelLeft1": "From",
+    "sideLabelLeft2": "Manual work",
+    "sideLabelLeft3": "To real progress",
+    "sideLabelRight1": "Simple",
+    "sideLabelRight2": "Powerful",
+    "sideLabelRight3": "Built for people"
+  },
+  "Bridge": {
+    "title": "Don’t just look at it. Try it.",
+    "subtitle": "Explore how orders, inventory and finances work together in one connected system."
+  },
+  "Dashboard": {
+    "commandCenter": "Command Center",
+    "askAt": "Ask AT",
+    "operationsManager": "Operations Manager",
+    "Sidebar": {
+      "sections": {
+        "operate": "Operate",
+        "automate": "Automate",
+        "manage": "Manage"
+      },
+      "items": {
+        "operations": "Operations",
+        "customers": "Customers",
+        "inventory": "Inventory",
+        "finance": "Finance",
+        "automations": "Automations",
+        "integrations": "Integrations",
+        "reports": "Reports",
+        "teamApprovals": "Team & Approvals"
+      }
+    },
+    "Topbar": {
+      "greeting": "Good morning, {name}.",
+      "attentionCount": "{count, plural, one {# item needs your attention.} other {# items need your attention.}}",
+      "searchPlaceholder": "Search operations, customers, invoices…",
+      "systemsOperational": "All systems operational",
+      "notifications": "Notifications"
+    },
+    "Kpi": {
+      "items": {
+        "revenue": "Revenue",
+        "openOperations": "Open Operations",
+        "cashDue": "Cash Due",
+        "automatedToday": "Automated Today"
+      },
+      "overdue": "{count} overdue",
+      "saved": "{hours} saved"
+    },
+    "Performance": {
+      "title": "Business Performance",
+      "subtitle": "Revenue, operations and profit over time",
+      "series": {
+        "revenue": "Revenue",
+        "operations": "Operations",
+        "profit": "Profit"
+      },
+      "rangeLabel": "Last 30 days",
+      "rangeFilterAria": "Filter: last 30 days",
+      "chartAria": "Revenue, operations and profit trending upward over the last 30 days",
+      "tooltipRevenue": "Revenue {value}"
+    },
+    "Attention": {
+      "title": "Needs Attention",
+      "ownerLabel": "Owner: {owner}",
+      "items": {
+        "overdueInvoices": {
+          "title": "{count, plural, one {# overdue invoice} other {# overdue invoices}}",
+          "meta": "{amount} · {dept}"
+        },
+        "lowStockItems": {
+          "title": "{count, plural, one {# low-stock item} other {# low-stock items}}",
+          "meta": "Across {categories} categories"
+        },
+        "operationDelayed": {
+          "title": "Operation {id} delayed",
+          "meta": "{days, plural, one {Supplier delay · # day} other {Supplier delay · # days}}"
+        },
+        "automationRunsFailed": {
+          "title": "{count, plural, one {# automation run failed} other {# automation runs failed}}",
+          "meta": "Check logs"
+        }
+      },
+      "notes": {
+        "reminderSentAutomatically": "Reminder sent automatically",
+        "purchaseRequired": "Purchase required",
+        "supplierDelayDetected": "Supplier delay detected",
+        "reviewRequired": "Review required"
+      }
+    },
+    "LiveOperations": {
+      "title": "Live Operations",
+      "live": "Live",
+      "events": {
+        "operationReceived": "Operation {id} received",
+        "paymentReceived": "Payment received — {amount} from {company}",
+        "stockBelowThreshold": "Stock below threshold — {product}",
+        "customerOnboarded": "New customer onboarded — {company}"
+      },
+      "steps": {
+        "inventoryReserved": "Inventory reserved",
+        "invoiceGenerated": "Invoice generated",
+        "customerNotified": "Customer notified",
+        "invoiceMarkedPaid": "Invoice {id} marked paid",
+        "purchaseRequestCreated": "Purchase request created",
+        "procurementNotified": "Procurement notified",
+        "accountCreated": "Account created",
+        "welcomeWorkflowCompleted": "Welcome workflow completed"
+      }
+    },
+    "Approvals": {
+      "title": "Approvals",
+      "review": "Review",
+      "awaitingApproval": "{count} awaiting approval",
+      "items": {
+        "purchaseRequest": "Purchase request",
+        "discountRequest": "Discount request",
+        "supplierPayment": "Supplier payment"
+      }
+    },
+    "Teams": {
+      "finance": "Finance",
+      "financeTeam": "Finance Team",
+      "procurement": "Procurement",
+      "operations": "Operations",
+      "salesTeam": "Sales Team"
+    }
+  }
+}

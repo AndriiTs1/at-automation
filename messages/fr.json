@@ -1,0 +1,149 @@
+{
+  "Metadata": {
+    "title": "AT Automation",
+    "description": "Automatisation des processus métier pour les entreprises du Tessin et de toute la Suisse — de l'analyse des besoins à la mise en œuvre complète de la solution."
+  },
+  "Header": {
+    "logoAlt": "Logo de l'entreprise",
+    "languageSwitcherLabel": "Changer de langue",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu",
+    "cta": "Discuter de votre projet"
+  },
+  "Hero": {
+    "eyebrow": "Automatisation d'entreprise",
+    "headlineLine1": "Votre entreprise.",
+    "headlineLine2": "Un seul système.",
+    "subhead": "Un logiciel sur mesure qui relie vos clients, commandes, stocks, finances et opérations quotidiennes.",
+    "ctaPrimary": "Essayer la démo en direct",
+    "ctaSecondary": "Discuter de votre projet",
+    "trustLine": "Démo interactive · Aucune inscription · Données d'exemple",
+    "sideLabelLeft1": "De",
+    "sideLabelLeft2": "Travail manuel",
+    "sideLabelLeft3": "Vers de vrais progrès",
+    "sideLabelRight1": "Simple",
+    "sideLabelRight2": "Puissant",
+    "sideLabelRight3": "Conçu pour les gens"
+  },
+  "Bridge": {
+    "title": "Ne vous contentez pas de regarder. Essayez.",
+    "subtitle": "Découvrez comment commandes, stocks et finances fonctionnent ensemble dans un seul système connecté."
+  },
+  "Dashboard": {
+    "commandCenter": "Centre de contrôle",
+    "askAt": "Demander à AT",
+    "operationsManager": "Responsable des opérations",
+    "Sidebar": {
+      "sections": {
+        "operate": "Exploitation",
+        "automate": "Automatisation",
+        "manage": "Gestion"
+      },
+      "items": {
+        "operations": "Opérations",
+        "customers": "Clients",
+        "inventory": "Stock",
+        "finance": "Finances",
+        "automations": "Automatisations",
+        "integrations": "Intégrations",
+        "reports": "Rapports",
+        "teamApprovals": "Équipe et validations"
+      }
+    },
+    "Topbar": {
+      "greeting": "Bonjour, {name}.",
+      "attentionCount": "{count, plural, one {# élément nécessite votre attention.} other {# éléments nécessitent votre attention.}}",
+      "searchPlaceholder": "Rechercher opérations, clients, factures…",
+      "systemsOperational": "Tous les systèmes opérationnels",
+      "notifications": "Notifications"
+    },
+    "Kpi": {
+      "items": {
+        "revenue": "Revenus",
+        "openOperations": "Opérations ouvertes",
+        "cashDue": "Créances dues",
+        "automatedToday": "Automatisé aujourd'hui"
+      },
+      "overdue": "{count} en retard",
+      "saved": "{hours} économisées"
+    },
+    "Performance": {
+      "title": "Performance de l'entreprise",
+      "subtitle": "Revenus, opérations et profit dans le temps",
+      "series": {
+        "revenue": "Revenus",
+        "operations": "Opérations",
+        "profit": "Profit"
+      },
+      "rangeLabel": "30 derniers jours",
+      "rangeFilterAria": "Filtre : 30 derniers jours",
+      "chartAria": "Revenus, opérations et profit en hausse sur les 30 derniers jours",
+      "tooltipRevenue": "Revenus {value}"
+    },
+    "Attention": {
+      "title": "À traiter",
+      "ownerLabel": "Responsable : {owner}",
+      "items": {
+        "overdueInvoices": {
+          "title": "{count, plural, one {# facture en retard} other {# factures en retard}}",
+          "meta": "{amount} · {dept}"
+        },
+        "lowStockItems": {
+          "title": "{count, plural, one {# article en stock faible} other {# articles en stock faible}}",
+          "meta": "Dans {categories} catégories"
+        },
+        "operationDelayed": {
+          "title": "Opération {id} retardée",
+          "meta": "{days, plural, one {Retard fournisseur · # jour} other {Retard fournisseur · # jours}}"
+        },
+        "automationRunsFailed": {
+          "title": "{count, plural, one {# automatisation échouée} other {# automatisations échouées}}",
+          "meta": "Vérifier les journaux"
+        }
+      },
+      "notes": {
+        "reminderSentAutomatically": "Rappel envoyé automatiquement",
+        "purchaseRequired": "Commande nécessaire",
+        "supplierDelayDetected": "Retard fournisseur détecté",
+        "reviewRequired": "Vérification requise"
+      }
+    },
+    "LiveOperations": {
+      "title": "Opérations en direct",
+      "live": "Live",
+      "events": {
+        "operationReceived": "Opération {id} reçue",
+        "paymentReceived": "Paiement reçu — {amount} de {company}",
+        "stockBelowThreshold": "Stock sous le seuil — {product}",
+        "customerOnboarded": "Nouveau client intégré — {company}"
+      },
+      "steps": {
+        "inventoryReserved": "Stock réservé",
+        "invoiceGenerated": "Facture générée",
+        "customerNotified": "Client notifié",
+        "invoiceMarkedPaid": "Facture {id} marquée payée",
+        "purchaseRequestCreated": "Demande d'achat créée",
+        "procurementNotified": "Achats notifiés",
+        "accountCreated": "Compte créé",
+        "welcomeWorkflowCompleted": "Parcours de bienvenue terminé"
+      }
+    },
+    "Approvals": {
+      "title": "Validations",
+      "review": "Vérifier",
+      "awaitingApproval": "{count} en attente de validation",
+      "items": {
+        "purchaseRequest": "Demande d'achat",
+        "discountRequest": "Demande de remise",
+        "supplierPayment": "Paiement fournisseur"
+      }
+    },
+    "Teams": {
+      "finance": "Finances",
+      "financeTeam": "Équipe finance",
+      "procurement": "Achats",
+      "operations": "Opérations",
+      "salesTeam": "Équipe commerciale"
+    }
+  }
+}

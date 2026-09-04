@@ -1,0 +1,149 @@
+{
+  "Metadata": {
+    "title": "AT Automation",
+    "description": "Автоматизация бизнес-процессов для компаний в Тичино и по всей Швейцарии: от анализа задач до внедрения готовых решений."
+  },
+  "Header": {
+    "logoAlt": "Логотип компании",
+    "languageSwitcherLabel": "Переключить язык",
+    "menuOpen": "Открыть меню",
+    "menuClose": "Закрыть меню",
+    "cta": "Обсудить проект"
+  },
+  "Hero": {
+    "eyebrow": "Автоматизация бизнеса",
+    "headlineLine1": "Ваш бизнес.",
+    "headlineLine2": "Единая система.",
+    "subhead": "Индивидуальное ПО, которое объединяет клиентов, заказы, склад, финансы и повседневные процессы.",
+    "ctaPrimary": "Попробовать демо",
+    "ctaSecondary": "Обсудить проект",
+    "trustLine": "Интерактивное демо · Без регистрации · Демо-данные",
+    "sideLabelLeft1": "От",
+    "sideLabelLeft2": "Ручной работы",
+    "sideLabelLeft3": "К реальному прогрессу",
+    "sideLabelRight1": "Просто",
+    "sideLabelRight2": "Мощно",
+    "sideLabelRight3": "Создано для людей"
+  },
+  "Bridge": {
+    "title": "Не просто смотрите. Попробуйте.",
+    "subtitle": "Посмотрите, как заказы, склад и финансы работают вместе в единой системе."
+  },
+  "Dashboard": {
+    "commandCenter": "Центр управления",
+    "askAt": "Спросить AT",
+    "operationsManager": "Операционный менеджер",
+    "Sidebar": {
+      "sections": {
+        "operate": "Операции",
+        "automate": "Автоматизация",
+        "manage": "Управление"
+      },
+      "items": {
+        "operations": "Операции",
+        "customers": "Клиенты",
+        "inventory": "Склад",
+        "finance": "Финансы",
+        "automations": "Автоматизации",
+        "integrations": "Интеграции",
+        "reports": "Отчёты",
+        "teamApprovals": "Команда и согласования"
+      }
+    },
+    "Topbar": {
+      "greeting": "Доброе утро, {name}.",
+      "attentionCount": "{count, plural, one {# элемент требует вашего внимания.} few {# элемента требуют вашего внимания.} many {# элементов требуют вашего внимания.} other {# элемента требуют вашего внимания.}}",
+      "searchPlaceholder": "Поиск операций, клиентов, счетов…",
+      "systemsOperational": "Все системы работают",
+      "notifications": "Уведомления"
+    },
+    "Kpi": {
+      "items": {
+        "revenue": "Выручка",
+        "openOperations": "Открытые операции",
+        "cashDue": "К получению",
+        "automatedToday": "Автоматизировано сегодня"
+      },
+      "overdue": "Просрочено: {count}",
+      "saved": "Экономия: {hours}"
+    },
+    "Performance": {
+      "title": "Показатели бизнеса",
+      "subtitle": "Выручка, операции и прибыль в динамике",
+      "series": {
+        "revenue": "Выручка",
+        "operations": "Операции",
+        "profit": "Прибыль"
+      },
+      "rangeLabel": "Последние 30 дней",
+      "rangeFilterAria": "Фильтр: последние 30 дней",
+      "chartAria": "Выручка, операции и прибыль растут за последние 30 дней",
+      "tooltipRevenue": "Выручка {value}"
+    },
+    "Attention": {
+      "title": "Требует внимания",
+      "ownerLabel": "Ответственный: {owner}",
+      "items": {
+        "overdueInvoices": {
+          "title": "{count, plural, one {# просроченный счёт} few {# просроченных счёта} many {# просроченных счетов} other {# просроченных счёта}}",
+          "meta": "{amount} · {dept}"
+        },
+        "lowStockItems": {
+          "title": "{count, plural, one {# товар с низким остатком} few {# товара с низким остатком} many {# товаров с низким остатком} other {# товара с низким остатком}}",
+          "meta": "В {categories} категориях"
+        },
+        "operationDelayed": {
+          "title": "Операция {id} задержана",
+          "meta": "{days, plural, one {Задержка поставщика · # день} few {Задержка поставщика · # дня} many {Задержка поставщика · # дней} other {Задержка поставщика · # дня}}"
+        },
+        "automationRunsFailed": {
+          "title": "{count, plural, one {# запуск автоматизации не выполнен} few {# запуска автоматизации не выполнены} many {# запусков автоматизации не выполнены} other {# запуска автоматизации не выполнены}}",
+          "meta": "Проверить журналы"
+        }
+      },
+      "notes": {
+        "reminderSentAutomatically": "Напоминание отправлено автоматически",
+        "purchaseRequired": "Требуется закупка",
+        "supplierDelayDetected": "Обнаружена задержка поставщика",
+        "reviewRequired": "Требуется проверка"
+      }
+    },
+    "LiveOperations": {
+      "title": "Операции в реальном времени",
+      "live": "Live",
+      "events": {
+        "operationReceived": "Получена операция {id}",
+        "paymentReceived": "Получен платёж — {amount} от {company}",
+        "stockBelowThreshold": "Остаток ниже порога — {product}",
+        "customerOnboarded": "Новый клиент подключён — {company}"
+      },
+      "steps": {
+        "inventoryReserved": "Товар зарезервирован",
+        "invoiceGenerated": "Счёт сформирован",
+        "customerNotified": "Клиент уведомлён",
+        "invoiceMarkedPaid": "Счёт {id} отмечен как оплаченный",
+        "purchaseRequestCreated": "Заявка на закупку создана",
+        "procurementNotified": "Отдел закупок уведомлён",
+        "accountCreated": "Аккаунт создан",
+        "welcomeWorkflowCompleted": "Приветственный сценарий завершён"
+      }
+    },
+    "Approvals": {
+      "title": "Согласования",
+      "review": "Рассмотреть",
+      "awaitingApproval": "{count, plural, one {# ожидает согласования} other {# ожидают согласования}}",
+      "items": {
+        "purchaseRequest": "Заявка на закупку",
+        "discountRequest": "Заявка на скидку",
+        "supplierPayment": "Оплата поставщику"
+      }
+    },
+    "Teams": {
+      "finance": "Финансы",
+      "financeTeam": "Финансовая команда",
+      "procurement": "Закупки",
+      "operations": "Операции",
+      "salesTeam": "Отдел продаж"
+    }
+  }
+}

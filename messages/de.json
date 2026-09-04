@@ -1,0 +1,149 @@
+{
+  "Metadata": {
+    "title": "AT Automation",
+    "description": "Automatisierung von Geschäftsprozessen für Unternehmen im Tessin und in der ganzen Schweiz – von der Bedarfsanalyse bis zur vollständigen Umsetzung."
+  },
+  "Header": {
+    "logoAlt": "Firmenlogo",
+    "languageSwitcherLabel": "Sprache wechseln",
+    "menuOpen": "Menü öffnen",
+    "menuClose": "Menü schließen",
+    "cta": "Projekt besprechen"
+  },
+  "Hero": {
+    "eyebrow": "Business-Automatisierung",
+    "headlineLine1": "Ihr Unternehmen.",
+    "headlineLine2": "Ein System.",
+    "subhead": "Individuelle Software, die Kunden, Aufträge, Lagerbestand, Finanzen und Arbeitsabläufe miteinander verbindet.",
+    "ctaPrimary": "Live-Demo testen",
+    "ctaSecondary": "Projekt besprechen",
+    "trustLine": "Interaktive Demo · Keine Registrierung · Beispieldaten",
+    "sideLabelLeft1": "Von",
+    "sideLabelLeft2": "Manueller Aufwand",
+    "sideLabelLeft3": "Zu echtem Fortschritt",
+    "sideLabelRight1": "Einfach",
+    "sideLabelRight2": "Leistungsstark",
+    "sideLabelRight3": "Für Menschen gemacht"
+  },
+  "Bridge": {
+    "title": "Nicht nur ansehen. Ausprobieren.",
+    "subtitle": "Entdecken Sie, wie Aufträge, Lagerbestand und Finanzen in einem vernetzten System zusammenspielen."
+  },
+  "Dashboard": {
+    "commandCenter": "Kommandozentrale",
+    "askAt": "AT fragen",
+    "operationsManager": "Operations Manager",
+    "Sidebar": {
+      "sections": {
+        "operate": "Betrieb",
+        "automate": "Automatisierung",
+        "manage": "Verwaltung"
+      },
+      "items": {
+        "operations": "Vorgänge",
+        "customers": "Kunden",
+        "inventory": "Lager",
+        "finance": "Finanzen",
+        "automations": "Automatisierungen",
+        "integrations": "Integrationen",
+        "reports": "Berichte",
+        "teamApprovals": "Team & Freigaben"
+      }
+    },
+    "Topbar": {
+      "greeting": "Guten Morgen, {name}.",
+      "attentionCount": "{count, plural, one {# Element benötigt Ihre Aufmerksamkeit.} other {# Elemente benötigen Ihre Aufmerksamkeit.}}",
+      "searchPlaceholder": "Vorgänge, Kunden, Rechnungen durchsuchen…",
+      "systemsOperational": "Alle Systeme betriebsbereit",
+      "notifications": "Benachrichtigungen"
+    },
+    "Kpi": {
+      "items": {
+        "revenue": "Umsatz",
+        "openOperations": "Offene Vorgänge",
+        "cashDue": "Offene Forderungen",
+        "automatedToday": "Heute automatisiert"
+      },
+      "overdue": "{count} überfällig",
+      "saved": "{hours} eingespart"
+    },
+    "Performance": {
+      "title": "Geschäftsentwicklung",
+      "subtitle": "Umsatz, Vorgänge und Gewinn im Zeitverlauf",
+      "series": {
+        "revenue": "Umsatz",
+        "operations": "Vorgänge",
+        "profit": "Gewinn"
+      },
+      "rangeLabel": "Letzte 30 Tage",
+      "rangeFilterAria": "Filter: letzte 30 Tage",
+      "chartAria": "Umsatz, Vorgänge und Gewinn steigen in den letzten 30 Tagen",
+      "tooltipRevenue": "Umsatz {value}"
+    },
+    "Attention": {
+      "title": "Handlungsbedarf",
+      "ownerLabel": "Verantwortlich: {owner}",
+      "items": {
+        "overdueInvoices": {
+          "title": "{count, plural, one {# überfällige Rechnung} other {# überfällige Rechnungen}}",
+          "meta": "{amount} · {dept}"
+        },
+        "lowStockItems": {
+          "title": "{count, plural, one {# Artikel mit niedrigem Bestand} other {# Artikel mit niedrigem Bestand}}",
+          "meta": "In {categories} Kategorien"
+        },
+        "operationDelayed": {
+          "title": "Vorgang {id} verzögert",
+          "meta": "{days, plural, one {Lieferverzug · # Tag} other {Lieferverzug · # Tage}}"
+        },
+        "automationRunsFailed": {
+          "title": "{count, plural, one {# Automatisierungslauf fehlgeschlagen} other {# Automatisierungsläufe fehlgeschlagen}}",
+          "meta": "Protokolle prüfen"
+        }
+      },
+      "notes": {
+        "reminderSentAutomatically": "Erinnerung automatisch versendet",
+        "purchaseRequired": "Bestellung erforderlich",
+        "supplierDelayDetected": "Lieferverzug erkannt",
+        "reviewRequired": "Prüfung erforderlich"
+      }
+    },
+    "LiveOperations": {
+      "title": "Live-Vorgänge",
+      "live": "Live",
+      "events": {
+        "operationReceived": "Vorgang {id} eingegangen",
+        "paymentReceived": "Zahlung eingegangen — {amount} von {company}",
+        "stockBelowThreshold": "Bestand unter Schwellenwert — {product}",
+        "customerOnboarded": "Neuer Kunde angelegt — {company}"
+      },
+      "steps": {
+        "inventoryReserved": "Lagerbestand reserviert",
+        "invoiceGenerated": "Rechnung erstellt",
+        "customerNotified": "Kunde benachrichtigt",
+        "invoiceMarkedPaid": "Rechnung {id} als bezahlt markiert",
+        "purchaseRequestCreated": "Bestellanforderung erstellt",
+        "procurementNotified": "Einkauf benachrichtigt",
+        "accountCreated": "Konto angelegt",
+        "welcomeWorkflowCompleted": "Willkommens-Workflow abgeschlossen"
+      }
+    },
+    "Approvals": {
+      "title": "Freigaben",
+      "review": "Prüfen",
+      "awaitingApproval": "{count} zur Freigabe",
+      "items": {
+        "purchaseRequest": "Bestellanfrage",
+        "discountRequest": "Rabattanfrage",
+        "supplierPayment": "Lieferantenzahlung"
+      }
+    },
+    "Teams": {
+      "finance": "Finanzen",
+      "financeTeam": "Finanzteam",
+      "procurement": "Einkauf",
+      "operations": "Betrieb",
+      "salesTeam": "Vertriebsteam"
+    }
+  }
+}
