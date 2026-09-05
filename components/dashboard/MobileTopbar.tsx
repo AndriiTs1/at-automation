@@ -8,7 +8,7 @@ export default function MobileTopbar({ navOpen, onToggleNav }: { navOpen: boolea
   const tTopbar = useTranslations("Dashboard.Topbar");
 
   return (
-    <div className="mb-3 shrink-0">
+    <div className="mb-2 shrink-0">
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
           <button
@@ -39,11 +39,11 @@ export default function MobileTopbar({ navOpen, onToggleNav }: { navOpen: boolea
         </div>
       </div>
 
-      <div className="mt-3">
-        <p className="text-lg leading-tight font-semibold text-foreground">
+      <div className="mt-2">
+        <p className="text-base leading-tight font-semibold text-foreground">
           {tTopbar("greeting", { name: DEMO_USER.firstName })}
         </p>
-        <p className="mt-0.5 text-xs text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+        <p className="mt-0.5 text-xs leading-tight text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
       </div>
     </div>
   );

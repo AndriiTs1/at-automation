@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { KPI_ITEMS } from "@/lib/demo-data";
-import ApprovalsPanel from "./ApprovalsPanel";
-import BusinessPerformance from "./BusinessPerformance";
-import LiveOperations from "./LiveOperations";
+import MobileApprovalsPanel from "./MobileApprovalsPanel";
+import MobileBusinessPerformance from "./MobileBusinessPerformance";
 import MobileKpiCard from "./MobileKpiCard";
+import MobileLiveOperations from "./MobileLiveOperations";
 import MobileNeedsAttention from "./MobileNeedsAttention";
 import MobileTopbar from "./MobileTopbar";
 import TabletNavigation from "./TabletNavigation";
@@ -27,7 +27,7 @@ export default function MobileCommandCenter() {
       <div className="flex h-full w-full flex-col overflow-y-auto bg-neutral-50 p-3">
         <MobileTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
 
-        <div className="mb-3 grid shrink-0 grid-cols-2 gap-2">
+        <div className="mb-2.5 grid shrink-0 grid-cols-2 gap-2">
           {KPI_ITEMS.map((item) => (
             <MobileKpiCard
               key={item.key}
@@ -43,20 +43,20 @@ export default function MobileCommandCenter() {
           ))}
         </div>
 
-        <div className="mb-3 h-[26rem] shrink-0">
+        <div className="mb-2.5 h-[23rem] shrink-0">
           <MobileNeedsAttention />
         </div>
 
-        <div className="mb-3 h-72 shrink-0">
-          <ApprovalsPanel />
+        <div className="mb-2.5 h-60 shrink-0">
+          <MobileApprovalsPanel />
         </div>
 
-        <div className="mb-3 h-80 shrink-0">
-          <LiveOperations />
+        <div className="mb-2.5 h-80 shrink-0">
+          <MobileLiveOperations />
         </div>
 
-        <div className="h-80 shrink-0">
-          <BusinessPerformance />
+        <div className="h-56 shrink-0">
+          <MobileBusinessPerformance />
         </div>
       </div>
 
