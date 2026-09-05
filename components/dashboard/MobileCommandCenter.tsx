@@ -24,7 +24,7 @@ export default function MobileCommandCenter() {
 
   return (
     <div className="relative flex min-w-0 flex-1 @lg:hidden">
-      <div className="flex h-full w-full flex-col overflow-y-auto bg-neutral-50 p-3">
+      <div className="flex h-full w-full flex-col overflow-y-auto bg-neutral-50 px-3 pt-1 pb-3">
         <MobileTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
 
         <div className="mb-2.5 grid shrink-0 grid-cols-2 gap-2">
