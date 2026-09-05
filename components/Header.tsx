@@ -16,9 +16,28 @@ export default function Header() {
 
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuHeight, setMobileMenuHeight] = useState(0);
 
   const langMenuRef = useRef<HTMLDivElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Measure the expanded dropdown so the spacer below the fixed Header can push
+  // page content down by exactly that amount, instead of the dropdown overlaying it.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const el = mobileDropdownRef.current;
+    if (!el) return;
+
+    const measure = () => setMobileMenuHeight(el.offsetHeight);
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [mobileMenuOpen]);
 
   // Close dropdowns/panels when clicking outside of them.
   useEffect(() => {
@@ -49,7 +68,8 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-5 z-50 bg-transparent px-4 md:px-6">
+    <>
+      <header className="fixed inset-x-0 top-5 z-50 bg-transparent px-4 md:px-6">
       <div ref={mobilePanelRef} className="relative mx-auto w-full max-w-[1320px] bg-transparent">
         <div className="flex h-[74px] items-center justify-between gap-3 rounded-2xl border border-black/8 bg-white/95 px-4 shadow-md shadow-black/8 backdrop-blur-2xl backdrop-saturate-150">
           {/* Logo */}
@@ -129,7 +149,10 @@ export default function Header() {
 
         {/* Mobile dropdown panel */}
         {mobileMenuOpen && (
-          <div className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden">
+          <div
+            ref={mobileDropdownRef}
+            className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden"
+          >
             {/* Mobile language switcher */}
             <ul role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5 pb-1">
               {routing.locales.map((lang) => (
@@ -159,7 +182,14 @@ export default function Header() {
           </div>
         )}
       </div>
-    </header>
+      </header>
+      {/* Pushes page content down by the expanded dropdown's height, on mobile only. */}
+      <div
+        aria-hidden="true"
+        className="transition-[height] duration-300 ease-in-out motion-reduce:transition-none md:hidden"
+        style={{ height: mobileMenuOpen ? mobileMenuHeight + 8 : 0 }}
+      />
+    </>
   );
 }
 
