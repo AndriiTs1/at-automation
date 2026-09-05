@@ -21,6 +21,16 @@ export default function Header() {
   const langMenuRef = useRef<HTMLDivElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
   const mobileDropdownRef = useRef<HTMLDivElement>(null);
+  const previousLangRef = useRef(currentLang);
+
+  // Reset scroll to top once the new locale's content has actually rendered,
+  // rather than racing the client-side navigation's own scroll handling.
+  useEffect(() => {
+    if (previousLangRef.current !== currentLang) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+      previousLangRef.current = currentLang;
+    }
+  }, [currentLang]);
 
   // Measure the expanded dropdown so the spacer below the fixed Header can push
   // page content down by exactly that amount, instead of the dropdown overlaying it.
@@ -56,7 +66,15 @@ export default function Header() {
 
   const selectLanguage = (lang: LanguageCode) => {
     setLangMenuOpen(false);
+    setMobileMenuOpen(false);
     router.replace(pathname, { locale: lang });
+  };
+
+  const handleMobileMenuToggle = () => {
+    if (!mobileMenuOpen) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+    setMobileMenuOpen((open) => !open);
   };
 
   const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
@@ -139,7 +157,7 @@ export default function Header() {
               type="button"
               aria-label={mobileMenuOpen ? t("menuClose") : t("menuOpen")}
               aria-expanded={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen((open) => !open)}
+              onClick={handleMobileMenuToggle}
               className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-700 transition-colors hover:bg-black/5 md:hidden"
             >
               {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
