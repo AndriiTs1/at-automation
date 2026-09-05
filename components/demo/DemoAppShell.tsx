@@ -1,11 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "@/i18n/navigation";
 import DashboardSidebar from "../dashboard/DashboardSidebar";
 import DashboardTopbar from "../dashboard/DashboardTopbar";
 import MobileTopbar from "../dashboard/MobileTopbar";
 import TabletNavigation from "../dashboard/TabletNavigation";
 import TabletTopbar from "../dashboard/TabletTopbar";
+
+/** Maps the current (locale-stripped) demo pathname to the sidebar/drawer item key it represents. */
+function useActiveDemoItem() {
+  const pathname = usePathname();
+  if (pathname === "/demo/operations") return "operations";
+  return "commandCenter";
+}
 
 /**
  * Persistent chrome for the real /demo application: sidebar (desktop), topbar (all
@@ -16,6 +24,7 @@ import TabletTopbar from "../dashboard/TabletTopbar";
  */
 export default function DemoAppShell({ children }: { children: React.ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
+  const activeItem = useActiveDemoItem();
 
   useEffect(() => {
     if (!navOpen) return;
@@ -34,7 +43,12 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
           <MobileTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
           {children}
         </div>
-        <TabletNavigation open={navOpen} onClose={() => setNavOpen(false)} panelId="mobile-nav-panel" />
+        <TabletNavigation
+          open={navOpen}
+          onClose={() => setNavOpen(false)}
+          panelId="mobile-nav-panel"
+          activeItem={activeItem}
+        />
       </div>
 
       {/* Tablet shell (@lg to below @5xl) */}
@@ -43,12 +57,12 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
           <TabletTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
           {children}
         </div>
-        <TabletNavigation open={navOpen} onClose={() => setNavOpen(false)} />
+        <TabletNavigation open={navOpen} onClose={() => setNavOpen(false)} activeItem={activeItem} />
       </div>
 
       {/* Desktop shell (@5xl and up) */}
       <div className="hidden w-full @5xl:flex">
-        <DashboardSidebar />
+        <DashboardSidebar activeItem={activeItem} />
         <div className="flex min-w-0 flex-1 flex-col overflow-y-auto bg-neutral-50 p-3 @lg:p-4 @3xl:p-2.5">
           <DashboardTopbar />
           {children}

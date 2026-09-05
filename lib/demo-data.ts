@@ -8,7 +8,7 @@ export const NAV_SECTIONS = [
   {
     key: "operate",
     items: [
-      { key: "operations", icon: "activity", href: "/demo/operations", badge: "3" },
+      { key: "operations", icon: "activity", href: "/demo/operations", badge: "3", available: true },
       { key: "customers", icon: "users", href: "/demo/customers" },
       { key: "inventory", icon: "box", href: "/demo/inventory", badge: "12" },
       { key: "finance", icon: "coins", href: "/demo/finance", badge: "4" },
@@ -117,3 +117,94 @@ export const CHART_TOOLTIP = {
   date: "25 Nov",
   value: "CHF 72K",
 } as const;
+
+export const OPERATIONS_SUMMARY = {
+  active: "248",
+  needsAttention: "12",
+  completedToday: "34",
+  totalValue: "CHF 482,300",
+} as const;
+
+export const OPERATIONS_ROWS = [
+  {
+    id: "#10348",
+    customer: "Northstar Systems",
+    status: "inProgress",
+    stage: "inventoryReserved",
+    owner: "Sarah M.",
+    value: "CHF 8,450",
+    updated: "10:42",
+  },
+  {
+    id: "#10347",
+    customer: "BluePeak Industries",
+    status: "completed",
+    stage: "readyToShip",
+    owner: "Marc T.",
+    value: "CHF 12,900",
+    updated: "09:58",
+  },
+  {
+    id: "#10346",
+    customer: "Alpine Works",
+    status: "waiting",
+    stage: "awaitingApproval",
+    owner: "Sarah M.",
+    value: "CHF 4,200",
+    updated: "09:40",
+  },
+  {
+    id: "#10345",
+    customer: "Meridian Labs",
+    status: "attention",
+    stage: "supplierConfirmed",
+    owner: "Jonas R.",
+    value: "CHF 21,600",
+    updated: "09:15",
+  },
+  {
+    id: "#10344",
+    customer: "Northstar Systems",
+    status: "inProgress",
+    stage: "invoiceIssued",
+    owner: "Marc T.",
+    value: "CHF 6,750",
+    updated: "08:52",
+  },
+  {
+    id: "#10343",
+    customer: "Solterra Group",
+    status: "completed",
+    stage: "readyToShip",
+    owner: "Sarah M.",
+    value: "CHF 15,300",
+    updated: "08:30",
+  },
+  {
+    id: "#10342",
+    customer: "BluePeak Industries",
+    status: "attention",
+    stage: "supplierConfirmed",
+    owner: "Jonas R.",
+    value: "CHF 9,100",
+    updated: "08:05",
+  },
+  {
+    id: "#10341",
+    customer: "Alpine Works",
+    status: "waiting",
+    stage: "customerNotified",
+    owner: "Marc T.",
+    value: "CHF 3,480",
+    updated: "07:44",
+  },
+  {
+    id: "#10340",
+    customer: "Meridian Labs",
+    status: "inProgress",
+    stage: "orderReceived",
+    owner: "Sarah M.",
+    value: "CHF 18,900",
+    updated: "07:20",
+  },
+] as const;

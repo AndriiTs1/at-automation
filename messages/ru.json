@@ -145,6 +145,46 @@
       "procurement": "Закупки",
       "operations": "Операции",
       "salesTeam": "Отдел продаж"
+    },
+    "Operations": {
+      "title": "Операции",
+      "description": "Отслеживайте каждую активную операцию от заказа до выполнения.",
+      "newOperation": "Новая операция",
+      "summary": {
+        "active": "Активные",
+        "needsAttention": "Требуют внимания",
+        "completedToday": "Завершено сегодня",
+        "totalValue": "Общая сумма"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Поиск операций…",
+        "allStatuses": "Все статусы",
+        "allOwners": "Все ответственные"
+      },
+      "table": {
+        "operation": "Операция",
+        "customer": "Клиент",
+        "status": "Статус",
+        "stage": "Этап",
+        "owner": "Ответственный",
+        "value": "Сумма",
+        "updated": "Обновлено"
+      },
+      "status": {
+        "inProgress": "В работе",
+        "waiting": "Ожидание",
+        "attention": "Внимание",
+        "completed": "Завершено"
+      },
+      "stage": {
+        "orderReceived": "Заказ получен",
+        "inventoryReserved": "Товар зарезервирован",
+        "invoiceIssued": "Счёт выставлен",
+        "supplierConfirmed": "Поставщик подтвердил",
+        "customerNotified": "Клиент уведомлён",
+        "awaitingApproval": "Ожидает согласования",
+        "readyToShip": "Готово к отгрузке"
+      }
     }
   }
 }

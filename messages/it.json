@@ -145,6 +145,46 @@
       "procurement": "Acquisti",
       "operations": "Operazioni",
       "salesTeam": "Team vendite"
+    },
+    "Operations": {
+      "title": "Operazioni",
+      "description": "Monitora ogni operazione attiva dall'ordine all'evasione.",
+      "newOperation": "Nuova operazione",
+      "summary": {
+        "active": "Attive",
+        "needsAttention": "Richiede attenzione",
+        "completedToday": "Completate oggi",
+        "totalValue": "Valore totale"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Cerca operazioni…",
+        "allStatuses": "Tutti gli stati",
+        "allOwners": "Tutti i responsabili"
+      },
+      "table": {
+        "operation": "Operazione",
+        "customer": "Cliente",
+        "status": "Stato",
+        "stage": "Fase",
+        "owner": "Responsabile",
+        "value": "Valore",
+        "updated": "Aggiornato"
+      },
+      "status": {
+        "inProgress": "In corso",
+        "waiting": "In attesa",
+        "attention": "Attenzione",
+        "completed": "Completata"
+      },
+      "stage": {
+        "orderReceived": "Ordine ricevuto",
+        "inventoryReserved": "Scorta riservata",
+        "invoiceIssued": "Fattura emessa",
+        "supplierConfirmed": "Fornitore confermato",
+        "customerNotified": "Cliente avvisato",
+        "awaitingApproval": "In attesa di approvazione",
+        "readyToShip": "Pronta per la spedizione"
+      }
     }
   }
 }

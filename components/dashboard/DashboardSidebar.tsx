@@ -3,7 +3,7 @@ import { DEMO_USER, NAV_SECTIONS } from "@/lib/demo-data";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeftIcon, DashboardIcon, NavIcon } from "./icons";
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ activeItem = "commandCenter" }: { activeItem?: string } = {}) {
   const t = useTranslations("Dashboard");
   const tSidebar = useTranslations("Dashboard.Sidebar");
   const tHeader = useTranslations("Header");
@@ -24,8 +24,10 @@ export default function DashboardSidebar() {
       <nav className="flex flex-1 flex-col gap-4 overflow-y-auto">
         <button
           type="button"
-          aria-current="page"
-          className="flex items-center justify-center gap-2.5 rounded-lg bg-white/10 p-2 text-xs font-medium text-white @3xl:justify-start @3xl:px-3 @3xl:py-2"
+          aria-current={activeItem === "commandCenter" ? "page" : undefined}
+          className={`flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium transition-colors @3xl:justify-start @3xl:px-3 @3xl:py-2 ${
+            activeItem === "commandCenter" ? "bg-white/10 text-white" : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
+          }`}
         >
           <NavIcon name="grid" className="h-4 w-4 shrink-0" />
           <span className="hidden truncate @3xl:inline">{t("commandCenter")}</span>
@@ -37,23 +39,35 @@ export default function DashboardSidebar() {
               {tSidebar(`sections.${section.key}`)}
             </p>
             <div className="flex flex-col gap-1">
-              {section.items.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  className="flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200 @3xl:justify-between @3xl:px-3 @3xl:py-2"
-                >
-                  <span className="flex min-w-0 items-center gap-2.5">
-                    <NavIcon name={item.icon} className="h-4 w-4 shrink-0" />
-                    <span className="hidden truncate @3xl:inline">{tSidebar(`items.${item.key}`)}</span>
-                  </span>
-                  {"badge" in item && item.badge && (
-                    <span className="hidden shrink-0 rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] font-medium text-neutral-300 @3xl:inline">
-                      {item.badge}
+              {section.items.map((item) => {
+                const isActive = activeItem === item.key;
+                const itemClassName = `flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium transition-colors @3xl:justify-between @3xl:px-3 @3xl:py-2 ${
+                  isActive ? "bg-white/10 text-white" : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
+                }`;
+                const itemContent = (
+                  <>
+                    <span className="flex min-w-0 items-center gap-2.5">
+                      <NavIcon name={item.icon} className="h-4 w-4 shrink-0" />
+                      <span className="hidden truncate @3xl:inline">{tSidebar(`items.${item.key}`)}</span>
                     </span>
-                  )}
-                </button>
-              ))}
+                    {"badge" in item && item.badge && (
+                      <span className="hidden shrink-0 rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] font-medium text-neutral-300 @3xl:inline">
+                        {item.badge}
+                      </span>
+                    )}
+                  </>
+                );
+
+                return "available" in item && item.available ? (
+                  <Link key={item.key} href={item.href} aria-current={isActive ? "page" : undefined} className={itemClassName}>
+                    {itemContent}
+                  </Link>
+                ) : (
+                  <button key={item.key} type="button" className={itemClassName}>
+                    {itemContent}
+                  </button>
+                );
+              })}
             </div>
           </div>
         ))}

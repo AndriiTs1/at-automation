@@ -10,10 +10,12 @@ export default function TabletNavigation({
   open,
   onClose,
   panelId = "tablet-nav-panel",
+  activeItem = "commandCenter",
 }: {
   open: boolean;
   onClose: () => void;
   panelId?: string;
+  activeItem?: string;
 }) {
   const t = useTranslations("Dashboard");
   const tSidebar = useTranslations("Dashboard.Sidebar");
@@ -64,9 +66,11 @@ export default function TabletNavigation({
         <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto @lg:gap-2">
           <button
             type="button"
-            aria-current="page"
+            aria-current={activeItem === "commandCenter" ? "page" : undefined}
             onClick={onClose}
-            className="flex items-center gap-2.5 rounded-lg bg-white/10 px-3 py-2 text-xs font-medium text-white"
+            className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+              activeItem === "commandCenter" ? "bg-white/10 text-white" : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
+            }`}
           >
             <NavIcon name="grid" className="h-4 w-4 shrink-0" />
             {t("commandCenter")}
@@ -78,24 +82,41 @@ export default function TabletNavigation({
                 {tSidebar(`sections.${section.key}`)}
               </p>
               <div className="flex flex-col gap-1">
-                {section.items.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={onClose}
-                    className="flex items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200"
-                  >
-                    <span className="flex min-w-0 items-center gap-2.5">
-                      <NavIcon name={item.icon} className="h-4 w-4 shrink-0" />
-                      <span className="truncate">{tSidebar(`items.${item.key}`)}</span>
-                    </span>
-                    {"badge" in item && item.badge && (
-                      <span className="shrink-0 rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] font-medium text-neutral-300">
-                        {item.badge}
+                {section.items.map((item) => {
+                  const isActive = activeItem === item.key;
+                  const itemClassName = `flex items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                    isActive ? "bg-white/10 text-white" : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
+                  }`;
+                  const itemContent = (
+                    <>
+                      <span className="flex min-w-0 items-center gap-2.5">
+                        <NavIcon name={item.icon} className="h-4 w-4 shrink-0" />
+                        <span className="truncate">{tSidebar(`items.${item.key}`)}</span>
                       </span>
-                    )}
-                  </button>
-                ))}
+                      {"badge" in item && item.badge && (
+                        <span className="shrink-0 rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] font-medium text-neutral-300">
+                          {item.badge}
+                        </span>
+                      )}
+                    </>
+                  );
+
+                  return "available" in item && item.available ? (
+                    <Link
+                      key={item.key}
+                      href={item.href}
+                      onClick={onClose}
+                      aria-current={isActive ? "page" : undefined}
+                      className={itemClassName}
+                    >
+                      {itemContent}
+                    </Link>
+                  ) : (
+                    <button key={item.key} type="button" onClick={onClose} className={itemClassName}>
+                      {itemContent}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           ))}

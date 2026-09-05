@@ -145,6 +145,46 @@
       "procurement": "Закупівлі",
       "operations": "Операції",
       "salesTeam": "Відділ продажів"
+    },
+    "Operations": {
+      "title": "Операції",
+      "description": "Відстежуйте кожну активну операцію від замовлення до виконання.",
+      "newOperation": "Нова операція",
+      "summary": {
+        "active": "Активні",
+        "needsAttention": "Потребують уваги",
+        "completedToday": "Завершено сьогодні",
+        "totalValue": "Загальна сума"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Пошук операцій…",
+        "allStatuses": "Усі статуси",
+        "allOwners": "Усі відповідальні"
+      },
+      "table": {
+        "operation": "Операція",
+        "customer": "Клієнт",
+        "status": "Статус",
+        "stage": "Етап",
+        "owner": "Відповідальний",
+        "value": "Сума",
+        "updated": "Оновлено"
+      },
+      "status": {
+        "inProgress": "У роботі",
+        "waiting": "Очікування",
+        "attention": "Увага",
+        "completed": "Завершено"
+      },
+      "stage": {
+        "orderReceived": "Замовлення отримано",
+        "inventoryReserved": "Товар зарезервовано",
+        "invoiceIssued": "Рахунок виставлено",
+        "supplierConfirmed": "Постачальник підтвердив",
+        "customerNotified": "Клієнта повідомлено",
+        "awaitingApproval": "Очікує погодження",
+        "readyToShip": "Готово до відвантаження"
+      }
     }
   }
 }

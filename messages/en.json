@@ -145,6 +145,46 @@
       "procurement": "Procurement",
       "operations": "Operations",
       "salesTeam": "Sales Team"
+    },
+    "Operations": {
+      "title": "Operations",
+      "description": "Track every active operation from order to fulfillment.",
+      "newOperation": "New operation",
+      "summary": {
+        "active": "Active",
+        "needsAttention": "Needs attention",
+        "completedToday": "Completed today",
+        "totalValue": "Total value"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Search operations…",
+        "allStatuses": "All statuses",
+        "allOwners": "All owners"
+      },
+      "table": {
+        "operation": "Operation",
+        "customer": "Customer",
+        "status": "Status",
+        "stage": "Stage",
+        "owner": "Owner",
+        "value": "Value",
+        "updated": "Updated"
+      },
+      "status": {
+        "inProgress": "In progress",
+        "waiting": "Waiting",
+        "attention": "Attention",
+        "completed": "Completed"
+      },
+      "stage": {
+        "orderReceived": "Order received",
+        "inventoryReserved": "Inventory reserved",
+        "invoiceIssued": "Invoice issued",
+        "supplierConfirmed": "Supplier confirmed",
+        "customerNotified": "Customer notified",
+        "awaitingApproval": "Awaiting approval",
+        "readyToShip": "Ready to ship"
+      }
     }
   }
 }

@@ -145,6 +145,46 @@
       "procurement": "Einkauf",
       "operations": "Betrieb",
       "salesTeam": "Vertriebsteam"
+    },
+    "Operations": {
+      "title": "Vorgänge",
+      "description": "Behalten Sie jeden aktiven Vorgang vom Auftrag bis zur Erfüllung im Blick.",
+      "newOperation": "Neuer Vorgang",
+      "summary": {
+        "active": "Aktiv",
+        "needsAttention": "Benötigt Aufmerksamkeit",
+        "completedToday": "Heute abgeschlossen",
+        "totalValue": "Gesamtwert"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Vorgänge durchsuchen…",
+        "allStatuses": "Alle Status",
+        "allOwners": "Alle Verantwortlichen"
+      },
+      "table": {
+        "operation": "Vorgang",
+        "customer": "Kunde",
+        "status": "Status",
+        "stage": "Phase",
+        "owner": "Verantwortlich",
+        "value": "Wert",
+        "updated": "Aktualisiert"
+      },
+      "status": {
+        "inProgress": "In Bearbeitung",
+        "waiting": "Wartet",
+        "attention": "Achtung",
+        "completed": "Abgeschlossen"
+      },
+      "stage": {
+        "orderReceived": "Bestellung eingegangen",
+        "inventoryReserved": "Lagerbestand reserviert",
+        "invoiceIssued": "Rechnung ausgestellt",
+        "supplierConfirmed": "Lieferant bestätigt",
+        "customerNotified": "Kunde benachrichtigt",
+        "awaitingApproval": "Freigabe ausstehend",
+        "readyToShip": "Versandbereit"
+      }
     }
   }
 }
