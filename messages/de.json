@@ -181,9 +181,39 @@
         "inventoryReserved": "Lagerbestand reserviert",
         "invoiceIssued": "Rechnung ausgestellt",
         "supplierConfirmed": "Lieferant bestätigt",
+        "paymentReceived": "Zahlung erhalten",
+        "preparingShipment": "Versand wird vorbereitet",
         "customerNotified": "Kunde benachrichtigt",
         "awaitingApproval": "Freigabe ausstehend",
         "readyToShip": "Versandbereit"
+      },
+      "detail": {
+        "close": "Schließen",
+        "overview": "Übersicht",
+        "created": "Erstellt",
+        "workflow": "Ablauf",
+        "customer": "Kunde",
+        "commercial": "Kaufmännisch",
+        "fulfilment": "Erfüllung",
+        "activity": "Aktivität",
+        "invoice": "Rechnung",
+        "noInvoice": "Noch nicht ausgestellt",
+        "paymentStatus": "Zahlungsstatus",
+        "inventoryStatus": "Lagerstatus"
+      },
+      "paymentStatus": {
+        "paid": "Bezahlt",
+        "pending": "Ausstehend",
+        "overdue": "Überfällig"
+      },
+      "inventoryStatus": {
+        "reserved": "Reserviert",
+        "available": "Verfügbar",
+        "backordered": "Rückstand"
+      },
+      "activity": {
+        "invoiceGenerated": "Rechnung {invoice} erstellt",
+        "awaitingCustomer": "Wartet auf Kundenantwort"
       }
     }
   }

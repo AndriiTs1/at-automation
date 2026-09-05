@@ -181,9 +181,39 @@
         "inventoryReserved": "Scorta riservata",
         "invoiceIssued": "Fattura emessa",
         "supplierConfirmed": "Fornitore confermato",
+        "paymentReceived": "Pagamento ricevuto",
+        "preparingShipment": "Spedizione in preparazione",
         "customerNotified": "Cliente avvisato",
         "awaitingApproval": "In attesa di approvazione",
         "readyToShip": "Pronta per la spedizione"
+      },
+      "detail": {
+        "close": "Chiudi",
+        "overview": "Panoramica",
+        "created": "Creato",
+        "workflow": "Flusso di lavoro",
+        "customer": "Cliente",
+        "commercial": "Commerciale",
+        "fulfilment": "Evasione",
+        "activity": "Attività",
+        "invoice": "Fattura",
+        "noInvoice": "Non ancora emessa",
+        "paymentStatus": "Stato pagamento",
+        "inventoryStatus": "Stato magazzino"
+      },
+      "paymentStatus": {
+        "paid": "Pagato",
+        "pending": "In sospeso",
+        "overdue": "Scaduto"
+      },
+      "inventoryStatus": {
+        "reserved": "Riservato",
+        "available": "Disponibile",
+        "backordered": "Arretrato"
+      },
+      "activity": {
+        "invoiceGenerated": "Fattura {invoice} generata",
+        "awaitingCustomer": "In attesa di risposta del cliente"
       }
     }
   }

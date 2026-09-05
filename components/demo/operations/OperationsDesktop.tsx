@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
 import { OPERATIONS_SUMMARY } from "@/lib/demo-data";
-import OperationsTable from "./OperationsTable";
+import OperationsWorkspace from "./OperationsWorkspace";
 
 const SUMMARY_ITEMS = [
   { key: "active", value: OPERATIONS_SUMMARY.active, tone: "accent" },
@@ -65,8 +65,8 @@ export default function OperationsDesktop() {
         </div>
       </div>
 
-      {/* Table */}
-      <OperationsTable />
+      {/* Table + detail panel */}
+      <OperationsWorkspace />
     </div>
   );
 }

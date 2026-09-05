@@ -181,9 +181,39 @@
         "inventoryReserved": "Товар зарезервирован",
         "invoiceIssued": "Счёт выставлен",
         "supplierConfirmed": "Поставщик подтвердил",
+        "paymentReceived": "Оплата получена",
+        "preparingShipment": "Подготовка к отгрузке",
         "customerNotified": "Клиент уведомлён",
         "awaitingApproval": "Ожидает согласования",
         "readyToShip": "Готово к отгрузке"
+      },
+      "detail": {
+        "close": "Закрыть",
+        "overview": "Обзор",
+        "created": "Создано",
+        "workflow": "Ход выполнения",
+        "customer": "Клиент",
+        "commercial": "Коммерческая информация",
+        "fulfilment": "Выполнение",
+        "activity": "Активность",
+        "invoice": "Счёт",
+        "noInvoice": "Ещё не выставлен",
+        "paymentStatus": "Статус оплаты",
+        "inventoryStatus": "Статус склада"
+      },
+      "paymentStatus": {
+        "paid": "Оплачено",
+        "pending": "Ожидается",
+        "overdue": "Просрочено"
+      },
+      "inventoryStatus": {
+        "reserved": "Зарезервировано",
+        "available": "В наличии",
+        "backordered": "Дефицит"
+      },
+      "activity": {
+        "invoiceGenerated": "Счёт {invoice} выставлен",
+        "awaitingCustomer": "Ожидание ответа клиента"
       }
     }
   }

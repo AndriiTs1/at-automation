@@ -181,9 +181,39 @@
         "inventoryReserved": "Товар зарезервовано",
         "invoiceIssued": "Рахунок виставлено",
         "supplierConfirmed": "Постачальник підтвердив",
+        "paymentReceived": "Оплату отримано",
+        "preparingShipment": "Підготовка до відправлення",
         "customerNotified": "Клієнта повідомлено",
         "awaitingApproval": "Очікує погодження",
         "readyToShip": "Готово до відвантаження"
+      },
+      "detail": {
+        "close": "Закрити",
+        "overview": "Огляд",
+        "created": "Створено",
+        "workflow": "Хід виконання",
+        "customer": "Клієнт",
+        "commercial": "Комерційна інформація",
+        "fulfilment": "Виконання",
+        "activity": "Активність",
+        "invoice": "Рахунок",
+        "noInvoice": "Ще не виставлено",
+        "paymentStatus": "Статус оплати",
+        "inventoryStatus": "Статус складу"
+      },
+      "paymentStatus": {
+        "paid": "Оплачено",
+        "pending": "Очікується",
+        "overdue": "Прострочено"
+      },
+      "inventoryStatus": {
+        "reserved": "Зарезервовано",
+        "available": "У наявності",
+        "backordered": "Дефіцит"
+      },
+      "activity": {
+        "invoiceGenerated": "Рахунок {invoice} виставлено",
+        "awaitingCustomer": "Очікування відповіді клієнта"
       }
     }
   }

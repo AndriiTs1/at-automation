@@ -181,9 +181,39 @@
         "inventoryReserved": "Stock réservé",
         "invoiceIssued": "Facture émise",
         "supplierConfirmed": "Fournisseur confirmé",
+        "paymentReceived": "Paiement reçu",
+        "preparingShipment": "Expédition en préparation",
         "customerNotified": "Client notifié",
         "awaitingApproval": "En attente de validation",
         "readyToShip": "Prête à expédier"
+      },
+      "detail": {
+        "close": "Fermer",
+        "overview": "Aperçu",
+        "created": "Créée",
+        "workflow": "Flux de travail",
+        "customer": "Client",
+        "commercial": "Commercial",
+        "fulfilment": "Exécution",
+        "activity": "Activité",
+        "invoice": "Facture",
+        "noInvoice": "Pas encore émise",
+        "paymentStatus": "Statut du paiement",
+        "inventoryStatus": "Statut du stock"
+      },
+      "paymentStatus": {
+        "paid": "Payé",
+        "pending": "En attente",
+        "overdue": "En retard"
+      },
+      "inventoryStatus": {
+        "reserved": "Réservé",
+        "available": "Disponible",
+        "backordered": "En rupture"
+      },
+      "activity": {
+        "invoiceGenerated": "Facture {invoice} générée",
+        "awaitingCustomer": "En attente de réponse du client"
       }
     }
   }
