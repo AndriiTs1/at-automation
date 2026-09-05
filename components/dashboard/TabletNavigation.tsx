@@ -105,7 +105,7 @@ export default function TabletNavigation({
           <Link
             href="/"
             onClick={onClose}
-            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200"
+            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-accent/10 hover:brightness-110 focus-visible:bg-accent/10 focus-visible:brightness-110 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none"
           >
             <ArrowLeftIcon className="h-4 w-4 shrink-0" />
             {t("backToWebsite")}

@@ -62,7 +62,7 @@ export default function DashboardSidebar() {
       <div className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4">
         <Link
           href="/"
-          className="flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200 @3xl:justify-start @3xl:px-3 @3xl:py-2"
+          className="flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium text-accent transition-colors hover:bg-accent/10 hover:brightness-110 focus-visible:bg-accent/10 focus-visible:brightness-110 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none @3xl:justify-start @3xl:px-3 @3xl:py-2"
         >
           <ArrowLeftIcon className="h-4 w-4 shrink-0" />
           <span className="hidden truncate @3xl:inline">{t("backToWebsite")}</span>
