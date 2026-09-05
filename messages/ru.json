@@ -307,7 +307,11 @@
       "toolbar": {
         "searchPlaceholder": "Поиск клиентов…",
         "allSegments": "Все клиенты",
-        "allHealth": "Все состояния"
+        "allHealth": "Все состояния",
+        "clearFilters": "Сбросить фильтры",
+        "resultCount": "{count, plural, one {# клиент} few {# клиента} many {# клиентов} other {# клиента}}",
+        "noResults": "Нет клиентов, соответствующих фильтрам.",
+        "noResultsHint": "Попробуйте изменить или сбросить текущие фильтры."
       },
       "table": {
         "customer": "Клиент",

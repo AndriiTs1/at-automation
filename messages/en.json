@@ -307,7 +307,11 @@
       "toolbar": {
         "searchPlaceholder": "Search customers…",
         "allSegments": "All customers",
-        "allHealth": "All health"
+        "allHealth": "All health",
+        "clearFilters": "Clear filters",
+        "resultCount": "{count, plural, one {# customer} other {# customers}}",
+        "noResults": "No customers match your filters.",
+        "noResultsHint": "Try changing or clearing the current filters."
       },
       "table": {
         "customer": "Customer",

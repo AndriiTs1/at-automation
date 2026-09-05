@@ -307,7 +307,11 @@
       "toolbar": {
         "searchPlaceholder": "Cerca clienti…",
         "allSegments": "Tutti i clienti",
-        "allHealth": "Tutte le condizioni"
+        "allHealth": "Tutte le condizioni",
+        "clearFilters": "Cancella filtri",
+        "resultCount": "{count, plural, one {# cliente} other {# clienti}}",
+        "noResults": "Nessun cliente corrisponde ai filtri.",
+        "noResultsHint": "Prova a modificare o cancellare i filtri attuali."
       },
       "table": {
         "customer": "Cliente",

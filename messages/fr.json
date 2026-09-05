@@ -307,7 +307,11 @@
       "toolbar": {
         "searchPlaceholder": "Rechercher des clients…",
         "allSegments": "Tous les clients",
-        "allHealth": "Tous les états"
+        "allHealth": "Tous les états",
+        "clearFilters": "Réinitialiser les filtres",
+        "resultCount": "{count, plural, one {# client} other {# clients}}",
+        "noResults": "Aucun client ne correspond à vos filtres.",
+        "noResultsHint": "Essayez de modifier ou de réinitialiser les filtres actuels."
       },
       "table": {
         "customer": "Client",

@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
 import { CUSTOMERS_SUMMARY } from "@/lib/demo-data";
 import CustomersWorkspace from "./CustomersWorkspace";
 
@@ -18,8 +17,8 @@ const TONE_TEXT: Record<string, string> = {
 
 /**
  * Desktop-only Customers workspace. Hidden below the @5xl container-query breakpoint.
- * Header/KPIs/toolbar stay static (server-rendered); row selection and the customer detail
- * panel are owned by CustomersWorkspace, the smallest client boundary needed (Stage 2C.2).
+ * Header/KPIs stay static (server-rendered); the toolbar, row selection/filtering and the
+ * customer detail panel are owned by CustomersWorkspace (Stage 2C.3).
  */
 export default function CustomersDesktop() {
   const t = useTranslations("Dashboard.Customers");
@@ -50,23 +49,7 @@ export default function CustomersDesktop() {
         ))}
       </div>
 
-      {/* Toolbar (visual foundation only — functional filtering is a later stage) */}
-      <div className="mb-3 flex shrink-0 items-center gap-2">
-        <div className="flex w-64 shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-400">
-          <SearchIcon className="h-4 w-4 shrink-0" />
-          <span className="truncate">{t("toolbar.searchPlaceholder")}</span>
-        </div>
-        <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-500">
-          <span>{t("toolbar.allSegments")}</span>
-          <ChevronDownIcon className="h-3.5 w-3.5" />
-        </div>
-        <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-500">
-          <span>{t("toolbar.allHealth")}</span>
-          <ChevronDownIcon className="h-3.5 w-3.5" />
-        </div>
-      </div>
-
-      {/* Table + detail panel */}
+      {/* Toolbar + table + detail panel — owned by CustomersWorkspace (Stage 2C.3) */}
       <CustomersWorkspace />
     </div>
   );

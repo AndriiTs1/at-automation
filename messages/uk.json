@@ -307,7 +307,11 @@
       "toolbar": {
         "searchPlaceholder": "Пошук клієнтів…",
         "allSegments": "Усі клієнти",
-        "allHealth": "Усі стани"
+        "allHealth": "Усі стани",
+        "clearFilters": "Скинути фільтри",
+        "resultCount": "{count, plural, one {# клієнт} few {# клієнта} many {# клієнтів} other {# клієнта}}",
+        "noResults": "Немає клієнтів, що відповідають фільтрам.",
+        "noResultsHint": "Спробуйте змінити або скинути поточні фільтри."
       },
       "table": {
         "customer": "Клієнт",

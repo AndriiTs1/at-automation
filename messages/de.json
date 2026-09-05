@@ -307,7 +307,11 @@
       "toolbar": {
         "searchPlaceholder": "Kunden durchsuchen…",
         "allSegments": "Alle Kunden",
-        "allHealth": "Alle Zustände"
+        "allHealth": "Alle Zustände",
+        "clearFilters": "Filter zurücksetzen",
+        "resultCount": "{count, plural, one {# Kunde} other {# Kunden}}",
+        "noResults": "Keine Kunden entsprechen Ihren Filtern.",
+        "noResultsHint": "Passen Sie die aktuellen Filter an oder setzen Sie sie zurück."
       },
       "table": {
         "customer": "Kunde",

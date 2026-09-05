@@ -526,3 +526,9 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     lastActivity: { kind: "date", date: "28 Aug", time: "13:20" },
   },
 ];
+
+/** All CustomerSegment values represented in CUSTOMERS_ROWS — feeds the Customers segment filter. */
+export const CUSTOMER_SEGMENTS: CustomerSegment[] = ["keyAccount", "standard", "new"];
+
+/** All CustomerHealth values represented in CUSTOMERS_ROWS — feeds the Customers health filter. */
+export const CUSTOMER_HEALTH_OPTIONS: CustomerHealth[] = ["healthy", "watch", "atRisk"];
