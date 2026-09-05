@@ -16,7 +16,7 @@
     "headlineLine2": "Un seul système.",
     "subhead": "Un logiciel sur mesure qui relie vos clients, commandes, stocks, finances et opérations quotidiennes.",
     "ctaPrimary": "Essayer la démo en direct",
-    "ctaSecondary": "Discuter de votre projet",
+    "ctaSecondary": "Que peut automatiser AT ?",
     "trustLine": "Démo interactive · Aucune inscription",
     "sideLabelLeft1": "De",
     "sideLabelLeft2": "Travail manuel",
@@ -28,6 +28,81 @@
   "Bridge": {
     "title": "Ne vous contentez pas de regarder. Essayez.",
     "subtitle": "Découvrez comment commandes, stocks et finances fonctionnent ensemble dans un seul système connecté."
+  },
+  "Capabilities": {
+    "eyebrow": "CE QU'AT PEUT AUTOMATISER",
+    "headline": "Automatisez le travail entre vos systèmes.",
+    "body": "AT relie les outils que votre entreprise utilise déjà, coordonne les flux de travail entre eux et donne à votre équipe une couche opérationnelle commune.",
+    "categories": {
+      "salesCustomers": {
+        "title": "Ventes & Clients",
+        "description": "Faites avancer prospects, devis et fiches clients sans relance manuelle.",
+        "examples": ["Flux prospects & clients", "Devis & relances", "Mises à jour CRM"]
+      },
+      "operations": {
+        "title": "Opérations",
+        "description": "Faites passer commandes et tâches par les bonnes étapes et validations automatiquement.",
+        "examples": ["Traitement des commandes", "Répartition des tâches & validations", "Gestion des exceptions"]
+      },
+      "inventorySupply": {
+        "title": "Stock & Approvisionnement",
+        "description": "Suivez les niveaux de stock et coordonnez les fournisseurs avant les ruptures.",
+        "examples": ["Suivi des stocks", "Demandes d'achat", "Statut des expéditions"]
+      },
+      "finance": {
+        "title": "Finance",
+        "description": "Gardez facturation, paiements et rapprochement à jour.",
+        "examples": ["Génération de factures", "Suivi des paiements & relances", "Flux de rapprochement"]
+      },
+      "documents": {
+        "title": "Documents",
+        "description": "Transformez les documents entrants en données structurées et exploitables.",
+        "examples": ["Extraction de données", "Classification des documents", "Circuits de validation"]
+      },
+      "communication": {
+        "title": "Communication",
+        "description": "Envoyez le bon message à la bonne personne au bon moment.",
+        "examples": ["Notifications clients", "Alertes internes", "Circuits d'escalade"]
+      },
+      "managementReporting": {
+        "title": "Pilotage & Reporting",
+        "description": "Donnez à la direction une vision claire de ce qui avance et de ce qui nécessite une attention.",
+        "examples": ["Tableaux de bord KPI", "Visibilité sur les exceptions", "Suivi de la performance"]
+      },
+      "aiAutomation": {
+        "title": "Automatisation par l'IA",
+        "description": "L'IA classe, extrait et recommande — les décisions restent validées par des personnes.",
+        "examples": ["Compréhension des documents", "Classification & extraction", "Décisions assistées par l'IA"]
+      }
+    }
+  },
+  "Integrations": {
+    "eyebrow": "COUCHE D'INTÉGRATION",
+    "headline": "Gardez les systèmes qui font déjà tourner votre entreprise.",
+    "body": "AT peut connecter les flux opérationnels de votre ERP, CRM, comptabilité, e-commerce, communication et systèmes internes existants.",
+    "exampleNote": "Exemples de systèmes avec lesquels AT peut s'intégrer :",
+    "categories": {
+      "erp": "ERP",
+      "crm": "CRM",
+      "accounting": "Comptabilité",
+      "commerce": "E-commerce",
+      "communication": "Communication",
+      "data": "Données",
+      "payments": "Paiements",
+      "customSystems": "Systèmes sur mesure"
+    },
+    "generic": {
+      "otherAccountingSystems": "d'autres systèmes comptables",
+      "otherPaymentProviders": "d'autres prestataires de paiement",
+      "internalLegacySystems": "systèmes internes & legacy"
+    },
+    "flow": {
+      "systemsLabel": "Systèmes existants",
+      "systemsExamples": "ERP · CRM · Finance · Entrepôt",
+      "atExamples": "Intégration · Flux de travail · Règles · IA",
+      "teamsLabel": "Vos équipes",
+      "teamsExamples": "Opérations · Finance · Stock · Pilotage"
+    }
   },
   "Dashboard": {
     "commandCenter": "Centre de contrôle",

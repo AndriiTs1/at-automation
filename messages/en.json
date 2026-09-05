@@ -16,7 +16,7 @@
     "headlineLine2": "One system.",
     "subhead": "Custom software that connects your clients, orders, inventory, finances and everyday workflows.",
     "ctaPrimary": "Try the live demo",
-    "ctaSecondary": "Discuss your project",
+    "ctaSecondary": "What can AT automate?",
     "trustLine": "Interactive demo · No registration",
     "sideLabelLeft1": "From",
     "sideLabelLeft2": "Manual work",
@@ -28,6 +28,81 @@
   "Bridge": {
     "title": "Don’t just look at it. Try it.",
     "subtitle": "Explore how orders, inventory and finances work together in one connected system."
+  },
+  "Capabilities": {
+    "eyebrow": "WHAT AT CAN AUTOMATE",
+    "headline": "Automate the work between your systems.",
+    "body": "AT connects the tools your business already uses, coordinates workflows across them, and gives your team one operational layer to work from.",
+    "categories": {
+      "salesCustomers": {
+        "title": "Sales & Customers",
+        "description": "Keep leads, quotes and customer records moving without manual follow-up.",
+        "examples": ["Lead & customer workflows", "Quotes & follow-ups", "CRM updates"]
+      },
+      "operations": {
+        "title": "Operations",
+        "description": "Route orders and tasks through the right stages and approvals automatically.",
+        "examples": ["Order processing", "Task routing & approvals", "Exception handling"]
+      },
+      "inventorySupply": {
+        "title": "Inventory & Supply",
+        "description": "Track stock levels and coordinate suppliers before shortages become problems.",
+        "examples": ["Stock monitoring", "Purchase requests", "Shipment status"]
+      },
+      "finance": {
+        "title": "Finance",
+        "description": "Keep invoicing, payments and reconciliation moving on schedule.",
+        "examples": ["Invoice generation", "Payment & overdue tracking", "Reconciliation workflows"]
+      },
+      "documents": {
+        "title": "Documents",
+        "description": "Turn incoming paperwork into structured, actionable data.",
+        "examples": ["Data extraction", "Document classification", "Approval routing"]
+      },
+      "communication": {
+        "title": "Communication",
+        "description": "Route the right message to the right person at the right time.",
+        "examples": ["Customer notifications", "Internal alerts", "Escalation routing"]
+      },
+      "managementReporting": {
+        "title": "Management & Reporting",
+        "description": "Give leadership a live view of what's on track and what needs attention.",
+        "examples": ["KPI dashboards", "Exception visibility", "Performance monitoring"]
+      },
+      "aiAutomation": {
+        "title": "AI Automation",
+        "description": "Apply AI to classify, extract and recommend — with people approving the outcome.",
+        "examples": ["Document understanding", "Classification & extraction", "AI-assisted decisions"]
+      }
+    }
+  },
+  "Integrations": {
+    "eyebrow": "INTEGRATION LAYER",
+    "headline": "Keep the systems that already run your business.",
+    "body": "AT can connect operational workflows across your existing ERP, CRM, accounting, commerce, communication and internal systems.",
+    "exampleNote": "Examples of systems AT can integrate with:",
+    "categories": {
+      "erp": "ERP",
+      "crm": "CRM",
+      "accounting": "Accounting",
+      "commerce": "Commerce",
+      "communication": "Communication",
+      "data": "Data",
+      "payments": "Payments",
+      "customSystems": "Custom systems"
+    },
+    "generic": {
+      "otherAccountingSystems": "other accounting systems",
+      "otherPaymentProviders": "other payment providers",
+      "internalLegacySystems": "internal & legacy systems"
+    },
+    "flow": {
+      "systemsLabel": "Existing systems",
+      "systemsExamples": "ERP · CRM · Finance · Warehouse",
+      "atExamples": "Integration · Workflows · Rules · AI",
+      "teamsLabel": "Your teams",
+      "teamsExamples": "Operations · Finance · Inventory · Management"
+    }
   },
   "Dashboard": {
     "commandCenter": "Command Center",

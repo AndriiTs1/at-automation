@@ -16,7 +16,7 @@
     "headlineLine2": "Un solo sistema.",
     "subhead": "Software su misura che collega clienti, ordini, magazzino, finanze e attività quotidiane.",
     "ctaPrimary": "Prova la demo live",
-    "ctaSecondary": "Parla del tuo progetto",
+    "ctaSecondary": "Cosa può automatizzare AT?",
     "trustLine": "Demo interattiva · Nessuna registrazione",
     "sideLabelLeft1": "Da",
     "sideLabelLeft2": "Lavoro manuale",
@@ -28,6 +28,81 @@
   "Bridge": {
     "title": "Non limitarti a guardarlo. Provalo.",
     "subtitle": "Scopri come ordini, magazzino e finanze lavorano insieme in un unico sistema connesso."
+  },
+  "Capabilities": {
+    "eyebrow": "COSA PUÒ AUTOMATIZZARE AT",
+    "headline": "Automatizza il lavoro tra i tuoi sistemi.",
+    "body": "AT collega gli strumenti che la tua azienda già utilizza, coordina i flussi di lavoro tra di essi e offre al team un unico livello operativo da cui lavorare.",
+    "categories": {
+      "salesCustomers": {
+        "title": "Vendite & Clienti",
+        "description": "Fai avanzare lead, preventivi e anagrafiche clienti senza follow-up manuali.",
+        "examples": ["Flussi di lead e clienti", "Preventivi & follow-up", "Aggiornamenti CRM"]
+      },
+      "operations": {
+        "title": "Operazioni",
+        "description": "Fai avanzare automaticamente ordini e attività tra le fasi e le approvazioni corrette.",
+        "examples": ["Elaborazione ordini", "Assegnazione attività & approvazioni", "Gestione delle eccezioni"]
+      },
+      "inventorySupply": {
+        "title": "Magazzino & Fornitura",
+        "description": "Monitora le scorte e coordina i fornitori prima che si creino carenze.",
+        "examples": ["Monitoraggio scorte", "Richieste di acquisto", "Stato delle spedizioni"]
+      },
+      "finance": {
+        "title": "Finanza",
+        "description": "Mantieni fatturazione, pagamenti e riconciliazione sempre puntuali.",
+        "examples": ["Generazione fatture", "Pagamenti & solleciti", "Flussi di riconciliazione"]
+      },
+      "documents": {
+        "title": "Documenti",
+        "description": "Trasforma i documenti in arrivo in dati strutturati e utilizzabili.",
+        "examples": ["Estrazione dati", "Classificazione documenti", "Instradamento delle approvazioni"]
+      },
+      "communication": {
+        "title": "Comunicazione",
+        "description": "Invia il messaggio giusto alla persona giusta al momento giusto.",
+        "examples": ["Notifiche ai clienti", "Avvisi interni", "Instradamento delle escalation"]
+      },
+      "managementReporting": {
+        "title": "Gestione & Reportistica",
+        "description": "Offri al management una visione aggiornata di ciò che procede bene e ciò che richiede attenzione.",
+        "examples": ["Dashboard KPI", "Visibilità sulle eccezioni", "Monitoraggio delle performance"]
+      },
+      "aiAutomation": {
+        "title": "Automazione AI",
+        "description": "L'AI classifica, estrae e consiglia — le persone approvano il risultato.",
+        "examples": ["Comprensione dei documenti", "Classificazione & estrazione", "Decisioni assistite dall'AI"]
+      }
+    }
+  },
+  "Integrations": {
+    "eyebrow": "LIVELLO DI INTEGRAZIONE",
+    "headline": "Mantieni i sistemi che già fanno funzionare la tua azienda.",
+    "body": "AT può collegare i flussi operativi tra il tuo ERP, CRM, la contabilità, l'e-commerce, la comunicazione e i sistemi interni esistenti.",
+    "exampleNote": "Esempi di sistemi con cui AT può integrarsi:",
+    "categories": {
+      "erp": "ERP",
+      "crm": "CRM",
+      "accounting": "Contabilità",
+      "commerce": "E-commerce",
+      "communication": "Comunicazione",
+      "data": "Dati",
+      "payments": "Pagamenti",
+      "customSystems": "Sistemi personalizzati"
+    },
+    "generic": {
+      "otherAccountingSystems": "altri sistemi contabili",
+      "otherPaymentProviders": "altri fornitori di pagamento",
+      "internalLegacySystems": "sistemi interni e legacy"
+    },
+    "flow": {
+      "systemsLabel": "Sistemi esistenti",
+      "systemsExamples": "ERP · CRM · Finanza · Magazzino",
+      "atExamples": "Integrazione · Flussi di lavoro · Regole · AI",
+      "teamsLabel": "I tuoi team",
+      "teamsExamples": "Operazioni · Finanza · Magazzino · Gestione"
+    }
   },
   "Dashboard": {
     "commandCenter": "Centro di controllo",

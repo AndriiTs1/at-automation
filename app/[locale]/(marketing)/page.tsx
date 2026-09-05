@@ -1,6 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import DemoDashboard from "@/components/dashboard/DemoDashboard";
 import TabletFrame from "@/components/dashboard/TabletFrame";
+import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
+import IntegrationEcosystem from "@/components/marketing/IntegrationEcosystem";
 import { Link } from "@/i18n/navigation";
 
 export default async function Home(props: PageProps<"/[locale]">) {
@@ -44,7 +46,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
               {tHero("ctaPrimary")}
             </Link>
             <a
-              href="#contact"
+              href="#capabilities"
               className="rounded-full border border-black/15 px-8 py-4 text-base font-semibold text-foreground transition-colors hover:bg-black/5"
             >
               {tHero("ctaSecondary")}
@@ -71,7 +73,11 @@ export default async function Home(props: PageProps<"/[locale]">) {
         </TabletFrame>
       </section>
 
-      {/* TODO: Demo section */}
+      {/* What AT can automate */}
+      <AutomationCapabilities />
+
+      {/* Systems AT can connect with */}
+      <IntegrationEcosystem />
     </main>
   );
 }

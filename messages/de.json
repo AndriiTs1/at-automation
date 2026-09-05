@@ -16,7 +16,7 @@
     "headlineLine2": "Ein System.",
     "subhead": "Individuelle Software, die Kunden, Aufträge, Lagerbestand, Finanzen und Arbeitsabläufe miteinander verbindet.",
     "ctaPrimary": "Live-Demo testen",
-    "ctaSecondary": "Projekt besprechen",
+    "ctaSecondary": "Was kann AT automatisieren?",
     "trustLine": "Interaktive Demo · Keine Registrierung",
     "sideLabelLeft1": "Von",
     "sideLabelLeft2": "Manueller Aufwand",
@@ -28,6 +28,81 @@
   "Bridge": {
     "title": "Nicht nur ansehen. Ausprobieren.",
     "subtitle": "Entdecken Sie, wie Aufträge, Lagerbestand und Finanzen in einem vernetzten System zusammenspielen."
+  },
+  "Capabilities": {
+    "eyebrow": "WAS AT AUTOMATISIEREN KANN",
+    "headline": "Automatisieren Sie die Arbeit zwischen Ihren Systemen.",
+    "body": "AT verbindet die Tools, die Ihr Unternehmen bereits nutzt, koordiniert die Abläufe zwischen ihnen und gibt Ihrem Team eine gemeinsame operative Ebene.",
+    "categories": {
+      "salesCustomers": {
+        "title": "Vertrieb & Kunden",
+        "description": "Leads, Angebote und Kundendaten bewegen sich ohne manuelle Nachverfolgung.",
+        "examples": ["Lead- & Kundenworkflows", "Angebote & Follow-ups", "CRM-Aktualisierungen"]
+      },
+      "operations": {
+        "title": "Betrieb",
+        "description": "Aufträge und Aufgaben durchlaufen automatisch die richtigen Phasen und Freigaben.",
+        "examples": ["Auftragsabwicklung", "Aufgabenverteilung & Freigaben", "Ausnahmebehandlung"]
+      },
+      "inventorySupply": {
+        "title": "Lager & Beschaffung",
+        "description": "Lagerbestände im Blick behalten und Lieferanten koordinieren, bevor Engpässe entstehen.",
+        "examples": ["Bestandsüberwachung", "Bestellanforderungen", "Sendungsstatus"]
+      },
+      "finance": {
+        "title": "Finanzen",
+        "description": "Rechnungsstellung, Zahlungen und Abstimmung termingerecht am Laufen halten.",
+        "examples": ["Rechnungserstellung", "Zahlungs- & Mahnwesen", "Abstimmungsworkflows"]
+      },
+      "documents": {
+        "title": "Dokumente",
+        "description": "Eingehende Unterlagen in strukturierte, nutzbare Daten verwandeln.",
+        "examples": ["Datenextraktion", "Dokumentenklassifizierung", "Freigabe-Workflows"]
+      },
+      "communication": {
+        "title": "Kommunikation",
+        "description": "Die richtige Nachricht zur richtigen Zeit an die richtige Person.",
+        "examples": ["Kundenbenachrichtigungen", "Interne Warnmeldungen", "Eskalationsweiterleitung"]
+      },
+      "managementReporting": {
+        "title": "Management & Reporting",
+        "description": "Der Geschäftsleitung einen aktuellen Überblick über Fortschritt und Handlungsbedarf geben.",
+        "examples": ["KPI-Dashboards", "Transparenz bei Ausnahmen", "Leistungsüberwachung"]
+      },
+      "aiAutomation": {
+        "title": "KI-Automatisierung",
+        "description": "KI klassifiziert, extrahiert und empfiehlt — Menschen genehmigen das Ergebnis.",
+        "examples": ["Dokumentenverständnis", "Klassifizierung & Extraktion", "KI-gestützte Entscheidungen"]
+      }
+    }
+  },
+  "Integrations": {
+    "eyebrow": "INTEGRATIONSEBENE",
+    "headline": "Behalten Sie die Systeme, die Ihr Unternehmen bereits am Laufen halten.",
+    "body": "AT kann operative Abläufe über Ihr bestehendes ERP, CRM, Ihre Buchhaltung, Ihren Handel, Ihre Kommunikation und interne Systeme hinweg verbinden.",
+    "exampleNote": "Beispiele für Systeme, mit denen AT sich verbinden lässt:",
+    "categories": {
+      "erp": "ERP",
+      "crm": "CRM",
+      "accounting": "Buchhaltung",
+      "commerce": "Handel",
+      "communication": "Kommunikation",
+      "data": "Daten",
+      "payments": "Zahlungen",
+      "customSystems": "Individuelle Systeme"
+    },
+    "generic": {
+      "otherAccountingSystems": "weitere Buchhaltungssysteme",
+      "otherPaymentProviders": "weitere Zahlungsanbieter",
+      "internalLegacySystems": "interne & Altsysteme"
+    },
+    "flow": {
+      "systemsLabel": "Bestehende Systeme",
+      "systemsExamples": "ERP · CRM · Finanzen · Lager",
+      "atExamples": "Integration · Workflows · Regeln · KI",
+      "teamsLabel": "Ihre Teams",
+      "teamsExamples": "Betrieb · Finanzen · Lager · Management"
+    }
   },
   "Dashboard": {
     "commandCenter": "Kommandozentrale",
