@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { KPI_ITEMS } from "@/lib/demo-data";
 import ApprovalsPanel from "./ApprovalsPanel";
 import BusinessPerformance from "./BusinessPerformance";
-import KpiCard from "./KpiCard";
 import LiveOperations from "./LiveOperations";
+import MobileKpiCard from "./MobileKpiCard";
 import MobileTopbar from "./MobileTopbar";
 import NeedsAttention from "./NeedsAttention";
 import TabletNavigation from "./TabletNavigation";
@@ -29,7 +29,7 @@ export default function MobileCommandCenter() {
 
         <div className="mb-3 grid shrink-0 grid-cols-2 gap-2">
           {KPI_ITEMS.map((item) => (
-            <KpiCard
+            <MobileKpiCard
               key={item.key}
               itemKey={item.key}
               value={item.value}

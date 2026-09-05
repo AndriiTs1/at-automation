@@ -39,9 +39,11 @@ export default function MobileTopbar({ navOpen, onToggleNav }: { navOpen: boolea
         </div>
       </div>
 
-      <div className="mt-2">
-        <p className="text-base font-semibold text-foreground">{tTopbar("greeting", { name: DEMO_USER.firstName })}</p>
-        <p className="text-xs text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+      <div className="mt-3">
+        <p className="text-lg leading-tight font-semibold text-foreground">
+          {tTopbar("greeting", { name: DEMO_USER.firstName })}
+        </p>
+        <p className="mt-0.5 text-xs text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
       </div>
     </div>
   );
