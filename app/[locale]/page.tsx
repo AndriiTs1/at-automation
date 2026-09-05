@@ -26,14 +26,14 @@ export default async function Home(props: PageProps<"/[locale]">) {
         </div>
 
         <div className="mx-auto max-w-4xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">{tHero("eyebrow")}</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-accent md:mb-4">{tHero("eyebrow")}</p>
 
-          <h1 className="text-6xl font-bold leading-[0.95] tracking-tight text-foreground break-words hyphens-auto md:text-7xl lg:text-8xl">
+          <h1 className="mx-auto max-w-xs text-4xl leading-[1.1] font-bold tracking-tight text-foreground [hyphens:none] md:mx-0 md:max-w-none md:text-7xl md:leading-[0.95] lg:text-8xl">
             <span className="block">{tHero("headlineLine1")}</span>
             <span className="block">{tHero("headlineLine2")}</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600 md:text-xl">{tHero("subhead")}</p>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-600 md:mt-6 md:text-xl">{tHero("subhead")}</p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a

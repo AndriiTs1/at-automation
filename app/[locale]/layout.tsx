@@ -33,10 +33,33 @@ export async function generateMetadata({
   setRequestLocale(locale);
 
   const t = await getTranslations("Metadata");
+  const title = t("title");
+  const description = t("description");
+
+  const ogImage = {
+    url: "/at-automation-og.png",
+    width: 1734,
+    height: 907,
+    alt: title,
+  };
 
   return {
-    title: t("title"),
-    description: t("description"),
+    metadataBase: new URL("https://at-automation-ai.vercel.app"),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: "AT Automation",
+      type: "website",
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage.url],
+    },
   };
 }
 
