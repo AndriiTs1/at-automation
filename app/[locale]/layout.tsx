@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import Header from "@/components/Header";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -81,7 +80,6 @@ export default async function RootLayout(props: LayoutProps<"/[locale]">) {
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
           {props.children}
         </NextIntlClientProvider>
       </body>
