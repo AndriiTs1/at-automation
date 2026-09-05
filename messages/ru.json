@@ -159,7 +159,10 @@
       "toolbar": {
         "searchPlaceholder": "Поиск операций…",
         "allStatuses": "Все статусы",
-        "allOwners": "Все ответственные"
+        "allOwners": "Все ответственные",
+        "clearFilters": "Сбросить фильтры",
+        "resultCount": "{count, plural, one {# операция} few {# операции} many {# операций} other {# операции}}",
+        "noResults": "Нет операций, соответствующих фильтрам."
       },
       "table": {
         "operation": "Операция",

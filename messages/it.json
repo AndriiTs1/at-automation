@@ -159,7 +159,10 @@
       "toolbar": {
         "searchPlaceholder": "Cerca operazioni…",
         "allStatuses": "Tutti gli stati",
-        "allOwners": "Tutti i responsabili"
+        "allOwners": "Tutti i responsabili",
+        "clearFilters": "Cancella filtri",
+        "resultCount": "{count, plural, one {# operazione} other {# operazioni}}",
+        "noResults": "Nessuna operazione corrisponde ai filtri."
       },
       "table": {
         "operation": "Operazione",

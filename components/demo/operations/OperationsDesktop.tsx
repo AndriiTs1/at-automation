@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
 import { OPERATIONS_SUMMARY } from "@/lib/demo-data";
 import OperationsWorkspace from "./OperationsWorkspace";
 
@@ -49,23 +48,7 @@ export default function OperationsDesktop() {
         ))}
       </div>
 
-      {/* Toolbar */}
-      <div className="mb-3 flex shrink-0 items-center gap-2">
-        <div className="flex w-64 shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-400">
-          <SearchIcon className="h-4 w-4 shrink-0" />
-          <span className="truncate">{t("toolbar.searchPlaceholder")}</span>
-        </div>
-        <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-500">
-          <span>{t("toolbar.allStatuses")}</span>
-          <ChevronDownIcon className="h-3.5 w-3.5" />
-        </div>
-        <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-500">
-          <span>{t("toolbar.allOwners")}</span>
-          <ChevronDownIcon className="h-3.5 w-3.5" />
-        </div>
-      </div>
-
-      {/* Table + detail panel */}
+      {/* Toolbar + table + detail panel */}
       <OperationsWorkspace />
     </div>
   );

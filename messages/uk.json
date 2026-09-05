@@ -159,7 +159,10 @@
       "toolbar": {
         "searchPlaceholder": "Пошук операцій…",
         "allStatuses": "Усі статуси",
-        "allOwners": "Усі відповідальні"
+        "allOwners": "Усі відповідальні",
+        "clearFilters": "Скинути фільтри",
+        "resultCount": "{count, plural, one {# операція} few {# операції} many {# операцій} other {# операції}}",
+        "noResults": "Немає операцій, що відповідають фільтрам."
       },
       "table": {
         "operation": "Операція",

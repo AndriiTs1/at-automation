@@ -159,7 +159,10 @@
       "toolbar": {
         "searchPlaceholder": "Vorgänge durchsuchen…",
         "allStatuses": "Alle Status",
-        "allOwners": "Alle Verantwortlichen"
+        "allOwners": "Alle Verantwortlichen",
+        "clearFilters": "Filter zurücksetzen",
+        "resultCount": "{count, plural, one {# Vorgang} other {# Vorgänge}}",
+        "noResults": "Keine Vorgänge entsprechen Ihren Filtern."
       },
       "table": {
         "operation": "Vorgang",

@@ -159,7 +159,10 @@
       "toolbar": {
         "searchPlaceholder": "Search operations…",
         "allStatuses": "All statuses",
-        "allOwners": "All owners"
+        "allOwners": "All owners",
+        "clearFilters": "Clear filters",
+        "resultCount": "{count, plural, one {# operation} other {# operations}}",
+        "noResults": "No operations match your filters."
       },
       "table": {
         "operation": "Operation",

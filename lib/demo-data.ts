@@ -142,10 +142,12 @@ export type OperationActivityEntry = {
   params?: Record<string, string>;
 };
 
+export type OperationStatus = "inProgress" | "waiting" | "attention" | "completed";
+
 export type OperationRow = {
   id: string;
   customer: string;
-  status: "inProgress" | "waiting" | "attention" | "completed";
+  status: OperationStatus;
   stage: (typeof WORKFLOW_STEP_KEYS)[number] | "awaitingApproval" | "readyToShip";
   owner: string;
   value: string;
@@ -331,3 +333,6 @@ export const OPERATIONS_ROWS: OperationRow[] = [
     activity: [{ time: "07:20", key: "received" }],
   },
 ];
+
+/** Unique owners represented in OPERATIONS_ROWS, in first-appearance order — feeds the Operations owner filter. */
+export const OPERATION_OWNERS = Array.from(new Set(OPERATIONS_ROWS.map((row) => row.owner)));
