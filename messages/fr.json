@@ -319,6 +319,23 @@
         "owner": "Responsable",
         "lastActivity": "Dernière activité"
       },
+      "detail": {
+        "close": "Fermer",
+        "accountOverview": "Aperçu du compte",
+        "accountHealth": "Santé du compte",
+        "relatedOperations": "Opérations liées",
+        "commercial": "Commercial",
+        "recentActivity": "Activité récente",
+        "noOperations": "Aucune opération pour ce client.",
+        "noActivity": "Aucune activité récente.",
+        "balanceClear": "Aucun solde impayé.",
+        "balanceOutstanding": "Solde impayé en attente de règlement.",
+        "healthNote": {
+          "healthy": "Le compte fonctionne normalement, aucun problème critique.",
+          "watch": "Un ou plusieurs éléments ouverts nécessitent une surveillance.",
+          "atRisk": "Des problèmes actifs ou des éléments en retard nécessitent une attention."
+        }
+      },
       "segment": {
         "keyAccount": "Compte clé",
         "standard": "Standard",

@@ -319,6 +319,23 @@
         "owner": "Responsabile",
         "lastActivity": "Ultima attività"
       },
+      "detail": {
+        "close": "Chiudi",
+        "accountOverview": "Panoramica account",
+        "accountHealth": "Stato dell'account",
+        "relatedOperations": "Operazioni collegate",
+        "commercial": "Commerciale",
+        "recentActivity": "Attività recenti",
+        "noOperations": "Nessuna operazione per questo cliente.",
+        "noActivity": "Nessuna attività recente.",
+        "balanceClear": "Nessun saldo in sospeso.",
+        "balanceOutstanding": "Saldo in sospeso in attesa di regolazione.",
+        "healthNote": {
+          "healthy": "L'account funziona normalmente, nessun problema critico.",
+          "watch": "Uno o più elementi aperti richiedono monitoraggio.",
+          "atRisk": "Problemi attivi o elementi scaduti richiedono attenzione."
+        }
+      },
       "segment": {
         "keyAccount": "Cliente chiave",
         "standard": "Standard",

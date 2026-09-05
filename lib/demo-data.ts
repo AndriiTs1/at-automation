@@ -146,6 +146,8 @@ export type OperationStatus = "inProgress" | "waiting" | "attention" | "complete
 
 export type OperationRow = {
   id: string;
+  /** Stable relational key into CUSTOMERS_ROWS — see getOperationsForCustomer. */
+  customerId: string;
   customer: string;
   status: OperationStatus;
   stage: (typeof WORKFLOW_STEP_KEYS)[number] | "awaitingApproval" | "readyToShip";
@@ -164,6 +166,7 @@ export type OperationRow = {
 export const OPERATIONS_ROWS: OperationRow[] = [
   {
     id: "#10348",
+    customerId: "CUS-1048",
     customer: "Northstar Systems",
     status: "inProgress",
     stage: "inventoryReserved",
@@ -183,6 +186,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10347",
+    customerId: "CUS-1047",
     customer: "BluePeak Industries",
     status: "completed",
     stage: "readyToShip",
@@ -203,6 +207,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10346",
+    customerId: "CUS-1046",
     customer: "Alpine Works",
     status: "waiting",
     stage: "awaitingApproval",
@@ -223,6 +228,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10345",
+    customerId: "CUS-1045",
     customer: "Meridian Labs",
     status: "attention",
     stage: "supplierConfirmed",
@@ -241,6 +247,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10344",
+    customerId: "CUS-1048",
     customer: "Northstar Systems",
     status: "inProgress",
     stage: "invoiceIssued",
@@ -261,6 +268,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10343",
+    customerId: "CUS-1044",
     customer: "Solterra Group",
     status: "completed",
     stage: "readyToShip",
@@ -281,6 +289,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10342",
+    customerId: "CUS-1047",
     customer: "BluePeak Industries",
     status: "attention",
     stage: "supplierConfirmed",
@@ -300,6 +309,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10341",
+    customerId: "CUS-1046",
     customer: "Alpine Works",
     status: "waiting",
     stage: "customerNotified",
@@ -319,6 +329,7 @@ export const OPERATIONS_ROWS: OperationRow[] = [
   },
   {
     id: "#10340",
+    customerId: "CUS-1045",
     customer: "Meridian Labs",
     status: "inProgress",
     stage: "orderReceived",
@@ -336,6 +347,34 @@ export const OPERATIONS_ROWS: OperationRow[] = [
 
 /** Unique owners represented in OPERATIONS_ROWS, in first-appearance order — feeds the Operations owner filter. */
 export const OPERATION_OWNERS = Array.from(new Set(OPERATIONS_ROWS.map((row) => row.owner)));
+
+/**
+ * Operations belonging to a customer, linked via the stable customerId (not name matching).
+ * Open (non-completed) operations are surfaced first; sort is stable so relative order within
+ * each group matches OPERATIONS_ROWS.
+ */
+export function getOperationsForCustomer(customerId: string): OperationRow[] {
+  const rows = OPERATIONS_ROWS.filter((row) => row.customerId === customerId);
+  return [...rows].sort((a, b) => {
+    const aOpen = a.status !== "completed" ? 0 : 1;
+    const bOpen = b.status !== "completed" ? 0 : 1;
+    return aOpen - bOpen;
+  });
+}
+
+export type CustomerActivityEntry = OperationActivityEntry & { operationId: string };
+
+/**
+ * Recent account activity for a customer, derived from its linked operations' own activity
+ * logs (single-source reuse — no separate customer-activity dataset). Merged across
+ * operations and sorted most-recent-first by the shared "HH:MM" time convention.
+ */
+export function getCustomerActivity(customerId: string, limit = 5): CustomerActivityEntry[] {
+  const entries: CustomerActivityEntry[] = getOperationsForCustomer(customerId).flatMap((operation) =>
+    operation.activity.map((entry) => ({ ...entry, operationId: operation.id })),
+  );
+  return entries.sort((a, b) => (a.time < b.time ? 1 : a.time > b.time ? -1 : 0)).slice(0, limit);
+}
 
 export const CUSTOMERS_SUMMARY = {
   totalCustomers: "128",
@@ -436,7 +475,7 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     name: "Vantage Freight Co.",
     segment: "keyAccount",
     health: "healthy",
-    openOperations: 1,
+    openOperations: 0,
     revenue: "CHF 156,400",
     outstanding: "CHF 0",
     owner: "Marc T.",
@@ -447,7 +486,7 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     name: "Cobalt Materials",
     segment: "standard",
     health: "watch",
-    openOperations: 1,
+    openOperations: 0,
     revenue: "CHF 58,900",
     outstanding: "CHF 12,300",
     owner: "Marc T.",
@@ -469,7 +508,7 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     name: "Fjordlight Energy",
     segment: "new",
     health: "healthy",
-    openOperations: 1,
+    openOperations: 0,
     revenue: "CHF 18,000",
     outstanding: "CHF 0",
     owner: "Marc T.",

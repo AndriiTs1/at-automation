@@ -36,7 +36,8 @@ function getStepState(index: number, workflowStepIndex: number, status: Operatio
   return "blocked";
 }
 
-function ActivityLabel({ entry }: { entry: OperationActivityEntry }) {
+/** Maps a typed OperationActivityEntry to its localized label — reused by Customer detail's account activity feed. */
+export function ActivityLabel({ entry }: { entry: OperationActivityEntry }) {
   const tStage = useTranslations("Dashboard.Operations.stage");
   const tActivity = useTranslations("Dashboard.Operations.activity");
   const tAttentionNotes = useTranslations("Dashboard.Attention.notes");

@@ -319,6 +319,23 @@
         "owner": "Owner",
         "lastActivity": "Last activity"
       },
+      "detail": {
+        "close": "Close",
+        "accountOverview": "Account overview",
+        "accountHealth": "Account health",
+        "relatedOperations": "Related operations",
+        "commercial": "Commercial",
+        "recentActivity": "Recent activity",
+        "noOperations": "No operations for this customer.",
+        "noActivity": "No recent activity.",
+        "balanceClear": "No outstanding balance.",
+        "balanceOutstanding": "Outstanding balance pending settlement.",
+        "healthNote": {
+          "healthy": "Account is operating normally with no critical issues.",
+          "watch": "One or more open items require monitoring.",
+          "atRisk": "Active issues or overdue items require attention."
+        }
+      },
       "segment": {
         "keyAccount": "Key account",
         "standard": "Standard",

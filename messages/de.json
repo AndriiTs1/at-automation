@@ -319,6 +319,23 @@
         "owner": "Verantwortlich",
         "lastActivity": "Letzte Aktivität"
       },
+      "detail": {
+        "close": "Schließen",
+        "accountOverview": "Kontoübersicht",
+        "accountHealth": "Kontostatus",
+        "relatedOperations": "Zugehörige Vorgänge",
+        "commercial": "Kommerziell",
+        "recentActivity": "Letzte Aktivitäten",
+        "noOperations": "Keine Vorgänge für diesen Kunden.",
+        "noActivity": "Keine aktuellen Aktivitäten.",
+        "balanceClear": "Kein offener Saldo.",
+        "balanceOutstanding": "Offener Saldo wartet auf Ausgleich.",
+        "healthNote": {
+          "healthy": "Das Konto läuft normal, keine kritischen Probleme.",
+          "watch": "Ein oder mehrere offene Punkte erfordern Beobachtung.",
+          "atRisk": "Aktive Probleme oder überfällige Posten erfordern Aufmerksamkeit."
+        }
+      },
       "segment": {
         "keyAccount": "Schlüsselkunde",
         "standard": "Standard",
