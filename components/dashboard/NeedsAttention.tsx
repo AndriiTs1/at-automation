@@ -45,7 +45,7 @@ export default function NeedsAttention() {
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[11px] font-semibold text-foreground @3xl:text-xs">{title}</span>
                 <span className="block truncate text-[10px] text-neutral-500 @3xl:text-[11px]">{meta}</span>
-                <span className="hidden truncate text-[10px] text-neutral-400 @lg:block">
+                <span className="block text-[10px] text-neutral-400 @lg:truncate">
                   {t("ownerLabel", { owner })} · {note}
                 </span>
               </span>

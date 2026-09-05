@@ -5,6 +5,7 @@ import DashboardSidebar from "./DashboardSidebar";
 import DashboardTopbar from "./DashboardTopbar";
 import KpiCard from "./KpiCard";
 import LiveOperations from "./LiveOperations";
+import MobileCommandCenter from "./MobileCommandCenter";
 import NeedsAttention from "./NeedsAttention";
 import TabletCommandCenter from "./TabletCommandCenter";
 
@@ -31,33 +32,8 @@ function KpiGrid() {
 export default function DemoDashboard() {
   return (
     <div className="@container flex h-full w-full">
-      {/* MOBILE — container below @lg (512px). Existing temporary presentation, unchanged this stage. */}
-      <div className="flex min-w-0 flex-1 flex-col overflow-y-auto bg-neutral-50 p-3 @lg:hidden">
-        <DashboardTopbar />
-
-        <div className="mb-3 grid shrink-0 grid-cols-2 gap-2">
-          <KpiGrid />
-        </div>
-
-        <div className="grid gap-2.5">
-          <div className="grid grid-cols-1 gap-2.5">
-            <div className="h-56">
-              <BusinessPerformance />
-            </div>
-            <div className="h-60">
-              <NeedsAttention />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-2.5">
-            <div className="h-64">
-              <LiveOperations />
-            </div>
-            <div className="h-64">
-              <ApprovalsPanel />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* MOBILE — container below @lg (512px). Dedicated mobile workspace. */}
+      <MobileCommandCenter />
 
       {/* TABLET — @lg to below @5xl (512px–1024px container). Dedicated tablet workspace. */}
       <TabletCommandCenter />

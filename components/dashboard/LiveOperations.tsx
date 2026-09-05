@@ -19,7 +19,7 @@ export default function LiveOperations() {
           <div key={event.time + event.titleKey} className="flex gap-2 text-[11px] @3xl:text-xs">
             <span className="shrink-0 pt-0.5 font-mono text-[10px] text-neutral-400 @3xl:text-[11px]">{event.time}</span>
             <div className="min-w-0 flex-1">
-              <p className="truncate font-medium text-foreground">{t(`events.${event.titleKey}`, event.titleParams)}</p>
+              <p className="font-medium text-foreground @lg:truncate">{t(`events.${event.titleKey}`, event.titleParams)}</p>
               <div className="mt-0.5 flex flex-col gap-0.5">
                 {event.steps.map((step) => (
                   <p key={step.key} className="truncate text-[10px] text-neutral-500 @3xl:text-[11px]">

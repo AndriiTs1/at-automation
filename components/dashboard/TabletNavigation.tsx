@@ -5,7 +5,15 @@ import { useEffect, useRef } from "react";
 import { DEMO_USER, NAV_SECTIONS } from "@/lib/demo-data";
 import { DashboardIcon, NavIcon } from "./icons";
 
-export default function TabletNavigation({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function TabletNavigation({
+  open,
+  onClose,
+  panelId = "tablet-nav-panel",
+}: {
+  open: boolean;
+  onClose: () => void;
+  panelId?: string;
+}) {
   const t = useTranslations("Dashboard");
   const tSidebar = useTranslations("Dashboard.Sidebar");
   const panelRef = useRef<HTMLDivElement>(null);
@@ -28,25 +36,25 @@ export default function TabletNavigation({ open, onClose }: { open: boolean; onC
       {/* Sliding panel */}
       <div
         ref={panelRef}
-        id="tablet-nav-panel"
+        id={panelId}
         role="dialog"
         aria-modal="true"
         aria-label={t("commandCenter")}
         aria-hidden={!open}
         inert={!open}
         tabIndex={-1}
-        className={`absolute inset-y-0 left-0 z-50 flex w-64 max-w-[80%] flex-col bg-neutral-900 p-4 shadow-xl transition-transform duration-200 focus:outline-none ${
+        className={`absolute inset-y-0 left-0 z-50 flex w-64 max-w-[80%] flex-col bg-neutral-900 p-3 shadow-xl transition-transform duration-200 focus:outline-none @lg:p-4 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="mb-4 flex items-center gap-2">
+        <div className="mb-2 flex shrink-0 items-center gap-2 @lg:mb-4">
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-white">
             AT
           </div>
           <span className="text-xs font-semibold tracking-wide text-white/90">AUTOMATION</span>
         </div>
 
-        <nav className="flex flex-1 flex-col gap-2 overflow-y-auto">
+        <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto @lg:gap-2">
           <button
             type="button"
             aria-current="page"
@@ -86,7 +94,7 @@ export default function TabletNavigation({ open, onClose }: { open: boolean; onC
           ))}
         </nav>
 
-        <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3">
+        <div className="mt-2 flex shrink-0 flex-col gap-1.5 border-t border-white/10 pt-2 @lg:mt-3 @lg:gap-2 @lg:pt-3">
           <button
             type="button"
             className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-white/5"

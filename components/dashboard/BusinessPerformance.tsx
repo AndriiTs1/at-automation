@@ -38,7 +38,7 @@ export default function BusinessPerformance() {
         </button>
       </div>
 
-      <div className="mb-1.5 hidden shrink-0 items-center gap-3 @lg:flex">
+      <div className="mb-1.5 flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1">
         {SERIES_KEYS.map((s) => (
           <span key={s.key} className="flex items-center gap-1.5 truncate text-[11px] text-neutral-500">
             <span className={`h-1.5 w-1.5 shrink-0 rounded-full bg-current ${s.className}`} />

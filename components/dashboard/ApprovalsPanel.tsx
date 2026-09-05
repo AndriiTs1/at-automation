@@ -21,7 +21,7 @@ export default function ApprovalsPanel() {
             >
               <div className="min-w-0">
                 <p className="truncate font-medium text-foreground">{t(`items.${item.key}`)}</p>
-                <p className="truncate text-neutral-500">
+                <p className="text-neutral-500 @lg:truncate">
                   <span className="font-semibold text-foreground">{item.amount}</span> · {requester}
                 </p>
               </div>
