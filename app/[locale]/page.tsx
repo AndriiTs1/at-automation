@@ -14,12 +14,12 @@ export default async function Home(props: PageProps<"/[locale]">) {
       {/* Hero */}
       <section className="relative px-6 pt-30 pb-10 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
         {/* Decorative side labels */}
-        <div className="absolute top-1/2 left-4 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase lg:block xl:left-10">
+        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase min-[1400px]:block min-[1400px]:left-10">
           <span className="block">{tHero("sideLabelLeft1")}</span>
           <span className="block">{tHero("sideLabelLeft2")}</span>
           <span className="block">{tHero("sideLabelLeft3")}</span>
         </div>
-        <div className="absolute top-1/2 right-4 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase lg:block xl:right-10">
+        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase min-[1400px]:block min-[1400px]:right-10">
           <span className="block">{tHero("sideLabelRight1")}</span>
           <span className="block">{tHero("sideLabelRight2")}</span>
           <span className="block">{tHero("sideLabelRight3")}</span>
