@@ -31,6 +31,7 @@
   },
   "Dashboard": {
     "commandCenter": "Центр управления",
+    "backToWebsite": "Вернуться на сайт",
     "askAt": "Спросить AT",
     "operationsManager": "Операционный менеджер",
     "Sidebar": {

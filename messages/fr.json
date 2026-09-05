@@ -31,6 +31,7 @@
   },
   "Dashboard": {
     "commandCenter": "Centre de contrôle",
+    "backToWebsite": "Retour au site",
     "askAt": "Demander à AT",
     "operationsManager": "Responsable des opérations",
     "Sidebar": {

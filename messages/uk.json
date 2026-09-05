@@ -31,6 +31,7 @@
   },
   "Dashboard": {
     "commandCenter": "Центр керування",
+    "backToWebsite": "Повернутися на сайт",
     "askAt": "Запитати AT",
     "operationsManager": "Операційний менеджер",
     "Sidebar": {

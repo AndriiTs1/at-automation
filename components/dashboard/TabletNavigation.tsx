@@ -3,7 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { DEMO_USER, NAV_SECTIONS } from "@/lib/demo-data";
-import { DashboardIcon, NavIcon } from "./icons";
+import { Link } from "@/i18n/navigation";
+import { ArrowLeftIcon, DashboardIcon, NavIcon } from "./icons";
 
 export default function TabletNavigation({
   open,
@@ -16,6 +17,7 @@ export default function TabletNavigation({
 }) {
   const t = useTranslations("Dashboard");
   const tSidebar = useTranslations("Dashboard.Sidebar");
+  const tHeader = useTranslations("Header");
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,12 +49,17 @@ export default function TabletNavigation({
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="mb-2 flex shrink-0 items-center gap-2 @lg:mb-4">
+        <Link
+          href="/"
+          onClick={onClose}
+          aria-label={tHeader("logoAlt")}
+          className="mb-2 flex shrink-0 items-center gap-2 @lg:mb-4"
+        >
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-white">
             AT
           </div>
           <span className="text-xs font-semibold tracking-wide text-white/90">AUTOMATION</span>
-        </div>
+        </Link>
 
         <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto @lg:gap-2">
           <button
@@ -95,6 +102,15 @@ export default function TabletNavigation({
         </nav>
 
         <div className="mt-2 flex shrink-0 flex-col gap-1.5 border-t border-white/10 pt-2 @lg:mt-3 @lg:gap-2 @lg:pt-3">
+          <Link
+            href="/"
+            onClick={onClose}
+            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200"
+          >
+            <ArrowLeftIcon className="h-4 w-4 shrink-0" />
+            {t("backToWebsite")}
+          </Link>
+
           <button
             type="button"
             className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-white/5"

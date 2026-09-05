@@ -1,19 +1,25 @@
 import { useTranslations } from "next-intl";
 import { DEMO_USER, NAV_SECTIONS } from "@/lib/demo-data";
-import { DashboardIcon, NavIcon } from "./icons";
+import { Link } from "@/i18n/navigation";
+import { ArrowLeftIcon, DashboardIcon, NavIcon } from "./icons";
 
 export default function DashboardSidebar() {
   const t = useTranslations("Dashboard");
   const tSidebar = useTranslations("Dashboard.Sidebar");
+  const tHeader = useTranslations("Header");
 
   return (
     <div className="hidden w-14 shrink-0 flex-col bg-neutral-900 py-4 @lg:flex @3xl:w-56 @3xl:p-5 @3xl:py-5">
-      <div className="mb-5 flex items-center justify-center gap-2 px-2 @3xl:justify-start @3xl:px-0">
+      <Link
+        href="/"
+        aria-label={tHeader("logoAlt")}
+        className="mb-5 flex items-center justify-center gap-2 px-2 @3xl:justify-start @3xl:px-0"
+      >
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-white">
           AT
         </div>
         <span className="hidden text-xs font-semibold tracking-wide text-white/90 @3xl:inline">AUTOMATION</span>
-      </div>
+      </Link>
 
       <nav className="flex flex-1 flex-col gap-4 overflow-y-auto">
         <button
@@ -54,6 +60,14 @@ export default function DashboardSidebar() {
       </nav>
 
       <div className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4">
+        <Link
+          href="/"
+          className="flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200 @3xl:justify-start @3xl:px-3 @3xl:py-2"
+        >
+          <ArrowLeftIcon className="h-4 w-4 shrink-0" />
+          <span className="hidden truncate @3xl:inline">{t("backToWebsite")}</span>
+        </Link>
+
         <button
           type="button"
           className="flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium text-accent transition-colors hover:bg-white/5 @3xl:justify-start @3xl:px-3 @3xl:py-2"
