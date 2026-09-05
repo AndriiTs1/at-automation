@@ -21,12 +21,12 @@ export default function MobileBusinessPerformance() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
-      <div className="mb-1 flex shrink-0 items-center justify-between gap-2">
-        <h4 className="truncate text-xs font-semibold text-foreground">{t("title")}</h4>
+      <div className="mb-1 flex shrink-0 items-center justify-between gap-1">
+        <h4 className="min-w-0 flex-1 truncate text-xs font-semibold text-foreground">{t("title")}</h4>
         <button
           type="button"
           aria-label={t("rangeFilterAria")}
-          className="flex shrink-0 items-center gap-1 rounded-full border border-border px-2 py-1 text-[10px] text-neutral-500 transition-colors hover:bg-black/5"
+          className="flex shrink-0 items-center gap-0 rounded-full border border-border px-1 py-1 text-[10px] text-neutral-500 transition-colors hover:bg-black/5"
         >
           <span className="whitespace-nowrap">{t("rangeLabel")}</span>
           <ChevronDownIcon className="h-3 w-3 shrink-0" />
