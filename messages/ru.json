@@ -218,6 +218,46 @@
         "invoiceGenerated": "Счёт {invoice} выставлен",
         "awaitingCustomer": "Ожидание ответа клиента"
       }
+    },
+    "Customers": {
+      "title": "Клиенты",
+      "description": "Отношения с клиентами, операции и коммерческий статус объединены в одном рабочем пространстве.",
+      "newCustomer": "Новый клиент",
+      "summary": {
+        "totalCustomers": "Всего клиентов",
+        "activeAccounts": "Активные клиенты",
+        "needsAttention": "Требуют внимания",
+        "outstanding": "К получению"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Поиск клиентов…",
+        "allSegments": "Все клиенты",
+        "allHealth": "Все состояния"
+      },
+      "table": {
+        "customer": "Клиент",
+        "segment": "Сегмент",
+        "health": "Состояние",
+        "openOperations": "Открытые операции",
+        "revenue": "Выручка",
+        "outstanding": "Задолженность",
+        "owner": "Ответственный",
+        "lastActivity": "Последняя активность"
+      },
+      "segment": {
+        "keyAccount": "Ключевой клиент",
+        "standard": "Стандартный",
+        "new": "Новый"
+      },
+      "health": {
+        "healthy": "Стабильно",
+        "watch": "Наблюдение",
+        "atRisk": "Риск"
+      },
+      "relativeTime": {
+        "today": "Сегодня",
+        "yesterday": "Вчера"
+      }
     }
   }
 }

@@ -218,6 +218,46 @@
         "invoiceGenerated": "Invoice {invoice} generated",
         "awaitingCustomer": "Awaiting customer response"
       }
+    },
+    "Customers": {
+      "title": "Customers",
+      "description": "Customer relationships, operations and commercial status connected in one workspace.",
+      "newCustomer": "New customer",
+      "summary": {
+        "totalCustomers": "Total customers",
+        "activeAccounts": "Active accounts",
+        "needsAttention": "Needs attention",
+        "outstanding": "Outstanding"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Search customers…",
+        "allSegments": "All customers",
+        "allHealth": "All health"
+      },
+      "table": {
+        "customer": "Customer",
+        "segment": "Segment",
+        "health": "Health",
+        "openOperations": "Open operations",
+        "revenue": "Revenue",
+        "outstanding": "Outstanding",
+        "owner": "Owner",
+        "lastActivity": "Last activity"
+      },
+      "segment": {
+        "keyAccount": "Key account",
+        "standard": "Standard",
+        "new": "New"
+      },
+      "health": {
+        "healthy": "Healthy",
+        "watch": "Watch",
+        "atRisk": "At risk"
+      },
+      "relativeTime": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      }
     }
   }
 }

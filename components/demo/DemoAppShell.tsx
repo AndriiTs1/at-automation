@@ -2,16 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
+import { NAV_SECTIONS } from "@/lib/demo-data";
 import DashboardSidebar from "../dashboard/DashboardSidebar";
 import DashboardTopbar from "../dashboard/DashboardTopbar";
 import MobileTopbar from "../dashboard/MobileTopbar";
 import TabletNavigation from "../dashboard/TabletNavigation";
 import TabletTopbar from "../dashboard/TabletTopbar";
 
-/** Maps the current (locale-stripped) demo pathname to the sidebar/drawer item key it represents. */
+/**
+ * Maps the current (locale-stripped) demo pathname to the sidebar/drawer item key it
+ * represents, by matching against NAV_SECTIONS' own hrefs — so wiring up a new module's
+ * route (Customers, then Inventory, ...) only means adding it to NAV_SECTIONS, not another
+ * equality check here. "/demo" itself has no NAV_SECTIONS entry (Command Center is the
+ * sidebar's implicit default item), so it — and any not-yet-mapped route — falls through.
+ */
 function useActiveDemoItem() {
   const pathname = usePathname();
-  if (pathname === "/demo/operations") return "operations";
+  for (const section of NAV_SECTIONS) {
+    for (const item of section.items) {
+      if (item.href === pathname) return item.key;
+    }
+  }
   return "commandCenter";
 }
 

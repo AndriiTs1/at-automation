@@ -218,6 +218,46 @@
         "invoiceGenerated": "Рахунок {invoice} виставлено",
         "awaitingCustomer": "Очікування відповіді клієнта"
       }
+    },
+    "Customers": {
+      "title": "Клієнти",
+      "description": "Відносини з клієнтами, операції та комерційний статус об'єднані в одному робочому просторі.",
+      "newCustomer": "Новий клієнт",
+      "summary": {
+        "totalCustomers": "Усього клієнтів",
+        "activeAccounts": "Активні клієнти",
+        "needsAttention": "Потребують уваги",
+        "outstanding": "До отримання"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Пошук клієнтів…",
+        "allSegments": "Усі клієнти",
+        "allHealth": "Усі стани"
+      },
+      "table": {
+        "customer": "Клієнт",
+        "segment": "Сегмент",
+        "health": "Стан",
+        "openOperations": "Відкриті операції",
+        "revenue": "Дохід",
+        "outstanding": "Заборгованість",
+        "owner": "Відповідальний",
+        "lastActivity": "Остання активність"
+      },
+      "segment": {
+        "keyAccount": "Ключовий клієнт",
+        "standard": "Стандартний",
+        "new": "Новий"
+      },
+      "health": {
+        "healthy": "Стабільно",
+        "watch": "Спостереження",
+        "atRisk": "Ризик"
+      },
+      "relativeTime": {
+        "today": "Сьогодні",
+        "yesterday": "Вчора"
+      }
     }
   }
 }

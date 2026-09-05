@@ -218,6 +218,46 @@
         "invoiceGenerated": "Facture {invoice} générée",
         "awaitingCustomer": "En attente de réponse du client"
       }
+    },
+    "Customers": {
+      "title": "Clients",
+      "description": "Les relations clients, les opérations et le statut commercial sont réunis dans un seul espace de travail.",
+      "newCustomer": "Nouveau client",
+      "summary": {
+        "totalCustomers": "Clients au total",
+        "activeAccounts": "Comptes actifs",
+        "needsAttention": "À traiter",
+        "outstanding": "Créances dues"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Rechercher des clients…",
+        "allSegments": "Tous les clients",
+        "allHealth": "Tous les états"
+      },
+      "table": {
+        "customer": "Client",
+        "segment": "Segment",
+        "health": "Santé",
+        "openOperations": "Opérations ouvertes",
+        "revenue": "Revenus",
+        "outstanding": "Solde dû",
+        "owner": "Responsable",
+        "lastActivity": "Dernière activité"
+      },
+      "segment": {
+        "keyAccount": "Compte clé",
+        "standard": "Standard",
+        "new": "Nouveau"
+      },
+      "health": {
+        "healthy": "Sain",
+        "watch": "À surveiller",
+        "atRisk": "À risque"
+      },
+      "relativeTime": {
+        "today": "Aujourd'hui",
+        "yesterday": "Hier"
+      }
     }
   }
 }

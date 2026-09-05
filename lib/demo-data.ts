@@ -9,7 +9,7 @@ export const NAV_SECTIONS = [
     key: "operate",
     items: [
       { key: "operations", icon: "activity", href: "/demo/operations", badge: "3", available: true },
-      { key: "customers", icon: "users", href: "/demo/customers" },
+      { key: "customers", icon: "users", href: "/demo/customers", available: true },
       { key: "inventory", icon: "box", href: "/demo/inventory", badge: "12" },
       { key: "finance", icon: "coins", href: "/demo/finance", badge: "4" },
     ],
@@ -336,3 +336,154 @@ export const OPERATIONS_ROWS: OperationRow[] = [
 
 /** Unique owners represented in OPERATIONS_ROWS, in first-appearance order — feeds the Operations owner filter. */
 export const OPERATION_OWNERS = Array.from(new Set(OPERATIONS_ROWS.map((row) => row.owner)));
+
+export const CUSTOMERS_SUMMARY = {
+  totalCustomers: "128",
+  activeAccounts: "94",
+  needsAttention: "7",
+  outstanding: "CHF 86,400",
+} as const;
+
+export type CustomerSegment = "keyAccount" | "standard" | "new";
+export type CustomerHealth = "healthy" | "watch" | "atRisk";
+
+/**
+ * "today"/"yesterday" carry only a time and are localized via Dashboard.Customers.relativeTime;
+ * "date" carries a fixed, untranslated day/month label (same convention as CHART_DATES) plus a time.
+ */
+export type CustomerLastActivity =
+  | { kind: "today" | "yesterday"; time: string }
+  | { kind: "date"; date: string; time: string };
+
+export type CustomerRow = {
+  id: string;
+  name: string;
+  segment: CustomerSegment;
+  health: CustomerHealth;
+  /** Count of that customer's OPERATIONS_ROWS entries with status !== "completed". */
+  openOperations: number;
+  revenue: string;
+  outstanding: string;
+  owner: string;
+  lastActivity: CustomerLastActivity;
+};
+
+/**
+ * Representative sample of the fictional Customers universe sized by CUSTOMERS_SUMMARY
+ * (128 total customers) — mirrors how OPERATIONS_ROWS is a sample of OPERATIONS_SUMMARY's
+ * totals. Where a customer also appears in OPERATIONS_ROWS, openOperations matches that
+ * customer's count of non-completed operations there, and owner reflects whoever owns
+ * their current open operation (or their most recent operation if none are open).
+ */
+export const CUSTOMERS_ROWS: CustomerRow[] = [
+  {
+    id: "CUS-1048",
+    name: "Northstar Systems",
+    segment: "keyAccount",
+    health: "healthy",
+    openOperations: 2,
+    revenue: "CHF 184,200",
+    outstanding: "CHF 0",
+    owner: "Sarah M.",
+    lastActivity: { kind: "today", time: "10:42" },
+  },
+  {
+    id: "CUS-1047",
+    name: "BluePeak Industries",
+    segment: "keyAccount",
+    health: "watch",
+    openOperations: 1,
+    revenue: "CHF 142,800",
+    outstanding: "CHF 9,100",
+    owner: "Jonas R.",
+    lastActivity: { kind: "today", time: "08:05" },
+  },
+  {
+    id: "CUS-1046",
+    name: "Alpine Works",
+    segment: "standard",
+    health: "watch",
+    openOperations: 2,
+    revenue: "CHF 42,500",
+    outstanding: "CHF 4,200",
+    owner: "Sarah M.",
+    lastActivity: { kind: "today", time: "09:40" },
+  },
+  {
+    id: "CUS-1045",
+    name: "Meridian Labs",
+    segment: "standard",
+    health: "atRisk",
+    openOperations: 2,
+    revenue: "CHF 96,800",
+    outstanding: "CHF 21,600",
+    owner: "Jonas R.",
+    lastActivity: { kind: "today", time: "09:15" },
+  },
+  {
+    id: "CUS-1044",
+    name: "Solterra Group",
+    segment: "standard",
+    health: "healthy",
+    openOperations: 0,
+    revenue: "CHF 78,300",
+    outstanding: "CHF 0",
+    owner: "Sarah M.",
+    lastActivity: { kind: "yesterday", time: "16:20" },
+  },
+  {
+    id: "CUS-1043",
+    name: "Vantage Freight Co.",
+    segment: "keyAccount",
+    health: "healthy",
+    openOperations: 1,
+    revenue: "CHF 156,400",
+    outstanding: "CHF 0",
+    owner: "Marc T.",
+    lastActivity: { kind: "yesterday", time: "11:15" },
+  },
+  {
+    id: "CUS-1042",
+    name: "Cobalt Materials",
+    segment: "standard",
+    health: "watch",
+    openOperations: 1,
+    revenue: "CHF 58,900",
+    outstanding: "CHF 12,300",
+    owner: "Marc T.",
+    lastActivity: { kind: "date", date: "2 Sep", time: "09:30" },
+  },
+  {
+    id: "CUS-1041",
+    name: "Harborline Logistics",
+    segment: "standard",
+    health: "healthy",
+    openOperations: 0,
+    revenue: "CHF 34,600",
+    outstanding: "CHF 0",
+    owner: "Sarah M.",
+    lastActivity: { kind: "date", date: "1 Sep", time: "15:50" },
+  },
+  {
+    id: "CUS-1040",
+    name: "Fjordlight Energy",
+    segment: "new",
+    health: "healthy",
+    openOperations: 1,
+    revenue: "CHF 18,000",
+    outstanding: "CHF 0",
+    owner: "Marc T.",
+    lastActivity: { kind: "yesterday", time: "09:05" },
+  },
+  {
+    id: "CUS-1039",
+    name: "Crestwood Manufacturing",
+    segment: "new",
+    health: "atRisk",
+    openOperations: 0,
+    revenue: "CHF 9,600",
+    outstanding: "CHF 6,400",
+    owner: "Jonas R.",
+    lastActivity: { kind: "date", date: "28 Aug", time: "13:20" },
+  },
+];

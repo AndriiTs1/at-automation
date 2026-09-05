@@ -218,6 +218,46 @@
         "invoiceGenerated": "Rechnung {invoice} erstellt",
         "awaitingCustomer": "Wartet auf Kundenantwort"
       }
+    },
+    "Customers": {
+      "title": "Kunden",
+      "description": "Kundenbeziehungen, Vorgänge und kaufmännischer Status sind in einem Arbeitsbereich miteinander verbunden.",
+      "newCustomer": "Neuer Kunde",
+      "summary": {
+        "totalCustomers": "Kunden gesamt",
+        "activeAccounts": "Aktive Konten",
+        "needsAttention": "Benötigt Aufmerksamkeit",
+        "outstanding": "Offene Forderungen"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Kunden durchsuchen…",
+        "allSegments": "Alle Kunden",
+        "allHealth": "Alle Zustände"
+      },
+      "table": {
+        "customer": "Kunde",
+        "segment": "Segment",
+        "health": "Zustand",
+        "openOperations": "Offene Vorgänge",
+        "revenue": "Umsatz",
+        "outstanding": "Offen",
+        "owner": "Verantwortlich",
+        "lastActivity": "Letzte Aktivität"
+      },
+      "segment": {
+        "keyAccount": "Schlüsselkunde",
+        "standard": "Standard",
+        "new": "Neu"
+      },
+      "health": {
+        "healthy": "Gesund",
+        "watch": "Beobachten",
+        "atRisk": "Gefährdet"
+      },
+      "relativeTime": {
+        "today": "Heute",
+        "yesterday": "Gestern"
+      }
     }
   }
 }
