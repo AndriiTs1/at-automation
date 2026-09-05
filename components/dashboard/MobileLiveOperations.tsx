@@ -14,15 +14,15 @@ export default function MobileLiveOperations() {
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col gap-1.5 overflow-y-auto">
+      <div className="flex flex-1 flex-col gap-1 overflow-y-auto">
         {LIVE_OPERATIONS.map((event) => (
           <div key={event.time + event.titleKey} className="flex gap-2 text-[11px]">
             <span className="shrink-0 pt-0.5 font-mono text-[10px] text-neutral-400">{event.time}</span>
             <div className="min-w-0 flex-1">
-              <p className="leading-snug font-medium text-foreground">{t(`events.${event.titleKey}`, event.titleParams)}</p>
+              <p className="leading-snug font-semibold text-foreground">{t(`events.${event.titleKey}`, event.titleParams)}</p>
               <div className="mt-0.5 flex flex-col gap-0.5">
                 {event.steps.map((step) => (
-                  <p key={step.key} className="truncate text-[10px] leading-snug text-neutral-500">
+                  <p key={step.key} className="text-[10px] leading-snug text-neutral-500">
                     <span className="text-neutral-300">→</span> {t(`steps.${step.key}`, "params" in step ? step.params : undefined)}
                   </p>
                 ))}
