@@ -6,8 +6,8 @@ import ApprovalsPanel from "./ApprovalsPanel";
 import BusinessPerformance from "./BusinessPerformance";
 import LiveOperations from "./LiveOperations";
 import MobileKpiCard from "./MobileKpiCard";
+import MobileNeedsAttention from "./MobileNeedsAttention";
 import MobileTopbar from "./MobileTopbar";
-import NeedsAttention from "./NeedsAttention";
 import TabletNavigation from "./TabletNavigation";
 
 export default function MobileCommandCenter() {
@@ -44,7 +44,7 @@ export default function MobileCommandCenter() {
         </div>
 
         <div className="mb-3 h-[26rem] shrink-0">
-          <NeedsAttention />
+          <MobileNeedsAttention />
         </div>
 
         <div className="mb-3 h-72 shrink-0">
