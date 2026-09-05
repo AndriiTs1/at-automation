@@ -2,9 +2,9 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { routing } from "@/i18n/routing";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 type LanguageCode = (typeof routing.locales)[number];
 
@@ -15,7 +15,6 @@ export default function Header() {
   const pathname = usePathname();
 
   const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const [mobileLangOpen, setMobileLangOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const langMenuRef = useRef<HTMLDivElement>(null);
@@ -29,7 +28,6 @@ export default function Header() {
       }
       if (mobilePanelRef.current && !mobilePanelRef.current.contains(event.target as Node)) {
         setMobileMenuOpen(false);
-        setMobileLangOpen(false);
       }
     };
 
@@ -39,8 +37,15 @@ export default function Header() {
 
   const selectLanguage = (lang: LanguageCode) => {
     setLangMenuOpen(false);
-    setMobileLangOpen(false);
     router.replace(pathname, { locale: lang });
+  };
+
+  const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    if (pathname === "/") {
+      event.preventDefault();
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    }
   };
 
   return (
@@ -48,7 +53,7 @@ export default function Header() {
       <div ref={mobilePanelRef} className="relative mx-auto w-full max-w-[1320px] bg-transparent">
         <div className="flex h-[74px] items-center justify-between gap-3 rounded-2xl border border-black/8 bg-white/95 px-4 shadow-md shadow-black/8 backdrop-blur-2xl backdrop-saturate-150">
           {/* Logo */}
-          <a href="#" className="my-[13px] mr-4 ml-0 flex shrink-0 items-center">
+          <Link href="/" onClick={handleLogoClick} className="my-[13px] mr-4 ml-0 flex shrink-0 items-center">
             <Image
               src="/logo.png"
               alt={t("logoAlt")}
@@ -60,7 +65,7 @@ export default function Header() {
             <span className="ml-1.5 inline-block text-xs font-bold tracking-normal text-foreground sm:text-sm md:text-base">
               AUTOMATION
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center gap-2 md:gap-3">
             {/* Desktop language switcher */}
@@ -124,44 +129,30 @@ export default function Header() {
 
         {/* Mobile dropdown panel */}
         {mobileMenuOpen && (
-          <div className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-3 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden">
+          <div className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden">
             {/* Mobile language switcher */}
-            <button
-              type="button"
-              aria-label={t("languageSwitcherLabel")}
-              aria-haspopup="listbox"
-              aria-expanded={mobileLangOpen}
-              onClick={() => setMobileLangOpen((open) => !open)}
-              className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-base font-medium text-neutral-800 transition-colors hover:bg-black/5 focus:bg-black/5 focus:outline-none"
-            >
-              {currentLang.toUpperCase()}
-              <ChevronIcon open={mobileLangOpen} />
-            </button>
-
-            {mobileLangOpen && (
-              <ul role="listbox" className="mt-2 grid grid-cols-2 gap-1 px-1 pb-1">
-                {routing.locales.map((lang) => (
-                  <li key={lang}>
-                    <button
-                      type="button"
-                      role="option"
-                      aria-selected={lang === currentLang}
-                      onClick={() => selectLanguage(lang)}
-                      className={`w-full rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
-                        lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
-                      }`}
-                    >
-                      {lang.toUpperCase()}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ul role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5 pb-1">
+              {routing.locales.map((lang) => (
+                <li key={lang}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={lang === currentLang}
+                    onClick={() => selectLanguage(lang)}
+                    className={`flex w-full items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
+                      lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                </li>
+              ))}
+            </ul>
 
             <a
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 flex w-full items-center justify-center rounded-full bg-accent px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent/90"
+              className="mt-1.5 flex w-full items-center justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent/90"
             >
               {t("cta")}
             </a>
