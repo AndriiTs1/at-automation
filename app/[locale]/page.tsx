@@ -12,7 +12,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
   return (
     <main className="flex-1">
       {/* Hero */}
-      <section className="relative px-6 pt-30 pb-16 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
+      <section className="relative px-6 pt-30 pb-10 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
         {/* Decorative side labels */}
         <div className="absolute top-1/2 left-4 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase lg:block xl:left-10">
           <span className="block">{tHero("sideLabelLeft1")}</span>
@@ -64,7 +64,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
       </section>
 
       {/* Product showcase */}
-      <section className="relative px-6 pt-8 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
+      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
         <TabletFrame>
           <DemoDashboard />
         </TabletFrame>
