@@ -426,6 +426,11 @@
         "openInvoices": "Factures ouvertes",
         "paid": "Payé"
       },
+      "cashFlow": {
+        "title": "Flux de trésorerie",
+        "dueSoon": "Échéance proche",
+        "dueLater": "Plus tard"
+      },
       "toolbar": {
         "searchPlaceholder": "Rechercher des factures…",
         "allStatuses": "Tous les statuts",

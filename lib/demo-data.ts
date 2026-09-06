@@ -1276,3 +1276,82 @@ export function getInvoiceActivity(invoiceId: string): FinanceActivityEntry[] {
 
   return entries;
 }
+
+/**
+ * Deterministic "today" anchor for receivables aging (Stage 2E.5) — 6 September, the same date
+ * already implied by the dataset itself: INV-2026-2005 and INV-2026-2012 both carry
+ * issueDate: "6 Sep" together with updated: { kind: "today" }. Reusing this existing anchor
+ * (rather than introducing a new one, or new Date()/Date.now()) keeps aging fully deterministic
+ * and consistent with every other "today"/"yesterday" label already in this dataset.
+ *
+ * Day-of-year arithmetic uses a fixed, non-leap-year (2026) cumulative-days-per-month table —
+ * plain integer math on the invoices' own stored date strings, never a Date object — so this can
+ * never depend on the real current date.
+ */
+const FINANCE_TODAY_ANCHOR = "6 Sep";
+
+const MONTH_DAY_OFFSET: Record<string, number> = {
+  Jan: 0,
+  Feb: 31,
+  Mar: 59,
+  Apr: 90,
+  May: 120,
+  Jun: 151,
+  Jul: 181,
+  Aug: 212,
+  Sep: 243,
+  Oct: 273,
+  Nov: 304,
+  Dec: 334,
+};
+
+function dayOfYear(date: string): number {
+  const [day, month] = date.split(" ");
+  return MONTH_DAY_OFFSET[month] + Number(day);
+}
+
+/** Due within this many days of the anchor counts as "due soon"; further out is "due later". */
+const DUE_SOON_WINDOW_DAYS = 14;
+
+export type ReceivablesAgingBucket = { count: number; amount: number };
+
+export type ReceivablesAging = {
+  overdue: ReceivablesAgingBucket;
+  dueSoon: ReceivablesAgingBucket;
+  dueLater: ReceivablesAgingBucket;
+};
+
+/**
+ * Receivables aging (Stage 2E.5) — buckets every non-Draft receivable (status "sent" or
+ * "overdue") by urgency, derived exclusively from FINANCE_INVOICES:
+ *   - "overdue": invoice.status === "overdue" (already a deterministic status, not re-derived
+ *     from dates).
+ *   - "dueSoon" / "dueLater": for "sent" invoices, split at DUE_SOON_WINDOW_DAYS (14 days) from
+ *     FINANCE_TODAY_ANCHOR, measured against the invoice's own dueDate.
+ * "paid" contributes 0 (its outstanding is always 0) and "draft" is excluded entirely — the same
+ * RECEIVABLE_STATUSES rule getTotalOutstanding already uses. The three bucket amounts therefore
+ * always sum to exactly getTotalOutstanding().
+ */
+export function getReceivablesAging(): ReceivablesAging {
+  const anchor = dayOfYear(FINANCE_TODAY_ANCHOR);
+  const aging: ReceivablesAging = {
+    overdue: { count: 0, amount: 0 },
+    dueSoon: { count: 0, amount: 0 },
+    dueLater: { count: 0, amount: 0 },
+  };
+
+  for (const invoice of FINANCE_INVOICES) {
+    if (!RECEIVABLE_STATUSES.includes(invoice.status)) continue;
+    const outstanding = getInvoiceOutstanding(invoice);
+    const bucket =
+      invoice.status === "overdue"
+        ? aging.overdue
+        : dayOfYear(invoice.dueDate) - anchor <= DUE_SOON_WINDOW_DAYS
+          ? aging.dueSoon
+          : aging.dueLater;
+    bucket.count += 1;
+    bucket.amount += outstanding;
+  }
+
+  return aging;
+}

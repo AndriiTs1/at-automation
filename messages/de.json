@@ -426,6 +426,11 @@
         "openInvoices": "Offene Rechnungen",
         "paid": "Bezahlt"
       },
+      "cashFlow": {
+        "title": "Cashflow-Übersicht",
+        "dueSoon": "Bald fällig",
+        "dueLater": "Später fällig"
+      },
       "toolbar": {
         "searchPlaceholder": "Rechnungen durchsuchen…",
         "allStatuses": "Alle Status",

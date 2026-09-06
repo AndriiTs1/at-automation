@@ -426,6 +426,11 @@
         "openInvoices": "Открытые счета",
         "paid": "Оплачено"
       },
+      "cashFlow": {
+        "title": "Движение денежных средств",
+        "dueSoon": "Скоро к оплате",
+        "dueLater": "К оплате позже"
+      },
       "toolbar": {
         "searchPlaceholder": "Поиск счетов…",
         "allStatuses": "Все статусы",

@@ -426,6 +426,11 @@
         "openInvoices": "Fatture aperte",
         "paid": "Pagato"
       },
+      "cashFlow": {
+        "title": "Flusso di cassa",
+        "dueSoon": "A breve",
+        "dueLater": "Più avanti"
+      },
       "toolbar": {
         "searchPlaceholder": "Cerca fatture…",
         "allStatuses": "Tutti gli stati",

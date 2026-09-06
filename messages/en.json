@@ -426,6 +426,11 @@
         "openInvoices": "Open invoices",
         "paid": "Paid"
       },
+      "cashFlow": {
+        "title": "Cash flow overview",
+        "dueSoon": "Due soon",
+        "dueLater": "Due later"
+      },
       "toolbar": {
         "searchPlaceholder": "Search invoices…",
         "allStatuses": "All statuses",

@@ -6,6 +6,7 @@ import {
   getTotalPaid,
   type FinanceInvoice,
 } from "@/lib/demo-data";
+import FinanceCashFlowSummary from "./FinanceCashFlowSummary";
 import FinanceDetailPanel from "./FinanceDetailPanel";
 import FinanceTable from "./FinanceTable";
 import FinanceToolbar, {
@@ -106,6 +107,8 @@ export default function FinanceDesktop({
           </div>
         ))}
       </div>
+
+      <FinanceCashFlowSummary />
 
       <FinanceToolbar
         searchQuery={searchQuery}

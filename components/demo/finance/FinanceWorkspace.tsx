@@ -14,6 +14,7 @@ import {
   getTotalOutstanding,
   getTotalPaid,
 } from "@/lib/demo-data";
+import FinanceCashFlowSummary from "./FinanceCashFlowSummary";
 import FinanceDesktop from "./FinanceDesktop";
 import FinanceDetailMobile from "./FinanceDetailMobile";
 import FinanceMobileList from "./FinanceMobileList";
@@ -148,6 +149,7 @@ export default function FinanceWorkspace() {
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
         <p className="text-base font-semibold text-foreground">{t("title")}</p>
         <SummaryGrid />
+        <FinanceCashFlowSummary />
 
         <div className="flex flex-col gap-2">
           <div className="flex w-full items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-accent/30">
@@ -234,6 +236,7 @@ export default function FinanceWorkspace() {
         </div>
 
         <SummaryGrid />
+        <FinanceCashFlowSummary />
 
         <div className="flex shrink-0 flex-wrap items-center gap-2">
           <div className="flex min-w-[160px] flex-1 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-accent/30">

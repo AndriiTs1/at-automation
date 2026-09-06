@@ -426,6 +426,11 @@
         "openInvoices": "Відкриті рахунки",
         "paid": "Оплачено"
       },
+      "cashFlow": {
+        "title": "Огляд грошового потоку",
+        "dueSoon": "Скоро до оплати",
+        "dueLater": "Пізніше"
+      },
       "toolbar": {
         "searchPlaceholder": "Пошук рахунків…",
         "allStatuses": "Усі статуси",
