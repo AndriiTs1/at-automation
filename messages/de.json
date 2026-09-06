@@ -368,7 +368,11 @@
       "toolbar": {
         "searchPlaceholder": "Lager durchsuchen…",
         "allStock": "Alle Bestände",
-        "allLocations": "Alle Standorte"
+        "allLocations": "Alle Standorte",
+        "clearFilters": "Filter zurücksetzen",
+        "resultCount": "{count, plural, one {# Artikel} other {# Artikel}}",
+        "noResults": "Keine Artikel entsprechen Ihren Filtern.",
+        "noResultsHint": "Passen Sie die aktuellen Filter an oder setzen Sie sie zurück."
       },
       "table": {
         "item": "Artikel",

@@ -368,7 +368,11 @@
       "toolbar": {
         "searchPlaceholder": "Пошук по складу…",
         "allStock": "Усі запаси",
-        "allLocations": "Усі склади"
+        "allLocations": "Усі склади",
+        "clearFilters": "Скинути фільтри",
+        "resultCount": "{count, plural, one {# позиція} few {# позиції} many {# позицій} other {# позиції}}",
+        "noResults": "Немає позицій, що відповідають фільтрам.",
+        "noResultsHint": "Спробуйте змінити або скинути поточні фільтри."
       },
       "table": {
         "item": "Позиція",

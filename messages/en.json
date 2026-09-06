@@ -368,7 +368,11 @@
       "toolbar": {
         "searchPlaceholder": "Search inventory…",
         "allStock": "All stock",
-        "allLocations": "All locations"
+        "allLocations": "All locations",
+        "clearFilters": "Clear filters",
+        "resultCount": "{count, plural, one {# item} other {# items}}",
+        "noResults": "No inventory items match your filters.",
+        "noResultsHint": "Try changing or clearing the current filters."
       },
       "table": {
         "item": "Item",

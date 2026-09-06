@@ -368,7 +368,11 @@
       "toolbar": {
         "searchPlaceholder": "Поиск по складу…",
         "allStock": "Все запасы",
-        "allLocations": "Все склады"
+        "allLocations": "Все склады",
+        "clearFilters": "Сбросить фильтры",
+        "resultCount": "{count, plural, one {# позиция} few {# позиции} many {# позиций} other {# позиции}}",
+        "noResults": "Нет позиций, соответствующих фильтрам.",
+        "noResultsHint": "Попробуйте изменить или сбросить текущие фильтры."
       },
       "table": {
         "item": "Позиция",

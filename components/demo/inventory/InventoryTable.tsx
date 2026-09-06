@@ -40,22 +40,29 @@ function formatValue(amount: number) {
  */
 const MIN_TABLE_WIDTH = 1190;
 const COLUMN_WIDTHS = ["16%", "14%", "9%", "8%", "9%", "13%", "12%", "8%", "11%"];
+const TABLE_COLUMN_COUNT = 9;
 
 /**
- * Selectable Inventory table (Stage 2D.2) — mirrors CustomersTable's row-selection pattern
- * exactly. Filtering is still Stage 2D.3's job, so `rows` is always INVENTORY_ROWS as-is for
- * now; Available is derived via getAvailableUnits rather than trusting a stored field, and
- * Value is derived as onHand × unitValue rather than a separately stored total, so neither can
- * drift out of sync with its source numbers.
+ * Selectable, filterable Inventory table (Stage 2D.3) — mirrors CustomersTable's row-selection
+ * and empty-state pattern exactly. `rows` is caller-filtered (INVENTORY_ROWS is never mutated
+ * or duplicated); geometry (table-layout: fixed, colgroup widths, min-width) is frozen and
+ * unchanged from Stage 2D.1/2D.2 regardless of how many rows are passed in. Available is
+ * derived via getAvailableUnits rather than trusting a stored field, and Value is derived as
+ * onHand × unitValue rather than a separately stored total, so neither can drift out of sync
+ * with its source numbers.
  */
 export default function InventoryTable({
   rows,
   selectedId,
   onSelect,
+  hasActiveFilters,
+  onClearFilters,
 }: {
   rows: InventoryItem[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  hasActiveFilters?: boolean;
+  onClearFilters?: () => void;
 }) {
   const t = useTranslations("Dashboard.Inventory");
 
@@ -91,50 +98,68 @@ export default function InventoryTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
-          {rows.map((item) => {
-            const available = getAvailableUnits(item);
-            const value = item.onHand * item.unitValue;
-            const isSelected = item.id === selectedId;
-            return (
-              <tr
-                key={item.id}
-                tabIndex={0}
-                aria-selected={isSelected}
-                onClick={() => onSelect(item.id)}
-                onKeyDown={(event) => handleRowKeyDown(event, item.id)}
-                className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
-                  isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
-                }`}
-              >
-                <td className="px-4 py-3">
-                  <p className="truncate font-semibold text-foreground">{item.name}</p>
-                  <p className="mt-0.5 truncate text-xs text-neutral-400">{item.sku}</p>
-                </td>
-                <td className="px-4 py-3 text-center">
-                  <span
-                    className={`inline-flex max-w-full items-center truncate rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONE[item.status]}`}
+          {rows.length === 0 ? (
+            <tr>
+              <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-12 text-center">
+                <p className="text-sm text-neutral-500">{t("toolbar.noResults")}</p>
+                <p className="mt-1 text-xs text-neutral-400">{t("toolbar.noResultsHint")}</p>
+                {hasActiveFilters && onClearFilters && (
+                  <button
+                    type="button"
+                    onClick={onClearFilters}
+                    className="mt-2 text-xs font-medium text-accent hover:underline"
                   >
-                    {t(`status.${item.status}`)}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-center whitespace-nowrap text-foreground">{item.onHand}</td>
-                <td className="px-4 py-3 text-center whitespace-nowrap text-neutral-600">{item.reserved}</td>
-                <td
-                  className={`px-4 py-3 text-center whitespace-nowrap ${available === 0 ? "text-neutral-400" : "font-medium text-foreground"}`}
+                    {t("toolbar.clearFilters")}
+                  </button>
+                )}
+              </td>
+            </tr>
+          ) : (
+            rows.map((item) => {
+              const available = getAvailableUnits(item);
+              const value = item.onHand * item.unitValue;
+              const isSelected = item.id === selectedId;
+              return (
+                <tr
+                  key={item.id}
+                  tabIndex={0}
+                  aria-selected={isSelected}
+                  onClick={() => onSelect(item.id)}
+                  onKeyDown={(event) => handleRowKeyDown(event, item.id)}
+                  className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
+                    isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                  }`}
                 >
-                  {available}
-                </td>
-                <td className="px-4 py-3 text-center whitespace-nowrap text-neutral-500">{item.reorderPoint}</td>
-                <td className="truncate px-4 py-3 text-center text-neutral-600">{item.location}</td>
-                <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
-                  {formatValue(value)}
-                </td>
-                <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">
-                  {formatUpdated(item.updated, t)}
-                </td>
-              </tr>
-            );
-          })}
+                  <td className="px-4 py-3">
+                    <p className="truncate font-semibold text-foreground">{item.name}</p>
+                    <p className="mt-0.5 truncate text-xs text-neutral-400">{item.sku}</p>
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <span
+                      className={`inline-flex max-w-full items-center truncate rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONE[item.status]}`}
+                    >
+                      {t(`status.${item.status}`)}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-center whitespace-nowrap text-foreground">{item.onHand}</td>
+                  <td className="px-4 py-3 text-center whitespace-nowrap text-neutral-600">{item.reserved}</td>
+                  <td
+                    className={`px-4 py-3 text-center whitespace-nowrap ${available === 0 ? "text-neutral-400" : "font-medium text-foreground"}`}
+                  >
+                    {available}
+                  </td>
+                  <td className="px-4 py-3 text-center whitespace-nowrap text-neutral-500">{item.reorderPoint}</td>
+                  <td className="truncate px-4 py-3 text-center text-neutral-600">{item.location}</td>
+                  <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
+                    {formatValue(value)}
+                  </td>
+                  <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">
+                    {formatUpdated(item.updated, t)}
+                  </td>
+                </tr>
+              );
+            })
+          )}
         </tbody>
       </table>
     </div>

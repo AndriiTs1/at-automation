@@ -368,7 +368,11 @@
       "toolbar": {
         "searchPlaceholder": "Cerca nel magazzino…",
         "allStock": "Tutte le scorte",
-        "allLocations": "Tutte le sedi"
+        "allLocations": "Tutte le sedi",
+        "clearFilters": "Cancella filtri",
+        "resultCount": "{count, plural, one {# articolo} other {# articoli}}",
+        "noResults": "Nessun articolo corrisponde ai filtri.",
+        "noResultsHint": "Prova a modificare o cancellare i filtri attuali."
       },
       "table": {
         "item": "Articolo",

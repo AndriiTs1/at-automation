@@ -717,6 +717,16 @@ export const INVENTORY_ROWS: InventoryItem[] = [
   },
 ];
 
+/** All InventoryStatus values — feeds the Inventory status filter (Stage 2D.3). */
+export const INVENTORY_STATUSES: InventoryStatus[] = ["healthy", "low", "critical", "outOfStock"];
+
+/**
+ * Unique locations represented in INVENTORY_ROWS, in first-appearance order — feeds the
+ * Inventory location filter (Stage 2D.3). Mirrors OPERATION_OWNERS' derivation: never
+ * hardcoded, so a future data change can't silently drift out of sync with the filter options.
+ */
+export const INVENTORY_LOCATIONS = Array.from(new Set(INVENTORY_ROWS.map((item) => item.location)));
+
 /**
  * Page-level Inventory KPIs — represent the wider ~142-item company inventory, not a sum of
  * INVENTORY_ROWS' own 10-row sample (same relationship as CUSTOMERS_SUMMARY to CUSTOMERS_ROWS).

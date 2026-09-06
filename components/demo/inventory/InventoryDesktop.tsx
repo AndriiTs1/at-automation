@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
 import { INVENTORY_SUMMARY } from "@/lib/demo-data";
 import InventoryWorkspace from "./InventoryWorkspace";
 
@@ -18,9 +17,9 @@ const TONE_TEXT: Record<string, string> = {
 
 /**
  * Desktop-only Inventory workspace. Hidden below the @5xl container-query breakpoint, matching
- * CustomersDesktop/OperationsDesktop's own threshold. Header/KPIs/toolbar stay static and
- * server-rendered — row selection and the Inventory Detail overlay drawer are owned by
- * InventoryWorkspace (Stage 2D.2). Filtering is still static (Stage 2D.3).
+ * CustomersDesktop/OperationsDesktop's own threshold. Header/KPIs stay static and
+ * server-rendered — the toolbar, row selection/filtering and the Inventory Detail overlay
+ * drawer are all owned by InventoryWorkspace (Stage 2D.3).
  */
 export default function InventoryDesktop() {
   const t = useTranslations("Dashboard.Inventory");
@@ -51,35 +50,7 @@ export default function InventoryDesktop() {
         ))}
       </div>
 
-      {/* Toolbar — static in Stage 2D.1: no filter state, no wired search (Stage 2D.3). */}
-      <div className="mb-3 flex shrink-0 items-center gap-2">
-        <div className="flex w-64 shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-accent/30">
-          <SearchIcon className="h-4 w-4 shrink-0 text-neutral-400" />
-          <input
-            type="text"
-            placeholder={t("toolbar.searchPlaceholder")}
-            className="w-full min-w-0 bg-transparent text-sm text-foreground placeholder:text-neutral-400 focus:outline-none"
-          />
-        </div>
-
-        <button
-          type="button"
-          className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-500"
-        >
-          {t("toolbar.allStock")}
-          <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-neutral-400" />
-        </button>
-
-        <button
-          type="button"
-          className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-2 text-sm text-neutral-500"
-        >
-          {t("toolbar.allLocations")}
-          <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-neutral-400" />
-        </button>
-      </div>
-
-      {/* Table + detail overlay drawer — owned by InventoryWorkspace (Stage 2D.2) */}
+      {/* Toolbar + table + detail overlay drawer — owned by InventoryWorkspace (Stage 2D.3) */}
       <InventoryWorkspace />
     </div>
   );
