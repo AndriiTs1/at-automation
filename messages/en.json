@@ -94,7 +94,7 @@
     "generic": {
       "otherAccountingSystems": "other accounting systems",
       "otherPaymentProviders": "other payment providers",
-      "internalLegacySystems": "internal & legacy systems"
+      "internalExistingSystems": "internal and existing systems"
     },
     "flow": {
       "systemsLabel": "Existing systems",

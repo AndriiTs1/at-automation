@@ -51,6 +51,6 @@ export const INTEGRATION_CATEGORIES: { key: string; examples: IntegrationExample
   },
   {
     key: "customSystems",
-    examples: [{ brand: "REST APIs" }, { brand: "Webhooks" }, { genericKey: "internalLegacySystems" }],
+    examples: [{ brand: "REST APIs" }, { brand: "Webhooks" }, { genericKey: "internalExistingSystems" }],
   },
 ];
