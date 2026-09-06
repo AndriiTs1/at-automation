@@ -693,7 +693,10 @@ export const INVENTORY_ROWS: InventoryItem[] = [
     category: "Sensors",
     status: "healthy",
     onHand: 30,
-    reserved: 4,
+    // Deliberately the one zero-reservation item (Stage 2D.2) — every other row already has an
+    // active reservation, and Inventory Detail must demonstrably handle the "no current demand"
+    // case cleanly rather than only ever showing populated reservation lists.
+    reserved: 0,
     reorderPoint: 12,
     location: "Zone B-12",
     unitValue: 38,
@@ -726,3 +729,75 @@ export const INVENTORY_SUMMARY = {
   reservedUnits: "216",
   inventoryValue: "CHF 248,600",
 } as const;
+
+export type ReservationStatus = "active" | "released";
+
+/**
+ * A dedicated many-to-many relation between InventoryItem and OperationRow (Stage 2D.2) — one
+ * operation can reserve several inventory items, and one inventory item can be reserved across
+ * several operations, so this can't be a single inventoryItemId field on OperationRow. Deliberately
+ * carries only the relation's own facts (id, which item, which operation, how many units, whether
+ * the reservation is still active); everything else (customer, operation status/stage/value, item
+ * name) is always resolved live from CUSTOMERS_ROWS/OPERATIONS_ROWS/INVENTORY_ROWS via
+ * getReservationsForItem below, never duplicated onto the reservation record itself.
+ *
+ * `status` has room for "released" (e.g. a completed operation whose reservation was fulfilled
+ * and no longer holds stock) even though every record below is currently "active" — none of the
+ * operations linked here are done yet, so there is nothing to release in this sample.
+ */
+export type InventoryReservation = {
+  id: string;
+  inventoryItemId: string;
+  operationId: string;
+  quantity: number;
+  status: ReservationStatus;
+};
+
+/**
+ * Active reservations, constructed so that for every INVENTORY_ROWS item with reserved > 0, the
+ * sum of its active reservation quantities equals that item's `reserved` field exactly (verified
+ * programmatically — see the Stage 2D.2 QA report). Only non-completed OPERATIONS_ROWS entries
+ * are used as active reservations' operationId, since a completed operation has already shipped
+ * rather than still holding reserved stock.
+ *
+ * Industrial Sensor A → #10348 is the anchor relation: it's the same fictional moment already
+ * referenced by the Command Center's "Stock below threshold — Industrial Sensor A" activity entry
+ * and by #10348's own "inventoryReserved" stage/activity step — one fact, told consistently
+ * across three places instead of three unrelated ones.
+ */
+export const INVENTORY_RESERVATIONS: InventoryReservation[] = [
+  { id: "RES-1", inventoryItemId: "INV-2048", operationId: "#10348", quantity: 2, status: "active" },
+  { id: "RES-2", inventoryItemId: "INV-2047", operationId: "#10346", quantity: 6, status: "active" },
+  { id: "RES-3", inventoryItemId: "INV-2047", operationId: "#10345", quantity: 4, status: "active" },
+  { id: "RES-4", inventoryItemId: "INV-2046", operationId: "#10344", quantity: 6, status: "active" },
+  { id: "RES-5", inventoryItemId: "INV-2045", operationId: "#10342", quantity: 8, status: "active" },
+  { id: "RES-6", inventoryItemId: "INV-2044", operationId: "#10340", quantity: 12, status: "active" },
+  { id: "RES-7", inventoryItemId: "INV-2044", operationId: "#10341", quantity: 8, status: "active" },
+  { id: "RES-8", inventoryItemId: "INV-2043", operationId: "#10346", quantity: 6, status: "active" },
+  { id: "RES-9", inventoryItemId: "INV-2042", operationId: "#10348", quantity: 10, status: "active" },
+  { id: "RES-10", inventoryItemId: "INV-2042", operationId: "#10344", quantity: 8, status: "active" },
+  { id: "RES-11", inventoryItemId: "INV-2041", operationId: "#10345", quantity: 2, status: "active" },
+  { id: "RES-12", inventoryItemId: "INV-2039", operationId: "#10340", quantity: 10, status: "active" },
+];
+
+/**
+ * Active reservations for one inventory item, each paired with its real linked Operation
+ * (resolved from OPERATIONS_ROWS by id — never a duplicated copy). A reservation whose
+ * operationId doesn't resolve is dropped rather than rendered with missing data; every id in
+ * INVENTORY_RESERVATIONS above resolves in practice.
+ */
+export function getReservationsForItem(
+  inventoryItemId: string,
+): Array<{ reservation: InventoryReservation; operation: OperationRow }> {
+  return INVENTORY_RESERVATIONS.filter((r) => r.inventoryItemId === inventoryItemId && r.status === "active")
+    .map((reservation) => ({ reservation, operation: OPERATIONS_ROWS.find((op) => op.id === reservation.operationId) }))
+    .filter((entry): entry is { reservation: InventoryReservation; operation: OperationRow } => Boolean(entry.operation));
+}
+
+/** Sum of active reservation quantities for one inventory item — must equal InventoryItem.reserved. */
+export function getActiveReservedQuantity(inventoryItemId: string): number {
+  return INVENTORY_RESERVATIONS.filter((r) => r.inventoryItemId === inventoryItemId && r.status === "active").reduce(
+    (sum, r) => sum + r.quantity,
+    0,
+  );
+}

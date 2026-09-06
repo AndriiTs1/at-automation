@@ -381,6 +381,26 @@
         "value": "Value",
         "updated": "Updated"
       },
+      "detail": {
+        "close": "Close",
+        "stockOverview": "Stock overview",
+        "stockStatus": "Stock status",
+        "connectedOperations": "Connected operations",
+        "noReservations": "No active reservations for this item.",
+        "unitsReserved": "{count, plural, one {# unit reserved} other {# units reserved}}",
+        "replenishment": "Replenishment",
+        "belowReorderPointBy": "{count, plural, one {Below reorder point by # unit} other {Below reorder point by # units}}",
+        "aboveReorderPointBy": "{count, plural, one {Above reorder point by # unit} other {Above reorder point by # units}}",
+        "unitValue": "Unit value",
+        "stockValue": "Stock value",
+        "statusNote": {
+          "healthy": "Available stock is comfortably above the reorder point.",
+          "low": "Available stock is approaching the reorder point.",
+          "critical": "Available stock is below the reorder point and requires attention.",
+          "outOfStockNoUnits": "No units are currently available.",
+          "outOfStockReserved": "All on-hand units are currently reserved. No units are available."
+        }
+      },
       "status": {
         "healthy": "Healthy",
         "low": "Low",

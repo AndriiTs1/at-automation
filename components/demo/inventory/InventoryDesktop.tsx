@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
-import { INVENTORY_ROWS, INVENTORY_SUMMARY } from "@/lib/demo-data";
-import InventoryTable from "./InventoryTable";
+import { INVENTORY_SUMMARY } from "@/lib/demo-data";
+import InventoryWorkspace from "./InventoryWorkspace";
 
 const SUMMARY_ITEMS = [
   { key: "totalItems", value: INVENTORY_SUMMARY.totalItems, tone: "accent" },
@@ -17,10 +17,10 @@ const TONE_TEXT: Record<string, string> = {
 };
 
 /**
- * Desktop-only Inventory workspace foundation (Stage 2D.1). Hidden below the @5xl
- * container-query breakpoint, matching CustomersDesktop/OperationsDesktop's own threshold.
- * Header/KPIs/toolbar/table are all static here — no row selection, no filtering, no client
- * state — that arrives with Inventory Detail (2D.2) and functional filters (2D.3).
+ * Desktop-only Inventory workspace. Hidden below the @5xl container-query breakpoint, matching
+ * CustomersDesktop/OperationsDesktop's own threshold. Header/KPIs/toolbar stay static and
+ * server-rendered — row selection and the Inventory Detail overlay drawer are owned by
+ * InventoryWorkspace (Stage 2D.2). Filtering is still static (Stage 2D.3).
  */
 export default function InventoryDesktop() {
   const t = useTranslations("Dashboard.Inventory");
@@ -79,8 +79,8 @@ export default function InventoryDesktop() {
         </button>
       </div>
 
-      {/* Table */}
-      <InventoryTable rows={INVENTORY_ROWS} />
+      {/* Table + detail overlay drawer — owned by InventoryWorkspace (Stage 2D.2) */}
+      <InventoryWorkspace />
     </div>
   );
 }

@@ -381,6 +381,26 @@
         "value": "Valore",
         "updated": "Aggiornato"
       },
+      "detail": {
+        "close": "Chiudi",
+        "stockOverview": "Panoramica scorte",
+        "stockStatus": "Stato scorte",
+        "connectedOperations": "Operazioni collegate",
+        "noReservations": "Nessuna prenotazione attiva per questo articolo.",
+        "unitsReserved": "{count, plural, one {# unità prenotata} other {# unità prenotate}}",
+        "replenishment": "Riordino",
+        "belowReorderPointBy": "{count, plural, one {# unità sotto il punto di riordino} other {# unità sotto il punto di riordino}}",
+        "aboveReorderPointBy": "{count, plural, one {# unità sopra il punto di riordino} other {# unità sopra il punto di riordino}}",
+        "unitValue": "Valore unitario",
+        "stockValue": "Valore di magazzino",
+        "statusNote": {
+          "healthy": "La giacenza disponibile è ampiamente sopra il punto di riordino.",
+          "low": "La giacenza disponibile si sta avvicinando al punto di riordino.",
+          "critical": "La giacenza disponibile è sotto il punto di riordino e richiede attenzione.",
+          "outOfStockNoUnits": "Al momento non ci sono unità disponibili.",
+          "outOfStockReserved": "Tutte le unità in giacenza sono attualmente prenotate. Nessuna unità è disponibile."
+        }
+      },
       "status": {
         "healthy": "Sano",
         "low": "Basso",

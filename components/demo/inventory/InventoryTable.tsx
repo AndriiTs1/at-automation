@@ -1,4 +1,7 @@
+"use client";
+
 import { useTranslations } from "next-intl";
+import type { KeyboardEvent } from "react";
 import { getAvailableUnits, type InventoryItem } from "@/lib/demo-data";
 
 const STATUS_TONE: Record<string, string> = {
@@ -39,14 +42,29 @@ const MIN_TABLE_WIDTH = 1190;
 const COLUMN_WIDTHS = ["16%", "14%", "9%", "8%", "9%", "13%", "12%", "8%", "11%"];
 
 /**
- * Static, presentational Inventory table (Stage 2D.1) — no row selection, no filtering, no
- * client state. Rows come from INVENTORY_ROWS as-is; Available is derived via
- * getAvailableUnits rather than trusting a stored field, and Value is derived as
- * onHand × unitValue rather than a separately stored total, so neither can drift out of sync
- * with its source numbers.
+ * Selectable Inventory table (Stage 2D.2) — mirrors CustomersTable's row-selection pattern
+ * exactly. Filtering is still Stage 2D.3's job, so `rows` is always INVENTORY_ROWS as-is for
+ * now; Available is derived via getAvailableUnits rather than trusting a stored field, and
+ * Value is derived as onHand × unitValue rather than a separately stored total, so neither can
+ * drift out of sync with its source numbers.
  */
-export default function InventoryTable({ rows }: { rows: InventoryItem[] }) {
+export default function InventoryTable({
+  rows,
+  selectedId,
+  onSelect,
+}: {
+  rows: InventoryItem[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}) {
   const t = useTranslations("Dashboard.Inventory");
+
+  const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, id: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelect(id);
+    }
+  };
 
   return (
     <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
@@ -76,8 +94,18 @@ export default function InventoryTable({ rows }: { rows: InventoryItem[] }) {
           {rows.map((item) => {
             const available = getAvailableUnits(item);
             const value = item.onHand * item.unitValue;
+            const isSelected = item.id === selectedId;
             return (
-              <tr key={item.id}>
+              <tr
+                key={item.id}
+                tabIndex={0}
+                aria-selected={isSelected}
+                onClick={() => onSelect(item.id)}
+                onKeyDown={(event) => handleRowKeyDown(event, item.id)}
+                className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
+                  isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                }`}
+              >
                 <td className="px-4 py-3">
                   <p className="truncate font-semibold text-foreground">{item.name}</p>
                   <p className="mt-0.5 truncate text-xs text-neutral-400">{item.sku}</p>
