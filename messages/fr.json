@@ -108,7 +108,7 @@
     "commandCenter": "Centre de contrôle",
     "backToWebsite": "Retour au site",
     "askAt": "Demander à AT",
-    "operationsManager": "Responsable des opérations",
+    "role": "Directeur Général",
     "Sidebar": {
       "sections": {
         "operate": "Exploitation",
@@ -127,7 +127,12 @@
       }
     },
     "Topbar": {
-      "greeting": "Bonjour, {name}.",
+      "greeting": {
+        "morning": "Bonjour, {name}.",
+        "afternoon": "Bon après-midi, {name}.",
+        "evening": "Bonsoir, {name}.",
+        "welcomeBack": "Content de vous revoir, {name}."
+      },
       "attentionCount": "{count, plural, one {# élément nécessite votre attention.} other {# éléments nécessitent votre attention.}}",
       "searchPlaceholder": "Rechercher opérations, clients, factures…",
       "systemsOperational": "Tous les systèmes opérationnels",

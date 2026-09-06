@@ -108,7 +108,7 @@
     "commandCenter": "Kommandozentrale",
     "backToWebsite": "Zurück zur Website",
     "askAt": "AT fragen",
-    "operationsManager": "Operations Manager",
+    "role": "Geschäftsführer",
     "Sidebar": {
       "sections": {
         "operate": "Betrieb",
@@ -127,7 +127,12 @@
       }
     },
     "Topbar": {
-      "greeting": "Guten Morgen, {name}.",
+      "greeting": {
+        "morning": "Guten Morgen, {name}.",
+        "afternoon": "Guten Tag, {name}.",
+        "evening": "Guten Abend, {name}.",
+        "welcomeBack": "Willkommen zurück, {name}."
+      },
       "attentionCount": "{count, plural, one {# Element benötigt Ihre Aufmerksamkeit.} other {# Elemente benötigen Ihre Aufmerksamkeit.}}",
       "searchPlaceholder": "Vorgänge, Kunden, Rechnungen durchsuchen…",
       "systemsOperational": "Alle Systeme betriebsbereit",

@@ -145,7 +145,7 @@ export default function TabletNavigation({
             </div>
             <div className="min-w-0 text-left">
               <p className="truncate text-xs font-semibold text-white/90">{DEMO_USER.name}</p>
-              <p className="truncate text-[11px] text-neutral-500">{t("operationsManager")}</p>
+              <p className="truncate text-[11px] text-neutral-500">{t("role")}</p>
             </div>
           </div>
         </div>

@@ -108,7 +108,7 @@
     "commandCenter": "Command Center",
     "backToWebsite": "Back to website",
     "askAt": "Ask AT",
-    "operationsManager": "Operations Manager",
+    "role": "Managing Director",
     "Sidebar": {
       "sections": {
         "operate": "Operate",
@@ -127,7 +127,12 @@
       }
     },
     "Topbar": {
-      "greeting": "Good morning, {name}.",
+      "greeting": {
+        "morning": "Good morning, {name}.",
+        "afternoon": "Good afternoon, {name}.",
+        "evening": "Good evening, {name}.",
+        "welcomeBack": "Welcome back, {name}."
+      },
       "attentionCount": "{count, plural, one {# item needs your attention.} other {# items need your attention.}}",
       "searchPlaceholder": "Search operations, customers, invoices…",
       "systemsOperational": "All systems operational",

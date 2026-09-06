@@ -108,7 +108,7 @@
     "commandCenter": "Центр управления",
     "backToWebsite": "Вернуться на сайт",
     "askAt": "Спросить AT",
-    "operationsManager": "Операционный менеджер",
+    "role": "Генеральный директор",
     "Sidebar": {
       "sections": {
         "operate": "Операции",
@@ -127,7 +127,12 @@
       }
     },
     "Topbar": {
-      "greeting": "Доброе утро, {name}.",
+      "greeting": {
+        "morning": "Доброе утро, {name}.",
+        "afternoon": "Добрый день, {name}.",
+        "evening": "Добрый вечер, {name}.",
+        "welcomeBack": "С возвращением, {name}."
+      },
       "attentionCount": "{count, plural, one {# элемент требует вашего внимания.} few {# элемента требуют вашего внимания.} many {# элементов требуют вашего внимания.} other {# элемента требуют вашего внимания.}}",
       "searchPlaceholder": "Поиск операций, клиентов, счетов…",
       "systemsOperational": "Все системы работают",

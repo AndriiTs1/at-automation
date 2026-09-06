@@ -108,7 +108,7 @@
     "commandCenter": "Центр керування",
     "backToWebsite": "Повернутися на сайт",
     "askAt": "Запитати AT",
-    "operationsManager": "Операційний менеджер",
+    "role": "Генеральний директор",
     "Sidebar": {
       "sections": {
         "operate": "Операції",
@@ -127,7 +127,12 @@
       }
     },
     "Topbar": {
-      "greeting": "Доброго ранку, {name}.",
+      "greeting": {
+        "morning": "Доброго ранку, {name}.",
+        "afternoon": "Добрий день, {name}.",
+        "evening": "Добрий вечір, {name}.",
+        "welcomeBack": "З поверненням, {name}."
+      },
       "attentionCount": "{count, plural, one {# елемент потребує вашої уваги.} few {# елементи потребують вашої уваги.} many {# елементів потребують вашої уваги.} other {# елемента потребують вашої уваги.}}",
       "searchPlaceholder": "Пошук операцій, клієнтів, рахунків…",
       "systemsOperational": "Усі системи працюють",

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { KPI_ITEMS } from "@/lib/demo-data";
 import ApprovalsPanel from "../dashboard/ApprovalsPanel";
 import BusinessPerformance from "../dashboard/BusinessPerformance";
@@ -9,17 +10,32 @@ import MobileKpiCard from "../dashboard/MobileKpiCard";
 import MobileLiveOperations from "../dashboard/MobileLiveOperations";
 import MobileNeedsAttention from "../dashboard/MobileNeedsAttention";
 import NeedsAttention from "../dashboard/NeedsAttention";
+import DynamicGreeting from "./DynamicGreeting";
 
 /**
  * Director Command Center workspace content — inserted via {children} into each of
  * DemoAppShell's three breakpoint slots. Each block below carries its own container-query
  * visibility (mirroring the gating that used to live on MobileCommandCenter/TabletCommandCenter/
  * DemoDashboard's outer wrappers), so only the block matching the current shell slot renders.
+ *
+ * The personalized greeting + attention-count line is owned here (Command Center only) rather
+ * than by the shared topbars — it used to live in DashboardTopbar/TabletTopbar/MobileTopbar,
+ * which meant it rendered on every module page. DynamicGreeting resolves the actual "morning/
+ * afternoon/evening/welcomeBack" text client-side from local browser time; attentionCount stays
+ * a plain server-renderable translation since it doesn't depend on the client clock.
  */
 export default function DemoCommandCenterContent() {
+  const tTopbar = useTranslations("Dashboard.Topbar");
+
   return (
     <>
       {/* Mobile workspace (below @lg) */}
+      <div className="mb-2.5 shrink-0 @lg:hidden">
+        <p className="text-base leading-tight font-semibold text-foreground">
+          <DynamicGreeting />
+        </p>
+        <p className="mt-0.5 text-xs leading-tight text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+      </div>
       <div className="mb-2.5 grid shrink-0 grid-cols-2 gap-2 @lg:hidden">
         {KPI_ITEMS.map((item) => (
           <MobileKpiCard
@@ -49,6 +65,12 @@ export default function DemoCommandCenterContent() {
       </div>
 
       {/* Tablet workspace (@lg to below @5xl) */}
+      <div className="hidden shrink-0 @lg:mb-4 @lg:block @5xl:hidden">
+        <p className="text-lg font-semibold text-foreground">
+          <DynamicGreeting />
+        </p>
+        <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+      </div>
       <div className="hidden shrink-0 grid-cols-2 gap-3 @lg:mb-4 @lg:grid @5xl:hidden">
         {KPI_ITEMS.map((item) => (
           <KpiCard
@@ -80,6 +102,12 @@ export default function DemoCommandCenterContent() {
       </div>
 
       {/* Desktop workspace (@5xl and up) */}
+      <div className="hidden shrink-0 @5xl:mb-3 @5xl:block">
+        <p className="text-sm font-normal text-neutral-500">
+          <DynamicGreeting />
+        </p>
+        <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+      </div>
       <div className="hidden shrink-0 grid-cols-2 gap-2 @5xl:mb-3 @5xl:grid @3xl:grid-cols-4 @3xl:gap-3">
         {KPI_ITEMS.map((item) => (
           <KpiCard

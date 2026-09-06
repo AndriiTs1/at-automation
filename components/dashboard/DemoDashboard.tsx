@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+import DynamicGreeting from "@/components/demo/DynamicGreeting";
 import { KPI_ITEMS } from "@/lib/demo-data";
 import ApprovalsPanel from "./ApprovalsPanel";
 import BusinessPerformance from "./BusinessPerformance";
@@ -30,6 +32,8 @@ function KpiGrid() {
 }
 
 export default function DemoDashboard() {
+  const tTopbar = useTranslations("Dashboard.Topbar");
+
   return (
     <div className="@container flex h-full w-full">
       {/* MOBILE — container below @lg (512px). Dedicated mobile workspace. */}
@@ -44,6 +48,13 @@ export default function DemoDashboard() {
 
         <div className="flex min-w-0 flex-1 flex-col overflow-y-auto bg-neutral-50 p-3 @lg:p-4 @3xl:p-2.5">
           <DashboardTopbar />
+
+          <div className="mb-3 shrink-0 @3xl:mb-2">
+            <p className="text-sm font-normal text-neutral-500">
+              <DynamicGreeting />
+            </p>
+            <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+          </div>
 
           <div className="mb-3 grid shrink-0 grid-cols-2 gap-2 @3xl:mb-2 @3xl:grid-cols-4 @3xl:gap-3">
             <KpiGrid />

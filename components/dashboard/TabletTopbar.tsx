@@ -42,11 +42,6 @@ export default function TabletTopbar({ navOpen, onToggleNav }: { navOpen: boolea
           </div>
         </div>
       </div>
-
-      <div className="mt-3">
-        <p className="text-lg font-semibold text-foreground">{tTopbar("greeting", { name: DEMO_USER.firstName })}</p>
-        <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
-      </div>
     </div>
   );
 }

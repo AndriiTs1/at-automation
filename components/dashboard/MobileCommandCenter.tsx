@@ -1,6 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import DynamicGreeting from "@/components/demo/DynamicGreeting";
 import { KPI_ITEMS } from "@/lib/demo-data";
 import MobileApprovalsPanel from "./MobileApprovalsPanel";
 import MobileBusinessPerformance from "./MobileBusinessPerformance";
@@ -11,6 +13,7 @@ import MobileTopbar from "./MobileTopbar";
 import TabletNavigation from "./TabletNavigation";
 
 export default function MobileCommandCenter() {
+  const tTopbar = useTranslations("Dashboard.Topbar");
   const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
@@ -26,6 +29,13 @@ export default function MobileCommandCenter() {
     <div className="relative flex min-w-0 flex-1 @lg:hidden">
       <div className="flex h-full w-full flex-col overflow-y-auto bg-neutral-50 px-3 pt-1 pb-3">
         <MobileTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
+
+        <div className="mb-2.5 shrink-0">
+          <p className="text-base leading-tight font-semibold text-foreground">
+            <DynamicGreeting />
+          </p>
+          <p className="mt-0.5 text-xs leading-tight text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+        </div>
 
         <div className="mb-2.5 grid shrink-0 grid-cols-2 gap-2">
           {KPI_ITEMS.map((item) => (
