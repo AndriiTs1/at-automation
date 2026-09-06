@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { SearchIcon } from "@/components/dashboard/icons";
 import { CUSTOMER_HEALTH_OPTIONS, CUSTOMER_SEGMENTS, type CustomerHealth, type CustomerSegment } from "@/lib/demo-data";
 import CustomerFilterDropdown from "./CustomerFilterDropdown";
@@ -7,12 +6,16 @@ import CustomerFilterDropdown from "./CustomerFilterDropdown";
 export type SegmentFilterValue = CustomerSegment | "all";
 export type HealthFilterValue = CustomerHealth | "all";
 
-type OpenFilter = "segment" | "health" | null;
+export type OpenFilter = "segment" | "health" | null;
 
 /**
  * Functional Customers toolbar (Stage 2C.3) — same visual composition as the Stage 2C.1/2C.2
  * static toolbar, now wired to filter state owned by CustomersWorkspace. Reuses Operations'
  * proven search/select/result-count/clear-filters interaction pattern.
+ *
+ * `openFilter` (which dropdown, if any, is open) is owned by CustomersWorkspace rather than
+ * locally — its Escape handler needs to know a dropdown is open so it can let the dropdown's
+ * own Escape close first, instead of closing the Customer Detail drawer in the same keypress.
  */
 export default function CustomersToolbar({
   searchQuery,
@@ -24,6 +27,8 @@ export default function CustomersToolbar({
   resultCount,
   hasActiveFilters,
   onClearFilters,
+  openFilter,
+  onOpenFilterChange,
 }: {
   searchQuery: string;
   onSearchChange: (value: string) => void;
@@ -34,9 +39,10 @@ export default function CustomersToolbar({
   resultCount: number;
   hasActiveFilters: boolean;
   onClearFilters: () => void;
+  openFilter: OpenFilter;
+  onOpenFilterChange: (value: OpenFilter) => void;
 }) {
   const t = useTranslations("Dashboard.Customers");
-  const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
 
   const segmentOptions = [
     { value: "all" as const, label: t("toolbar.allSegments") },
@@ -67,7 +73,7 @@ export default function CustomersToolbar({
         onChange={onSegmentChange}
         ariaLabel={t("toolbar.allSegments")}
         open={openFilter === "segment"}
-        onOpenChange={(isOpen) => setOpenFilter(isOpen ? "segment" : null)}
+        onOpenChange={(isOpen) => onOpenFilterChange(isOpen ? "segment" : null)}
       />
 
       <CustomerFilterDropdown
@@ -76,7 +82,7 @@ export default function CustomersToolbar({
         onChange={onHealthChange}
         ariaLabel={t("toolbar.allHealth")}
         open={openFilter === "health"}
-        onOpenChange={(isOpen) => setOpenFilter(isOpen ? "health" : null)}
+        onOpenChange={(isOpen) => onOpenFilterChange(isOpen ? "health" : null)}
       />
 
       <div className="ml-auto flex shrink-0 items-center gap-3">

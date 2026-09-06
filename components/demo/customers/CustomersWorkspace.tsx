@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CUSTOMERS_ROWS } from "@/lib/demo-data";
 import CustomerDetailPanel from "./CustomerDetailPanel";
 import CustomersTable from "./CustomersTable";
-import CustomersToolbar, { type HealthFilterValue, type SegmentFilterValue } from "./CustomersToolbar";
+import CustomersToolbar, { type HealthFilterValue, type OpenFilter, type SegmentFilterValue } from "./CustomersToolbar";
 
 /**
  * Client boundary for Customers row selection and filtering (Stage 2C.3). Owns
@@ -17,6 +17,10 @@ export default function CustomersWorkspace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [segmentFilter, setSegmentFilter] = useState<SegmentFilterValue>("all");
   const [healthFilter, setHealthFilter] = useState<HealthFilterValue>("all");
+  // Which Segment/Health dropdown (if any) is open — owned here rather than inside
+  // CustomersToolbar so the Escape handler below can tell a dropdown is open and let its own
+  // Escape close it first, instead of closing the Customer Detail drawer in the same keypress.
+  const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
 
   const filteredCustomers = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -47,11 +51,16 @@ export default function CustomersWorkspace() {
   useEffect(() => {
     if (!selectedId) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedId(null);
+      if (event.key !== "Escape") return;
+      // A dropdown owns this Escape if one is open — its own handler closes it on this same
+      // keypress. Skip closing the drawer so the two layers close one at a time: dropdown
+      // first, drawer on the next Escape.
+      if (openFilter) return;
+      setSelectedId(null);
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId]);
+  }, [selectedId, openFilter]);
 
   const hasActiveFilters = searchQuery.trim() !== "" || segmentFilter !== "all" || healthFilter !== "all";
 
@@ -75,17 +84,32 @@ export default function CustomersWorkspace() {
         resultCount={filteredCustomers.length}
         hasActiveFilters={hasActiveFilters}
         onClearFilters={handleClearFilters}
+        openFilter={openFilter}
+        onOpenFilterChange={setOpenFilter}
       />
-      <div className="flex min-h-0 flex-1 gap-3">
+      <div className="relative flex min-h-0 flex-1">
         <CustomersTable
           rows={filteredCustomers}
           selectedId={selectedId}
           onSelect={setSelectedId}
-          panelOpen={selectedCustomer !== null}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={handleClearFilters}
         />
-        {selectedCustomer && <CustomerDetailPanel customer={selectedCustomer} onClose={() => setSelectedId(null)} />}
+        {selectedCustomer && (
+          <>
+            {/* Subtle workspace-level scrim — communicates layering without darkening the app or
+                blocking recognition of the table underneath. Decorative: X and Escape are the
+                primary close mechanisms, so this stays out of tab order and hidden from AT. */}
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={() => setSelectedId(null)}
+              className="absolute inset-0 z-10 cursor-default bg-black/[0.02]"
+            />
+            <CustomerDetailPanel customer={selectedCustomer} onClose={() => setSelectedId(null)} />
+          </>
+        )}
       </div>
     </>
   );

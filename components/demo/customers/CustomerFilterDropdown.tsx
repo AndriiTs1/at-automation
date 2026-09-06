@@ -133,7 +133,7 @@ export default function CustomerFilterDropdown<T extends string>({
           id={listboxId}
           role="listbox"
           aria-label={ariaLabel}
-          className="absolute top-full left-0 z-20 mt-1 w-full overflow-hidden rounded-xl border border-border bg-white py-1 shadow-lg shadow-black/10"
+          className="absolute top-full left-0 z-30 mt-1 w-full overflow-hidden rounded-xl border border-border bg-white py-1 shadow-lg shadow-black/10"
         >
           {options.map((option, index) => {
             const isSelected = option.value === value;
