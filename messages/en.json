@@ -446,6 +446,37 @@
       "relativeTime": {
         "today": "Today",
         "yesterday": "Yesterday"
+      },
+      "detail": {
+        "close": "Close",
+        "invoiceOverview": "Invoice overview",
+        "amounts": "Amounts",
+        "subtotal": "Subtotal",
+        "vat": "VAT ({rate}%)",
+        "connectedOperation": "Connected operation",
+        "noConnectedOperation": "No connected operation",
+        "paymentStatus": "Payment status",
+        "reconciliation": "Reconciliation",
+        "reconciliationState": {
+          "reconciled": "Reconciled",
+          "pending": "Pending",
+          "exception": "Needs review"
+        },
+        "note": {
+          "draft": "Draft — not yet issued, not part of receivables.",
+          "paidInFull": "Paid in full.",
+          "partial": "Partial payment received — the remaining balance is still outstanding.",
+          "open": "Open — not yet due.",
+          "overdue": "Overdue — payment was due on {date}.",
+          "needsReview": "A payment was received but could not be automatically matched to this invoice yet."
+        },
+        "paymentActivity": "Payment activity",
+        "activity": {
+          "invoiceIssued": "Invoice issued",
+          "paymentMatched": "Payment received — {amount}",
+          "paymentNeedsReview": "Payment received — {amount}, needs review",
+          "invoiceOverdue": "Payment overdue"
+        }
       }
     }
   }

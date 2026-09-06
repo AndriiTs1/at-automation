@@ -446,6 +446,37 @@
       "relativeTime": {
         "today": "Heute",
         "yesterday": "Gestern"
+      },
+      "detail": {
+        "close": "Schließen",
+        "invoiceOverview": "Rechnungsübersicht",
+        "amounts": "Beträge",
+        "subtotal": "Zwischensumme",
+        "vat": "MWST ({rate}%)",
+        "connectedOperation": "Verknüpfter Auftrag",
+        "noConnectedOperation": "Kein verknüpfter Auftrag",
+        "paymentStatus": "Zahlungsstatus",
+        "reconciliation": "Abgleich",
+        "reconciliationState": {
+          "reconciled": "Abgeglichen",
+          "pending": "Ausstehend",
+          "exception": "Prüfung erforderlich"
+        },
+        "note": {
+          "draft": "Entwurf – noch nicht ausgestellt, nicht Teil der Forderungen.",
+          "paidInFull": "Vollständig bezahlt.",
+          "partial": "Teilzahlung erhalten – der Restbetrag ist weiterhin offen.",
+          "open": "Offen – noch nicht fällig.",
+          "overdue": "Überfällig – Zahlung war fällig am {date}.",
+          "needsReview": "Eine Zahlung ist eingegangen, konnte dieser Rechnung aber noch nicht automatisch zugeordnet werden."
+        },
+        "paymentActivity": "Zahlungsverlauf",
+        "activity": {
+          "invoiceIssued": "Rechnung ausgestellt",
+          "paymentMatched": "Zahlung erhalten — {amount}",
+          "paymentNeedsReview": "Zahlung erhalten — {amount}, Prüfung erforderlich",
+          "invoiceOverdue": "Zahlung überfällig"
+        }
       }
     }
   }

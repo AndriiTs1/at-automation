@@ -446,6 +446,37 @@
       "relativeTime": {
         "today": "Aujourd'hui",
         "yesterday": "Hier"
+      },
+      "detail": {
+        "close": "Fermer",
+        "invoiceOverview": "Aperçu de la facture",
+        "amounts": "Montants",
+        "subtotal": "Sous-total",
+        "vat": "TVA ({rate} %)",
+        "connectedOperation": "Opération liée",
+        "noConnectedOperation": "Aucune opération liée",
+        "paymentStatus": "Statut de paiement",
+        "reconciliation": "Rapprochement",
+        "reconciliationState": {
+          "reconciled": "Rapproché",
+          "pending": "En attente",
+          "exception": "À vérifier"
+        },
+        "note": {
+          "draft": "Brouillon – pas encore émise, ne fait pas partie des créances.",
+          "paidInFull": "Payée intégralement.",
+          "partial": "Paiement partiel reçu – le solde restant est toujours dû.",
+          "open": "Ouverte – pas encore échue.",
+          "overdue": "En retard – paiement dû le {date}.",
+          "needsReview": "Un paiement a été reçu mais n'a pas encore pu être rapproché automatiquement de cette facture."
+        },
+        "paymentActivity": "Activité de paiement",
+        "activity": {
+          "invoiceIssued": "Facture émise",
+          "paymentMatched": "Paiement reçu — {amount}",
+          "paymentNeedsReview": "Paiement reçu — {amount}, à vérifier",
+          "invoiceOverdue": "Paiement en retard"
+        }
       }
     }
   }

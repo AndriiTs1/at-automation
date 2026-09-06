@@ -5,7 +5,9 @@ import {
   getOverdueOutstanding,
   getTotalOutstanding,
   getTotalPaid,
+  type FinanceInvoice,
 } from "@/lib/demo-data";
+import FinanceDetailPanel from "./FinanceDetailPanel";
 import FinanceTable from "./FinanceTable";
 
 function formatChf(amount: number) {
@@ -19,14 +21,25 @@ const TONE_TEXT: Record<string, string> = {
 };
 
 /**
- * Desktop-only Finance workspace foundation (Stage 2E.1). Hidden below the @5xl container-query
- * breakpoint, matching CustomersDesktop/InventoryDesktop/OperationsDesktop's own threshold.
- * Deliberately minimal: header, KPIs and a static table — no toolbar (no filters exist yet,
- * Stage 2E.3), no row selection, no detail overlay (Stage 2E.2). KPIs are computed from
- * FINANCE_INVOICES itself via lib/demo-data.ts helpers rather than a separate hardcoded
- * summary, so they can never drift out of sync with the row data.
+ * Desktop-only Finance workspace (Stage 2E.2). Hidden below the @5xl container-query breakpoint,
+ * matching CustomersDesktop/InventoryDesktop/OperationsDesktop's own threshold. Header and KPIs
+ * are unchanged since Stage 2E.1; now a presentational component receiving the shared selection
+ * state from FinanceWorkspace, mirroring InventoryDesktop's prop-driven pattern. No toolbar yet
+ * (no filters exist, Stage 2E.3). KPIs are computed from FINANCE_INVOICES itself via
+ * lib/demo-data.ts helpers rather than a separate hardcoded summary, so they can never drift out
+ * of sync with the row data.
  */
-export default function FinanceDesktop() {
+export default function FinanceDesktop({
+  selectedId,
+  onSelectRow,
+  selectedInvoice,
+  onCloseDetail,
+}: {
+  selectedId: string | null;
+  onSelectRow: (id: string) => void;
+  selectedInvoice: FinanceInvoice | null;
+  onCloseDetail: () => void;
+}) {
   const t = useTranslations("Dashboard.Finance");
 
   const summaryItems = [
@@ -63,7 +76,24 @@ export default function FinanceDesktop() {
       </div>
 
       {/* Table */}
-      <FinanceTable rows={FINANCE_INVOICES} />
+      <div className="relative flex min-h-0 flex-1">
+        <FinanceTable rows={FINANCE_INVOICES} selectedId={selectedId} onSelect={onSelectRow} />
+        {selectedInvoice && (
+          <>
+            {/* Subtle workspace-level scrim — communicates layering without darkening the app or
+                blocking recognition of the table underneath. Decorative: X and Escape are the
+                primary close mechanisms, so this stays out of tab order and hidden from AT. */}
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={onCloseDetail}
+              className="absolute inset-0 z-10 cursor-default bg-black/[0.02]"
+            />
+            <FinanceDetailPanel invoice={selectedInvoice} onClose={onCloseDetail} />
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import { useTranslations } from "next-intl";
+import type { KeyboardEvent } from "react";
 import {
   getFinanceCustomer,
   getFinanceOperation,
@@ -39,14 +42,30 @@ const MIN_TABLE_WIDTH = 1190;
 const COLUMN_WIDTHS = ["12%", "16%", "12%", "9%", "9%", "11%", "9%", "11%", "11%"];
 
 /**
- * Static, presentational Finance table (Stage 2E.1) — no row selection, no filtering, no
- * client state; rows are not interactive (no detail drawer until Stage 2E.2). Customer and
- * connected operation are resolved live via getFinanceCustomer/getFinanceOperation rather than
- * duplicated onto the invoice, and Outstanding is derived via getInvoiceOutstanding rather than
- * trusting a stored field, so neither can drift out of sync with total/paidAmount.
+ * Selectable Finance table (Stage 2E.2) — mirrors InventoryTable's row-selection pattern
+ * exactly (tabIndex, onClick/onKeyDown for Enter/Space, aria-selected, selected-row tint). No
+ * filtering yet (Stage 2E.3), so there's no empty state to render here. Customer and connected
+ * operation are resolved live via getFinanceCustomer/getFinanceOperation rather than duplicated
+ * onto the invoice, and Outstanding is derived via getInvoiceOutstanding rather than trusting a
+ * stored field, so neither can drift out of sync with total/paidAmount.
  */
-export default function FinanceTable({ rows }: { rows: FinanceInvoice[] }) {
+export default function FinanceTable({
+  rows,
+  selectedId,
+  onSelect,
+}: {
+  rows: FinanceInvoice[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}) {
   const t = useTranslations("Dashboard.Finance");
+
+  const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, id: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelect(id);
+    }
+  };
 
   return (
     <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
@@ -77,8 +96,18 @@ export default function FinanceTable({ rows }: { rows: FinanceInvoice[] }) {
             const customer = getFinanceCustomer(invoice.customerId);
             const operation = getFinanceOperation(invoice.operationId);
             const outstanding = getInvoiceOutstanding(invoice);
+            const isSelected = invoice.id === selectedId;
             return (
-              <tr key={invoice.id}>
+              <tr
+                key={invoice.id}
+                tabIndex={0}
+                aria-selected={isSelected}
+                onClick={() => onSelect(invoice.id)}
+                onKeyDown={(event) => handleRowKeyDown(event, invoice.id)}
+                className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
+                  isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                }`}
+              >
                 <td className="truncate px-4 py-3 font-semibold text-foreground">{invoice.id}</td>
                 <td className="truncate px-4 py-3 text-neutral-600">{customer?.name ?? invoice.customerId}</td>
                 <td className="px-4 py-3 text-center">

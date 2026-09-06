@@ -997,6 +997,12 @@ export const FINANCE_INVOICES: FinanceInvoice[] = [
     paidAmount: 0,
     updated: { kind: "yesterday", time: "11:15" },
   },
+  // Partial payment (Stage 2E.2): total raised from 12,800 to 16,800 and paidAmount set to
+  // 4,000 so outstanding stays exactly 12,800 (total - paidAmount) — the CHF 86,400/24,500
+  // aggregates above are computed from outstanding, not total, so this redistribution is
+  // invisible to them. Harborline has no operationId, so there's no operation.value to keep in
+  // sync either — chosen deliberately per Stage 2E.2's own guidance to prefer a
+  // non-operation-linked invoice for the partial-payment scenario.
   {
     id: "INV-2026-2009",
     customerId: "CUS-1041", // Harborline Logistics
@@ -1004,11 +1010,11 @@ export const FINANCE_INVOICES: FinanceInvoice[] = [
     status: "sent",
     issueDate: "20 Aug",
     dueDate: "19 Sep",
-    subtotal: 11841,
+    subtotal: 15541,
     vatRate: 8.1,
-    vatAmount: 959,
-    total: 12800,
-    paidAmount: 0,
+    vatAmount: 1259,
+    total: 16800,
+    paidAmount: 4000,
     updated: { kind: "date", date: "1 Sep", time: "15:50" },
   },
   // Paid — outstanding = 0
@@ -1109,4 +1115,146 @@ export function getTotalPaid(): number {
     (sum, invoice) => sum + invoice.paidAmount,
     0,
   );
+}
+
+/**
+ * A payment record (Stage 2E.2). References its invoice by id only — customer/invoice number
+ * are never duplicated here, always resolved live via getInvoicePayments + FINANCE_INVOICES.
+ *
+ * "received"/"matched" are counted as credited to the invoice (see getInvoicePaidAmount);
+ * "unmatched" is money that has arrived but couldn't be confidently applied yet (e.g. an
+ * ambiguous bank reference) — it is deliberately EXCLUDED from paidAmount until reviewed, which
+ * is what makes it a useful "AT flags this for you" demo moment. "reversed" is likewise excluded
+ * (no example currently uses it, but getInvoiceReconciliationState below already accounts for it).
+ */
+export type FinancePaymentStatus = "received" | "matched" | "unmatched" | "reversed";
+
+export type FinancePayment = {
+  id: string;
+  /** Stable relational key into FINANCE_INVOICES. */
+  invoiceId: string;
+  amount: number;
+  receivedDate: string;
+  status: FinancePaymentStatus;
+  /** Bank/remittance reference as captured on the payment — not necessarily the invoice id. */
+  reference?: string;
+};
+
+/**
+ * Payment records for the 4 invoices with a real payment story (Stage 2E.2):
+ *   - INV-2026-2010 / INV-2026-2011: full "matched" payments backing their existing paidAmount.
+ *   - INV-2026-2009 (Harborline): the CHF 4,000 partial payment backing its updated paidAmount.
+ *   - INV-2026-2008 (Vantage Freight Co.): CHF 15,000 arrived but "unmatched" — its reference
+ *     ("REF-88213") doesn't map cleanly to the invoice, so it is NOT counted toward paidAmount
+ *     (invoice.paidAmount stays 0, matching FINANCE_INVOICES) and surfaces as a reconciliation
+ *     exception needing review. This is the deliberate "needs review" scenario — every other
+ *     invoice is left with no payment records at all rather than an invented one.
+ */
+export const FINANCE_PAYMENTS: FinancePayment[] = [
+  {
+    id: "PAY-2026-3001",
+    invoiceId: "INV-2026-2010",
+    amount: 12900,
+    receivedDate: "9 Aug",
+    status: "matched",
+    reference: "INV-2026-2010",
+  },
+  {
+    id: "PAY-2026-3002",
+    invoiceId: "INV-2026-2011",
+    amount: 15300,
+    receivedDate: "4 Aug",
+    status: "matched",
+    reference: "INV-2026-2011",
+  },
+  {
+    id: "PAY-2026-3003",
+    invoiceId: "INV-2026-2009",
+    amount: 4000,
+    receivedDate: "1 Sep",
+    status: "matched",
+    reference: "INV-2026-2009",
+  },
+  {
+    id: "PAY-2026-3004",
+    invoiceId: "INV-2026-2008",
+    amount: 15000,
+    receivedDate: "3 Sep",
+    status: "unmatched",
+    reference: "REF-88213",
+  },
+];
+
+/** Payment statuses counted as credited to the invoice — excludes "unmatched"/"reversed". */
+const CREDITED_PAYMENT_STATUSES: FinancePaymentStatus[] = ["received", "matched"];
+
+/** All payment records for one invoice, oldest first — resolved live, never duplicated. */
+export function getInvoicePayments(invoiceId: string): FinancePayment[] {
+  return FINANCE_PAYMENTS.filter((payment) => payment.invoiceId === invoiceId);
+}
+
+/** Sum of credited (received/matched) payments for one invoice — should equal invoice.paidAmount. */
+export function getInvoicePaidAmount(invoiceId: string): number {
+  return getInvoicePayments(invoiceId)
+    .filter((payment) => CREDITED_PAYMENT_STATUSES.includes(payment.status))
+    .reduce((sum, payment) => sum + payment.amount, 0);
+}
+
+export type FinanceReconciliationState = "reconciled" | "pending" | "exception";
+
+/**
+ * Invoice-level reconciliation state, derived (never stored) from the invoice's own payments:
+ *   - "exception" if any payment for this invoice is unmatched/reversed and needs review —
+ *     takes priority since it's actionable regardless of outstanding balance.
+ *   - "reconciled" only once outstanding is 0 (a draft is never "reconciled" — it isn't a
+ *     receivable yet, see getInvoiceReconciliationState's draft handling in the UI layer).
+ *   - "pending" otherwise (no payments yet, or a matched partial payment still awaiting the rest).
+ */
+export function getInvoiceReconciliationState(invoiceId: string): FinanceReconciliationState {
+  const invoice = FINANCE_INVOICES.find((candidate) => candidate.id === invoiceId);
+  const payments = getInvoicePayments(invoiceId);
+  const hasException = payments.some((payment) => payment.status === "unmatched" || payment.status === "reversed");
+  if (hasException) return "exception";
+  if (invoice && invoice.status !== "draft" && getInvoiceOutstanding(invoice) === 0) return "reconciled";
+  return "pending";
+}
+
+export type FinanceActivityEntry = {
+  key:
+    | "invoiceIssued"
+    | "paymentReceived"
+    | "paymentMatched"
+    | "paymentNeedsReview"
+    | "invoiceOverdue";
+  date: string;
+  params?: Record<string, string>;
+};
+
+/**
+ * A small, fully deterministic activity timeline for one invoice — built from the invoice's own
+ * issueDate/status and its real FINANCE_PAYMENTS records only, never fabricated or time-computed.
+ * A draft invoice hasn't been issued yet, so it gets an empty timeline (handled in the UI as "not
+ * yet issued" rather than an empty activity list).
+ */
+export function getInvoiceActivity(invoiceId: string): FinanceActivityEntry[] {
+  const invoice = FINANCE_INVOICES.find((candidate) => candidate.id === invoiceId);
+  if (!invoice || invoice.status === "draft") return [];
+
+  const entries: FinanceActivityEntry[] = [
+    { key: "invoiceIssued", date: invoice.issueDate },
+  ];
+
+  for (const payment of getInvoicePayments(invoiceId)) {
+    entries.push({
+      key: payment.status === "unmatched" ? "paymentNeedsReview" : "paymentMatched",
+      date: payment.receivedDate,
+      params: { amount: `CHF ${payment.amount.toLocaleString("en-US")}` },
+    });
+  }
+
+  if (invoice.status === "overdue") {
+    entries.push({ key: "invoiceOverdue", date: invoice.dueDate });
+  }
+
+  return entries;
 }

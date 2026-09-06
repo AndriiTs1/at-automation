@@ -446,6 +446,37 @@
       "relativeTime": {
         "today": "Сьогодні",
         "yesterday": "Вчора"
+      },
+      "detail": {
+        "close": "Закрити",
+        "invoiceOverview": "Огляд рахунку",
+        "amounts": "Суми",
+        "subtotal": "Проміжний підсумок",
+        "vat": "ПДВ ({rate}%)",
+        "connectedOperation": "Пов'язана операція",
+        "noConnectedOperation": "Немає пов'язаної операції",
+        "paymentStatus": "Статус оплати",
+        "reconciliation": "Звірка",
+        "reconciliationState": {
+          "reconciled": "Звірено",
+          "pending": "Очікує",
+          "exception": "Потребує перевірки"
+        },
+        "note": {
+          "draft": "Чернетка — ще не виставлено, не входить до дебіторської заборгованості.",
+          "paidInFull": "Оплачено повністю.",
+          "partial": "Отримано часткову оплату — залишок досі не погашено.",
+          "open": "Відкритий — термін оплати ще не настав.",
+          "overdue": "Прострочено — термін оплати минув {date}.",
+          "needsReview": "Платіж отримано, але його ще не вдалося автоматично зіставити з цим рахунком."
+        },
+        "paymentActivity": "Історія платежів",
+        "activity": {
+          "invoiceIssued": "Рахунок виставлено",
+          "paymentMatched": "Платіж отримано — {amount}",
+          "paymentNeedsReview": "Платіж отримано — {amount}, потребує перевірки",
+          "invoiceOverdue": "Платіж прострочено"
+        }
       }
     }
   }

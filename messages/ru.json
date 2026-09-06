@@ -446,6 +446,37 @@
       "relativeTime": {
         "today": "Сегодня",
         "yesterday": "Вчера"
+      },
+      "detail": {
+        "close": "Закрыть",
+        "invoiceOverview": "Обзор счёта",
+        "amounts": "Суммы",
+        "subtotal": "Промежуточный итог",
+        "vat": "НДС ({rate}%)",
+        "connectedOperation": "Связанная операция",
+        "noConnectedOperation": "Нет связанной операции",
+        "paymentStatus": "Статус оплаты",
+        "reconciliation": "Сверка",
+        "reconciliationState": {
+          "reconciled": "Сверено",
+          "pending": "Ожидает",
+          "exception": "Требует проверки"
+        },
+        "note": {
+          "draft": "Черновик — ещё не выставлен, не входит в дебиторскую задолженность.",
+          "paidInFull": "Оплачено полностью.",
+          "partial": "Получена частичная оплата — оставшаяся сумма всё ещё не погашена.",
+          "open": "Открыт — срок оплаты ещё не наступил.",
+          "overdue": "Просрочен — срок оплаты истёк {date}.",
+          "needsReview": "Платёж получен, но пока не удалось автоматически сопоставить его с этим счётом."
+        },
+        "paymentActivity": "История платежей",
+        "activity": {
+          "invoiceIssued": "Счёт выставлен",
+          "paymentMatched": "Платёж получен — {amount}",
+          "paymentNeedsReview": "Платёж получен — {amount}, требует проверки",
+          "invoiceOverdue": "Платёж просрочен"
+        }
       }
     }
   }

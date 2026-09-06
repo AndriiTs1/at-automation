@@ -446,6 +446,37 @@
       "relativeTime": {
         "today": "Oggi",
         "yesterday": "Ieri"
+      },
+      "detail": {
+        "close": "Chiudi",
+        "invoiceOverview": "Riepilogo fattura",
+        "amounts": "Importi",
+        "subtotal": "Subtotale",
+        "vat": "IVA ({rate}%)",
+        "connectedOperation": "Operazione collegata",
+        "noConnectedOperation": "Nessuna operazione collegata",
+        "paymentStatus": "Stato del pagamento",
+        "reconciliation": "Riconciliazione",
+        "reconciliationState": {
+          "reconciled": "Riconciliato",
+          "pending": "In sospeso",
+          "exception": "Da verificare"
+        },
+        "note": {
+          "draft": "Bozza – non ancora emessa, non fa parte dei crediti.",
+          "paidInFull": "Pagata per intero.",
+          "partial": "Pagamento parziale ricevuto – il saldo residuo è ancora da incassare.",
+          "open": "Aperta – non ancora scaduta.",
+          "overdue": "Scaduta – il pagamento era dovuto il {date}.",
+          "needsReview": "È stato ricevuto un pagamento, ma non è ancora stato abbinato automaticamente a questa fattura."
+        },
+        "paymentActivity": "Attività di pagamento",
+        "activity": {
+          "invoiceIssued": "Fattura emessa",
+          "paymentMatched": "Pagamento ricevuto — {amount}",
+          "paymentNeedsReview": "Pagamento ricevuto — {amount}, da verificare",
+          "invoiceOverdue": "Pagamento scaduto"
+        }
       }
     }
   }
