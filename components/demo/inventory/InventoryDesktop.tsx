@@ -1,6 +1,8 @@
 import { useTranslations } from "next-intl";
-import { INVENTORY_SUMMARY } from "@/lib/demo-data";
-import InventoryWorkspace from "./InventoryWorkspace";
+import { INVENTORY_SUMMARY, type InventoryItem } from "@/lib/demo-data";
+import InventoryDetailPanel from "./InventoryDetailPanel";
+import InventoryTable from "./InventoryTable";
+import InventoryToolbar, { type LocationFilterValue, type OpenFilter, type StatusFilterValue } from "./InventoryToolbar";
 
 const SUMMARY_ITEMS = [
   { key: "totalItems", value: INVENTORY_SUMMARY.totalItems, tone: "accent" },
@@ -17,11 +19,44 @@ const TONE_TEXT: Record<string, string> = {
 
 /**
  * Desktop-only Inventory workspace. Hidden below the @5xl container-query breakpoint, matching
- * CustomersDesktop/OperationsDesktop's own threshold. Header/KPIs stay static and
- * server-rendered — the toolbar, row selection/filtering and the Inventory Detail overlay
- * drawer are all owned by InventoryWorkspace (Stage 2D.3).
+ * CustomersDesktop/OperationsDesktop's own threshold. Visual output unchanged since Stage
+ * 2D.3; now a presentational component receiving the shared filter/selection state from
+ * InventoryWorkspace instead of owning it itself (Stage 2D.4), mirroring CustomersDesktop's
+ * prop-driven pattern.
  */
-export default function InventoryDesktop() {
+export default function InventoryDesktop({
+  searchQuery,
+  onSearchChange,
+  statusFilter,
+  onStatusChange,
+  locationFilter,
+  onLocationChange,
+  hasActiveFilters,
+  onClearFilters,
+  openFilter,
+  onOpenFilterChange,
+  filteredItems,
+  selectedId,
+  onSelectRow,
+  selectedItem,
+  onCloseDetail,
+}: {
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+  statusFilter: StatusFilterValue;
+  onStatusChange: (value: StatusFilterValue) => void;
+  locationFilter: LocationFilterValue;
+  onLocationChange: (value: LocationFilterValue) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
+  openFilter: OpenFilter;
+  onOpenFilterChange: (value: OpenFilter) => void;
+  filteredItems: InventoryItem[];
+  selectedId: string | null;
+  onSelectRow: (id: string) => void;
+  selectedItem: InventoryItem | null;
+  onCloseDetail: () => void;
+}) {
   const t = useTranslations("Dashboard.Inventory");
 
   return (
@@ -50,8 +85,43 @@ export default function InventoryDesktop() {
         ))}
       </div>
 
-      {/* Toolbar + table + detail overlay drawer — owned by InventoryWorkspace (Stage 2D.3) */}
-      <InventoryWorkspace />
+      <InventoryToolbar
+        searchQuery={searchQuery}
+        onSearchChange={onSearchChange}
+        statusFilter={statusFilter}
+        onStatusChange={onStatusChange}
+        locationFilter={locationFilter}
+        onLocationChange={onLocationChange}
+        resultCount={filteredItems.length}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilters={onClearFilters}
+        openFilter={openFilter}
+        onOpenFilterChange={onOpenFilterChange}
+      />
+      <div className="relative flex min-h-0 flex-1">
+        <InventoryTable
+          rows={filteredItems}
+          selectedId={selectedId}
+          onSelect={onSelectRow}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={onClearFilters}
+        />
+        {selectedItem && (
+          <>
+            {/* Subtle workspace-level scrim — communicates layering without darkening the app or
+                blocking recognition of the table underneath. Decorative: X and Escape are the
+                primary close mechanisms, so this stays out of tab order and hidden from AT. */}
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={onCloseDetail}
+              className="absolute inset-0 z-10 cursor-default bg-black/[0.02]"
+            />
+            <InventoryDetailPanel item={selectedItem} onClose={onCloseDetail} />
+          </>
+        )}
+      </div>
     </div>
   );
 }
