@@ -11,7 +11,7 @@ export const NAV_SECTIONS = [
       { key: "operations", icon: "activity", href: "/demo/operations", badge: "3", available: true },
       { key: "customers", icon: "users", href: "/demo/customers", available: true },
       { key: "inventory", icon: "box", href: "/demo/inventory", badge: "12", available: true },
-      { key: "finance", icon: "coins", href: "/demo/finance", badge: "4" },
+      { key: "finance", icon: "coins", href: "/demo/finance", badge: "4", available: true },
     ],
   },
   {
@@ -41,7 +41,7 @@ export const NEEDS_ATTENTION = [
   {
     key: "overdueInvoices",
     count: 4,
-    amount: "CHF 18,400",
+    amount: "CHF 24,500",
     deptKey: "finance",
     ownerKey: "financeTeam",
     noteKey: "reminderSentAutomatically",
@@ -808,6 +808,305 @@ export function getReservationsForItem(
 export function getActiveReservedQuantity(inventoryItemId: string): number {
   return INVENTORY_RESERVATIONS.filter((r) => r.inventoryItemId === inventoryItemId && r.status === "active").reduce(
     (sum, r) => sum + r.quantity,
+    0,
+  );
+}
+
+export type FinanceInvoiceStatus = "draft" | "sent" | "overdue" | "paid";
+
+/**
+ * "today"/"yesterday" carry only a time and are localized via Dashboard.Finance.relativeTime;
+ * "date" carries a fixed, untranslated day/month label plus a time. Mirrors
+ * InventoryUpdated/CustomerLastActivity's shape but kept as Finance's own type (not imported)
+ * so this module stays independent of the others' internals — same reasoning Inventory used
+ * for its own InventoryUpdated rather than reusing Customers'.
+ */
+export type FinanceUpdated =
+  | { kind: "today" | "yesterday"; time: string }
+  | { kind: "date"; date: string; time: string };
+
+/**
+ * A Finance invoice (Stage 2E.1 foundation). Deliberately carries only the invoice's own facts
+ * (identity, status, dates, money) plus stable relational keys — customerId into CUSTOMERS_ROWS
+ * and operationId into OPERATIONS_ROWS (or null when an invoice isn't tied to one sampled
+ * operation, e.g. a standalone service invoice). Customer name, operation status/stage/value are
+ * never duplicated here — always resolved live via getFinanceCustomer/getFinanceOperation below.
+ *
+ * `total` and `paidAmount` are stored (a paid invoice's paidAmount is a historical fact, not
+ * something to re-derive); `outstanding` is NOT stored — always getInvoiceOutstanding(invoice) —
+ * so it can never drift out of sync with total/paidAmount. subtotal/vatAmount are stored as a
+ * matched pair constructed so subtotal + vatAmount === total exactly (see FINANCE_INVOICES
+ * below) — vatRate is carried per invoice rather than assumed globally, leaving room for a
+ * future invoice using a different Swiss rate without a model change.
+ */
+export type FinanceInvoice = {
+  id: string;
+  customerId: string;
+  /** Stable relational key into OPERATIONS_ROWS — null when not tied to one sampled operation. */
+  operationId: string | null;
+  status: FinanceInvoiceStatus;
+  issueDate: string;
+  dueDate: string;
+  subtotal: number;
+  vatRate: number;
+  vatAmount: number;
+  total: number;
+  paidAmount: number;
+  updated: FinanceUpdated;
+};
+
+/**
+ * Representative sample of the fictional Finance universe (Stage 2E.1) — unlike
+ * CUSTOMERS_SUMMARY/INVENTORY_SUMMARY (company-wide figures larger than their 10-row samples),
+ * this sample is deliberately constructed so its own totals ARE the page-level KPIs exactly:
+ *
+ *   - sum(outstanding) across "sent"/"overdue" invoices = CHF 86,400 — matches Customers'
+ *     existing CUSTOMERS_SUMMARY.outstanding exactly (same fictional fact, told consistently).
+ *   - sum(outstanding) across "overdue" invoices = CHF 24,500, count = 4 — matches Command
+ *     Center's existing KPI_ITEMS.cashDue ("CHF 24,500", 4 overdue) exactly.
+ *
+ * "draft" is excluded from both sums — an unsent invoice isn't a receivable yet — and "paid"
+ * naturally contributes zero (outstanding = 0 once paidAmount === total).
+ *
+ * Every subtotal/vatAmount pair is constructed as subtotal = round(total / 1.081), vatAmount =
+ * total - subtotal, so subtotal + vatAmount === total exactly (no floating-point drift) while
+ * vatAmount still closely matches subtotal × 8.1% (Switzerland's current standard VAT rate,
+ * appropriate for this industrial B2B demo — see the Stage 2E.1 report for the per-invoice
+ * numbers this was verified against).
+ *
+ * Operation links reuse OPERATIONS_ROWS' real, existing operations (verified against the file,
+ * not invented) — #10342/#10346/#10345 (all "pending" payment status, i.e. not yet paid — fits
+ * "overdue"/"sent"), #10348/#10344/#10340 ("pending", fits "sent"), and #10347/#10343 ("paid",
+ * matching those two invoices' own "paid" status so the operation and its invoice never
+ * disagree). Cobalt Materials/Vantage Freight Co./Harborline Logistics/Fjordlight Energy don't
+ * have a sampled OPERATIONS_ROWS entry, so their invoices use operationId: null rather than
+ * inventing one.
+ */
+export const FINANCE_INVOICES: FinanceInvoice[] = [
+  // Overdue — sum(total) = 24,500
+  {
+    id: "INV-2026-2001",
+    customerId: "CUS-1047", // BluePeak Industries
+    operationId: "#10342",
+    status: "overdue",
+    issueDate: "15 Jul",
+    dueDate: "14 Aug",
+    subtotal: 8418,
+    vatRate: 8.1,
+    vatAmount: 682,
+    total: 9100,
+    paidAmount: 0,
+    updated: { kind: "date", date: "14 Aug", time: "09:00" },
+  },
+  {
+    id: "INV-2026-2002",
+    customerId: "CUS-1046", // Alpine Works
+    operationId: "#10346",
+    status: "overdue",
+    issueDate: "20 Jul",
+    dueDate: "19 Aug",
+    subtotal: 3885,
+    vatRate: 8.1,
+    vatAmount: 315,
+    total: 4200,
+    paidAmount: 0,
+    updated: { kind: "date", date: "19 Aug", time: "10:00" },
+  },
+  {
+    id: "INV-2026-2003",
+    customerId: "CUS-1045", // Meridian Labs
+    operationId: "#10345",
+    status: "overdue",
+    issueDate: "22 Jul",
+    dueDate: "21 Aug",
+    subtotal: 5920,
+    vatRate: 8.1,
+    vatAmount: 480,
+    total: 6400,
+    paidAmount: 0,
+    updated: { kind: "date", date: "21 Aug", time: "11:00" },
+  },
+  {
+    id: "INV-2026-2004",
+    customerId: "CUS-1042", // Cobalt Materials
+    operationId: null,
+    status: "overdue",
+    issueDate: "25 Jul",
+    dueDate: "24 Aug",
+    subtotal: 4440,
+    vatRate: 8.1,
+    vatAmount: 360,
+    total: 4800,
+    paidAmount: 0,
+    updated: { kind: "date", date: "24 Aug", time: "14:00" },
+  },
+  // Sent (open, not yet overdue) — sum(total) = 61,900
+  {
+    id: "INV-2026-2005",
+    customerId: "CUS-1048", // Northstar Systems
+    operationId: "#10348",
+    status: "sent",
+    issueDate: "6 Sep",
+    dueDate: "6 Oct",
+    subtotal: 7817,
+    vatRate: 8.1,
+    vatAmount: 633,
+    total: 8450,
+    paidAmount: 0,
+    updated: { kind: "today", time: "10:42" },
+  },
+  {
+    id: "INV-2026-2006",
+    customerId: "CUS-1048", // Northstar Systems
+    operationId: "#10344",
+    status: "sent",
+    issueDate: "29 Aug",
+    dueDate: "28 Sep",
+    subtotal: 6244,
+    vatRate: 8.1,
+    vatAmount: 506,
+    total: 6750,
+    paidAmount: 0,
+    updated: { kind: "today", time: "08:52" },
+  },
+  {
+    id: "INV-2026-2007",
+    customerId: "CUS-1045", // Meridian Labs
+    operationId: "#10340",
+    status: "sent",
+    issueDate: "30 Aug",
+    dueDate: "29 Sep",
+    subtotal: 17484,
+    vatRate: 8.1,
+    vatAmount: 1416,
+    total: 18900,
+    paidAmount: 0,
+    updated: { kind: "today", time: "07:20" },
+  },
+  {
+    id: "INV-2026-2008",
+    customerId: "CUS-1043", // Vantage Freight Co.
+    operationId: null,
+    status: "sent",
+    issueDate: "28 Aug",
+    dueDate: "27 Sep",
+    subtotal: 13876,
+    vatRate: 8.1,
+    vatAmount: 1124,
+    total: 15000,
+    paidAmount: 0,
+    updated: { kind: "yesterday", time: "11:15" },
+  },
+  {
+    id: "INV-2026-2009",
+    customerId: "CUS-1041", // Harborline Logistics
+    operationId: null,
+    status: "sent",
+    issueDate: "20 Aug",
+    dueDate: "19 Sep",
+    subtotal: 11841,
+    vatRate: 8.1,
+    vatAmount: 959,
+    total: 12800,
+    paidAmount: 0,
+    updated: { kind: "date", date: "1 Sep", time: "15:50" },
+  },
+  // Paid — outstanding = 0
+  {
+    id: "INV-2026-2010",
+    customerId: "CUS-1047", // BluePeak Industries
+    operationId: "#10347",
+    status: "paid",
+    issueDate: "10 Jul",
+    dueDate: "9 Aug",
+    subtotal: 11933,
+    vatRate: 8.1,
+    vatAmount: 967,
+    total: 12900,
+    paidAmount: 12900,
+    updated: { kind: "today", time: "09:58" },
+  },
+  {
+    id: "INV-2026-2011",
+    customerId: "CUS-1044", // Solterra Group
+    operationId: "#10343",
+    status: "paid",
+    issueDate: "5 Jul",
+    dueDate: "4 Aug",
+    subtotal: 14154,
+    vatRate: 8.1,
+    vatAmount: 1146,
+    total: 15300,
+    paidAmount: 15300,
+    updated: { kind: "today", time: "08:30" },
+  },
+  // Draft — not yet sent, excluded from outstanding/overdue aggregates
+  {
+    id: "INV-2026-2012",
+    customerId: "CUS-1040", // Fjordlight Energy
+    operationId: null,
+    status: "draft",
+    issueDate: "6 Sep",
+    dueDate: "6 Oct",
+    subtotal: 2405,
+    vatRate: 8.1,
+    vatAmount: 195,
+    total: 2600,
+    paidAmount: 0,
+    updated: { kind: "today", time: "09:00" },
+  },
+];
+
+/** Invoice statuses counted as real, issued receivables — excludes "draft" (not yet sent, so
+ * not a receivable yet) and naturally excludes "paid" (its own outstanding is always 0). */
+const RECEIVABLE_STATUSES: FinanceInvoiceStatus[] = ["sent", "overdue"];
+
+/** outstanding = max(0, total - paidAmount) — never stored, always derived. */
+export function getInvoiceOutstanding(invoice: FinanceInvoice): number {
+  return Math.max(0, invoice.total - invoice.paidAmount);
+}
+
+/** The invoice's customer, resolved live from CUSTOMERS_ROWS — never duplicated onto the invoice. */
+export function getFinanceCustomer(customerId: string): CustomerRow | undefined {
+  return CUSTOMERS_ROWS.find((customer) => customer.id === customerId);
+}
+
+/** The invoice's connected operation (if any), resolved live from OPERATIONS_ROWS. */
+export function getFinanceOperation(operationId: string | null): OperationRow | undefined {
+  if (!operationId) return undefined;
+  return OPERATIONS_ROWS.find((operation) => operation.id === operationId);
+}
+
+/** Sum of outstanding across all real receivables (sent + overdue) — must equal CHF 86,400. */
+export function getTotalOutstanding(): number {
+  return FINANCE_INVOICES.filter((invoice) => RECEIVABLE_STATUSES.includes(invoice.status)).reduce(
+    (sum, invoice) => sum + getInvoiceOutstanding(invoice),
+    0,
+  );
+}
+
+/** Sum of outstanding across overdue invoices only — must equal CHF 24,500. */
+export function getOverdueOutstanding(): number {
+  return FINANCE_INVOICES.filter((invoice) => invoice.status === "overdue").reduce(
+    (sum, invoice) => sum + getInvoiceOutstanding(invoice),
+    0,
+  );
+}
+
+/** Count of overdue invoices — must equal 4. */
+export function getOverdueCount(): number {
+  return FINANCE_INVOICES.filter((invoice) => invoice.status === "overdue").length;
+}
+
+/** Count of currently active (sent + overdue) invoices. */
+export function getOpenInvoiceCount(): number {
+  return FINANCE_INVOICES.filter((invoice) => RECEIVABLE_STATUSES.includes(invoice.status)).length;
+}
+
+/** Total collected across paid invoices. */
+export function getTotalPaid(): number {
+  return FINANCE_INVOICES.filter((invoice) => invoice.status === "paid").reduce(
+    (sum, invoice) => sum + invoice.paidAmount,
     0,
   );
 }

@@ -415,6 +415,38 @@
         "today": "Сегодня",
         "yesterday": "Вчера"
       }
+    },
+    "Finance": {
+      "title": "Финансы",
+      "description": "Счета, дебиторская задолженность и статус оплаты связаны с вашими операциями.",
+      "newInvoice": "Новый счёт",
+      "summary": {
+        "outstanding": "К получению",
+        "overdue": "Просрочено",
+        "openInvoices": "Открытые счета",
+        "paid": "Оплачено"
+      },
+      "table": {
+        "invoice": "Счёт",
+        "customer": "Клиент",
+        "status": "Статус",
+        "operation": "Операция",
+        "issued": "Выставлен",
+        "due": "Срок оплаты",
+        "total": "Сумма",
+        "outstanding": "Задолженность",
+        "updated": "Обновлено"
+      },
+      "status": {
+        "draft": "Черновик",
+        "sent": "Отправлен",
+        "overdue": "Просрочен",
+        "paid": "Оплачен"
+      },
+      "relativeTime": {
+        "today": "Сегодня",
+        "yesterday": "Вчера"
+      }
     }
   }
 }

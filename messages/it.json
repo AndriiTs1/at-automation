@@ -415,6 +415,38 @@
         "today": "Oggi",
         "yesterday": "Ieri"
       }
+    },
+    "Finance": {
+      "title": "Finanza",
+      "description": "Fatture, crediti e stato dei pagamenti collegati alle vostre operazioni.",
+      "newInvoice": "Nuova fattura",
+      "summary": {
+        "outstanding": "Crediti in sospeso",
+        "overdue": "Scaduto",
+        "openInvoices": "Fatture aperte",
+        "paid": "Pagato"
+      },
+      "table": {
+        "invoice": "Fattura",
+        "customer": "Cliente",
+        "status": "Stato",
+        "operation": "Operazione",
+        "issued": "Emessa",
+        "due": "Scadenza",
+        "total": "Totale",
+        "outstanding": "Saldo",
+        "updated": "Aggiornato"
+      },
+      "status": {
+        "draft": "Bozza",
+        "sent": "Inviata",
+        "overdue": "Scaduta",
+        "paid": "Pagata"
+      },
+      "relativeTime": {
+        "today": "Oggi",
+        "yesterday": "Ieri"
+      }
     }
   }
 }

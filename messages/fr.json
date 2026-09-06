@@ -415,6 +415,38 @@
         "today": "Aujourd'hui",
         "yesterday": "Hier"
       }
+    },
+    "Finance": {
+      "title": "Finances",
+      "description": "Factures, créances et statut des paiements reliés à vos opérations.",
+      "newInvoice": "Nouvelle facture",
+      "summary": {
+        "outstanding": "Créances dues",
+        "overdue": "En retard",
+        "openInvoices": "Factures ouvertes",
+        "paid": "Payé"
+      },
+      "table": {
+        "invoice": "Facture",
+        "customer": "Client",
+        "status": "Statut",
+        "operation": "Opération",
+        "issued": "Émise",
+        "due": "Échéance",
+        "total": "Total",
+        "outstanding": "Solde dû",
+        "updated": "Mis à jour"
+      },
+      "status": {
+        "draft": "Brouillon",
+        "sent": "Envoyée",
+        "overdue": "En retard",
+        "paid": "Payée"
+      },
+      "relativeTime": {
+        "today": "Aujourd'hui",
+        "yesterday": "Hier"
+      }
     }
   }
 }

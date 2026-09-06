@@ -415,6 +415,38 @@
         "today": "Heute",
         "yesterday": "Gestern"
       }
+    },
+    "Finance": {
+      "title": "Finanzen",
+      "description": "Rechnungen, Forderungen und Zahlungsstatus sind mit Ihren Vorgängen verbunden.",
+      "newInvoice": "Neue Rechnung",
+      "summary": {
+        "outstanding": "Offene Forderungen",
+        "overdue": "Überfällig",
+        "openInvoices": "Offene Rechnungen",
+        "paid": "Bezahlt"
+      },
+      "table": {
+        "invoice": "Rechnung",
+        "customer": "Kunde",
+        "status": "Status",
+        "operation": "Vorgang",
+        "issued": "Ausgestellt",
+        "due": "Fällig",
+        "total": "Total",
+        "outstanding": "Offen",
+        "updated": "Aktualisiert"
+      },
+      "status": {
+        "draft": "Entwurf",
+        "sent": "Versendet",
+        "overdue": "Überfällig",
+        "paid": "Bezahlt"
+      },
+      "relativeTime": {
+        "today": "Heute",
+        "yesterday": "Gestern"
+      }
     }
   }
 }

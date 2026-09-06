@@ -415,6 +415,38 @@
         "today": "Today",
         "yesterday": "Yesterday"
       }
+    },
+    "Finance": {
+      "title": "Finance",
+      "description": "Invoices, receivables and payment status connected to your operations.",
+      "newInvoice": "New invoice",
+      "summary": {
+        "outstanding": "Outstanding",
+        "overdue": "Overdue",
+        "openInvoices": "Open invoices",
+        "paid": "Paid"
+      },
+      "table": {
+        "invoice": "Invoice",
+        "customer": "Customer",
+        "status": "Status",
+        "operation": "Operation",
+        "issued": "Issued",
+        "due": "Due",
+        "total": "Total",
+        "outstanding": "Outstanding",
+        "updated": "Updated"
+      },
+      "status": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "overdue": "Overdue",
+        "paid": "Paid"
+      },
+      "relativeTime": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      }
     }
   }
 }
