@@ -436,6 +436,15 @@
         "dueSoon": "Bald fällig",
         "dueLater": "Später fällig"
       },
+      "financeOperations": {
+        "title": "Finanzprozesse",
+        "vatRepresented": "MWST",
+        "awaitingReview": "{count, plural, one {# Rechnung wartet auf Prüfung} other {# Rechnungen warten auf Prüfung}}",
+        "fiduciaryHandoff": "Treuhänder",
+        "handoffReady": "Bereit",
+        "handoffNeedsAttention": "Handlungsbedarf",
+        "exceptionCount": "{count, plural, one {# Abgleichausnahme} other {# Abgleichausnahmen}}"
+      },
       "toolbar": {
         "searchPlaceholder": "Rechnungen durchsuchen…",
         "allStatuses": "Alle Status",

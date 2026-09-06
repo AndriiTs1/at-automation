@@ -8,6 +8,7 @@ import {
 } from "@/lib/demo-data";
 import FinanceCashFlowSummary from "./FinanceCashFlowSummary";
 import FinanceDetailPanel from "./FinanceDetailPanel";
+import FinanceOperationsSummary from "./FinanceOperationsSummary";
 import FinanceTable from "./FinanceTable";
 import FinanceToolbar, {
   type CustomerFilterValue,
@@ -109,6 +110,7 @@ export default function FinanceDesktop({
       </div>
 
       <FinanceCashFlowSummary />
+      <FinanceOperationsSummary />
 
       <FinanceToolbar
         searchQuery={searchQuery}

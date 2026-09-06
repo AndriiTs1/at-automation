@@ -1355,3 +1355,82 @@ export function getReceivablesAging(): ReceivablesAging {
 
   return aging;
 }
+
+/** Invoice statuses that have actually been issued to a customer — every status except "draft".
+ * Deliberately broader than RECEIVABLE_STATUSES (which excludes "paid" too): VAT was charged and
+ * reconciliation is meaningful for a paid invoice as well, whereas it isn't yet a receivable. */
+const ISSUED_STATUSES: FinanceInvoiceStatus[] = ["sent", "overdue", "paid"];
+
+export type FinanceVatOverview = {
+  rate: number;
+  vatAmount: number;
+  invoiceCount: number;
+};
+
+/**
+ * VAT overview (Stage 2E.6) — invoice-level VAT *visibility* only. This is deliberately NOT a
+ * VAT return, not a payable/liability figure, and not official tax reporting — just "how much
+ * VAT is represented in the invoices AT already knows about."
+ *
+ * Inclusion rule: every ISSUED invoice (sent, overdue, or paid) — i.e. every non-draft invoice.
+ * A Draft hasn't actually been issued to a customer yet, so its VAT doesn't "exist" from the
+ * customer's perspective; sent/overdue/paid all represent real, issued VAT regardless of whether
+ * the invoice has since been paid or is still outstanding.
+ *
+ * Sums the invoices' own stored vatAmount fields directly (never recomputed with a different
+ * rule) — there is exactly one shared vatRate (8.1%) across the current dataset, so `rate` is
+ * read from the first issued invoice rather than a second hardcoded constant.
+ */
+export function getFinanceVatOverview(): FinanceVatOverview {
+  const issuedInvoices = FINANCE_INVOICES.filter((invoice) => ISSUED_STATUSES.includes(invoice.status));
+  return {
+    rate: issuedInvoices[0]?.vatRate ?? 8.1,
+    vatAmount: issuedInvoices.reduce((sum, invoice) => sum + invoice.vatAmount, 0),
+    invoiceCount: issuedInvoices.length,
+  };
+}
+
+export type FinanceReconciliationOverview = {
+  reconciled: number;
+  pending: number;
+  exception: number;
+};
+
+/**
+ * Global reconciliation summary (Stage 2E.6) across every ISSUED (non-draft) invoice — mirrors
+ * the exact same Draft-exclusion rule already established by the Finance reconciliation filter
+ * (Stage 2E.3): a Draft isn't active reconciliation work, so it must never be counted under any
+ * bucket here just because getInvoiceReconciliationState's internal fallback happens to return
+ * "pending" for it.
+ */
+export function getFinanceReconciliationOverview(): FinanceReconciliationOverview {
+  const overview: FinanceReconciliationOverview = { reconciled: 0, pending: 0, exception: 0 };
+  for (const invoice of FINANCE_INVOICES) {
+    if (invoice.status === "draft") continue;
+    overview[getInvoiceReconciliationState(invoice.id)] += 1;
+  }
+  return overview;
+}
+
+export type FiduciaryHandoffStatus = {
+  status: "ready" | "needsAttention";
+  issuedInvoiceCount: number;
+  draftExcludedCount: number;
+  exceptionCount: number;
+};
+
+/**
+ * Deterministic DEMO readiness state for the fiduciary/accountant handoff (Stage 2E.6) — no
+ * mutable workflow, no real integration: derived entirely from the existing reconciliation
+ * picture each time it's read. If any issued invoice still has an unresolved reconciliation
+ * exception, the package is NOT "ready" — it "needsAttention" until that exception is resolved.
+ */
+export function getFiduciaryHandoffStatus(): FiduciaryHandoffStatus {
+  const reconciliation = getFinanceReconciliationOverview();
+  return {
+    status: reconciliation.exception > 0 ? "needsAttention" : "ready",
+    issuedInvoiceCount: reconciliation.reconciled + reconciliation.pending + reconciliation.exception,
+    draftExcludedCount: FINANCE_INVOICES.filter((invoice) => invoice.status === "draft").length,
+    exceptionCount: reconciliation.exception,
+  };
+}

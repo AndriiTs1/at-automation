@@ -436,6 +436,15 @@
         "dueSoon": "Due soon",
         "dueLater": "Due later"
       },
+      "financeOperations": {
+        "title": "Finance Operations",
+        "vatRepresented": "VAT represented",
+        "awaitingReview": "{count, plural, one {# invoice awaiting review} other {# invoices awaiting review}}",
+        "fiduciaryHandoff": "Fiduciary handoff",
+        "handoffReady": "Ready",
+        "handoffNeedsAttention": "Needs attention",
+        "exceptionCount": "{count, plural, one {# reconciliation exception} other {# reconciliation exceptions}}"
+      },
       "toolbar": {
         "searchPlaceholder": "Search invoices…",
         "allStatuses": "All statuses",

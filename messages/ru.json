@@ -436,6 +436,15 @@
         "dueSoon": "Скоро к оплате",
         "dueLater": "К оплате позже"
       },
+      "financeOperations": {
+        "title": "Финансовые операции",
+        "vatRepresented": "НДС",
+        "awaitingReview": "{count, plural, one {# счёт ожидает проверки} few {# счёта ожидают проверки} many {# счетов ожидают проверки} other {# счёта ожидают проверки}}",
+        "fiduciaryHandoff": "Бухгалтерия",
+        "handoffReady": "Готово",
+        "handoffNeedsAttention": "Требует внимания",
+        "exceptionCount": "{count, plural, one {# исключение сверки} few {# исключения сверки} many {# исключений сверки} other {# исключения сверки}}"
+      },
       "toolbar": {
         "searchPlaceholder": "Поиск счетов…",
         "allStatuses": "Все статусы",

@@ -436,6 +436,15 @@
         "dueSoon": "Échéance proche",
         "dueLater": "Plus tard"
       },
+      "financeOperations": {
+        "title": "Opérations financières",
+        "vatRepresented": "TVA représentée",
+        "awaitingReview": "{count, plural, one {# facture en attente de vérification} other {# factures en attente de vérification}}",
+        "fiduciaryHandoff": "Fiduciaire",
+        "handoffReady": "Prêt",
+        "handoffNeedsAttention": "Attention requise",
+        "exceptionCount": "{count, plural, one {# exception de rapprochement} other {# exceptions de rapprochement}}"
+      },
       "toolbar": {
         "searchPlaceholder": "Rechercher des factures…",
         "allStatuses": "Tous les statuts",

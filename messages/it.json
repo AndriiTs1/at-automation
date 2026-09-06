@@ -436,6 +436,15 @@
         "dueSoon": "A breve",
         "dueLater": "Più avanti"
       },
+      "financeOperations": {
+        "title": "Operazioni finanziarie",
+        "vatRepresented": "IVA rappresentata",
+        "awaitingReview": "{count, plural, one {# fattura in attesa di verifica} other {# fatture in attesa di verifica}}",
+        "fiduciaryHandoff": "Fiduciario",
+        "handoffReady": "Pronto",
+        "handoffNeedsAttention": "Richiede attenzione",
+        "exceptionCount": "{count, plural, one {# eccezione di riconciliazione} other {# eccezioni di riconciliazione}}"
+      },
       "toolbar": {
         "searchPlaceholder": "Cerca fatture…",
         "allStatuses": "Tutti gli stati",

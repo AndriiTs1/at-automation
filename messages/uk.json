@@ -436,6 +436,15 @@
         "dueSoon": "Скоро до оплати",
         "dueLater": "Пізніше"
       },
+      "financeOperations": {
+        "title": "Фінансові операції",
+        "vatRepresented": "ПДВ",
+        "awaitingReview": "{count, plural, one {# рахунок очікує перевірки} few {# рахунки очікують перевірки} many {# рахунків очікують перевірки} other {# рахунки очікують перевірки}}",
+        "fiduciaryHandoff": "Бухгалтерія",
+        "handoffReady": "Готово",
+        "handoffNeedsAttention": "Потребує уваги",
+        "exceptionCount": "{count, plural, one {# виняток звірки} few {# винятки звірки} many {# винятків звірки} other {# винятки звірки}}"
+      },
       "toolbar": {
         "searchPlaceholder": "Пошук рахунків…",
         "allStatuses": "Усі статуси",
