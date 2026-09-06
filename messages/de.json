@@ -426,6 +426,16 @@
         "openInvoices": "Offene Rechnungen",
         "paid": "Bezahlt"
       },
+      "toolbar": {
+        "searchPlaceholder": "Rechnungen durchsuchen…",
+        "allStatuses": "Alle Status",
+        "allCustomers": "Alle Kunden",
+        "allReconciliation": "Alle Abgleichstatus",
+        "clearFilters": "Filter zurücksetzen",
+        "resultCount": "{count, plural, one {# Rechnung} other {# Rechnungen}}",
+        "noResults": "Keine Rechnungen entsprechen diesen Filtern.",
+        "noResultsHint": "Passen Sie die aktuellen Filter an oder setzen Sie sie zurück."
+      },
       "table": {
         "invoice": "Rechnung",
         "customer": "Kunde",

@@ -426,6 +426,16 @@
         "openInvoices": "Открытые счета",
         "paid": "Оплачено"
       },
+      "toolbar": {
+        "searchPlaceholder": "Поиск счетов…",
+        "allStatuses": "Все статусы",
+        "allCustomers": "Все клиенты",
+        "allReconciliation": "Все статусы сверки",
+        "clearFilters": "Сбросить фильтры",
+        "resultCount": "{count, plural, one {# счёт} few {# счёта} many {# счетов} other {# счёта}}",
+        "noResults": "Нет счетов, соответствующих фильтрам.",
+        "noResultsHint": "Попробуйте изменить или сбросить текущие фильтры."
+      },
       "table": {
         "invoice": "Счёт",
         "customer": "Клиент",

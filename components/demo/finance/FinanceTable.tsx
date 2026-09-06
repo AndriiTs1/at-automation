@@ -40,11 +40,14 @@ function formatChf(amount: number) {
  */
 const MIN_TABLE_WIDTH = 1190;
 const COLUMN_WIDTHS = ["12%", "16%", "12%", "9%", "9%", "11%", "9%", "11%", "11%"];
+const TABLE_COLUMN_COUNT = 9;
 
 /**
- * Selectable Finance table (Stage 2E.2) — mirrors InventoryTable's row-selection pattern
- * exactly (tabIndex, onClick/onKeyDown for Enter/Space, aria-selected, selected-row tint). No
- * filtering yet (Stage 2E.3), so there's no empty state to render here. Customer and connected
+ * Selectable, filterable Finance table (Stage 2E.3) — mirrors InventoryTable's row-selection and
+ * empty-state pattern exactly (tabIndex, onClick/onKeyDown for Enter/Space, aria-selected,
+ * selected-row tint). `rows` is caller-filtered (FINANCE_INVOICES is never mutated or
+ * duplicated); geometry (table-layout: fixed, colgroup widths, min-width) is frozen and unchanged
+ * from Stage 2E.1/2E.2 regardless of how many rows are passed in. Customer and connected
  * operation are resolved live via getFinanceCustomer/getFinanceOperation rather than duplicated
  * onto the invoice, and Outstanding is derived via getInvoiceOutstanding rather than trusting a
  * stored field, so neither can drift out of sync with total/paidAmount.
@@ -53,10 +56,14 @@ export default function FinanceTable({
   rows,
   selectedId,
   onSelect,
+  hasActiveFilters,
+  onClearFilters,
 }: {
   rows: FinanceInvoice[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  hasActiveFilters?: boolean;
+  onClearFilters?: () => void;
 }) {
   const t = useTranslations("Dashboard.Finance");
 
@@ -92,48 +99,68 @@ export default function FinanceTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
-          {rows.map((invoice) => {
-            const customer = getFinanceCustomer(invoice.customerId);
-            const operation = getFinanceOperation(invoice.operationId);
-            const outstanding = getInvoiceOutstanding(invoice);
-            const isSelected = invoice.id === selectedId;
-            return (
-              <tr
-                key={invoice.id}
-                tabIndex={0}
-                aria-selected={isSelected}
-                onClick={() => onSelect(invoice.id)}
-                onKeyDown={(event) => handleRowKeyDown(event, invoice.id)}
-                className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
-                  isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
-                }`}
-              >
-                <td className="truncate px-4 py-3 font-semibold text-foreground">{invoice.id}</td>
-                <td className="truncate px-4 py-3 text-neutral-600">{customer?.name ?? invoice.customerId}</td>
-                <td className="px-4 py-3 text-center">
-                  <span
-                    className={`inline-flex max-w-full items-center truncate rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONE[invoice.status]}`}
+          {rows.length === 0 ? (
+            <tr>
+              <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-12 text-center">
+                <p className="text-sm text-neutral-500">{t("toolbar.noResults")}</p>
+                <p className="mt-1 text-xs text-neutral-400">{t("toolbar.noResultsHint")}</p>
+                {hasActiveFilters && onClearFilters && (
+                  <button
+                    type="button"
+                    onClick={onClearFilters}
+                    className="mt-2 text-xs font-medium text-accent hover:underline"
                   >
-                    {t(`status.${invoice.status}`)}
-                  </span>
-                </td>
-                <td className="truncate px-4 py-3 text-center text-neutral-500">{operation ? operation.id : "—"}</td>
-                <td className="px-4 py-3 text-right whitespace-nowrap text-neutral-500">{invoice.issueDate}</td>
-                <td className="px-4 py-3 text-right whitespace-nowrap text-neutral-500">{invoice.dueDate}</td>
-                <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
-                  {formatChf(invoice.total)}
-                </td>
-                <td
-                  className={`px-4 py-3 text-right whitespace-nowrap ${outstanding === 0 ? "text-neutral-400" : "font-medium text-foreground"}`}
+                    {t("toolbar.clearFilters")}
+                  </button>
+                )}
+              </td>
+            </tr>
+          ) : (
+            rows.map((invoice) => {
+              const customer = getFinanceCustomer(invoice.customerId);
+              const operation = getFinanceOperation(invoice.operationId);
+              const outstanding = getInvoiceOutstanding(invoice);
+              const isSelected = invoice.id === selectedId;
+              return (
+                <tr
+                  key={invoice.id}
+                  tabIndex={0}
+                  aria-selected={isSelected}
+                  onClick={() => onSelect(invoice.id)}
+                  onKeyDown={(event) => handleRowKeyDown(event, invoice.id)}
+                  className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
+                    isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                  }`}
                 >
-                  {formatChf(outstanding)}
-                </td>
-                <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">
-                  {formatUpdated(invoice.updated, t)}
-                </td>
-              </tr>
-            );
-          })}
+                  <td className="truncate px-4 py-3 font-semibold text-foreground">{invoice.id}</td>
+                  <td className="truncate px-4 py-3 text-neutral-600">{customer?.name ?? invoice.customerId}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span
+                      className={`inline-flex max-w-full items-center truncate rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONE[invoice.status]}`}
+                    >
+                      {t(`status.${invoice.status}`)}
+                    </span>
+                  </td>
+                  <td className="truncate px-4 py-3 text-center text-neutral-500">
+                    {operation ? operation.id : "—"}
+                  </td>
+                  <td className="px-4 py-3 text-right whitespace-nowrap text-neutral-500">{invoice.issueDate}</td>
+                  <td className="px-4 py-3 text-right whitespace-nowrap text-neutral-500">{invoice.dueDate}</td>
+                  <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
+                    {formatChf(invoice.total)}
+                  </td>
+                  <td
+                    className={`px-4 py-3 text-right whitespace-nowrap ${outstanding === 0 ? "text-neutral-400" : "font-medium text-foreground"}`}
+                  >
+                    {formatChf(outstanding)}
+                  </td>
+                  <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">
+                    {formatUpdated(invoice.updated, t)}
+                  </td>
+                </tr>
+              );
+            })
+          )}
         </tbody>
       </table>
     </div>

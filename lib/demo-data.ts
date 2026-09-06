@@ -1067,6 +1067,17 @@ export const FINANCE_INVOICES: FinanceInvoice[] = [
  * not a receivable yet) and naturally excludes "paid" (its own outstanding is always 0). */
 const RECEIVABLE_STATUSES: FinanceInvoiceStatus[] = ["sent", "overdue"];
 
+/** Fixed, hand-ordered option list for the Finance status filter (Stage 2E.3) — mirrors
+ * INVENTORY_STATUSES' pattern (a manually-ordered enumeration of the known union) rather than
+ * INVENTORY_LOCATIONS' derive-from-data pattern, since FinanceInvoiceStatus is already a closed
+ * set, not an open one discovered from the sample. */
+export const FINANCE_INVOICE_STATUSES: FinanceInvoiceStatus[] = ["overdue", "sent", "paid", "draft"];
+
+/** Distinct customerIds represented in FINANCE_INVOICES, in first-appearance order — the
+ * customer filter's option set. Mirrors INVENTORY_LOCATIONS' derive-from-data pattern (never a
+ * hardcoded second customer list, and never includes a customer with no Finance invoice). */
+export const FINANCE_INVOICE_CUSTOMER_IDS = Array.from(new Set(FINANCE_INVOICES.map((invoice) => invoice.customerId)));
+
 /** outstanding = max(0, total - paidAmount) — never stored, always derived. */
 export function getInvoiceOutstanding(invoice: FinanceInvoice): number {
   return Math.max(0, invoice.total - invoice.paidAmount);
@@ -1201,6 +1212,13 @@ export function getInvoicePaidAmount(invoiceId: string): number {
 }
 
 export type FinanceReconciliationState = "reconciled" | "pending" | "exception";
+
+/** Fixed, hand-ordered option list for the Finance reconciliation filter (Stage 2E.3) — mirrors
+ * FINANCE_INVOICE_STATUSES' pattern (FinanceReconciliationState is a closed set, not derived
+ * from data). Draft invoices are excluded from this filter entirely at the call site rather than
+ * here — getInvoiceReconciliationState's "pending" fallback for Draft is an internal default,
+ * not a real reconciliation fact, so a Draft must never surface as a "Pending" filter match. */
+export const FINANCE_RECONCILIATION_STATES: FinanceReconciliationState[] = ["reconciled", "pending", "exception"];
 
 /**
  * Invoice-level reconciliation state, derived (never stored) from the invoice's own payments:

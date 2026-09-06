@@ -426,6 +426,16 @@
         "openInvoices": "Відкриті рахунки",
         "paid": "Оплачено"
       },
+      "toolbar": {
+        "searchPlaceholder": "Пошук рахунків…",
+        "allStatuses": "Усі статуси",
+        "allCustomers": "Усі клієнти",
+        "allReconciliation": "Усі статуси звірки",
+        "clearFilters": "Скинути фільтри",
+        "resultCount": "{count, plural, one {# рахунок} few {# рахунки} many {# рахунків} other {# рахунки}}",
+        "noResults": "Немає рахунків, що відповідають фільтрам.",
+        "noResultsHint": "Спробуйте змінити або скинути поточні фільтри."
+      },
       "table": {
         "invoice": "Рахунок",
         "customer": "Клієнт",

@@ -426,6 +426,16 @@
         "openInvoices": "Open invoices",
         "paid": "Paid"
       },
+      "toolbar": {
+        "searchPlaceholder": "Search invoices…",
+        "allStatuses": "All statuses",
+        "allCustomers": "All customers",
+        "allReconciliation": "All reconciliation",
+        "clearFilters": "Clear filters",
+        "resultCount": "{count, plural, one {# invoice} other {# invoices}}",
+        "noResults": "No invoices match these filters.",
+        "noResultsHint": "Try changing or clearing the current filters."
+      },
       "table": {
         "invoice": "Invoice",
         "customer": "Customer",

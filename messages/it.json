@@ -426,6 +426,16 @@
         "openInvoices": "Fatture aperte",
         "paid": "Pagato"
       },
+      "toolbar": {
+        "searchPlaceholder": "Cerca fatture…",
+        "allStatuses": "Tutti gli stati",
+        "allCustomers": "Tutti i clienti",
+        "allReconciliation": "Tutte le riconciliazioni",
+        "clearFilters": "Cancella filtri",
+        "resultCount": "{count, plural, one {# fattura} other {# fatture}}",
+        "noResults": "Nessuna fattura corrisponde a questi filtri.",
+        "noResultsHint": "Prova a modificare o cancellare i filtri attuali."
+      },
       "table": {
         "invoice": "Fattura",
         "customer": "Cliente",

@@ -426,6 +426,16 @@
         "openInvoices": "Factures ouvertes",
         "paid": "Payé"
       },
+      "toolbar": {
+        "searchPlaceholder": "Rechercher des factures…",
+        "allStatuses": "Tous les statuts",
+        "allCustomers": "Tous les clients",
+        "allReconciliation": "Tous les rapprochements",
+        "clearFilters": "Réinitialiser les filtres",
+        "resultCount": "{count, plural, one {# facture} other {# factures}}",
+        "noResults": "Aucune facture ne correspond à ces filtres.",
+        "noResultsHint": "Essayez de modifier ou de réinitialiser les filtres actuels."
+      },
       "table": {
         "invoice": "Facture",
         "customer": "Client",

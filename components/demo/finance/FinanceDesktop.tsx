@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
 import {
-  FINANCE_INVOICES,
   getOpenInvoiceCount,
   getOverdueOutstanding,
   getTotalOutstanding,
@@ -9,6 +8,12 @@ import {
 } from "@/lib/demo-data";
 import FinanceDetailPanel from "./FinanceDetailPanel";
 import FinanceTable from "./FinanceTable";
+import FinanceToolbar, {
+  type CustomerFilterValue,
+  type OpenFilter,
+  type ReconciliationFilterValue,
+  type StatusFilterValue,
+} from "./FinanceToolbar";
 
 function formatChf(amount: number) {
   return `CHF ${amount.toLocaleString("en-US")}`;
@@ -21,20 +26,47 @@ const TONE_TEXT: Record<string, string> = {
 };
 
 /**
- * Desktop-only Finance workspace (Stage 2E.2). Hidden below the @5xl container-query breakpoint,
+ * Desktop-only Finance workspace (Stage 2E.3). Hidden below the @5xl container-query breakpoint,
  * matching CustomersDesktop/InventoryDesktop/OperationsDesktop's own threshold. Header and KPIs
- * are unchanged since Stage 2E.1; now a presentational component receiving the shared selection
- * state from FinanceWorkspace, mirroring InventoryDesktop's prop-driven pattern. No toolbar yet
- * (no filters exist, Stage 2E.3). KPIs are computed from FINANCE_INVOICES itself via
- * lib/demo-data.ts helpers rather than a separate hardcoded summary, so they can never drift out
- * of sync with the row data.
+ * are unchanged since Stage 2E.1 and deliberately computed from the global getTotalOutstanding/
+ * getOverdueOutstanding/getOpenInvoiceCount/getTotalPaid helpers (i.e. from ALL of
+ * FINANCE_INVOICES) rather than from filteredInvoices — the KPI row is a page-level metric, not
+ * a filtered total, and must stay CHF 86,400/24,500/9/28,200 regardless of the active filters.
+ * A presentational component receiving the shared filter/selection state from FinanceWorkspace,
+ * mirroring InventoryDesktop's prop-driven pattern.
  */
 export default function FinanceDesktop({
+  searchQuery,
+  onSearchChange,
+  statusFilter,
+  onStatusChange,
+  customerFilter,
+  onCustomerChange,
+  reconciliationFilter,
+  onReconciliationChange,
+  hasActiveFilters,
+  onClearFilters,
+  openFilter,
+  onOpenFilterChange,
+  filteredInvoices,
   selectedId,
   onSelectRow,
   selectedInvoice,
   onCloseDetail,
 }: {
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+  statusFilter: StatusFilterValue;
+  onStatusChange: (value: StatusFilterValue) => void;
+  customerFilter: CustomerFilterValue;
+  onCustomerChange: (value: CustomerFilterValue) => void;
+  reconciliationFilter: ReconciliationFilterValue;
+  onReconciliationChange: (value: ReconciliationFilterValue) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
+  openFilter: OpenFilter;
+  onOpenFilterChange: (value: OpenFilter) => void;
+  filteredInvoices: FinanceInvoice[];
   selectedId: string | null;
   onSelectRow: (id: string) => void;
   selectedInvoice: FinanceInvoice | null;
@@ -75,9 +107,31 @@ export default function FinanceDesktop({
         ))}
       </div>
 
+      <FinanceToolbar
+        searchQuery={searchQuery}
+        onSearchChange={onSearchChange}
+        statusFilter={statusFilter}
+        onStatusChange={onStatusChange}
+        customerFilter={customerFilter}
+        onCustomerChange={onCustomerChange}
+        reconciliationFilter={reconciliationFilter}
+        onReconciliationChange={onReconciliationChange}
+        resultCount={filteredInvoices.length}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilters={onClearFilters}
+        openFilter={openFilter}
+        onOpenFilterChange={onOpenFilterChange}
+      />
+
       {/* Table */}
       <div className="relative flex min-h-0 flex-1">
-        <FinanceTable rows={FINANCE_INVOICES} selectedId={selectedId} onSelect={onSelectRow} />
+        <FinanceTable
+          rows={filteredInvoices}
+          selectedId={selectedId}
+          onSelect={onSelectRow}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={onClearFilters}
+        />
         {selectedInvoice && (
           <>
             {/* Subtle workspace-level scrim — communicates layering without darkening the app or
