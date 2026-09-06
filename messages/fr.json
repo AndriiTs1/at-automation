@@ -507,6 +507,83 @@
           "invoiceOverdue": "Paiement en retard"
         }
       }
+    },
+    "Automations": {
+      "title": "Automatisations",
+      "description": "Suivez les workflows qu'AT automatise dans votre entreprise.",
+      "summary": {
+        "activeAutomations": "Automatisations actives",
+        "automatedToday": "Automatisés aujourd'hui",
+        "timeSavedToday": "Temps économisé aujourd'hui",
+        "needsAttention": "Nécessite une attention"
+      },
+      "table": {
+        "automation": "Automatisation",
+        "area": "Domaine",
+        "status": "Statut",
+        "trigger": "Déclencheur",
+        "runsToday": "Exécutions aujourd'hui",
+        "lastRun": "Dernière exécution"
+      },
+      "status": {
+        "active": "Active",
+        "paused": "En pause",
+        "needsAttention": "Nécessite une attention"
+      },
+      "category": {
+        "finance": "Finances",
+        "operations": "Opérations",
+        "inventory": "Stock",
+        "customers": "Clients"
+      },
+      "relativeTime": {
+        "today": "Aujourd'hui",
+        "yesterday": "Hier"
+      },
+      "recentActivity": {
+        "title": "Activité récente"
+      },
+      "runStatus": {
+        "completed": "Terminée",
+        "attention": "Vérification requise"
+      },
+      "definitions": {
+        "overdueInvoiceFollowUp": {
+          "name": "Relance des factures en retard",
+          "trigger": "La facture devient en retard",
+          "outcome": "Crée une relance et l'escalade si la facture reste non résolue."
+        },
+        "paymentReconciliation": {
+          "name": "Rapprochement des paiements",
+          "trigger": "Paiement reçu",
+          "outcome": "Rapproche le paiement d'une facture et crée une exception en cas d'échec du rapprochement."
+        },
+        "lowStockReplenishment": {
+          "name": "Réapprovisionnement sur seuil bas",
+          "trigger": "Le stock atteint le seuil de réapprovisionnement",
+          "outcome": "Crée un besoin de réapprovisionnement et demande une approbation si nécessaire."
+        },
+        "operationToInvoice": {
+          "name": "Opération → Facture",
+          "trigger": "Opération prête à facturer",
+          "outcome": "Démarre la préparation de la facture et la transmet aux Finances."
+        },
+        "customerFollowUp": {
+          "name": "Suivi client",
+          "trigger": "Le client nécessite une attention",
+          "outcome": "Crée un suivi pour le responsable et trace l'activité du client."
+        },
+        "approvalRouting": {
+          "name": "Acheminement des approbations",
+          "trigger": "La demande nécessite une approbation",
+          "outcome": "Détermine l'approbateur responsable et met la demande en file d'attente."
+        },
+        "fiduciaryHandoff": {
+          "name": "Transmission au fiduciaire",
+          "trigger": "Période comptable prête pour vérification",
+          "outcome": "Organise les documents comptables et met à jour l'état de préparation de la transmission."
+        }
+      }
     }
   }
 }

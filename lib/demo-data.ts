@@ -17,7 +17,7 @@ export const NAV_SECTIONS = [
   {
     key: "automate",
     items: [
-      { key: "automations", icon: "bolt", href: "/demo/automations" },
+      { key: "automations", icon: "bolt", href: "/demo/automations", available: true },
       { key: "integrations", icon: "plug", href: "/demo/integrations" },
     ],
   },
@@ -1434,3 +1434,269 @@ export function getFiduciaryHandoffStatus(): FiduciaryHandoffStatus {
     exceptionCount: reconciliation.exception,
   };
 }
+
+/**
+ * Same "today"/"yesterday"/fixed-date-plus-time" shape already used by FinanceInvoice.updated
+ * and InventoryItem.updated — reused here rather than redesigned, so an automation's lastRun (and
+ * an AutomationRun's own timestamp) formats identically to every other "when did this last
+ * happen" value already in the demo.
+ */
+export type AutomationTimestamp = { kind: "today" | "yesterday"; time: string } | { kind: "date"; date: string; time: string };
+
+export type AutomationStatus = "active" | "paused" | "needsAttention";
+
+export type AutomationCategory = "finance" | "operations" | "inventory" | "customers";
+
+/**
+ * A business workflow AT orchestrates across the existing modules — not a technical job. `key` is
+ * a semantic identifier only (name/description/trigger text lives in
+ * Dashboard.Automations.definitions.<key> via next-intl, never a translated string stored here).
+ * `runsToday`/`timeSavedMinutesToday` are this automation's OWN operational metadata (how often it
+ * fired today, not a re-statement of an existing business total) — see the individual definitions
+ * below for which ones derive from an existing cross-module count vs. author authored operational
+ * detail. `relatedEntityIds` point at real ids from other modules (invoice/operation/inventory/
+ * customer ids) for later stages (e.g. a detail drawer) — 2F.1 doesn't render them anywhere.
+ */
+export type AutomationDefinition = {
+  id: string;
+  key: string;
+  category: AutomationCategory;
+  status: AutomationStatus;
+  triggerKey: string;
+  outcomeKey: string;
+  runsToday: number;
+  timeSavedMinutesToday: number;
+  lastRun: AutomationTimestamp;
+  relatedEntityIds?: string[];
+};
+
+/**
+ * Approximately 7 automations telling one coherent cross-module story (Stage 2F.1). Every
+ * `runsToday` that has a real existing cross-module equivalent is derived from that helper/
+ * constant (never re-typed as a literal) so it can't drift out of sync:
+ *   - overdueInvoiceFollowUp  → getOverdueCount()                         (4 overdue invoices)
+ *   - lowStockReplenishment   → NEEDS_ATTENTION's lowStockItems count     (12 low-stock items)
+ *   - customerFollowUp        → CUSTOMERS_SUMMARY.needsAttention          (7 customers)
+ *   - approvalRouting         → APPROVALS.length                         (3 awaiting approval)
+ * The remaining three (paymentReconciliation, operationToInvoice, fiduciaryHandoff) have no
+ * existing "how many ran today" fact anywhere else, so their runsToday is this automation's own
+ * authored operational detail, not a duplicated business figure.
+ *
+ * paymentReconciliation is "needsAttention" because INV-2026-2008 is the existing (and only)
+ * reconciliation exception (Stage 2E.6) — this automation must never invent a second one.
+ * fiduciaryHandoff is "paused": the demo's fiduciary/accountant handoff only runs at period-end,
+ * not continuously, so it sits idle (0 runs today) between periods — its lastRun is the previous
+ * period-end, not "today".
+ */
+export const AUTOMATION_DEFINITIONS: AutomationDefinition[] = [
+  {
+    id: "AUTO-1",
+    key: "overdueInvoiceFollowUp",
+    category: "finance",
+    status: "active",
+    triggerKey: "invoiceOverdue",
+    outcomeKey: "followUpEscalated",
+    runsToday: getOverdueCount(),
+    timeSavedMinutesToday: 24,
+    lastRun: { kind: "date", date: "24 Aug", time: "14:00" },
+    relatedEntityIds: FINANCE_INVOICES.filter((invoice) => invoice.status === "overdue").map((invoice) => invoice.id),
+  },
+  {
+    id: "AUTO-2",
+    key: "paymentReconciliation",
+    category: "finance",
+    status: "needsAttention",
+    triggerKey: "paymentReceived",
+    outcomeKey: "exceptionCreated",
+    runsToday: 3,
+    timeSavedMinutesToday: 15,
+    lastRun: { kind: "today", time: "10:48" },
+    relatedEntityIds: ["INV-2026-2008"],
+  },
+  {
+    id: "AUTO-3",
+    key: "lowStockReplenishment",
+    category: "inventory",
+    status: "active",
+    triggerKey: "stockThresholdReached",
+    outcomeKey: "replenishmentCreated",
+    runsToday: (() => {
+      const lowStockItem = NEEDS_ATTENTION.find((item) => item.key === "lowStockItems");
+      return lowStockItem && "count" in lowStockItem ? lowStockItem.count : 0;
+    })(),
+    timeSavedMinutesToday: 30,
+    lastRun: { kind: "today", time: "10:31" },
+    relatedEntityIds: ["INV-2048"],
+  },
+  {
+    id: "AUTO-4",
+    key: "operationToInvoice",
+    category: "operations",
+    status: "active",
+    triggerKey: "operationInvoiceReady",
+    outcomeKey: "invoicePreparationStarted",
+    runsToday: 5,
+    timeSavedMinutesToday: 22,
+    lastRun: { kind: "today", time: "08:52" },
+    relatedEntityIds: ["#10344"],
+  },
+  {
+    id: "AUTO-5",
+    key: "customerFollowUp",
+    category: "customers",
+    status: "active",
+    triggerKey: "customerAttentionDetected",
+    outcomeKey: "followUpCreated",
+    runsToday: Number(CUSTOMERS_SUMMARY.needsAttention),
+    timeSavedMinutesToday: 18,
+    lastRun: { kind: "today", time: "09:15" },
+    relatedEntityIds: ["CUS-1045"],
+  },
+  {
+    id: "AUTO-6",
+    key: "approvalRouting",
+    category: "operations",
+    status: "active",
+    triggerKey: "approvalRequested",
+    outcomeKey: "approvalQueued",
+    runsToday: APPROVALS.length,
+    timeSavedMinutesToday: 12,
+    lastRun: { kind: "today", time: "09:40" },
+  },
+  {
+    id: "AUTO-7",
+    key: "fiduciaryHandoff",
+    category: "finance",
+    status: "paused",
+    triggerKey: "financePeriodReady",
+    outcomeKey: "handoffReadinessUpdated",
+    runsToday: 0,
+    timeSavedMinutesToday: 0,
+    lastRun: { kind: "date", date: "31 Aug", time: "18:00" },
+  },
+];
+
+export function getActiveAutomationCount(): number {
+  return AUTOMATION_DEFINITIONS.filter((automation) => automation.status === "active").length;
+}
+
+export function getAutomationsNeedingAttentionCount(): number {
+  return AUTOMATION_DEFINITIONS.filter((automation) => automation.status === "needsAttention").length;
+}
+
+/**
+ * Reuses the Command Center's existing "automatedToday" KPI (186 automated / 14.2h saved) as the
+ * single source of truth rather than duplicating those two figures as new literals here. Recent
+ * automation *executions* below (AUTOMATION_RUNS) are only a small sample, never a second count
+ * that could contradict this one.
+ */
+export function getAutomatedTodayStats(): { count: string; hoursSaved: string } {
+  const item = KPI_ITEMS.find((kpi) => kpi.key === "automatedToday");
+  return {
+    count: item?.value ?? "0",
+    hoursSaved: item && "deltaHours" in item ? item.deltaHours : "0h",
+  };
+}
+
+export type AutomationRunStatus = "completed" | "attention";
+
+export type AutomationRelatedEntityType = "invoice" | "operation" | "inventoryItem" | "customer" | "approval";
+
+/**
+ * A small, fully deterministic sample of recent executions — NOT the full 186-run daily total
+ * (see getAutomatedTodayStats above). Every timestamp/related entity reuses an existing
+ * authoritative value from the module it references (e.g. INV-2048's own "10:31" update, operation
+ * #10344's own "08:52" update) rather than inventing a new one, so nothing here can contradict
+ * Finance/Inventory/Operations/Customers. Ordered most-recent-first.
+ */
+export type AutomationRun = {
+  id: string;
+  automationId: string;
+  status: AutomationRunStatus;
+  timestamp: AutomationTimestamp;
+  relatedEntityType?: AutomationRelatedEntityType;
+  relatedEntityId?: string;
+};
+
+export const AUTOMATION_RUNS: AutomationRun[] = [
+  {
+    id: "RUN-1",
+    automationId: "AUTO-2",
+    status: "attention",
+    timestamp: { kind: "today", time: "10:48" },
+    relatedEntityType: "invoice",
+    relatedEntityId: "INV-2026-2008",
+  },
+  {
+    id: "RUN-2",
+    automationId: "AUTO-3",
+    status: "completed",
+    timestamp: { kind: "today", time: "10:31" },
+    relatedEntityType: "inventoryItem",
+    relatedEntityId: "INV-2048",
+  },
+  {
+    id: "RUN-3",
+    automationId: "AUTO-2",
+    status: "completed",
+    timestamp: { kind: "today", time: "09:58" },
+    relatedEntityType: "invoice",
+    relatedEntityId: "INV-2026-2010",
+  },
+  {
+    id: "RUN-4",
+    automationId: "AUTO-6",
+    status: "completed",
+    timestamp: { kind: "today", time: "09:40" },
+    relatedEntityType: "approval",
+    relatedEntityId: "purchaseRequest",
+  },
+  {
+    id: "RUN-5",
+    automationId: "AUTO-5",
+    status: "completed",
+    timestamp: { kind: "today", time: "09:15" },
+    relatedEntityType: "customer",
+    relatedEntityId: "CUS-1045",
+  },
+  {
+    id: "RUN-6",
+    automationId: "AUTO-3",
+    status: "completed",
+    timestamp: { kind: "today", time: "09:12" },
+    relatedEntityType: "inventoryItem",
+    relatedEntityId: "INV-2046",
+  },
+  {
+    id: "RUN-7",
+    automationId: "AUTO-4",
+    status: "completed",
+    timestamp: { kind: "today", time: "08:52" },
+    relatedEntityType: "operation",
+    relatedEntityId: "#10344",
+  },
+  {
+    id: "RUN-8",
+    automationId: "AUTO-4",
+    status: "completed",
+    timestamp: { kind: "today", time: "07:20" },
+    relatedEntityType: "operation",
+    relatedEntityId: "#10340",
+  },
+  {
+    id: "RUN-9",
+    automationId: "AUTO-1",
+    status: "completed",
+    timestamp: { kind: "date", date: "24 Aug", time: "14:00" },
+    relatedEntityType: "invoice",
+    relatedEntityId: "INV-2026-2004",
+  },
+  {
+    id: "RUN-10",
+    automationId: "AUTO-1",
+    status: "completed",
+    timestamp: { kind: "date", date: "21 Aug", time: "11:00" },
+    relatedEntityType: "invoice",
+    relatedEntityId: "INV-2026-2003",
+  },
+];

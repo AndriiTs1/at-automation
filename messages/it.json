@@ -507,6 +507,83 @@
           "invoiceOverdue": "Pagamento scaduto"
         }
       }
+    },
+    "Automations": {
+      "title": "Automazioni",
+      "description": "Monitora i flussi di lavoro che AT automatizza nella tua azienda.",
+      "summary": {
+        "activeAutomations": "Automazioni attive",
+        "automatedToday": "Automatizzati oggi",
+        "timeSavedToday": "Tempo risparmiato oggi",
+        "needsAttention": "Richiede attenzione"
+      },
+      "table": {
+        "automation": "Automazione",
+        "area": "Area",
+        "status": "Stato",
+        "trigger": "Evento scatenante",
+        "runsToday": "Esecuzioni oggi",
+        "lastRun": "Ultima esecuzione"
+      },
+      "status": {
+        "active": "Attiva",
+        "paused": "In pausa",
+        "needsAttention": "Richiede attenzione"
+      },
+      "category": {
+        "finance": "Finanze",
+        "operations": "Operazioni",
+        "inventory": "Magazzino",
+        "customers": "Clienti"
+      },
+      "relativeTime": {
+        "today": "Oggi",
+        "yesterday": "Ieri"
+      },
+      "recentActivity": {
+        "title": "Attività recente"
+      },
+      "runStatus": {
+        "completed": "Completata",
+        "attention": "Richiede verifica"
+      },
+      "definitions": {
+        "overdueInvoiceFollowUp": {
+          "name": "Sollecito fatture scadute",
+          "trigger": "La fattura diventa scaduta",
+          "outcome": "Crea un sollecito ed effettua un'escalation se la fattura resta irrisolta."
+        },
+        "paymentReconciliation": {
+          "name": "Riconciliazione pagamenti",
+          "trigger": "Pagamento ricevuto",
+          "outcome": "Abbina il pagamento a una fattura e crea un'eccezione se l'abbinamento non riesce."
+        },
+        "lowStockReplenishment": {
+          "name": "Riordino scorte minime",
+          "trigger": "Scorta al livello di riordino",
+          "outcome": "Crea una richiesta di riordino e richiede l'approvazione se necessaria."
+        },
+        "operationToInvoice": {
+          "name": "Operazione → Fattura",
+          "trigger": "Operazione pronta per la fatturazione",
+          "outcome": "Avvia la preparazione della fattura e la trasmette all'area Finanze."
+        },
+        "customerFollowUp": {
+          "name": "Follow-up cliente",
+          "trigger": "Il cliente richiede attenzione",
+          "outcome": "Crea un follow-up per il referente e traccia l'attività del cliente."
+        },
+        "approvalRouting": {
+          "name": "Instradamento approvazioni",
+          "trigger": "La richiesta richiede approvazione",
+          "outcome": "Individua il responsabile dell'approvazione e mette in coda la richiesta."
+        },
+        "fiduciaryHandoff": {
+          "name": "Consegna al fiduciario",
+          "trigger": "Periodo contabile pronto per la verifica",
+          "outcome": "Organizza i documenti contabili e aggiorna lo stato di preparazione alla consegna."
+        }
+      }
     }
   }
 }

@@ -507,6 +507,83 @@
           "invoiceOverdue": "Payment overdue"
         }
       }
+    },
+    "Automations": {
+      "title": "Automations",
+      "description": "Monitor the workflows AT runs across your business.",
+      "summary": {
+        "activeAutomations": "Active automations",
+        "automatedToday": "Automated today",
+        "timeSavedToday": "Time saved today",
+        "needsAttention": "Needs attention"
+      },
+      "table": {
+        "automation": "Automation",
+        "area": "Area",
+        "status": "Status",
+        "trigger": "Trigger",
+        "runsToday": "Runs today",
+        "lastRun": "Last run"
+      },
+      "status": {
+        "active": "Active",
+        "paused": "Paused",
+        "needsAttention": "Needs attention"
+      },
+      "category": {
+        "finance": "Finance",
+        "operations": "Operations",
+        "inventory": "Inventory",
+        "customers": "Customers"
+      },
+      "relativeTime": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      },
+      "recentActivity": {
+        "title": "Recent activity"
+      },
+      "runStatus": {
+        "completed": "Completed",
+        "attention": "Needs review"
+      },
+      "definitions": {
+        "overdueInvoiceFollowUp": {
+          "name": "Overdue invoice follow-up",
+          "trigger": "Invoice becomes overdue",
+          "outcome": "Creates a follow-up and escalates if the invoice remains unresolved."
+        },
+        "paymentReconciliation": {
+          "name": "Payment reconciliation",
+          "trigger": "Payment received",
+          "outcome": "Matches the payment to an invoice and creates an exception if it can't be matched."
+        },
+        "lowStockReplenishment": {
+          "name": "Low stock replenishment",
+          "trigger": "Stock reaches reorder point",
+          "outcome": "Creates a replenishment requirement and requests approval if needed."
+        },
+        "operationToInvoice": {
+          "name": "Operation → Invoice",
+          "trigger": "Operation ready to invoice",
+          "outcome": "Starts invoice preparation and hands the item to Finance."
+        },
+        "customerFollowUp": {
+          "name": "Customer follow-up",
+          "trigger": "Customer needs attention",
+          "outcome": "Creates an owner follow-up and tracks the customer's activity."
+        },
+        "approvalRouting": {
+          "name": "Approval routing",
+          "trigger": "Request requires approval",
+          "outcome": "Selects the responsible approver and queues the request."
+        },
+        "fiduciaryHandoff": {
+          "name": "Fiduciary handoff",
+          "trigger": "Finance period ready for review",
+          "outcome": "Organizes financial records and updates handoff readiness."
+        }
+      }
     }
   }
 }

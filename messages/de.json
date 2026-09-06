@@ -507,6 +507,83 @@
           "invoiceOverdue": "Zahlung überfällig"
         }
       }
+    },
+    "Automations": {
+      "title": "Automatisierungen",
+      "description": "Behalten Sie die Workflows im Blick, die AT in Ihrem Unternehmen automatisiert.",
+      "summary": {
+        "activeAutomations": "Aktive Automatisierungen",
+        "automatedToday": "Heute automatisiert",
+        "timeSavedToday": "Heute eingesparte Zeit",
+        "needsAttention": "Handlungsbedarf"
+      },
+      "table": {
+        "automation": "Automatisierung",
+        "area": "Bereich",
+        "status": "Status",
+        "trigger": "Auslöser",
+        "runsToday": "Ausführungen heute",
+        "lastRun": "Letzte Ausführung"
+      },
+      "status": {
+        "active": "Aktiv",
+        "paused": "Pausiert",
+        "needsAttention": "Handlungsbedarf"
+      },
+      "category": {
+        "finance": "Finanzen",
+        "operations": "Vorgänge",
+        "inventory": "Lager",
+        "customers": "Kunden"
+      },
+      "relativeTime": {
+        "today": "Heute",
+        "yesterday": "Gestern"
+      },
+      "recentActivity": {
+        "title": "Letzte Aktivitäten"
+      },
+      "runStatus": {
+        "completed": "Abgeschlossen",
+        "attention": "Prüfung erforderlich"
+      },
+      "definitions": {
+        "overdueInvoiceFollowUp": {
+          "name": "Mahnwesen bei überfälligen Rechnungen",
+          "trigger": "Rechnung wird überfällig",
+          "outcome": "Erstellt eine Erinnerung und eskaliert, falls die Rechnung offen bleibt."
+        },
+        "paymentReconciliation": {
+          "name": "Zahlungsabgleich",
+          "trigger": "Zahlung eingegangen",
+          "outcome": "Gleicht die Zahlung mit einer Rechnung ab und erstellt eine Ausnahme, falls keine Zuordnung möglich ist."
+        },
+        "lowStockReplenishment": {
+          "name": "Nachbestellung bei Mindestbestand",
+          "trigger": "Bestand erreicht Meldebestand",
+          "outcome": "Erstellt einen Nachbestellbedarf und fordert bei Bedarf eine Freigabe an."
+        },
+        "operationToInvoice": {
+          "name": "Vorgang → Rechnung",
+          "trigger": "Vorgang bereit zur Rechnungsstellung",
+          "outcome": "Startet die Rechnungserstellung und übergibt den Vorgang an die Finanzabteilung."
+        },
+        "customerFollowUp": {
+          "name": "Kunden-Nachverfolgung",
+          "trigger": "Kunde benötigt Aufmerksamkeit",
+          "outcome": "Erstellt eine Nachverfolgung für den Betreuer und protokolliert die Kundenaktivität."
+        },
+        "approvalRouting": {
+          "name": "Freigabe-Weiterleitung",
+          "trigger": "Anfrage erfordert Freigabe",
+          "outcome": "Bestimmt die zuständige Freigabeperson und reiht die Anfrage ein."
+        },
+        "fiduciaryHandoff": {
+          "name": "Treuhänder-Übergabe",
+          "trigger": "Finanzperiode bereit zur Prüfung",
+          "outcome": "Ordnet die Finanzunterlagen und aktualisiert die Übergabebereitschaft."
+        }
+      }
     }
   }
 }
