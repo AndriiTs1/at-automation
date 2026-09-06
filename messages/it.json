@@ -354,6 +354,43 @@
         "today": "Oggi",
         "yesterday": "Ieri"
       }
+    },
+    "Inventory": {
+      "title": "Magazzino",
+      "description": "Livelli di scorta, prenotazioni e disponibilità collegati alle vostre operazioni.",
+      "newItem": "Nuovo articolo",
+      "summary": {
+        "totalItems": "Articoli totali",
+        "lowStock": "Scorta bassa",
+        "reservedUnits": "Unità riservate",
+        "inventoryValue": "Valore di magazzino"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Cerca nel magazzino…",
+        "allStock": "Tutte le scorte",
+        "allLocations": "Tutte le sedi"
+      },
+      "table": {
+        "item": "Articolo",
+        "status": "Stato",
+        "onHand": "Giacenza",
+        "reserved": "Riservato",
+        "available": "Disponibile",
+        "reorderPoint": "Punto di riordino",
+        "location": "Sede",
+        "value": "Valore",
+        "updated": "Aggiornato"
+      },
+      "status": {
+        "healthy": "Sano",
+        "low": "Basso",
+        "critical": "Critico",
+        "outOfStock": "Esaurito"
+      },
+      "relativeTime": {
+        "today": "Oggi",
+        "yesterday": "Ieri"
+      }
     }
   }
 }

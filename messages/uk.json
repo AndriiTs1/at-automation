@@ -354,6 +354,43 @@
         "today": "Сьогодні",
         "yesterday": "Вчора"
       }
+    },
+    "Inventory": {
+      "title": "Склад",
+      "description": "Залишки, резервування та доступність товару пов'язані з вашими операціями.",
+      "newItem": "Нова позиція",
+      "summary": {
+        "totalItems": "Усього позицій",
+        "lowStock": "Низький залишок",
+        "reservedUnits": "Зарезервовано одиниць",
+        "inventoryValue": "Вартість запасів"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Пошук по складу…",
+        "allStock": "Усі запаси",
+        "allLocations": "Усі склади"
+      },
+      "table": {
+        "item": "Позиція",
+        "status": "Статус",
+        "onHand": "В наявності",
+        "reserved": "Резерв",
+        "available": "Доступно",
+        "reorderPoint": "Точка замовлення",
+        "location": "Розташування",
+        "value": "Вартість",
+        "updated": "Оновлено"
+      },
+      "status": {
+        "healthy": "Стабільно",
+        "low": "Низький",
+        "critical": "Критично",
+        "outOfStock": "Немає в наявності"
+      },
+      "relativeTime": {
+        "today": "Сьогодні",
+        "yesterday": "Вчора"
+      }
     }
   }
 }

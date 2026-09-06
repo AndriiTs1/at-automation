@@ -354,6 +354,43 @@
         "today": "Today",
         "yesterday": "Yesterday"
       }
+    },
+    "Inventory": {
+      "title": "Inventory",
+      "description": "Stock levels, reservations and availability connected to your operations.",
+      "newItem": "New item",
+      "summary": {
+        "totalItems": "Total items",
+        "lowStock": "Low stock",
+        "reservedUnits": "Reserved units",
+        "inventoryValue": "Inventory value"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Search inventory…",
+        "allStock": "All stock",
+        "allLocations": "All locations"
+      },
+      "table": {
+        "item": "Item",
+        "status": "Status",
+        "onHand": "On hand",
+        "reserved": "Reserved",
+        "available": "Available",
+        "reorderPoint": "Reorder point",
+        "location": "Location",
+        "value": "Value",
+        "updated": "Updated"
+      },
+      "status": {
+        "healthy": "Healthy",
+        "low": "Low",
+        "critical": "Critical",
+        "outOfStock": "Out of stock"
+      },
+      "relativeTime": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      }
     }
   }
 }

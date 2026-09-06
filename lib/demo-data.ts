@@ -10,7 +10,7 @@ export const NAV_SECTIONS = [
     items: [
       { key: "operations", icon: "activity", href: "/demo/operations", badge: "3", available: true },
       { key: "customers", icon: "users", href: "/demo/customers", available: true },
-      { key: "inventory", icon: "box", href: "/demo/inventory", badge: "12" },
+      { key: "inventory", icon: "box", href: "/demo/inventory", badge: "12", available: true },
       { key: "finance", icon: "coins", href: "/demo/finance", badge: "4" },
     ],
   },
@@ -532,3 +532,197 @@ export const CUSTOMER_SEGMENTS: CustomerSegment[] = ["keyAccount", "standard", "
 
 /** All CustomerHealth values represented in CUSTOMERS_ROWS — feeds the Customers health filter. */
 export const CUSTOMER_HEALTH_OPTIONS: CustomerHealth[] = ["healthy", "watch", "atRisk"];
+
+export type InventoryStatus = "healthy" | "low" | "critical" | "outOfStock";
+
+/**
+ * "today"/"yesterday" carry only a time and are localized via Dashboard.Inventory.relativeTime;
+ * "date" carries a fixed, untranslated day/month label (same convention as CustomerLastActivity)
+ * plus a time. Kept as Inventory's own type (rather than reusing CustomerLastActivity) so this
+ * module stays independent of Customers' internals.
+ */
+export type InventoryUpdated =
+  | { kind: "today" | "yesterday"; time: string }
+  | { kind: "date"; date: string; time: string };
+
+export type InventoryItem = {
+  id: string;
+  sku: string;
+  name: string;
+  category: string;
+  status: InventoryStatus;
+  onHand: number;
+  reserved: number;
+  reorderPoint: number;
+  location: string;
+  /** CHF per unit — the table derives its Value column as onHand × unitValue, never a stored total. */
+  unitValue: number;
+  updated: InventoryUpdated;
+};
+
+/**
+ * Units free to promise, derived from onHand/reserved rather than stored — guarantees the
+ * invariant (available = onHand - reserved, never negative) can't drift out of sync with a
+ * hand-authored row. Reserved is constructed to never exceed onHand in INVENTORY_ROWS below.
+ */
+export function getAvailableUnits(item: InventoryItem): number {
+  return Math.max(0, item.onHand - item.reserved);
+}
+
+/**
+ * Representative sample of the fictional Inventory universe sized by INVENTORY_SUMMARY
+ * (142 total items) — mirrors how CUSTOMERS_ROWS/OPERATIONS_ROWS sample their own larger
+ * totals. Status is derived from how available (onHand - reserved) compares to reorderPoint,
+ * not chosen arbitrarily:
+ *   - outOfStock: available is 0
+ *   - critical: available is well below reorderPoint
+ *   - low: available is at or just below reorderPoint
+ *   - healthy: available comfortably clears reorderPoint
+ * "Industrial Sensor A" deliberately echoes the Command Center's existing "Stock below
+ * threshold" activity entry (10:31) — same fictional item, same moment, consistent story.
+ */
+export const INVENTORY_ROWS: InventoryItem[] = [
+  {
+    id: "INV-2048",
+    sku: "INV-2048",
+    name: "Industrial Sensor A",
+    category: "Sensors",
+    status: "critical",
+    onHand: 10,
+    reserved: 2,
+    reorderPoint: 20,
+    location: "Warehouse A",
+    unitValue: 46,
+    updated: { kind: "today", time: "10:31" },
+  },
+  {
+    id: "INV-2047",
+    sku: "INV-2047",
+    name: "Control Module X2",
+    category: "Controls",
+    status: "healthy",
+    onHand: 54,
+    reserved: 10,
+    reorderPoint: 15,
+    location: "Warehouse A",
+    unitValue: 128,
+    updated: { kind: "today", time: "09:50" },
+  },
+  {
+    id: "INV-2046",
+    sku: "INV-2046",
+    name: "Precision Valve 40mm",
+    category: "Valves",
+    status: "low",
+    onHand: 22,
+    reserved: 6,
+    reorderPoint: 18,
+    location: "Zone A-03",
+    unitValue: 64,
+    updated: { kind: "today", time: "09:12" },
+  },
+  {
+    id: "INV-2045",
+    sku: "INV-2045",
+    name: "Drive Motor M8",
+    category: "Motors",
+    status: "outOfStock",
+    onHand: 8,
+    reserved: 8,
+    reorderPoint: 10,
+    location: "Warehouse B",
+    unitValue: 310,
+    updated: { kind: "yesterday", time: "16:40" },
+  },
+  {
+    id: "INV-2044",
+    sku: "INV-2044",
+    name: "Safety Relay S4",
+    category: "Safety",
+    status: "healthy",
+    onHand: 96,
+    reserved: 20,
+    reorderPoint: 25,
+    location: "Zone B-12",
+    unitValue: 18,
+    updated: { kind: "today", time: "08:15" },
+  },
+  {
+    id: "INV-2043",
+    sku: "INV-2043",
+    name: "Steel Housing H12",
+    category: "Fabrication",
+    status: "low",
+    onHand: 34,
+    reserved: 6,
+    reorderPoint: 30,
+    location: "Zone A-03",
+    unitValue: 54,
+    updated: { kind: "yesterday", time: "14:05" },
+  },
+  {
+    id: "INV-2042",
+    sku: "INV-2042",
+    name: "Power Supply 24V",
+    category: "Electrical",
+    status: "healthy",
+    onHand: 120,
+    reserved: 18,
+    reorderPoint: 25,
+    location: "Warehouse A",
+    unitValue: 22,
+    updated: { kind: "today", time: "07:55" },
+  },
+  {
+    id: "INV-2041",
+    sku: "INV-2041",
+    name: "Conveyor Belt Kit",
+    category: "Material handling",
+    status: "healthy",
+    onHand: 14,
+    reserved: 2,
+    reorderPoint: 8,
+    location: "Warehouse B",
+    unitValue: 240,
+    updated: { kind: "date", date: "2 Sep", time: "11:20" },
+  },
+  {
+    id: "INV-2040",
+    sku: "INV-2040",
+    name: "Thermal Probe T8",
+    category: "Sensors",
+    status: "healthy",
+    onHand: 30,
+    reserved: 4,
+    reorderPoint: 12,
+    location: "Zone B-12",
+    unitValue: 38,
+    updated: { kind: "yesterday", time: "10:05" },
+  },
+  {
+    id: "INV-2039",
+    sku: "INV-2039",
+    name: "Packaging Unit P6",
+    category: "Packaging",
+    status: "healthy",
+    onHand: 60,
+    reserved: 10,
+    reorderPoint: 20,
+    location: "Warehouse A",
+    unitValue: 9,
+    updated: { kind: "date", date: "1 Sep", time: "09:40" },
+  },
+];
+
+/**
+ * Page-level Inventory KPIs — represent the wider ~142-item company inventory, not a sum of
+ * INVENTORY_ROWS' own 10-row sample (same relationship as CUSTOMERS_SUMMARY to CUSTOMERS_ROWS).
+ * lowStock (12) deliberately matches the Command Center's existing "12 low-stock items" —
+ * same fictional fact, told consistently in both places.
+ */
+export const INVENTORY_SUMMARY = {
+  totalItems: "142",
+  lowStock: "12",
+  reservedUnits: "216",
+  inventoryValue: "CHF 248,600",
+} as const;

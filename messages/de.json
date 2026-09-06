@@ -354,6 +354,43 @@
         "today": "Heute",
         "yesterday": "Gestern"
       }
+    },
+    "Inventory": {
+      "title": "Lager",
+      "description": "Bestände, Reservierungen und Verfügbarkeit sind mit Ihren Vorgängen verbunden.",
+      "newItem": "Neuer Artikel",
+      "summary": {
+        "totalItems": "Artikel gesamt",
+        "lowStock": "Niedriger Bestand",
+        "reservedUnits": "Reservierte Einheiten",
+        "inventoryValue": "Lagerwert"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Lager durchsuchen…",
+        "allStock": "Alle Bestände",
+        "allLocations": "Alle Standorte"
+      },
+      "table": {
+        "item": "Artikel",
+        "status": "Status",
+        "onHand": "Bestand",
+        "reserved": "Reserviert",
+        "available": "Verfügbar",
+        "reorderPoint": "Meldebestand",
+        "location": "Standort",
+        "value": "Wert",
+        "updated": "Aktualisiert"
+      },
+      "status": {
+        "healthy": "Gesund",
+        "low": "Niedrig",
+        "critical": "Kritisch",
+        "outOfStock": "Ausverkauft"
+      },
+      "relativeTime": {
+        "today": "Heute",
+        "yesterday": "Gestern"
+      }
     }
   }
 }

@@ -354,6 +354,43 @@
         "today": "Сегодня",
         "yesterday": "Вчера"
       }
+    },
+    "Inventory": {
+      "title": "Склад",
+      "description": "Остатки, резервирование и доступность товара связаны с вашими операциями.",
+      "newItem": "Новая позиция",
+      "summary": {
+        "totalItems": "Всего позиций",
+        "lowStock": "Низкий остаток",
+        "reservedUnits": "Зарезервировано единиц",
+        "inventoryValue": "Стоимость запасов"
+      },
+      "toolbar": {
+        "searchPlaceholder": "Поиск по складу…",
+        "allStock": "Все запасы",
+        "allLocations": "Все склады"
+      },
+      "table": {
+        "item": "Позиция",
+        "status": "Статус",
+        "onHand": "В наличии",
+        "reserved": "Резерв",
+        "available": "Доступно",
+        "reorderPoint": "Точка заказа",
+        "location": "Местоположение",
+        "value": "Стоимость",
+        "updated": "Обновлено"
+      },
+      "status": {
+        "healthy": "Стабильно",
+        "low": "Низкий",
+        "critical": "Критично",
+        "outOfStock": "Нет в наличии"
+      },
+      "relativeTime": {
+        "today": "Сегодня",
+        "yesterday": "Вчера"
+      }
     }
   }
 }
