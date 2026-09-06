@@ -16,7 +16,8 @@ const SEGMENT_TONE: Record<string, string> = {
   new: "bg-neutral-100 text-neutral-500",
 };
 
-function formatLastActivity(entry: CustomerRow["lastActivity"], t: ReturnType<typeof useTranslations>) {
+/** Shared by CustomersTable and CustomersMobileList so both format relative activity identically. */
+export function formatLastActivity(entry: CustomerRow["lastActivity"], t: ReturnType<typeof useTranslations>) {
   if (entry.kind === "date") return `${entry.date}, ${entry.time}`;
   return `${t(`relativeTime.${entry.kind}`)}, ${entry.time}`;
 }

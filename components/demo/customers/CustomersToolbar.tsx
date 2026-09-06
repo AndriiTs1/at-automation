@@ -9,6 +9,24 @@ export type HealthFilterValue = CustomerHealth | "all";
 export type OpenFilter = "segment" | "health" | null;
 
 /**
+ * Segment/Health dropdown option lists — shared by the desktop toolbar below and the
+ * tablet/mobile toolbars in CustomersWorkspace, so the "all" + translated-option construction
+ * lives in exactly one place regardless of which breakpoint's markup renders the dropdowns.
+ */
+export function buildCustomerFilterOptions(t: ReturnType<typeof useTranslations>) {
+  return {
+    segmentOptions: [
+      { value: "all" as const, label: t("toolbar.allSegments") },
+      ...CUSTOMER_SEGMENTS.map((segment) => ({ value: segment, label: t(`segment.${segment}`) })),
+    ],
+    healthOptions: [
+      { value: "all" as const, label: t("toolbar.allHealth") },
+      ...CUSTOMER_HEALTH_OPTIONS.map((health) => ({ value: health, label: t(`health.${health}`) })),
+    ],
+  };
+}
+
+/**
  * Functional Customers toolbar (Stage 2C.3) — same visual composition as the Stage 2C.1/2C.2
  * static toolbar, now wired to filter state owned by CustomersWorkspace. Reuses Operations'
  * proven search/select/result-count/clear-filters interaction pattern.
@@ -43,16 +61,7 @@ export default function CustomersToolbar({
   onOpenFilterChange: (value: OpenFilter) => void;
 }) {
   const t = useTranslations("Dashboard.Customers");
-
-  const segmentOptions = [
-    { value: "all" as const, label: t("toolbar.allSegments") },
-    ...CUSTOMER_SEGMENTS.map((segment) => ({ value: segment, label: t(`segment.${segment}`) })),
-  ];
-
-  const healthOptions = [
-    { value: "all" as const, label: t("toolbar.allHealth") },
-    ...CUSTOMER_HEALTH_OPTIONS.map((health) => ({ value: health, label: t(`health.${health}`) })),
-  ];
+  const { segmentOptions, healthOptions } = buildCustomerFilterOptions(t);
 
   return (
     <div className="mb-3 flex shrink-0 items-center gap-2">
