@@ -583,6 +583,54 @@
           "trigger": "Финансовый период готов к проверке",
           "outcome": "Систематизирует финансовые документы и обновляет готовность к передаче."
         }
+      },
+      "detail": {
+        "close": "Закрыть",
+        "trigger": "Триггер",
+        "workflow": "Процесс",
+        "currentOutcome": "Текущий статус",
+        "related": "Связано с",
+        "recentExecutions": "Последние выполнения",
+        "noRecentExecutions": "Нет недавних выполнений"
+      },
+      "workflowStepStatus": {
+        "pending": "Ожидает"
+      },
+      "workflowSteps": {
+        "overdueDetected": "Просрочка обнаружена",
+        "followUpCreated": "Напоминание создано",
+        "escalationMonitoring": "Контроль эскалации активен",
+        "referenceChecked": "Референс проверен",
+        "invoiceMatch": "Сопоставление со счётом",
+        "financeReviewCreated": "Финансовая проверка создана",
+        "availabilityChecked": "Наличие проверено",
+        "replenishmentRequirementCreated": "Заявка на пополнение создана",
+        "approvalQueued": "Согласование запрошено",
+        "operationValidated": "Операция проверена",
+        "financePreparationCreated": "Финансовая подготовка создана",
+        "invoiceWorkflowStarted": "Процесс выставления счёта запущен",
+        "conditionIdentified": "Причина определена",
+        "ownerFollowUpCreated": "Напоминание для ответственного создано",
+        "activityTracked": "Активность отслеживается",
+        "approverDetermined": "Ответственный согласующий определён",
+        "decisionAwaited": "Решение ожидается",
+        "reconciliationChecked": "Сверка проверена",
+        "exceptionsChecked": "Исключения проверены",
+        "handoffReadinessEvaluated": "Готовность к передаче оценена"
+      },
+      "currentOutcome": {
+        "overdueInvoiceFollowUp": "{count, plural, one {# просроченный счёт отслеживается} few {# просроченных счёта отслеживаются} many {# просроченных счетов отслеживаются} other {# просроченных счёта отслеживаются}}",
+        "paymentReconciliation": "Требуется ручная проверка",
+        "lowStockReplenishment": "Процесс пополнения активен",
+        "operationToInvoice": "Финансовая подготовка завершена",
+        "customerFollowUp": "Активность клиента отслеживается",
+        "approvalRouting": "Очередь согласования обновлена",
+        "fiduciaryHandoff": "Автоматизация приостановлена"
+      },
+      "relatedLabels": {
+        "overdueInvoiceCount": "Просроченные счета",
+        "inventoryItem": "Складская позиция",
+        "awaitingApproval": "Ожидает согласования"
       }
     }
   }

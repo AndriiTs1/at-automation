@@ -583,6 +583,54 @@
           "trigger": "Finanzperiode bereit zur Prüfung",
           "outcome": "Ordnet die Finanzunterlagen und aktualisiert die Übergabebereitschaft."
         }
+      },
+      "detail": {
+        "close": "Schließen",
+        "trigger": "Auslöser",
+        "workflow": "Ablauf",
+        "currentOutcome": "Aktueller Status",
+        "related": "Bezug",
+        "recentExecutions": "Letzte Ausführungen",
+        "noRecentExecutions": "Keine aktuellen Ausführungen"
+      },
+      "workflowStepStatus": {
+        "pending": "Ausstehend"
+      },
+      "workflowSteps": {
+        "overdueDetected": "Überfälligkeit erkannt",
+        "followUpCreated": "Erinnerung erstellt",
+        "escalationMonitoring": "Eskalationsüberwachung aktiv",
+        "referenceChecked": "Referenz geprüft",
+        "invoiceMatch": "Rechnungsabgleich",
+        "financeReviewCreated": "Finanzprüfung erstellt",
+        "availabilityChecked": "Verfügbarkeit geprüft",
+        "replenishmentRequirementCreated": "Nachbestellbedarf erstellt",
+        "approvalQueued": "Freigabe angefragt",
+        "operationValidated": "Vorgang geprüft",
+        "financePreparationCreated": "Finanzvorbereitung erstellt",
+        "invoiceWorkflowStarted": "Rechnungsworkflow gestartet",
+        "conditionIdentified": "Anlass erkannt",
+        "ownerFollowUpCreated": "Nachverfolgung für Betreuer erstellt",
+        "activityTracked": "Aktivität erfasst",
+        "approverDetermined": "Zuständige Freigabeperson bestimmt",
+        "decisionAwaited": "Entscheidung ausstehend",
+        "reconciliationChecked": "Abgleich geprüft",
+        "exceptionsChecked": "Ausnahmen geprüft",
+        "handoffReadinessEvaluated": "Übergabebereitschaft bewertet"
+      },
+      "currentOutcome": {
+        "overdueInvoiceFollowUp": "{count, plural, one {# überfällige Rechnung wird überwacht} other {# überfällige Rechnungen werden überwacht}}",
+        "paymentReconciliation": "Manuelle Prüfung erforderlich",
+        "lowStockReplenishment": "Nachbestellprozess aktiv",
+        "operationToInvoice": "Finanzvorbereitung abgeschlossen",
+        "customerFollowUp": "Kundenaktivität wird verfolgt",
+        "approvalRouting": "Freigabewarteschlange aktualisiert",
+        "fiduciaryHandoff": "Automatisierung pausiert"
+      },
+      "relatedLabels": {
+        "overdueInvoiceCount": "Überfällige Rechnungen",
+        "inventoryItem": "Lagerartikel",
+        "awaitingApproval": "Ausstehende Freigaben"
       }
     }
   }

@@ -1,15 +1,15 @@
 import { useTranslations } from "next-intl";
+import type { KeyboardEvent } from "react";
 import {
   AUTOMATION_DEFINITIONS,
   AUTOMATION_RUNS,
-  CUSTOMERS_ROWS,
-  INVENTORY_ROWS,
   getActiveAutomationCount,
   getAutomatedTodayStats,
   getAutomationsNeedingAttentionCount,
-  type AutomationRun,
-  type AutomationTimestamp,
+  type AutomationDefinition,
 } from "@/lib/demo-data";
+import AutomationDetailPanel from "./AutomationDetailPanel";
+import { formatAutomationTimestamp, getAutomationRunEntityLabel } from "./automationFormatters";
 
 const STATUS_TONE: Record<string, string> = {
   active: "bg-success/10 text-success",
@@ -19,36 +19,11 @@ const STATUS_TONE: Record<string, string> = {
 
 const COLUMN_WIDTHS = ["20%", "14%", "19%", "18%", "11%", "18%"];
 
-function formatTimestamp(ts: AutomationTimestamp, t: ReturnType<typeof useTranslations>) {
-  if (ts.kind === "date") return `${ts.date}, ${ts.time}`;
-  return `${t(`relativeTime.${ts.kind}`)}, ${ts.time}`;
-}
-
 /**
- * Resolves an AutomationRun's related entity to a display label by reading the real record it
- * points at (never a duplicated copy) — mirrors how FinanceTable resolves customer/operation via
- * getFinanceCustomer/getFinanceOperation. Invoice and operation ids are shown as-is (same
- * convention as Finance/Operations tables); inventory items and customers show their name.
- */
-function getRunEntityLabel(run: AutomationRun, tApprovals: ReturnType<typeof useTranslations>) {
-  if (!run.relatedEntityId) return null;
-  switch (run.relatedEntityType) {
-    case "inventoryItem":
-      return INVENTORY_ROWS.find((item) => item.id === run.relatedEntityId)?.name ?? run.relatedEntityId;
-    case "customer":
-      return CUSTOMERS_ROWS.find((customer) => customer.id === run.relatedEntityId)?.name ?? run.relatedEntityId;
-    case "approval":
-      return tApprovals(`items.${run.relatedEntityId}`);
-    default:
-      return run.relatedEntityId;
-  }
-}
-
-/**
- * Desktop-only Automations workspace (Stage 2F.1) — a read-only operational overview: no
- * filters, no detail drawer, no create/edit/toggle actions (those are later stages). Hidden below
- * the @5xl container-query breakpoint, matching every other module's own desktop-foundation stage
- * (FinanceDesktop, InventoryDesktop, ...) before its tablet/mobile stage existed.
+ * Desktop-only Automations workspace (Stage 2F.1, made presentational in 2F.2). Hidden below the
+ * @5xl container-query breakpoint, matching every other module's own desktop-foundation stage.
+ * Selection state (selectedId/selectedAutomation) is owned by AutomationsWorkspace and passed in,
+ * mirroring InventoryDesktop's prop-driven pattern — this component only renders.
  *
  * Every KPI here is derived, never a re-typed literal: activeAutomations/needsAttention come from
  * AUTOMATION_DEFINITIONS' own status field, and automatedToday/timeSavedToday reuse the Command
@@ -56,7 +31,17 @@ function getRunEntityLabel(run: AutomationRun, tApprovals: ReturnType<typeof use
  * workflow *types*, not the 186 executions counted there, so they must never be summed and shown
  * as a second "automated today" figure.
  */
-export default function AutomationsDesktop() {
+export default function AutomationsDesktop({
+  selectedId,
+  onSelectRow,
+  selectedAutomation,
+  onCloseDetail,
+}: {
+  selectedId: string | null;
+  onSelectRow: (id: string) => void;
+  selectedAutomation: AutomationDefinition | null;
+  onCloseDetail: () => void;
+}) {
   const t = useTranslations("Dashboard.Automations");
   const tApprovals = useTranslations("Dashboard.Approvals");
 
@@ -70,6 +55,13 @@ export default function AutomationsDesktop() {
     { key: "timeSavedToday", value: automatedToday.hoursSaved, tone: "text-success" },
     { key: "needsAttention", value: String(needsAttentionCount), tone: needsAttentionCount > 0 ? "text-warning" : "text-accent" },
   ] as const;
+
+  const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, id: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelectRow(id);
+    }
+  };
 
   return (
     <div className="hidden min-h-0 flex-1 @5xl:flex @5xl:flex-col">
@@ -89,8 +81,9 @@ export default function AutomationsDesktop() {
         ))}
       </div>
 
-      {/* Main workspace: automation list (~70%) + recent activity (~30%) */}
-      <div className="flex min-h-0 flex-1 gap-4">
+      {/* Main workspace: automation list (~70%) + recent activity (~30%); `relative` so the
+          detail panel below can overlay this whole row from the right without resizing it. */}
+      <div className="relative flex min-h-0 flex-1 gap-4">
         <div className="min-h-0 min-w-0 flex-[4] overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
           <table className="w-full table-fixed border-collapse text-left text-sm">
             <colgroup>
@@ -109,28 +102,44 @@ export default function AutomationsDesktop() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {AUTOMATION_DEFINITIONS.map((automation) => (
-                <tr key={automation.id}>
-                  <td className="px-4 py-3 align-top font-semibold break-words text-foreground">
-                    {t(`definitions.${automation.key}.name`)}
-                  </td>
-                  <td className="px-4 py-3 align-top break-words text-neutral-600">{t(`category.${automation.category}`)}</td>
-                  <td className="px-4 py-3 align-top">
-                    <span
-                      className={`inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-xs font-medium break-words ${STATUS_TONE[automation.status]}`}
-                    >
-                      {t(`status.${automation.status}`)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 align-top break-words text-neutral-600">{t(`definitions.${automation.key}.trigger`)}</td>
-                  <td className="px-4 py-3 text-right align-top font-medium whitespace-nowrap text-foreground">
-                    {automation.runsToday}
-                  </td>
-                  <td className="px-4 py-3 text-right align-top text-xs whitespace-nowrap text-neutral-400">
-                    {formatTimestamp(automation.lastRun, t)}
-                  </td>
-                </tr>
-              ))}
+              {AUTOMATION_DEFINITIONS.map((automation) => {
+                const isSelected = automation.id === selectedId;
+                return (
+                  <tr
+                    key={automation.id}
+                    tabIndex={0}
+                    aria-selected={isSelected}
+                    onClick={() => onSelectRow(automation.id)}
+                    onKeyDown={(event) => handleRowKeyDown(event, automation.id)}
+                    className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
+                      isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                    }`}
+                  >
+                    <td className="px-4 py-3 align-top font-semibold break-words text-foreground">
+                      {t(`definitions.${automation.key}.name`)}
+                    </td>
+                    <td className="px-4 py-3 align-top break-words text-neutral-600">
+                      {t(`category.${automation.category}`)}
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      <span
+                        className={`inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-xs font-medium break-words ${STATUS_TONE[automation.status]}`}
+                      >
+                        {t(`status.${automation.status}`)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 align-top break-words text-neutral-600">
+                      {t(`definitions.${automation.key}.trigger`)}
+                    </td>
+                    <td className="px-4 py-3 text-right align-top font-medium whitespace-nowrap text-foreground">
+                      {automation.runsToday}
+                    </td>
+                    <td className="px-4 py-3 text-right align-top text-xs whitespace-nowrap text-neutral-400">
+                      {formatAutomationTimestamp(automation.lastRun, t)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -141,7 +150,7 @@ export default function AutomationsDesktop() {
             {AUTOMATION_RUNS.map((run) => {
               const automation = AUTOMATION_DEFINITIONS.find((item) => item.id === run.automationId);
               if (!automation) return null;
-              const entityLabel = getRunEntityLabel(run, tApprovals);
+              const entityLabel = getAutomationRunEntityLabel(run, tApprovals);
 
               return (
                 <div key={run.id} className="flex items-start justify-between gap-2 rounded-lg border border-border/60 px-2 py-1.5">
@@ -153,13 +162,31 @@ export default function AutomationsDesktop() {
                     <p className={`text-xs ${run.status === "attention" ? "font-medium text-warning" : "text-neutral-400"}`}>
                       {t(`runStatus.${run.status}`)}
                     </p>
-                    <p className="mt-0.5 text-[11px] whitespace-nowrap text-neutral-400">{formatTimestamp(run.timestamp, t)}</p>
+                    <p className="mt-0.5 text-[11px] whitespace-nowrap text-neutral-400">
+                      {formatAutomationTimestamp(run.timestamp, t)}
+                    </p>
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
+
+        {selectedAutomation && (
+          <>
+            {/* Subtle workspace-level scrim — communicates layering without darkening the app or
+                blocking recognition of the table underneath. Decorative: X and Escape are the
+                primary close mechanisms, so this stays out of tab order and hidden from AT. */}
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={onCloseDetail}
+              className="absolute inset-0 z-10 cursor-default bg-black/[0.02]"
+            />
+            <AutomationDetailPanel automation={selectedAutomation} onClose={onCloseDetail} />
+          </>
+        )}
       </div>
     </div>
   );

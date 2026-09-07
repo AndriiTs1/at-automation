@@ -1700,3 +1700,79 @@ export const AUTOMATION_RUNS: AutomationRun[] = [
     relatedEntityId: "INV-2026-2003",
   },
 ];
+
+/** All sample executions for one automation, most-recent-first as authored above. */
+export function getAutomationRuns(automationId: string): AutomationRun[] {
+  return AUTOMATION_RUNS.filter((run) => run.automationId === automationId);
+}
+
+export type AutomationWorkflowStepStatus = "completed" | "attention" | "pending";
+
+export type AutomationWorkflowStep = {
+  id: string;
+  /** Looked up under Dashboard.Automations.workflowSteps.<labelKey> — shared across automations
+   * wherever two steps are genuinely the same concept (e.g. "approvalQueued" below), rather than
+   * duplicated per automation. */
+  labelKey: string;
+  status: AutomationWorkflowStepStatus;
+};
+
+/**
+ * Per-automation business workflow (Stage 2F.2), keyed by AutomationDefinition.key. Deliberately
+ * excludes each automation's own trigger step — AutomationDetailContent always renders the
+ * trigger (definitions.<key>.trigger) as the first, already-completed step, so the trigger text
+ * exists in exactly one place instead of being restated here.
+ *
+ * Status coherence: an "active" definition's steps are all "completed" (AT ran the process
+ * cleanly). "paymentReconciliation" (needsAttention) has its "invoiceMatch" step marked
+ * "attention" — the one unresolved exception (INV-2026-2008) — while its final step
+ * ("financeReviewCreated") is "completed": AT correctly detected the problem and already created
+ * the human review, so the automation itself did its job. A "pending" step marks work AT has
+ * queued but that awaits a human decision the demo doesn't resolve (an approval, a replenishment
+ * sign-off) — never used to mean failure. "fiduciaryHandoff" (paused) steps are all "completed"
+ * because its lastRun (31 Aug) predates INV-2026-2008's payment (3 Sep) — the last time this
+ * automation actually ran, there was nothing to flag yet, so showing "attention" here would
+ * misrepresent that historical run.
+ */
+const AUTOMATION_WORKFLOW_STEPS: Record<string, AutomationWorkflowStep[]> = {
+  overdueInvoiceFollowUp: [
+    { id: "overdueDetected", labelKey: "overdueDetected", status: "completed" },
+    { id: "followUpCreated", labelKey: "followUpCreated", status: "completed" },
+    { id: "escalationMonitoring", labelKey: "escalationMonitoring", status: "completed" },
+  ],
+  paymentReconciliation: [
+    { id: "referenceChecked", labelKey: "referenceChecked", status: "completed" },
+    { id: "invoiceMatch", labelKey: "invoiceMatch", status: "attention" },
+    { id: "financeReviewCreated", labelKey: "financeReviewCreated", status: "completed" },
+  ],
+  lowStockReplenishment: [
+    { id: "availabilityChecked", labelKey: "availabilityChecked", status: "completed" },
+    { id: "replenishmentRequirementCreated", labelKey: "replenishmentRequirementCreated", status: "completed" },
+    { id: "approvalQueued", labelKey: "approvalQueued", status: "pending" },
+  ],
+  operationToInvoice: [
+    { id: "operationValidated", labelKey: "operationValidated", status: "completed" },
+    { id: "financePreparationCreated", labelKey: "financePreparationCreated", status: "completed" },
+    { id: "invoiceWorkflowStarted", labelKey: "invoiceWorkflowStarted", status: "completed" },
+  ],
+  customerFollowUp: [
+    { id: "conditionIdentified", labelKey: "conditionIdentified", status: "completed" },
+    { id: "ownerFollowUpCreated", labelKey: "ownerFollowUpCreated", status: "completed" },
+    { id: "activityTracked", labelKey: "activityTracked", status: "completed" },
+  ],
+  approvalRouting: [
+    { id: "approverDetermined", labelKey: "approverDetermined", status: "completed" },
+    { id: "approvalQueued", labelKey: "approvalQueued", status: "completed" },
+    { id: "decisionAwaited", labelKey: "decisionAwaited", status: "pending" },
+  ],
+  fiduciaryHandoff: [
+    { id: "reconciliationChecked", labelKey: "reconciliationChecked", status: "completed" },
+    { id: "exceptionsChecked", labelKey: "exceptionsChecked", status: "completed" },
+    { id: "handoffReadinessEvaluated", labelKey: "handoffReadinessEvaluated", status: "completed" },
+  ],
+};
+
+/** The stored post-trigger workflow steps for one automation (by AutomationDefinition.key). */
+export function getAutomationWorkflowSteps(automationKey: string): AutomationWorkflowStep[] {
+  return AUTOMATION_WORKFLOW_STEPS[automationKey] ?? [];
+}

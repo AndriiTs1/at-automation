@@ -583,6 +583,54 @@
           "trigger": "Фінансовий період готовий до перевірки",
           "outcome": "Систематизує фінансові документи та оновлює готовність до передачі."
         }
+      },
+      "detail": {
+        "close": "Закрити",
+        "trigger": "Тригер",
+        "workflow": "Процес",
+        "currentOutcome": "Поточний статус",
+        "related": "Пов'язано з",
+        "recentExecutions": "Останні виконання",
+        "noRecentExecutions": "Немає останніх виконань"
+      },
+      "workflowStepStatus": {
+        "pending": "Очікує"
+      },
+      "workflowSteps": {
+        "overdueDetected": "Прострочення виявлено",
+        "followUpCreated": "Нагадування створено",
+        "escalationMonitoring": "Контроль ескалації активний",
+        "referenceChecked": "Референс перевірено",
+        "invoiceMatch": "Зіставлення з рахунком",
+        "financeReviewCreated": "Фінансову перевірку створено",
+        "availabilityChecked": "Наявність перевірено",
+        "replenishmentRequirementCreated": "Заявку на поповнення створено",
+        "approvalQueued": "Погодження запитано",
+        "operationValidated": "Операцію перевірено",
+        "financePreparationCreated": "Фінансову підготовку створено",
+        "invoiceWorkflowStarted": "Процес виставлення рахунку запущено",
+        "conditionIdentified": "Причину визначено",
+        "ownerFollowUpCreated": "Нагадування для відповідального створено",
+        "activityTracked": "Активність відстежується",
+        "approverDetermined": "Відповідального погоджувача визначено",
+        "decisionAwaited": "Рішення очікується",
+        "reconciliationChecked": "Звірку перевірено",
+        "exceptionsChecked": "Винятки перевірено",
+        "handoffReadinessEvaluated": "Готовність до передачі оцінено"
+      },
+      "currentOutcome": {
+        "overdueInvoiceFollowUp": "{count, plural, one {# прострочений рахунок відстежується} few {# прострочені рахунки відстежуються} many {# прострочених рахунків відстежуються} other {# прострочені рахунки відстежуються}}",
+        "paymentReconciliation": "Потрібна ручна перевірка",
+        "lowStockReplenishment": "Процес поповнення активний",
+        "operationToInvoice": "Фінансову підготовку завершено",
+        "customerFollowUp": "Активність клієнта відстежується",
+        "approvalRouting": "Чергу погоджень оновлено",
+        "fiduciaryHandoff": "Автоматизацію призупинено"
+      },
+      "relatedLabels": {
+        "overdueInvoiceCount": "Прострочені рахунки",
+        "inventoryItem": "Складська позиція",
+        "awaitingApproval": "Очікує погодження"
       }
     }
   }

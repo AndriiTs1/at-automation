@@ -583,6 +583,54 @@
           "trigger": "Période comptable prête pour vérification",
           "outcome": "Organise les documents comptables et met à jour l'état de préparation de la transmission."
         }
+      },
+      "detail": {
+        "close": "Fermer",
+        "trigger": "Déclencheur",
+        "workflow": "Processus",
+        "currentOutcome": "État actuel",
+        "related": "Éléments liés",
+        "recentExecutions": "Exécutions récentes",
+        "noRecentExecutions": "Aucune exécution récente"
+      },
+      "workflowStepStatus": {
+        "pending": "En attente"
+      },
+      "workflowSteps": {
+        "overdueDetected": "Retard détecté",
+        "followUpCreated": "Relance créée",
+        "escalationMonitoring": "Suivi d'escalade actif",
+        "referenceChecked": "Référence vérifiée",
+        "invoiceMatch": "Rapprochement de facture",
+        "financeReviewCreated": "Vérification financière créée",
+        "availabilityChecked": "Disponibilité vérifiée",
+        "replenishmentRequirementCreated": "Besoin de réapprovisionnement créé",
+        "approvalQueued": "Approbation demandée",
+        "operationValidated": "Opération validée",
+        "financePreparationCreated": "Préparation financière créée",
+        "invoiceWorkflowStarted": "Processus de facturation démarré",
+        "conditionIdentified": "Condition identifiée",
+        "ownerFollowUpCreated": "Suivi créé pour le responsable",
+        "activityTracked": "Activité suivie",
+        "approverDetermined": "Approbateur responsable déterminé",
+        "decisionAwaited": "Décision en attente",
+        "reconciliationChecked": "Rapprochement vérifié",
+        "exceptionsChecked": "Exceptions vérifiées",
+        "handoffReadinessEvaluated": "Préparation à la transmission évaluée"
+      },
+      "currentOutcome": {
+        "overdueInvoiceFollowUp": "{count, plural, one {# facture en retard sous surveillance} other {# factures en retard sous surveillance}}",
+        "paymentReconciliation": "Vérification manuelle requise",
+        "lowStockReplenishment": "Processus de réapprovisionnement actif",
+        "operationToInvoice": "Préparation financière terminée",
+        "customerFollowUp": "Activité du client suivie",
+        "approvalRouting": "File d'approbation mise à jour",
+        "fiduciaryHandoff": "Automatisation en pause"
+      },
+      "relatedLabels": {
+        "overdueInvoiceCount": "Factures en retard",
+        "inventoryItem": "Article en stock",
+        "awaitingApproval": "En attente d'approbation"
       }
     }
   }

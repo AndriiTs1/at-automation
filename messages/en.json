@@ -583,6 +583,54 @@
           "trigger": "Finance period ready for review",
           "outcome": "Organizes financial records and updates handoff readiness."
         }
+      },
+      "detail": {
+        "close": "Close",
+        "trigger": "Trigger",
+        "workflow": "Workflow",
+        "currentOutcome": "Current outcome",
+        "related": "Related",
+        "recentExecutions": "Recent executions",
+        "noRecentExecutions": "No recent executions"
+      },
+      "workflowStepStatus": {
+        "pending": "Pending"
+      },
+      "workflowSteps": {
+        "overdueDetected": "Overdue condition detected",
+        "followUpCreated": "Follow-up created",
+        "escalationMonitoring": "Escalation monitoring active",
+        "referenceChecked": "Reference checked",
+        "invoiceMatch": "Invoice match",
+        "financeReviewCreated": "Finance review created",
+        "availabilityChecked": "Availability checked",
+        "replenishmentRequirementCreated": "Replenishment requirement created",
+        "approvalQueued": "Approval queued",
+        "operationValidated": "Operation validated",
+        "financePreparationCreated": "Finance preparation created",
+        "invoiceWorkflowStarted": "Invoice workflow started",
+        "conditionIdentified": "Condition identified",
+        "ownerFollowUpCreated": "Owner follow-up created",
+        "activityTracked": "Activity tracked",
+        "approverDetermined": "Responsible approver determined",
+        "decisionAwaited": "Decision awaited",
+        "reconciliationChecked": "Reconciliation checked",
+        "exceptionsChecked": "Exceptions checked",
+        "handoffReadinessEvaluated": "Handoff readiness evaluated"
+      },
+      "currentOutcome": {
+        "overdueInvoiceFollowUp": "{count, plural, one {# overdue invoice is being monitored} other {# overdue invoices are being monitored}}",
+        "paymentReconciliation": "Manual review required",
+        "lowStockReplenishment": "Replenishment workflow active",
+        "operationToInvoice": "Finance preparation completed",
+        "customerFollowUp": "Customer activity being tracked",
+        "approvalRouting": "Approval queue updated",
+        "fiduciaryHandoff": "Automation paused"
+      },
+      "relatedLabels": {
+        "overdueInvoiceCount": "Overdue invoices",
+        "inventoryItem": "Inventory item",
+        "awaitingApproval": "Awaiting approval"
       }
     }
   }

@@ -583,6 +583,54 @@
           "trigger": "Periodo contabile pronto per la verifica",
           "outcome": "Organizza i documenti contabili e aggiorna lo stato di preparazione alla consegna."
         }
+      },
+      "detail": {
+        "close": "Chiudi",
+        "trigger": "Evento scatenante",
+        "workflow": "Flusso di lavoro",
+        "currentOutcome": "Stato attuale",
+        "related": "Correlati",
+        "recentExecutions": "Esecuzioni recenti",
+        "noRecentExecutions": "Nessuna esecuzione recente"
+      },
+      "workflowStepStatus": {
+        "pending": "In attesa"
+      },
+      "workflowSteps": {
+        "overdueDetected": "Scadenza rilevata",
+        "followUpCreated": "Sollecito creato",
+        "escalationMonitoring": "Monitoraggio escalation attivo",
+        "referenceChecked": "Riferimento verificato",
+        "invoiceMatch": "Abbinamento fattura",
+        "financeReviewCreated": "Verifica finanziaria creata",
+        "availabilityChecked": "Disponibilità verificata",
+        "replenishmentRequirementCreated": "Richiesta di riordino creata",
+        "approvalQueued": "Approvazione richiesta",
+        "operationValidated": "Operazione convalidata",
+        "financePreparationCreated": "Preparazione finanziaria creata",
+        "invoiceWorkflowStarted": "Flusso di fatturazione avviato",
+        "conditionIdentified": "Condizione identificata",
+        "ownerFollowUpCreated": "Follow-up per il referente creato",
+        "activityTracked": "Attività tracciata",
+        "approverDetermined": "Responsabile dell'approvazione individuato",
+        "decisionAwaited": "Decisione in attesa",
+        "reconciliationChecked": "Riconciliazione verificata",
+        "exceptionsChecked": "Eccezioni verificate",
+        "handoffReadinessEvaluated": "Prontezza alla consegna valutata"
+      },
+      "currentOutcome": {
+        "overdueInvoiceFollowUp": "{count, plural, one {# fattura scaduta sotto monitoraggio} other {# fatture scadute sotto monitoraggio}}",
+        "paymentReconciliation": "Verifica manuale richiesta",
+        "lowStockReplenishment": "Processo di riordino attivo",
+        "operationToInvoice": "Preparazione finanziaria completata",
+        "customerFollowUp": "Attività del cliente monitorata",
+        "approvalRouting": "Coda di approvazione aggiornata",
+        "fiduciaryHandoff": "Automazione in pausa"
+      },
+      "relatedLabels": {
+        "overdueInvoiceCount": "Fatture scadute",
+        "inventoryItem": "Articolo di magazzino",
+        "awaitingApproval": "In attesa di approvazione"
       }
     }
   }
