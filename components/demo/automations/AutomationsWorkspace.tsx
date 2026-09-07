@@ -1,18 +1,68 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { AUTOMATION_DEFINITIONS } from "@/lib/demo-data";
+import {
+  AUTOMATION_DEFINITIONS,
+  getActiveAutomationCount,
+  getAutomatedTodayStats,
+  getAutomationsNeedingAttentionCount,
+} from "@/lib/demo-data";
+import AutomationDetailMobile from "./AutomationDetailMobile";
 import AutomationsDesktop from "./AutomationsDesktop";
+import AutomationsMobileList from "./AutomationsMobileList";
 
 /**
- * Top-level Automations workspace (Stage 2F.2) — owns selectedAutomationId and resolves the
- * selected AutomationDefinition, mirroring InventoryWorkspace/CustomersWorkspace's ownership
- * pattern. No filters exist yet (Stage 2F.1/2F.2 are read-only, search/filters are a later
- * stage), so this Escape handler is simpler than Inventory's: there's no open dropdown that could
- * compete for the same keypress. AUTOMATION_DEFINITIONS stays the single, unfiltered source of
- * truth — no separate filtered dataset.
+ * Compact 2x2 KPI grid shared by the mobile and tablet Automations sections (Stage 2F.4) — the
+ * same 4 approved page-level figures as desktop's summary row, read from the same helpers
+ * (getActiveAutomationCount/getAutomatedTodayStats/getAutomationsNeedingAttentionCount), never a
+ * re-typed literal. Mirrors InventoryWorkspace/FinanceWorkspace's own SummaryGrid pattern.
+ */
+function SummaryGrid() {
+  const t = useTranslations("Dashboard.Automations");
+  const activeCount = getActiveAutomationCount();
+  const needsAttentionCount = getAutomationsNeedingAttentionCount();
+  const automatedToday = getAutomatedTodayStats();
+
+  const items = [
+    { key: "activeAutomations", value: String(activeCount), tone: "text-accent" },
+    { key: "automatedToday", value: automatedToday.count, tone: "text-accent" },
+    { key: "timeSavedToday", value: automatedToday.hoursSaved, tone: "text-success" },
+    { key: "needsAttention", value: String(needsAttentionCount), tone: needsAttentionCount > 0 ? "text-warning" : "text-accent" },
+  ] as const;
+
+  return (
+    <div className="grid shrink-0 grid-cols-2 gap-2">
+      {items.map((item) => (
+        <div key={item.key} className="rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
+          <p className="text-xs leading-tight text-neutral-500">{t(`summary.${item.key}`)}</p>
+          <p className={`mt-1 text-lg font-bold ${item.tone}`}>{item.value}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Top-level Automations workspace — owns selectedAutomationId and resolves the selected
+ * AutomationDefinition, mirroring InventoryWorkspace/CustomersWorkspace's ownership pattern.
+ * Fans out to three breakpoint-gated presentations (mobile / tablet / desktop), like every other
+ * module's own Workspace, while AUTOMATION_DEFINITIONS stays the single, unfiltered source of
+ * truth shared by all three — there is still no filtering in this stage (2F.3 was deliberately
+ * skipped), so this Escape handler stays simpler than Inventory's: there's no open dropdown that
+ * could compete for the same keypress.
+ *
+ * Desktop is untouched from Stage 2F.2 (AutomationsDesktop + its own 420px AutomationDetailPanel).
+ * Mobile and tablet share the same AutomationsMobileList + AutomationDetailMobile — only the
+ * surrounding header markup differs (mobile: compact title only; tablet: title + description),
+ * matching Finance/Inventory's own mobile-vs-tablet header convention exactly. The global Recent
+ * Activity panel is desktop-only by deliberate decision (see AutomationsDesktop) — every
+ * automation's own recent executions already live in AutomationDetailContent, so reproducing the
+ * whole cross-automation feed again above/below a 7-item list would be redundant length on a
+ * small screen, not missing information.
  */
 export default function AutomationsWorkspace() {
+  const t = useTranslations("Dashboard.Automations");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,13 +75,36 @@ export default function AutomationsWorkspace() {
   }, [selectedId]);
 
   const selectedAutomation = AUTOMATION_DEFINITIONS.find((automation) => automation.id === selectedId) ?? null;
+  const closeDetail = () => setSelectedId(null);
 
   return (
-    <AutomationsDesktop
-      selectedId={selectedId}
-      onSelectRow={setSelectedId}
-      selectedAutomation={selectedAutomation}
-      onCloseDetail={() => setSelectedId(null)}
-    />
+    <>
+      {/* Mobile workspace (below @lg) */}
+      <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
+        <p className="text-base font-semibold text-foreground">{t("title")}</p>
+        <SummaryGrid />
+        <AutomationsMobileList selectedId={selectedId} onSelect={setSelectedId} />
+        {selectedAutomation && <AutomationDetailMobile automation={selectedAutomation} onClose={closeDetail} />}
+      </div>
+
+      {/* Tablet workspace (@lg to below @5xl) */}
+      <div className="hidden min-h-0 flex-1 flex-col gap-3 @lg:flex @5xl:hidden">
+        <div className="shrink-0">
+          <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
+          <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
+        </div>
+        <SummaryGrid />
+        <AutomationsMobileList selectedId={selectedId} onSelect={setSelectedId} />
+        {selectedAutomation && <AutomationDetailMobile automation={selectedAutomation} onClose={closeDetail} />}
+      </div>
+
+      {/* Desktop workspace (@5xl and up) — unchanged since Stage 2F.2 */}
+      <AutomationsDesktop
+        selectedId={selectedId}
+        onSelectRow={setSelectedId}
+        selectedAutomation={selectedAutomation}
+        onCloseDetail={closeDetail}
+      />
+    </>
   );
 }

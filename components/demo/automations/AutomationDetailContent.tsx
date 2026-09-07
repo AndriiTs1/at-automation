@@ -211,7 +211,7 @@ export default function AutomationDetailContent({
             <div className="grid grid-cols-2 gap-3">
               {relatedFacts.map((fact) => (
                 <div key={fact.label} className="min-w-0">
-                  <p className="truncate text-xs text-neutral-500">{fact.label}</p>
+                  <p className="break-words text-xs text-neutral-500">{fact.label}</p>
                   <p className="mt-0.5 text-sm font-semibold break-words text-foreground">{fact.value}</p>
                 </div>
               ))}
@@ -233,7 +233,7 @@ export default function AutomationDetailContent({
                 return (
                   <div key={run.id} className="flex items-center justify-between gap-3 px-3 py-2">
                     <div className="min-w-0">
-                      {entityLabel && <p className="truncate text-sm text-foreground">{entityLabel}</p>}
+                      {entityLabel && <p className="break-words text-sm text-foreground">{entityLabel}</p>}
                       <span
                         className={`text-xs ${run.status === "attention" ? "font-medium text-warning" : "text-neutral-500"}`}
                       >

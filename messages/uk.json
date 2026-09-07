@@ -525,6 +525,9 @@
         "runsToday": "Запусків сьогодні",
         "lastRun": "Останній запуск"
       },
+      "mobileList": {
+        "runsToday": "{count, plural, one {# запуск сьогодні} few {# запуски сьогодні} many {# запусків сьогодні} other {# запуски сьогодні}}"
+      },
       "status": {
         "active": "Активна",
         "paused": "Призупинена",

@@ -525,6 +525,9 @@
         "runsToday": "Exécutions aujourd'hui",
         "lastRun": "Dernière exécution"
       },
+      "mobileList": {
+        "runsToday": "{count, plural, one {# exécution aujourd'hui} other {# exécutions aujourd'hui}}"
+      },
       "status": {
         "active": "Active",
         "paused": "En pause",
