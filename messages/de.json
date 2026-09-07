@@ -723,6 +723,37 @@
         "ready": "AT kann so konfiguriert werden, dass Geschäftsdaten mit Systemen dieser Art ausgetauscht werden.",
         "notConnected": "Es ist keine aktive Verbindung konfiguriert."
       }
+    },
+    "Reports": {
+      "title": "Berichte",
+      "description": "Leistung, Ausnahmen und Automatisierungswirkung im Überblick.",
+      "kpi": {
+        "revenue": "Umsatz",
+        "openOperations": "Offene Vorgänge",
+        "outstandingReceivables": "Offene Forderungen",
+        "overdueReceivables": "Überfällige Forderungen"
+      },
+      "performance": {
+        "title": "Geschäftsentwicklung",
+        "subtitle": "Aktuelle 30 Tage"
+      },
+      "operationalHealth": {
+        "title": "Betriebliche Übersicht",
+        "items": {
+          "operations": "{count} offen",
+          "customers": "{count, plural, one {# benötigt Aufmerksamkeit} other {# benötigen Aufmerksamkeit}}",
+          "inventory": "{count} niedriger Bestand",
+          "automations": "{count, plural, one {# benötigt Aufmerksamkeit} other {# benötigen Aufmerksamkeit}}"
+        }
+      },
+      "highlights": {
+        "title": "Wichtige Hinweise",
+        "overdueReceivables": "{amount} überfällig bei {count, plural, one {# Rechnung} other {# Rechnungen}}",
+        "paymentReconciliationException": "{name}: Ausnahme erfordert Prüfung",
+        "lowStockItems": "{count, plural, one {# Artikel} other {# Artikel}} unter dem Mindestbestand",
+        "customersNeedAttention": "{count, plural, one {# Kunde benötigt} other {# Kunden benötigen}} Aufmerksamkeit",
+        "automationsNeedAttention": "{count, plural, one {# Automatisierung erfordert} other {# Automatisierungen erfordern}} Aufmerksamkeit"
+      }
     }
   }
 }

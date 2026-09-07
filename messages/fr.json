@@ -723,6 +723,37 @@
         "ready": "AT peut être configuré pour échanger des données métier avec des systèmes de ce type.",
         "notConnected": "Aucune connexion active n'est configurée."
       }
+    },
+    "Reports": {
+      "title": "Rapports",
+      "description": "Suivez la performance, les exceptions et l'impact de l'automatisation.",
+      "kpi": {
+        "revenue": "Chiffre d'affaires",
+        "openOperations": "Opérations ouvertes",
+        "outstandingReceivables": "Créances en cours",
+        "overdueReceivables": "Créances en retard"
+      },
+      "performance": {
+        "title": "Performance de l'activité",
+        "subtitle": "30 derniers jours"
+      },
+      "operationalHealth": {
+        "title": "Santé opérationnelle",
+        "items": {
+          "operations": "{count} ouvertes",
+          "customers": "{count, plural, one {# nécessite de l'attention} other {# nécessitent de l'attention}}",
+          "inventory": "{count} en stock faible",
+          "automations": "{count, plural, one {# nécessite de l'attention} other {# nécessitent de l'attention}}"
+        }
+      },
+      "highlights": {
+        "title": "Points clés de gestion",
+        "overdueReceivables": "{amount} en retard sur {count, plural, one {# facture} other {# factures}}",
+        "paymentReconciliationException": "{name} : exception à examiner",
+        "lowStockItems": "{count, plural, one {# article} other {# articles}} sous le seuil",
+        "customersNeedAttention": "{count, plural, one {# client nécessite} other {# clients nécessitent}} de l'attention",
+        "automationsNeedAttention": "{count, plural, one {# automatisation nécessite} other {# automatisations nécessitent}} de l'attention"
+      }
     }
   }
 }

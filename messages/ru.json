@@ -723,6 +723,37 @@
         "ready": "AT можно настроить для обмена бизнес-данными с системами такого типа.",
         "notConnected": "Активное подключение не настроено."
       }
+    },
+    "Reports": {
+      "title": "Отчёты",
+      "description": "Отслеживайте показатели, исключения и эффект автоматизации.",
+      "kpi": {
+        "revenue": "Выручка",
+        "openOperations": "Открытые операции",
+        "outstandingReceivables": "Дебиторская задолженность",
+        "overdueReceivables": "Просроченная задолженность"
+      },
+      "performance": {
+        "title": "Динамика бизнеса",
+        "subtitle": "Текущие 30 дней"
+      },
+      "operationalHealth": {
+        "title": "Операционное состояние",
+        "items": {
+          "operations": "{count} открыто",
+          "customers": "{count, plural, one {# требует внимания} few {# требуют внимания} many {# требуют внимания} other {# требуют внимания}}",
+          "inventory": "{count} с низким остатком",
+          "automations": "{count, plural, one {# требует внимания} few {# требуют внимания} many {# требуют внимания} other {# требуют внимания}}"
+        }
+      },
+      "highlights": {
+        "title": "Ключевые управленческие моменты",
+        "overdueReceivables": "{amount} просрочено по {count, plural, one {# счёту} few {# счетам} many {# счетам} other {# счетам}}",
+        "paymentReconciliationException": "{name}: исключение требует проверки",
+        "lowStockItems": "{count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}} ниже порога",
+        "customersNeedAttention": "{count, plural, one {# клиент требует} few {# клиента требуют} many {# клиентов требуют} other {# клиента требуют}} внимания",
+        "automationsNeedAttention": "{count, plural, one {# автоматизация требует} few {# автоматизации требуют} many {# автоматизаций требуют} other {# автоматизации требуют}} внимания"
+      }
     }
   }
 }

@@ -723,6 +723,37 @@
         "ready": "AT можна налаштувати для обміну бізнес-даними із системами такого типу.",
         "notConnected": "Активне підключення не налаштовано."
       }
+    },
+    "Reports": {
+      "title": "Звіти",
+      "description": "Відстежуйте показники, винятки та вплив автоматизації.",
+      "kpi": {
+        "revenue": "Виручка",
+        "openOperations": "Відкриті операції",
+        "outstandingReceivables": "Дебіторська заборгованість",
+        "overdueReceivables": "Прострочена заборгованість"
+      },
+      "performance": {
+        "title": "Динаміка бізнесу",
+        "subtitle": "Поточні 30 днів"
+      },
+      "operationalHealth": {
+        "title": "Операційний стан",
+        "items": {
+          "operations": "{count} відкрито",
+          "customers": "{count, plural, one {# потребує уваги} few {# потребують уваги} many {# потребують уваги} other {# потребують уваги}}",
+          "inventory": "{count} з низьким залишком",
+          "automations": "{count, plural, one {# потребує уваги} few {# потребують уваги} many {# потребують уваги} other {# потребують уваги}}"
+        }
+      },
+      "highlights": {
+        "title": "Ключові управлінські моменти",
+        "overdueReceivables": "{amount} прострочено за {count, plural, one {# рахунком} few {# рахунками} many {# рахунками} other {# рахунками}}",
+        "paymentReconciliationException": "{name}: виняток потребує перевірки",
+        "lowStockItems": "{count, plural, one {# товар} few {# товари} many {# товарів} other {# товара}} нижче порога",
+        "customersNeedAttention": "{count, plural, one {# клієнт потребує} few {# клієнти потребують} many {# клієнтів потребують} other {# клієнта потребують}} уваги",
+        "automationsNeedAttention": "{count, plural, one {# автоматизація потребує} few {# автоматизації потребують} many {# автоматизацій потребують} other {# автоматизації потребують}} уваги"
+      }
     }
   }
 }

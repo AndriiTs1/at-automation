@@ -24,7 +24,7 @@ export const NAV_SECTIONS = [
   {
     key: "manage",
     items: [
-      { key: "reports", icon: "chart", href: "/demo/reports" },
+      { key: "reports", icon: "chart", href: "/demo/reports", available: true },
       { key: "teamApprovals", icon: "users", href: "/demo/team" },
     ],
   },
@@ -105,7 +105,16 @@ export const APPROVALS = [
   { key: "supplierPayment", amount: "CHF 24,800", deptKey: "finance" },
 ] as const;
 
-export const CHART_DATES = ["1 Nov", "5 Nov", "10 Nov", "15 Nov", "20 Nov", "25 Nov", "30 Nov"] as const;
+/**
+ * Fixed date labels for the shared Business Performance chart (Command Center + Reports), kept as
+ * plain literal "D Mon" strings — the same convention already used everywhere else a fixed date
+ * appears (CustomerLastActivity, FinanceInvoice issued/due, AutomationTimestamp), never localized
+ * per-locale since no date-formatting infrastructure exists in this codebase. The sequence ends at
+ * "6 Sep", the same day as FINANCE_TODAY_ANCHOR, so the chart's most recent point lines up with
+ * the rest of the demo's "today" — a deterministic previous-30-day window, not calculated from
+ * Date.now().
+ */
+export const CHART_DATES = ["8 Aug", "13 Aug", "18 Aug", "23 Aug", "28 Aug", "2 Sep", "6 Sep"] as const;
 
 export const CHART_SERIES = {
   revenue: "50,110 155,95 260,99 365,73 470,58 575,35 680,16",
@@ -113,8 +122,9 @@ export const CHART_SERIES = {
   profit: "50,155 155,151 260,153 365,144 470,140 575,133 680,118",
 } as const;
 
+/** The tooltip marker sits at x="575" — CHART_DATES[5] ("2 Sep"), not the final point. */
 export const CHART_TOOLTIP = {
-  date: "25 Nov",
+  date: "2 Sep",
   value: "CHF 72K",
 } as const;
 
@@ -1962,4 +1972,126 @@ export function getIntegrationAutomations(integration: IntegrationDefinition): A
   return (integration.usedByAutomationIds ?? [])
     .map((id) => AUTOMATION_DEFINITIONS.find((automation) => automation.id === id))
     .filter((automation): automation is AutomationDefinition => Boolean(automation));
+}
+
+/**
+ * Reports (Stage 2H.1) — a management reporting layer over existing business truth, not a second
+ * parallel dataset. Every figure below is derived from data/helpers already owned by another
+ * module (KPI_ITEMS, OPERATIONS_SUMMARY, CUSTOMERS_SUMMARY, INVENTORY_SUMMARY, Finance's own
+ * receivables helpers, Automations' own counts) — this section only assembles a report *view*
+ * over those, never a re-typed literal.
+ *
+ * Deliberately excludes "Automated today" (186 / 14.2h) as a KPI here: that figure is a same-day
+ * total, and presenting — or worse, multiplying — it inside a Last-30-days report would
+ * misrepresent it. Automation impact is instead reported operationally, via the "automations"
+ * row in getOperationalHealth() (needs-attention count), not as a fabricated monthly total.
+ */
+export type ReportMetricTrend = "up" | "down" | "flat";
+
+export type ReportKpi = {
+  key: "revenue" | "openOperations" | "outstandingReceivables" | "overdueReceivables";
+  value: string;
+  deltaKind: "percent" | "overdue" | "none";
+  deltaValue?: string;
+  deltaCount?: number;
+  trend: ReportMetricTrend;
+};
+
+/** The report's single fixed period for this foundation stage — no date picker, no comparison
+ * range control. Mirrors Dashboard.Performance's own existing "Last 30 days" range label rather
+ * than introducing a second period concept. */
+export const REPORT_PERIOD = "last30Days" as const;
+
+/**
+ * The 4 primary management KPIs. Revenue and Open Operations reuse KPI_ITEMS directly (the same
+ * figures Command Center already shows); Outstanding/Overdue Receivables reuse Finance's own
+ * getTotalOutstanding()/getOverdueOutstanding()/getOverdueCount() rather than Command Center's
+ * "Cash Due" KPI literal, so a future change to either stays in exactly one place.
+ */
+export function getReportsKpis(): ReportKpi[] {
+  const revenue = KPI_ITEMS.find((item) => item.key === "revenue");
+  const openOperations = KPI_ITEMS.find((item) => item.key === "openOperations");
+
+  return [
+    {
+      key: "revenue",
+      value: revenue?.value ?? "",
+      deltaKind: "percent",
+      deltaValue: revenue && "deltaValue" in revenue ? revenue.deltaValue : undefined,
+      trend: "up",
+    },
+    {
+      key: "openOperations",
+      value: openOperations?.value ?? "",
+      deltaKind: "percent",
+      deltaValue: openOperations && "deltaValue" in openOperations ? openOperations.deltaValue : undefined,
+      trend: "up",
+    },
+    {
+      key: "outstandingReceivables",
+      value: `CHF ${getTotalOutstanding().toLocaleString("en-US")}`,
+      deltaKind: "none",
+      trend: "flat",
+    },
+    {
+      key: "overdueReceivables",
+      value: `CHF ${getOverdueOutstanding().toLocaleString("en-US")}`,
+      deltaKind: "overdue",
+      deltaCount: getOverdueCount(),
+      trend: "flat",
+    },
+  ];
+}
+
+export type ReportOperationalHealthItem = {
+  key: "operations" | "customers" | "inventory" | "finance" | "automations";
+  value: number;
+};
+
+/**
+ * One meaningful cross-module state per module, each read from that module's own existing
+ * summary/helper — never a re-typed literal. Order mirrors NAV_SECTIONS' Operate section plus
+ * Automations.
+ */
+export function getOperationalHealth(): ReportOperationalHealthItem[] {
+  return [
+    { key: "operations", value: Number(OPERATIONS_SUMMARY.active) },
+    { key: "customers", value: Number(CUSTOMERS_SUMMARY.needsAttention) },
+    { key: "inventory", value: Number(INVENTORY_SUMMARY.lowStock) },
+    { key: "finance", value: getOverdueCount() },
+    { key: "automations", value: getAutomationsNeedingAttentionCount() },
+  ];
+}
+
+export type ReportHighlight =
+  | { key: "overdueReceivables"; amount: string; count: number }
+  | { key: "paymentReconciliationException" }
+  | { key: "lowStockItems"; count: number }
+  | { key: "customersNeedAttention"; count: number }
+  | { key: "automationsNeedAttention"; count: number };
+
+/**
+ * 4–5 concise management-relevant exceptions, every one resolved from existing truth — never an
+ * invented alert. The reconciliation exception is only included while AUTO-2
+ * (paymentReconciliation) actually reports needsAttention, so this list can never assert a
+ * resolved exception still needs review.
+ */
+export function getManagementHighlights(): ReportHighlight[] {
+  const paymentReconciliation = AUTOMATION_DEFINITIONS.find((automation) => automation.key === "paymentReconciliation");
+
+  const highlights: ReportHighlight[] = [
+    { key: "overdueReceivables", amount: `CHF ${getOverdueOutstanding().toLocaleString("en-US")}`, count: getOverdueCount() },
+  ];
+
+  if (paymentReconciliation?.status === "needsAttention") {
+    highlights.push({ key: "paymentReconciliationException" });
+  }
+
+  highlights.push(
+    { key: "lowStockItems", count: Number(INVENTORY_SUMMARY.lowStock) },
+    { key: "customersNeedAttention", count: Number(CUSTOMERS_SUMMARY.needsAttention) },
+    { key: "automationsNeedAttention", count: getAutomationsNeedingAttentionCount() },
+  );
+
+  return highlights;
 }

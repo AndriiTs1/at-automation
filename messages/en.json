@@ -723,6 +723,37 @@
         "ready": "AT can be configured to exchange business data with systems of this type.",
         "notConnected": "No active connection is configured."
       }
+    },
+    "Reports": {
+      "title": "Reports",
+      "description": "Track performance, exceptions and automation impact.",
+      "kpi": {
+        "revenue": "Revenue",
+        "openOperations": "Open operations",
+        "outstandingReceivables": "Outstanding receivables",
+        "overdueReceivables": "Overdue receivables"
+      },
+      "performance": {
+        "title": "Business performance",
+        "subtitle": "Current 30 days"
+      },
+      "operationalHealth": {
+        "title": "Operational health",
+        "items": {
+          "operations": "{count} open",
+          "customers": "{count, plural, one {# needs attention} other {# need attention}}",
+          "inventory": "{count} low stock",
+          "automations": "{count, plural, one {# needs attention} other {# need attention}}"
+        }
+      },
+      "highlights": {
+        "title": "Management highlights",
+        "overdueReceivables": "{amount} overdue across {count, plural, one {# invoice} other {# invoices}}",
+        "paymentReconciliationException": "{name} exception requires review",
+        "lowStockItems": "{count, plural, one {# inventory item} other {# inventory items}} below threshold",
+        "customersNeedAttention": "{count, plural, one {# customer needs} other {# customers need}} attention",
+        "automationsNeedAttention": "{count, plural, one {# automation requires} other {# automations require}} attention"
+      }
     }
   }
 }

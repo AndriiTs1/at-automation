@@ -723,6 +723,37 @@
         "ready": "AT può essere configurato per scambiare dati aziendali con sistemi di questo tipo.",
         "notConnected": "Nessuna connessione attiva è configurata."
       }
+    },
+    "Reports": {
+      "title": "Report",
+      "description": "Monitora le performance, le eccezioni e l'impatto dell'automazione.",
+      "kpi": {
+        "revenue": "Ricavi",
+        "openOperations": "Operazioni aperte",
+        "outstandingReceivables": "Crediti in essere",
+        "overdueReceivables": "Crediti scaduti"
+      },
+      "performance": {
+        "title": "Andamento del business",
+        "subtitle": "Ultimi 30 giorni"
+      },
+      "operationalHealth": {
+        "title": "Stato operativo",
+        "items": {
+          "operations": "{count} aperte",
+          "customers": "{count, plural, one {# richiede attenzione} other {# richiedono attenzione}}",
+          "inventory": "{count} in scorta bassa",
+          "automations": "{count, plural, one {# richiede attenzione} other {# richiedono attenzione}}"
+        }
+      },
+      "highlights": {
+        "title": "Punti chiave di gestione",
+        "overdueReceivables": "{amount} scaduti su {count, plural, one {# fattura} other {# fatture}}",
+        "paymentReconciliationException": "{name}: eccezione da rivedere",
+        "lowStockItems": "{count, plural, one {# articolo} other {# articoli}} sotto la soglia",
+        "customersNeedAttention": "{count, plural, one {# cliente richiede} other {# clienti richiedono}} attenzione",
+        "automationsNeedAttention": "{count, plural, one {# automazione richiede} other {# automazioni richiedono}} attenzione"
+      }
     }
   }
 }
