@@ -11,6 +11,10 @@ const GRID_LINES = [
 
 const X_POSITIONS = [50, 155, 260, 365, 470, 575, 680];
 
+/** Indices kept when `compact` thins the x-axis to 4 labels (8 Aug/18 Aug/28 Aug/6 Sep) — the
+ * underlying 7 plotted points and their CHART_DATES never change, only which labels render. */
+const COMPACT_LABEL_INDICES = new Set([0, 2, 4, 6]);
+
 const SERIES_KEYS = [
   { key: "revenue", points: CHART_SERIES.revenue, className: "text-accent" },
   { key: "operations", points: CHART_SERIES.operations, className: "text-success" },
@@ -23,13 +27,20 @@ const SERIES_KEYS = [
  * translations, so Reports can never show a trend that disagrees with Command Center. Omits the
  * "Last 30 days" range-filter button: Reports has no filters yet, and the fixed period is already
  * shown once at the page level.
+ *
+ * `compact` (Stage 2H.2, default false — desktop's own call site never passes it, so desktop
+ * output is byte-for-byte unchanged) thins the x-axis down to 4 of the 7 labels for narrow mobile
+ * widths, where all 7 "D Mon" labels would collide. All 7 data points still plot; only label
+ * density changes.
  */
-export default function ReportsBusinessPerformance() {
+export default function ReportsBusinessPerformance({ compact = false }: { compact?: boolean } = {}) {
   const t = useTranslations("Dashboard.Performance");
   const tReports = useTranslations("Dashboard.Reports");
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border bg-surface p-4 shadow-sm shadow-black/5">
+    <div
+      className={`flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-sm shadow-black/5 ${compact ? "p-3" : "p-4"}`}
+    >
       <div className="mb-2 shrink-0">
         <h4 className="text-sm font-semibold text-foreground">{tReports("performance.title")}</h4>
         <p className="text-xs text-neutral-500">{tReports("performance.subtitle")}</p>
@@ -95,11 +106,14 @@ export default function ReportsBusinessPerformance() {
           </text>
         </g>
 
-        {X_POSITIONS.map((x, i) => (
-          <text key={CHART_DATES[i]} x={x} y="192" fontSize="9" textAnchor="middle" className="fill-neutral-400">
-            {CHART_DATES[i]}
-          </text>
-        ))}
+        {X_POSITIONS.map((x, i) => {
+          if (compact && !COMPACT_LABEL_INDICES.has(i)) return null;
+          return (
+            <text key={CHART_DATES[i]} x={x} y="192" fontSize="9" textAnchor="middle" className="fill-neutral-400">
+              {CHART_DATES[i]}
+            </text>
+          );
+        })}
       </svg>
     </div>
   );
