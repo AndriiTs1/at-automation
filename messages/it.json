@@ -754,6 +754,55 @@
         "customersNeedAttention": "{count, plural, one {# cliente richiede} other {# clienti richiedono}} attenzione",
         "automationsNeedAttention": "{count, plural, one {# automazione richiede} other {# automazioni richiedono}} attenzione"
       }
+    },
+    "TeamApprovals": {
+      "title": "Team e approvazioni",
+      "description": "Gestisci responsabilità, approvazioni e titolari delle decisioni.",
+      "summary": {
+        "teamMembers": "Membri del team",
+        "pendingApprovals": "Approvazioni in sospeso",
+        "approvalValue": "Valore approvazioni in sospeso",
+        "openResponsibilities": "Responsabilità aperte"
+      },
+      "approvals": {
+        "title": "Approvazioni in sospeso",
+        "columns": {
+          "request": "Richiesta",
+          "area": "Area",
+          "requestedBy": "Richiesta da",
+          "approver": "Approvatore",
+          "value": "Valore",
+          "waitingSince": "In attesa da"
+        },
+        "status": {
+          "pending": "In sospeso"
+        }
+      },
+      "team": {
+        "title": "Team e responsabilità",
+        "columns": {
+          "member": "Membro del team",
+          "role": "Ruolo",
+          "responsibleFor": "Responsabile di",
+          "openItems": "Attività aperte",
+          "status": "Stato"
+        }
+      },
+      "roles": {
+        "financeManager": "Responsabile finanziario",
+        "operationsManager": "Responsabile operativo",
+        "warehouseLead": "Responsabile di magazzino"
+      },
+      "areas": {
+        "companyWideApprovals": "Approvazioni aziendali",
+        "management": "Direzione",
+        "reconciliation": "Riconciliazione",
+        "replenishment": "Riassortimento"
+      },
+      "status": {
+        "active": "Attivo",
+        "away": "Assente"
+      }
     }
   }
 }

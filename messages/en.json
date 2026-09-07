@@ -754,6 +754,55 @@
         "customersNeedAttention": "{count, plural, one {# customer needs} other {# customers need}} attention",
         "automationsNeedAttention": "{count, plural, one {# automation requires} other {# automations require}} attention"
       }
+    },
+    "TeamApprovals": {
+      "title": "Team & Approvals",
+      "description": "Manage responsibility, approvals and decision ownership.",
+      "summary": {
+        "teamMembers": "Team members",
+        "pendingApprovals": "Pending approvals",
+        "approvalValue": "Pending approval value",
+        "openResponsibilities": "Open responsibilities"
+      },
+      "approvals": {
+        "title": "Pending approvals",
+        "columns": {
+          "request": "Request",
+          "area": "Area",
+          "requestedBy": "Requested by",
+          "approver": "Approver",
+          "value": "Value",
+          "waitingSince": "Waiting since"
+        },
+        "status": {
+          "pending": "Pending"
+        }
+      },
+      "team": {
+        "title": "Team & responsibility",
+        "columns": {
+          "member": "Team member",
+          "role": "Role",
+          "responsibleFor": "Responsible for",
+          "openItems": "Open items",
+          "status": "Status"
+        }
+      },
+      "roles": {
+        "financeManager": "Finance Manager",
+        "operationsManager": "Operations Manager",
+        "warehouseLead": "Warehouse Lead"
+      },
+      "areas": {
+        "companyWideApprovals": "Company-wide approvals",
+        "management": "Management",
+        "reconciliation": "Reconciliation",
+        "replenishment": "Replenishment"
+      },
+      "status": {
+        "active": "Active",
+        "away": "Away"
+      }
     }
   }
 }

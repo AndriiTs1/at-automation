@@ -25,7 +25,7 @@ export const NAV_SECTIONS = [
     key: "manage",
     items: [
       { key: "reports", icon: "chart", href: "/demo/reports", available: true },
-      { key: "teamApprovals", icon: "users", href: "/demo/team" },
+      { key: "teamApprovals", icon: "users", href: "/demo/team", available: true },
     ],
   },
 ] as const;
@@ -99,10 +99,44 @@ export const LIVE_OPERATIONS = [
   },
 ] as const;
 
+/**
+ * The single authoritative pending-approvals list — Command Center's ApprovalsPanel has read
+ * this since Stage 2A; Stage 2I.1 (Team & Approvals) extends each entry in place with
+ * requestedByMemberId/approverMemberId/status/waitingSince rather than creating a second,
+ * parallel approvals dataset. This must stay at exactly 3 entries: Command Center's own
+ * "awaitingApproval" count and Automations' approvalRouting.runsToday both read APPROVALS.length
+ * directly, so adding, removing, or reordering entries here would silently change already-shown
+ * truth on both of those pages.
+ */
 export const APPROVALS = [
-  { key: "purchaseRequest", amount: "CHF 18,400", requesterName: "Sarah M.", deptKey: "procurement" },
-  { key: "discountRequest", amount: "12%", deptKey: "salesTeam" },
-  { key: "supplierPayment", amount: "CHF 24,800", deptKey: "finance" },
+  {
+    key: "purchaseRequest",
+    amount: "CHF 18,400",
+    requesterName: "Sarah M.",
+    deptKey: "procurement",
+    requestedByMemberId: "TM-2",
+    approverMemberId: "TM-1",
+    status: "pending",
+    waitingSince: { kind: "yesterday", time: "16:20" },
+  },
+  {
+    key: "discountRequest",
+    amount: "12%",
+    deptKey: "salesTeam",
+    requestedByMemberId: "TM-3",
+    approverMemberId: "TM-1",
+    status: "pending",
+    waitingSince: { kind: "today", time: "09:40" },
+  },
+  {
+    key: "supplierPayment",
+    amount: "CHF 24,800",
+    deptKey: "finance",
+    requestedByMemberId: "TM-2",
+    approverMemberId: "TM-1",
+    status: "pending",
+    waitingSince: { kind: "today", time: "08:15" },
+  },
 ] as const;
 
 /**
@@ -2094,4 +2128,101 @@ export function getManagementHighlights(): ReportHighlight[] {
   );
 
   return highlights;
+}
+
+/**
+ * Team & Approvals (Stage 2I.1) — the management layer over who owns what and what is waiting for
+ * a decision. Deliberately NOT an HR system: no payroll, attendance, recruiting, or performance
+ * scoring. Team membership is small and fully fictional by design (a lean 4-person leadership
+ * team), but every member's name and open-item count is anchored in data that already exists
+ * elsewhere: "Sarah M."/"Marc T."/"Jonas R." are the exact owner strings already used across
+ * OPERATIONS_ROWS and CUSTOMERS_ROWS (Stage 2B/2C), so a "Sarah Miller" row on this page must
+ * never contradict what Operations/Customers already show for "Sarah M." — and Alex Morgan is the
+ * existing DEMO_USER, not a new identity. Only the formal role LABEL (Finance Manager, Operations
+ * Manager, Warehouse Lead) is new — nothing here re-derives or overrides those modules' own truth.
+ */
+export type TeamMemberStatus = "active" | "away";
+
+export type TeamMemberRole = "managingDirector" | "financeManager" | "operationsManager" | "warehouseLead";
+
+export type TeamMember = {
+  id: string;
+  name: string;
+  initials: string;
+  role: TeamMemberRole;
+  status: TeamMemberStatus;
+  /** Semantic responsibility-area keys resolved by the UI against either the existing
+   * Dashboard.Sidebar module names (finance/operations/customers/inventory) or this module's own
+   * small Dashboard.TeamApprovals.areas set (companyWideApprovals/management/reconciliation/
+   * replenishment) — never a re-typed literal for a module name that already has one. */
+  areaKeys: string[];
+  openItems: number;
+};
+
+/** Count of that owner's OPERATIONS_ROWS entries not yet completed — the same real ownership
+ * data Operations already shows, just aggregated per person for this page's "Open items" column. */
+function getOpenOperationsCountForOwner(owner: string): number {
+  return OPERATIONS_ROWS.filter((row) => row.owner === owner && row.status !== "completed").length;
+}
+
+export const TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: "TM-1",
+    name: DEMO_USER.name,
+    initials: DEMO_USER.initials,
+    role: "managingDirector",
+    status: "active",
+    areaKeys: ["companyWideApprovals", "management"],
+    // The Managing Director's own open items are the company's pending approvals, exactly the
+    // same figure Command Center's ApprovalsPanel already shows for APPROVALS.length.
+    openItems: APPROVALS.length,
+  },
+  {
+    id: "TM-2",
+    name: "Sarah Miller",
+    initials: "SM",
+    role: "financeManager",
+    status: "active",
+    areaKeys: ["finance", "reconciliation"],
+    openItems: getOpenOperationsCountForOwner("Sarah M."),
+  },
+  {
+    id: "TM-3",
+    name: "Marc Taylor",
+    initials: "MT",
+    role: "operationsManager",
+    status: "active",
+    areaKeys: ["operations", "customers"],
+    openItems: getOpenOperationsCountForOwner("Marc T."),
+  },
+  {
+    id: "TM-4",
+    name: "Jonas Reed",
+    initials: "JR",
+    role: "warehouseLead",
+    status: "away",
+    areaKeys: ["inventory", "replenishment"],
+    openItems: getOpenOperationsCountForOwner("Jonas R."),
+  },
+];
+
+export function getTeamMember(id: string): TeamMember | undefined {
+  return TEAM_MEMBERS.find((member) => member.id === id);
+}
+
+/**
+ * Sum of only the CHF-denominated pending approvals (excludes discountRequest's "12%", which is
+ * not a currency amount and can't be meaningfully summed with one) — CHF 18,400 + CHF 24,800.
+ */
+export function getPendingApprovalsValue(): number {
+  return APPROVALS.reduce((sum, approval) => {
+    if (!approval.amount.startsWith("CHF ")) return sum;
+    return sum + Number(approval.amount.replace("CHF ", "").replace(/,/g, ""));
+  }, 0);
+}
+
+/** Sum of every team member's own open-items count — a distinct aggregate from the pending
+ * approvals count, giving a company-wide "how much open responsibility exists" figure. */
+export function getTotalOpenResponsibilities(): number {
+  return TEAM_MEMBERS.reduce((sum, member) => sum + member.openItems, 0);
 }

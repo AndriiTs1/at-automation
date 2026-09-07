@@ -754,6 +754,55 @@
         "customersNeedAttention": "{count, plural, one {# клиент требует} few {# клиента требуют} many {# клиентов требуют} other {# клиента требуют}} внимания",
         "automationsNeedAttention": "{count, plural, one {# автоматизация требует} few {# автоматизации требуют} many {# автоматизаций требуют} other {# автоматизации требуют}} внимания"
       }
+    },
+    "TeamApprovals": {
+      "title": "Команда и согласования",
+      "description": "Управляйте ответственностью, согласованиями и принятием решений.",
+      "summary": {
+        "teamMembers": "Участники команды",
+        "pendingApprovals": "Ожидающие согласования",
+        "approvalValue": "Сумма ожидающих согласований",
+        "openResponsibilities": "Открытые зоны ответственности"
+      },
+      "approvals": {
+        "title": "Ожидающие согласования",
+        "columns": {
+          "request": "Запрос",
+          "area": "Область",
+          "requestedBy": "Инициатор",
+          "approver": "Согласующий",
+          "value": "Сумма",
+          "waitingSince": "Ожидает с"
+        },
+        "status": {
+          "pending": "Ожидает"
+        }
+      },
+      "team": {
+        "title": "Команда и ответственность",
+        "columns": {
+          "member": "Участник команды",
+          "role": "Роль",
+          "responsibleFor": "Отвечает за",
+          "openItems": "Открытые задачи",
+          "status": "Статус"
+        }
+      },
+      "roles": {
+        "financeManager": "Финансовый директор",
+        "operationsManager": "Операционный директор",
+        "warehouseLead": "Руководитель склада"
+      },
+      "areas": {
+        "companyWideApprovals": "Согласования по компании",
+        "management": "Руководство",
+        "reconciliation": "Сверка платежей",
+        "replenishment": "Пополнение запасов"
+      },
+      "status": {
+        "active": "Активен",
+        "away": "Отсутствует"
+      }
     }
   }
 }

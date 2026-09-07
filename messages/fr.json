@@ -754,6 +754,55 @@
         "customersNeedAttention": "{count, plural, one {# client nécessite} other {# clients nécessitent}} de l'attention",
         "automationsNeedAttention": "{count, plural, one {# automatisation nécessite} other {# automatisations nécessitent}} de l'attention"
       }
+    },
+    "TeamApprovals": {
+      "title": "Équipe et approbations",
+      "description": "Gérez les responsabilités, les approbations et les décideurs.",
+      "summary": {
+        "teamMembers": "Membres de l'équipe",
+        "pendingApprovals": "Approbations en attente",
+        "approvalValue": "Valeur des approbations en attente",
+        "openResponsibilities": "Responsabilités ouvertes"
+      },
+      "approvals": {
+        "title": "Approbations en attente",
+        "columns": {
+          "request": "Demande",
+          "area": "Domaine",
+          "requestedBy": "Demandé par",
+          "approver": "Approbateur",
+          "value": "Valeur",
+          "waitingSince": "En attente depuis"
+        },
+        "status": {
+          "pending": "En attente"
+        }
+      },
+      "team": {
+        "title": "Équipe et responsabilités",
+        "columns": {
+          "member": "Membre de l'équipe",
+          "role": "Rôle",
+          "responsibleFor": "Responsable de",
+          "openItems": "Tâches ouvertes",
+          "status": "Statut"
+        }
+      },
+      "roles": {
+        "financeManager": "Responsable finance",
+        "operationsManager": "Responsable opérations",
+        "warehouseLead": "Responsable entrepôt"
+      },
+      "areas": {
+        "companyWideApprovals": "Approbations globales",
+        "management": "Direction",
+        "reconciliation": "Rapprochement",
+        "replenishment": "Réapprovisionnement"
+      },
+      "status": {
+        "active": "Actif",
+        "away": "Absent"
+      }
     }
   }
 }

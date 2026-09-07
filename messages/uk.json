@@ -754,6 +754,55 @@
         "customersNeedAttention": "{count, plural, one {# клієнт потребує} few {# клієнти потребують} many {# клієнтів потребують} other {# клієнта потребують}} уваги",
         "automationsNeedAttention": "{count, plural, one {# автоматизація потребує} few {# автоматизації потребують} many {# автоматизацій потребують} other {# автоматизації потребують}} уваги"
       }
+    },
+    "TeamApprovals": {
+      "title": "Команда та погодження",
+      "description": "Керуйте відповідальністю, погодженнями та прийняттям рішень.",
+      "summary": {
+        "teamMembers": "Учасники команди",
+        "pendingApprovals": "Погодження, що очікують",
+        "approvalValue": "Сума очікуваних погоджень",
+        "openResponsibilities": "Відкриті зони відповідальності"
+      },
+      "approvals": {
+        "title": "Погодження, що очікують",
+        "columns": {
+          "request": "Запит",
+          "area": "Область",
+          "requestedBy": "Ініціатор",
+          "approver": "Погоджує",
+          "value": "Сума",
+          "waitingSince": "Очікує з"
+        },
+        "status": {
+          "pending": "Очікує"
+        }
+      },
+      "team": {
+        "title": "Команда та відповідальність",
+        "columns": {
+          "member": "Учасник команди",
+          "role": "Роль",
+          "responsibleFor": "Відповідає за",
+          "openItems": "Відкриті завдання",
+          "status": "Статус"
+        }
+      },
+      "roles": {
+        "financeManager": "Фінансовий директор",
+        "operationsManager": "Операційний директор",
+        "warehouseLead": "Керівник складу"
+      },
+      "areas": {
+        "companyWideApprovals": "Погодження по компанії",
+        "management": "Керівництво",
+        "reconciliation": "Звірка платежів",
+        "replenishment": "Поповнення запасів"
+      },
+      "status": {
+        "active": "Активний",
+        "away": "Відсутній"
+      }
     }
   }
 }

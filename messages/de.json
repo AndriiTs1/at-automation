@@ -754,6 +754,55 @@
         "customersNeedAttention": "{count, plural, one {# Kunde benötigt} other {# Kunden benötigen}} Aufmerksamkeit",
         "automationsNeedAttention": "{count, plural, one {# Automatisierung erfordert} other {# Automatisierungen erfordern}} Aufmerksamkeit"
       }
+    },
+    "TeamApprovals": {
+      "title": "Team & Genehmigungen",
+      "description": "Verantwortlichkeiten, Genehmigungen und Entscheidungsträger verwalten.",
+      "summary": {
+        "teamMembers": "Teammitglieder",
+        "pendingApprovals": "Offene Genehmigungen",
+        "approvalValue": "Wert ausstehender Genehmigungen",
+        "openResponsibilities": "Offene Verantwortlichkeiten"
+      },
+      "approvals": {
+        "title": "Offene Genehmigungen",
+        "columns": {
+          "request": "Anfrage",
+          "area": "Bereich",
+          "requestedBy": "Angefragt von",
+          "approver": "Genehmiger",
+          "value": "Wert",
+          "waitingSince": "Wartet seit"
+        },
+        "status": {
+          "pending": "Ausstehend"
+        }
+      },
+      "team": {
+        "title": "Team & Verantwortlichkeiten",
+        "columns": {
+          "member": "Teammitglied",
+          "role": "Rolle",
+          "responsibleFor": "Verantwortlich für",
+          "openItems": "Offene Vorgänge",
+          "status": "Status"
+        }
+      },
+      "roles": {
+        "financeManager": "Finanzleiter",
+        "operationsManager": "Betriebsleiter",
+        "warehouseLead": "Lagerleiter"
+      },
+      "areas": {
+        "companyWideApprovals": "Unternehmensweite Genehmigungen",
+        "management": "Geschäftsführung",
+        "reconciliation": "Zahlungsabgleich",
+        "replenishment": "Nachbestellung"
+      },
+      "status": {
+        "active": "Aktiv",
+        "away": "Abwesend"
+      }
     }
   }
 }
