@@ -707,7 +707,22 @@
         "warehouseSystem": { "name": "Lagersystem" },
         "internalApi": { "name": "Interne API" }
       },
-      "noLastSync": "—"
+      "noLastSync": "—",
+      "detail": {
+        "close": "Schließen",
+        "connectionStatus": "Verbindungsstatus",
+        "dataFlow": "Datenfluss",
+        "moduleUsage": "Genutzt von AT",
+        "automationsUsing": "Genutzt von Automatisierungen",
+        "noAutomations": "Keine Automatisierung nutzt diese Verbindung",
+        "lastActivity": "Letzte Aktivität"
+      },
+      "connectionExplanation": {
+        "connected": "Dieses System wird in dieser Demo als aktiv verbundene Quelle dargestellt.",
+        "demo": "Diese Verbindung ist zu Demonstrationszwecken simuliert.",
+        "ready": "AT kann so konfiguriert werden, dass Geschäftsdaten mit Systemen dieser Art ausgetauscht werden.",
+        "notConnected": "Es ist keine aktive Verbindung konfiguriert."
+      }
     }
   }
 }

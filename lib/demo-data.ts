@@ -1954,3 +1954,12 @@ export function getIntegrationCounts(): { connected: number; ready: number; demo
   for (const integration of INTEGRATION_DEFINITIONS) counts[integration.status] += 1;
   return counts;
 }
+
+/** Resolves an integration's usedByAutomationIds against the real AUTOMATION_DEFINITIONS list
+ * (Stage 2G.2) — the integration only stores id references, never a duplicated automation name,
+ * so this is the single place that turns those ids into the actual definitions to render. */
+export function getIntegrationAutomations(integration: IntegrationDefinition): AutomationDefinition[] {
+  return (integration.usedByAutomationIds ?? [])
+    .map((id) => AUTOMATION_DEFINITIONS.find((automation) => automation.id === id))
+    .filter((automation): automation is AutomationDefinition => Boolean(automation));
+}

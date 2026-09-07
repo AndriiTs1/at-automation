@@ -707,7 +707,22 @@
         "warehouseSystem": { "name": "Warehouse System" },
         "internalApi": { "name": "Internal API" }
       },
-      "noLastSync": "—"
+      "noLastSync": "—",
+      "detail": {
+        "close": "Close",
+        "connectionStatus": "Connection status",
+        "dataFlow": "Data flow",
+        "moduleUsage": "Used by AT",
+        "automationsUsing": "Used by automations",
+        "noAutomations": "No automations use this connection",
+        "lastActivity": "Last activity"
+      },
+      "connectionExplanation": {
+        "connected": "This system is represented as an active connected source in this demo.",
+        "demo": "This connection is simulated for demonstration purposes.",
+        "ready": "AT can be configured to exchange business data with systems of this type.",
+        "notConnected": "No active connection is configured."
+      }
     }
   }
 }

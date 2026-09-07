@@ -707,7 +707,22 @@
         "warehouseSystem": { "name": "Système d'entrepôt" },
         "internalApi": { "name": "API interne" }
       },
-      "noLastSync": "—"
+      "noLastSync": "—",
+      "detail": {
+        "close": "Fermer",
+        "connectionStatus": "État de la connexion",
+        "dataFlow": "Flux de données",
+        "moduleUsage": "Utilisé par AT",
+        "automationsUsing": "Utilisé par les automatisations",
+        "noAutomations": "Aucune automatisation n'utilise cette connexion",
+        "lastActivity": "Dernière activité"
+      },
+      "connectionExplanation": {
+        "connected": "Dans cette démonstration, ce système est représenté comme une source activement connectée.",
+        "demo": "Cette connexion est simulée à des fins de démonstration.",
+        "ready": "AT peut être configuré pour échanger des données métier avec des systèmes de ce type.",
+        "notConnected": "Aucune connexion active n'est configurée."
+      }
     }
   }
 }

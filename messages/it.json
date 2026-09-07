@@ -707,7 +707,22 @@
         "warehouseSystem": { "name": "Sistema di magazzino" },
         "internalApi": { "name": "API interna" }
       },
-      "noLastSync": "—"
+      "noLastSync": "—",
+      "detail": {
+        "close": "Chiudi",
+        "connectionStatus": "Stato della connessione",
+        "dataFlow": "Flusso dati",
+        "moduleUsage": "Utilizzato da AT",
+        "automationsUsing": "Utilizzato dalle automazioni",
+        "noAutomations": "Nessuna automazione utilizza questa connessione",
+        "lastActivity": "Ultima attività"
+      },
+      "connectionExplanation": {
+        "connected": "In questa demo, questo sistema è rappresentato come una fonte attivamente connessa.",
+        "demo": "Questa connessione è simulata a scopo dimostrativo.",
+        "ready": "AT può essere configurato per scambiare dati aziendali con sistemi di questo tipo.",
+        "notConnected": "Nessuna connessione attiva è configurata."
+      }
     }
   }
 }

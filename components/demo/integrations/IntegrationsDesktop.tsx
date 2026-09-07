@@ -1,5 +1,8 @@
 import { useTranslations } from "next-intl";
-import { INTEGRATION_DEFINITIONS, getIntegrationCounts, type AutomationTimestamp, type IntegrationDefinition } from "@/lib/demo-data";
+import type { KeyboardEvent } from "react";
+import { INTEGRATION_DEFINITIONS, getIntegrationCounts, type IntegrationDefinition } from "@/lib/demo-data";
+import IntegrationDetailPanel from "./IntegrationDetailPanel";
+import { formatLastSync, systemDisplayName } from "./integrationFormatters";
 
 const STATUS_TONE: Record<string, string> = {
   connected: "bg-success/10 text-success",
@@ -13,32 +16,27 @@ const MODULE_ORDER = ["operations", "finance", "inventory", "customers", "automa
 
 const COLUMN_WIDTHS = ["16%", "10%", "17%", "10%", "26%", "21%"];
 
-function systemDisplayName(integration: IntegrationDefinition, t: ReturnType<typeof useTranslations>) {
-  return integration.systemName ?? t(`systems.${integration.key}.name`);
-}
-
-/** Reuses Dashboard.Automations' existing relativeTime labels ("Today"/"Yesterday") rather than
- * duplicating them in a new namespace — same wording, same concept, already localized. */
-function formatLastSync(
-  sync: AutomationTimestamp | null | undefined,
-  t: ReturnType<typeof useTranslations>,
-  tAutomations: ReturnType<typeof useTranslations>,
-) {
-  if (!sync) return t("noLastSync");
-  if (sync.kind === "date") return `${sync.date}, ${sync.time}`;
-  return `${tAutomations(`relativeTime.${sync.kind}`)}, ${sync.time}`;
-}
-
 /**
- * Desktop-only Integrations workspace (Stage 2G.1) — foundation only: read-only system
- * landscape, no selection, no detail, no filters. A Server Component like
- * FinanceCashFlowSummary/FinanceOperationsSummary (no client-side state exists yet), hidden
- * below the @5xl container-query breakpoint, matching every other module's own desktop-
- * foundation stage. All counts are derived from INTEGRATION_DEFINITIONS via getIntegrationCounts()
- * — never a re-typed literal — and every automation/module reference resolves live rather than
- * duplicating a business fact already owned by Automations/Finance/Inventory/etc.
+ * Desktop-only Integrations workspace (Stage 2G.1, made presentational in 2G.2). Hidden below the
+ * @5xl container-query breakpoint, matching every other module's own desktop-foundation stage.
+ * Selection state (selectedId/selectedIntegration) is owned by IntegrationsWorkspace and passed
+ * in, mirroring AutomationsDesktop's prop-driven pattern — this component only renders.
+ *
+ * All counts are derived from INTEGRATION_DEFINITIONS via getIntegrationCounts() — never a
+ * re-typed literal — and every automation/module reference resolves live rather than duplicating
+ * a business fact already owned by Automations/Finance/Inventory/etc.
  */
-export default function IntegrationsDesktop() {
+export default function IntegrationsDesktop({
+  selectedId,
+  onSelectRow,
+  selectedIntegration,
+  onCloseDetail,
+}: {
+  selectedId: string | null;
+  onSelectRow: (id: string) => void;
+  selectedIntegration: IntegrationDefinition | null;
+  onCloseDetail: () => void;
+}) {
   const t = useTranslations("Dashboard.Integrations");
   const tAutomations = useTranslations("Dashboard.Automations");
   const tSidebar = useTranslations("Dashboard.Sidebar");
@@ -53,6 +51,13 @@ export default function IntegrationsDesktop() {
   ] as const;
 
   const moduleLabel = (key: string) => (key === "automations" ? tSidebar("items.automations") : tAutomations(`category.${key}`));
+
+  const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, id: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelectRow(id);
+    }
+  };
 
   return (
     <div className="hidden min-h-0 flex-1 @5xl:flex @5xl:flex-col">
@@ -100,52 +105,89 @@ export default function IntegrationsDesktop() {
         </div>
       </div>
 
-      {/* Integration list */}
-      <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
-        <table className="w-full table-fixed border-collapse text-left text-sm">
-          <colgroup>
-            {COLUMN_WIDTHS.map((width, index) => (
-              <col key={index} style={{ width }} />
-            ))}
-          </colgroup>
-          <thead>
-            <tr className="border-b border-border text-xs text-neutral-500">
-              <th className="px-4 py-3 font-medium">{t("table.system")}</th>
-              <th className="px-4 py-3 font-medium">{t("table.category")}</th>
-              <th className="px-4 py-3 font-medium">{t("table.status")}</th>
-              <th className="px-4 py-3 font-medium">{t("table.direction")}</th>
-              <th className="px-4 py-3 font-medium">{t("table.businessData")}</th>
-              <th className="px-4 py-3 font-medium">{t("table.usedBy")}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {INTEGRATION_DEFINITIONS.map((integration) => (
-              <tr key={integration.id}>
-                <td className="px-4 py-3 align-top font-semibold break-words text-foreground">
-                  {systemDisplayName(integration, t)}
-                </td>
-                <td className="px-4 py-3 align-top break-words text-neutral-600">{t(`category.${integration.category}`)}</td>
-                <td className="px-4 py-3 align-top">
-                  <span
-                    className={`inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-xs font-medium break-words ${STATUS_TONE[integration.status]}`}
-                  >
-                    {t(`status.${integration.status}`)}
-                  </span>
-                  <p className="mt-1 text-xs break-words text-neutral-400">
-                    {formatLastSync(integration.lastSync, t, tAutomations)}
-                  </p>
-                </td>
-                <td className="px-4 py-3 align-top break-words text-neutral-600">{t(`direction.${integration.direction}`)}</td>
-                <td className="px-4 py-3 align-top break-words text-neutral-600">
-                  {integration.dataFlowKeys.map((key) => t(`dataFlow.${key}`)).join(" · ")}
-                </td>
-                <td className="px-4 py-3 align-top break-words text-neutral-600">
-                  {(integration.relatedModuleKeys ?? []).map((key) => moduleLabel(key)).join(" · ")}
-                </td>
+      {/* Integration list; outer `relative` (non-scrolling) is the positioning context for the
+          detail panel below, so the panel stays pinned to the viewport rather than scrolling
+          away with the table's own internal overflow-auto — same two-layer pattern as
+          AutomationsDesktop/FinanceDesktop's table + panel. */}
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
+          <table className="w-full table-fixed border-collapse text-left text-sm">
+            <colgroup>
+              {COLUMN_WIDTHS.map((width, index) => (
+                <col key={index} style={{ width }} />
+              ))}
+            </colgroup>
+            <thead>
+              <tr className="border-b border-border text-xs text-neutral-500">
+                <th className="px-4 py-3 font-medium">{t("table.system")}</th>
+                <th className="px-4 py-3 font-medium">{t("table.category")}</th>
+                <th className="px-4 py-3 font-medium">{t("table.status")}</th>
+                <th className="px-4 py-3 font-medium">{t("table.direction")}</th>
+                <th className="px-4 py-3 font-medium">{t("table.businessData")}</th>
+                <th className="px-4 py-3 font-medium">{t("table.usedBy")}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {INTEGRATION_DEFINITIONS.map((integration) => {
+                const isSelected = integration.id === selectedId;
+                return (
+                  <tr
+                    key={integration.id}
+                    tabIndex={0}
+                    aria-selected={isSelected}
+                    onClick={() => onSelectRow(integration.id)}
+                    onKeyDown={(event) => handleRowKeyDown(event, integration.id)}
+                    className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
+                      isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                    }`}
+                  >
+                    <td className="px-4 py-3 align-top font-semibold break-words text-foreground">
+                      {systemDisplayName(integration, t)}
+                    </td>
+                    <td className="px-4 py-3 align-top break-words text-neutral-600">
+                      {t(`category.${integration.category}`)}
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      <span
+                        className={`inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-xs font-medium break-words ${STATUS_TONE[integration.status]}`}
+                      >
+                        {t(`status.${integration.status}`)}
+                      </span>
+                      <p className="mt-1 text-xs break-words text-neutral-400">
+                        {formatLastSync(integration.lastSync, t, tAutomations)}
+                      </p>
+                    </td>
+                    <td className="px-4 py-3 align-top break-words text-neutral-600">
+                      {t(`direction.${integration.direction}`)}
+                    </td>
+                    <td className="px-4 py-3 align-top break-words text-neutral-600">
+                      {integration.dataFlowKeys.map((key) => t(`dataFlow.${key}`)).join(" · ")}
+                    </td>
+                    <td className="px-4 py-3 align-top break-words text-neutral-600">
+                      {(integration.relatedModuleKeys ?? []).map((key) => moduleLabel(key)).join(" · ")}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {selectedIntegration && (
+          <>
+            {/* Subtle workspace-level scrim — communicates layering without darkening the app or
+                blocking recognition of the table underneath. Decorative: X and Escape are the
+                primary close mechanisms, so this stays out of tab order and hidden from AT. */}
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={onCloseDetail}
+              className="absolute inset-0 z-10 cursor-default bg-black/[0.02]"
+            />
+            <IntegrationDetailPanel integration={selectedIntegration} onClose={onCloseDetail} />
+          </>
+        )}
       </div>
     </div>
   );
