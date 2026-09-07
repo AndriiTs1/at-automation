@@ -635,6 +635,79 @@
         "inventoryItem": "Articolo di magazzino",
         "awaitingApproval": "In attesa di approvazione"
       }
+    },
+    "Integrations": {
+      "title": "Integrazioni",
+      "description": "Collega i sistemi che la tua azienda già utilizza.",
+      "summary": {
+        "connected": "Connesse",
+        "ready": "Pronte per l'integrazione",
+        "demo": "Connessioni demo",
+        "businessSystems": "Sistemi aziendali"
+      },
+      "landscape": {
+        "title": "Panoramica dei sistemi",
+        "businessSystemsLabel": "Sistemi aziendali",
+        "atLayerLabel": "Livello di integrazione AT",
+        "workflowsLabel": "Processi aziendali"
+      },
+      "table": {
+        "system": "Sistema",
+        "category": "Categoria",
+        "status": "Stato",
+        "direction": "Direzione",
+        "businessData": "Dati aziendali",
+        "usedBy": "Utilizzato da"
+      },
+      "status": {
+        "connected": "Connessa",
+        "ready": "Pronta per l'integrazione",
+        "demo": "Demo",
+        "notConnected": "Non connessa"
+      },
+      "direction": {
+        "inbound": "In entrata",
+        "outbound": "In uscita",
+        "bidirectional": "Bidirezionale"
+      },
+      "category": {
+        "erp": "ERP",
+        "crm": "CRM",
+        "accounting": "Contabilità",
+        "payments": "Pagamenti",
+        "warehouse": "Magazzino",
+        "ecommerce": "E-commerce",
+        "email": "Email",
+        "internal": "Strumenti interni"
+      },
+      "dataFlow": {
+        "orders": "Ordini",
+        "customers": "Clienti",
+        "inventory": "Magazzino",
+        "invoices": "Fatture",
+        "stock": "Scorte",
+        "reservations": "Prenotazioni",
+        "reorderLevels": "Livelli di riordino",
+        "opportunities": "Opportunità",
+        "activities": "Attività",
+        "payments": "Pagamenti",
+        "vatData": "Dati IVA",
+        "references": "Riferimenti",
+        "settlementStatus": "Stato di liquidazione",
+        "products": "Prodotti",
+        "followUpMessages": "Messaggi di sollecito",
+        "notifications": "Notifiche",
+        "approvalRequests": "Richieste di approvazione",
+        "operationalEvents": "Eventi operativi",
+        "customRecords": "Record personalizzati",
+        "statusUpdates": "Aggiornamenti di stato"
+      },
+      "systems": {
+        "internalErp": { "name": "ERP interno" },
+        "warehouseSystem": { "name": "Sistema di magazzino" },
+        "internalApi": { "name": "API interna" }
+      },
+      "noLastSync": "—"
     }
   }
 }

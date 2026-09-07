@@ -635,6 +635,79 @@
         "inventoryItem": "Складська позиція",
         "awaitingApproval": "Очікує погодження"
       }
+    },
+    "Integrations": {
+      "title": "Інтеграції",
+      "description": "Підключіть системи, які вже використовує ваша компанія.",
+      "summary": {
+        "connected": "Підключено",
+        "ready": "Готово до інтеграції",
+        "demo": "Демо-підключення",
+        "businessSystems": "Бізнес-системи"
+      },
+      "landscape": {
+        "title": "Ландшафт систем",
+        "businessSystemsLabel": "Бізнес-системи",
+        "atLayerLabel": "Рівень інтеграції AT",
+        "workflowsLabel": "Бізнес-процеси"
+      },
+      "table": {
+        "system": "Система",
+        "category": "Категорія",
+        "status": "Статус",
+        "direction": "Напрямок",
+        "businessData": "Бізнес-дані",
+        "usedBy": "Використовується в"
+      },
+      "status": {
+        "connected": "Підключено",
+        "ready": "Готово до інтеграції",
+        "demo": "Демо",
+        "notConnected": "Не підключено"
+      },
+      "direction": {
+        "inbound": "Вхідний",
+        "outbound": "Вихідний",
+        "bidirectional": "Двосторонній"
+      },
+      "category": {
+        "erp": "ERP",
+        "crm": "CRM",
+        "accounting": "Бухгалтерія",
+        "payments": "Платежі",
+        "warehouse": "Склад",
+        "ecommerce": "Електронна комерція",
+        "email": "Пошта",
+        "internal": "Внутрішні інструменти"
+      },
+      "dataFlow": {
+        "orders": "Замовлення",
+        "customers": "Клієнти",
+        "inventory": "Складські залишки",
+        "invoices": "Рахунки",
+        "stock": "Залишки",
+        "reservations": "Резервування",
+        "reorderLevels": "Точки замовлення",
+        "opportunities": "Угоди",
+        "activities": "Активності",
+        "payments": "Платежі",
+        "vatData": "Дані ПДВ",
+        "references": "Референси",
+        "settlementStatus": "Статус розрахунків",
+        "products": "Товари",
+        "followUpMessages": "Нагадування",
+        "notifications": "Сповіщення",
+        "approvalRequests": "Запити на погодження",
+        "operationalEvents": "Операційні події",
+        "customRecords": "Користувацькі записи",
+        "statusUpdates": "Оновлення статусу"
+      },
+      "systems": {
+        "internalErp": { "name": "Внутрішня ERP-система" },
+        "warehouseSystem": { "name": "Складська система" },
+        "internalApi": { "name": "Внутрішній API" }
+      },
+      "noLastSync": "—"
     }
   }
 }

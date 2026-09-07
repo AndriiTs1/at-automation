@@ -635,6 +635,79 @@
         "inventoryItem": "Lagerartikel",
         "awaitingApproval": "Ausstehende Freigaben"
       }
+    },
+    "Integrations": {
+      "title": "Integrationen",
+      "description": "Verbinden Sie die Systeme, die Ihr Unternehmen bereits nutzt.",
+      "summary": {
+        "connected": "Verbunden",
+        "ready": "Bereit zur Integration",
+        "demo": "Demo-Verbindungen",
+        "businessSystems": "Business-Systeme"
+      },
+      "landscape": {
+        "title": "Systemlandschaft",
+        "businessSystemsLabel": "Business-Systeme",
+        "atLayerLabel": "AT-Integrationsebene",
+        "workflowsLabel": "Geschäftsprozesse"
+      },
+      "table": {
+        "system": "System",
+        "category": "Kategorie",
+        "status": "Status",
+        "direction": "Richtung",
+        "businessData": "Geschäftsdaten",
+        "usedBy": "Genutzt von"
+      },
+      "status": {
+        "connected": "Verbunden",
+        "ready": "Bereit zur Integration",
+        "demo": "Demo",
+        "notConnected": "Nicht verbunden"
+      },
+      "direction": {
+        "inbound": "Eingehend",
+        "outbound": "Ausgehend",
+        "bidirectional": "Beidseitig"
+      },
+      "category": {
+        "erp": "ERP",
+        "crm": "CRM",
+        "accounting": "Buchhaltung",
+        "payments": "Zahlungen",
+        "warehouse": "Lagerverwaltung",
+        "ecommerce": "E-Commerce",
+        "email": "E-Mail",
+        "internal": "Interne Systeme"
+      },
+      "dataFlow": {
+        "orders": "Aufträge",
+        "customers": "Kunden",
+        "inventory": "Lagerbestand",
+        "invoices": "Rechnungen",
+        "stock": "Bestand",
+        "reservations": "Reservierungen",
+        "reorderLevels": "Meldebestände",
+        "opportunities": "Verkaufschancen",
+        "activities": "Aktivitäten",
+        "payments": "Zahlungen",
+        "vatData": "MWST-Daten",
+        "references": "Referenzen",
+        "settlementStatus": "Abrechnungsstatus",
+        "products": "Produkte",
+        "followUpMessages": "Erinnerungen",
+        "notifications": "Benachrichtigungen",
+        "approvalRequests": "Freigabeanfragen",
+        "operationalEvents": "Betriebsereignisse",
+        "customRecords": "Individuelle Datensätze",
+        "statusUpdates": "Statusaktualisierungen"
+      },
+      "systems": {
+        "internalErp": { "name": "Internes ERP" },
+        "warehouseSystem": { "name": "Lagersystem" },
+        "internalApi": { "name": "Interne API" }
+      },
+      "noLastSync": "—"
     }
   }
 }

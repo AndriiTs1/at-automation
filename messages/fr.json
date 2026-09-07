@@ -635,6 +635,79 @@
         "inventoryItem": "Article en stock",
         "awaitingApproval": "En attente d'approbation"
       }
+    },
+    "Integrations": {
+      "title": "Intégrations",
+      "description": "Connectez les systèmes que votre entreprise utilise déjà.",
+      "summary": {
+        "connected": "Connectées",
+        "ready": "Prêtes pour l'intégration",
+        "demo": "Connexions de démonstration",
+        "businessSystems": "Systèmes métier"
+      },
+      "landscape": {
+        "title": "Paysage des systèmes",
+        "businessSystemsLabel": "Systèmes métier",
+        "atLayerLabel": "Couche d'intégration AT",
+        "workflowsLabel": "Processus métier"
+      },
+      "table": {
+        "system": "Système",
+        "category": "Catégorie",
+        "status": "Statut",
+        "direction": "Sens",
+        "businessData": "Données métier",
+        "usedBy": "Utilisé par"
+      },
+      "status": {
+        "connected": "Connectée",
+        "ready": "Prête pour l'intégration",
+        "demo": "Démo",
+        "notConnected": "Non connectée"
+      },
+      "direction": {
+        "inbound": "Entrant",
+        "outbound": "Sortant",
+        "bidirectional": "Bidirectionnel"
+      },
+      "category": {
+        "erp": "ERP",
+        "crm": "CRM",
+        "accounting": "Comptabilité",
+        "payments": "Paiements",
+        "warehouse": "Entrepôt",
+        "ecommerce": "E-commerce",
+        "email": "E-mail",
+        "internal": "Outils internes"
+      },
+      "dataFlow": {
+        "orders": "Commandes",
+        "customers": "Clients",
+        "inventory": "Stock",
+        "invoices": "Factures",
+        "stock": "Stock",
+        "reservations": "Réservations",
+        "reorderLevels": "Seuils de réapprovisionnement",
+        "opportunities": "Opportunités",
+        "activities": "Activités",
+        "payments": "Paiements",
+        "vatData": "Données TVA",
+        "references": "Références",
+        "settlementStatus": "Statut de règlement",
+        "products": "Produits",
+        "followUpMessages": "Messages de relance",
+        "notifications": "Notifications",
+        "approvalRequests": "Demandes d'approbation",
+        "operationalEvents": "Événements opérationnels",
+        "customRecords": "Enregistrements personnalisés",
+        "statusUpdates": "Mises à jour de statut"
+      },
+      "systems": {
+        "internalErp": { "name": "ERP interne" },
+        "warehouseSystem": { "name": "Système d'entrepôt" },
+        "internalApi": { "name": "API interne" }
+      },
+      "noLastSync": "—"
     }
   }
 }

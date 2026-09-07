@@ -635,6 +635,79 @@
         "inventoryItem": "Складская позиция",
         "awaitingApproval": "Ожидает согласования"
       }
+    },
+    "Integrations": {
+      "title": "Интеграции",
+      "description": "Подключите системы, которые уже использует ваша компания.",
+      "summary": {
+        "connected": "Подключено",
+        "ready": "Готово к интеграции",
+        "demo": "Демо-подключения",
+        "businessSystems": "Бизнес-системы"
+      },
+      "landscape": {
+        "title": "Ландшафт систем",
+        "businessSystemsLabel": "Бизнес-системы",
+        "atLayerLabel": "Уровень интеграции AT",
+        "workflowsLabel": "Бизнес-процессы"
+      },
+      "table": {
+        "system": "Система",
+        "category": "Категория",
+        "status": "Статус",
+        "direction": "Направление",
+        "businessData": "Бизнес-данные",
+        "usedBy": "Используется в"
+      },
+      "status": {
+        "connected": "Подключено",
+        "ready": "Готово к интеграции",
+        "demo": "Демо",
+        "notConnected": "Не подключено"
+      },
+      "direction": {
+        "inbound": "Входящее",
+        "outbound": "Исходящее",
+        "bidirectional": "Двустороннее"
+      },
+      "category": {
+        "erp": "ERP",
+        "crm": "CRM",
+        "accounting": "Бухгалтерия",
+        "payments": "Платежи",
+        "warehouse": "Склад",
+        "ecommerce": "Электронная торговля",
+        "email": "Почта",
+        "internal": "Внутренние инструменты"
+      },
+      "dataFlow": {
+        "orders": "Заказы",
+        "customers": "Клиенты",
+        "inventory": "Складские остатки",
+        "invoices": "Счета",
+        "stock": "Остатки",
+        "reservations": "Резервирования",
+        "reorderLevels": "Точки заказа",
+        "opportunities": "Сделки",
+        "activities": "Активности",
+        "payments": "Платежи",
+        "vatData": "Данные НДС",
+        "references": "Референсы",
+        "settlementStatus": "Статус расчётов",
+        "products": "Товары",
+        "followUpMessages": "Напоминания",
+        "notifications": "Уведомления",
+        "approvalRequests": "Запросы на согласование",
+        "operationalEvents": "Операционные события",
+        "customRecords": "Пользовательские записи",
+        "statusUpdates": "Обновления статуса"
+      },
+      "systems": {
+        "internalErp": { "name": "Внутренняя ERP-система" },
+        "warehouseSystem": { "name": "Складская система" },
+        "internalApi": { "name": "Внутренний API" }
+      },
+      "noLastSync": "—"
     }
   }
 }

@@ -635,6 +635,79 @@
         "inventoryItem": "Inventory item",
         "awaitingApproval": "Awaiting approval"
       }
+    },
+    "Integrations": {
+      "title": "Integrations",
+      "description": "Connect the systems your business already uses.",
+      "summary": {
+        "connected": "Connected",
+        "ready": "Ready for integration",
+        "demo": "Demo connections",
+        "businessSystems": "Business systems"
+      },
+      "landscape": {
+        "title": "System landscape",
+        "businessSystemsLabel": "Business systems",
+        "atLayerLabel": "AT Integration Layer",
+        "workflowsLabel": "Business workflows"
+      },
+      "table": {
+        "system": "System",
+        "category": "Category",
+        "status": "Status",
+        "direction": "Direction",
+        "businessData": "Business data",
+        "usedBy": "Used by"
+      },
+      "status": {
+        "connected": "Connected",
+        "ready": "Ready for integration",
+        "demo": "Demo",
+        "notConnected": "Not connected"
+      },
+      "direction": {
+        "inbound": "Inbound",
+        "outbound": "Outbound",
+        "bidirectional": "Two-way"
+      },
+      "category": {
+        "erp": "ERP",
+        "crm": "CRM",
+        "accounting": "Accounting",
+        "payments": "Payments",
+        "warehouse": "Warehouse",
+        "ecommerce": "E-commerce",
+        "email": "Email",
+        "internal": "Internal tools"
+      },
+      "dataFlow": {
+        "orders": "Orders",
+        "customers": "Customers",
+        "inventory": "Inventory",
+        "invoices": "Invoices",
+        "stock": "Stock",
+        "reservations": "Reservations",
+        "reorderLevels": "Reorder levels",
+        "opportunities": "Opportunities",
+        "activities": "Activities",
+        "payments": "Payments",
+        "vatData": "VAT data",
+        "references": "References",
+        "settlementStatus": "Settlement status",
+        "products": "Products",
+        "followUpMessages": "Follow-up messages",
+        "notifications": "Notifications",
+        "approvalRequests": "Approval requests",
+        "operationalEvents": "Operational events",
+        "customRecords": "Custom records",
+        "statusUpdates": "Status updates"
+      },
+      "systems": {
+        "internalErp": { "name": "Internal ERP" },
+        "warehouseSystem": { "name": "Warehouse System" },
+        "internalApi": { "name": "Internal API" }
+      },
+      "noLastSync": "—"
     }
   }
 }

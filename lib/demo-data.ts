@@ -18,7 +18,7 @@ export const NAV_SECTIONS = [
     key: "automate",
     items: [
       { key: "automations", icon: "bolt", href: "/demo/automations", available: true },
-      { key: "integrations", icon: "plug", href: "/demo/integrations" },
+      { key: "integrations", icon: "plug", href: "/demo/integrations", available: true },
     ],
   },
   {
@@ -1775,4 +1775,182 @@ const AUTOMATION_WORKFLOW_STEPS: Record<string, AutomationWorkflowStep[]> = {
 /** The stored post-trigger workflow steps for one automation (by AutomationDefinition.key). */
 export function getAutomationWorkflowSteps(automationKey: string): AutomationWorkflowStep[] {
   return AUTOMATION_WORKFLOW_STEPS[automationKey] ?? [];
+}
+
+export type IntegrationCategory = "erp" | "crm" | "accounting" | "payments" | "warehouse" | "ecommerce" | "email" | "internal";
+
+export type IntegrationStatus = "connected" | "ready" | "demo" | "notConnected";
+
+export type IntegrationDirection = "inbound" | "outbound" | "bidirectional";
+
+/**
+ * `systemName` is a literal, untranslated string — used only for real third-party product names
+ * (SAP, Salesforce, Bexio, ...), which must never be translated. Fictional/generic systems (the
+ * demo company's own internal systems) omit `systemName` entirely; the UI falls back to
+ * `t(\`systems.${key}.name\`)` for those, since a generic label like "Internal ERP" does need to
+ * read naturally in all 6 locales. `dataFlowKeys`/`relatedModuleKeys` are semantic keys only
+ * (Dashboard.Integrations.dataFlow.* and existing module labels — see getIntegrationModuleLabel
+ * below) — no translated string is ever stored here. `usedByAutomationIds` must resolve to real
+ * AUTOMATION_DEFINITIONS ids; see the module-load-time check further down.
+ */
+export type IntegrationDefinition = {
+  id: string;
+  key: string;
+  systemName?: string;
+  category: IntegrationCategory;
+  status: IntegrationStatus;
+  direction: IntegrationDirection;
+  dataFlowKeys: string[];
+  usedByAutomationIds?: string[];
+  relatedModuleKeys?: string[];
+  /** Same "today"/"yesterday"/fixed-date shape as AutomationTimestamp — reuses an existing
+   * timestamp from the system it represents wherever one exists, never a new fabricated moment,
+   * and renders through the same localized relativeTime labels rather than a hardcoded English
+   * string. Present only for "connected"/"demo" (an active or simulated data flow); "ready"/
+   * "notConnected" have no sync to report and render the localized "—" placeholder. */
+  lastSync?: AutomationTimestamp | null;
+};
+
+/**
+ * Approximately 10 systems (Stage 2G.1) telling one coherent, claim-safe story. Real third-party
+ * products (SAP, Odoo, Salesforce, Bexio, Stripe, Shopify, Microsoft 365) are never marked
+ * "connected" — that would read as "AT is actually live-connected to SAP", exactly the false
+ * production claim Stage 2G.1 must avoid. "connected" is reserved for the demo company's own
+ * fictional/generic internal systems (Internal ERP, Warehouse System) — a safe claim since
+ * nothing real is named. Real products appear only as "ready" (conceptually integrable, no
+ * connector claimed) or "demo" (simulated for this demonstration). Status distribution —
+ * connected 2 / ready 4 / demo 3 / notConnected 1 — matches the credible mix the stage asked for.
+ */
+export const INTEGRATION_DEFINITIONS: IntegrationDefinition[] = [
+  {
+    id: "INTEG-1",
+    key: "internalErp",
+    category: "erp",
+    status: "connected",
+    direction: "bidirectional",
+    dataFlowKeys: ["orders", "customers", "inventory", "invoices"],
+    usedByAutomationIds: ["AUTO-4"],
+    relatedModuleKeys: ["operations", "inventory", "finance"],
+    lastSync: { kind: "today", time: "08:52" },
+  },
+  {
+    id: "INTEG-2",
+    key: "warehouseSystem",
+    category: "warehouse",
+    status: "connected",
+    direction: "bidirectional",
+    dataFlowKeys: ["stock", "reservations", "reorderLevels"],
+    usedByAutomationIds: ["AUTO-3"],
+    relatedModuleKeys: ["inventory", "operations", "automations"],
+    lastSync: { kind: "today", time: "10:31" },
+  },
+  {
+    id: "INTEG-3",
+    key: "sap",
+    systemName: "SAP",
+    category: "erp",
+    status: "ready",
+    direction: "bidirectional",
+    dataFlowKeys: ["orders", "customers", "inventory", "invoices"],
+    usedByAutomationIds: ["AUTO-4"],
+    relatedModuleKeys: ["operations", "inventory", "finance"],
+    lastSync: null,
+  },
+  {
+    id: "INTEG-4",
+    key: "odoo",
+    systemName: "Odoo",
+    category: "erp",
+    status: "demo",
+    direction: "bidirectional",
+    dataFlowKeys: ["orders", "inventory", "invoices"],
+    relatedModuleKeys: ["operations", "inventory"],
+    lastSync: { kind: "yesterday", time: "16:20" },
+  },
+  {
+    id: "INTEG-5",
+    key: "salesforce",
+    systemName: "Salesforce",
+    category: "crm",
+    status: "ready",
+    direction: "bidirectional",
+    dataFlowKeys: ["customers", "opportunities", "activities"],
+    usedByAutomationIds: ["AUTO-5"],
+    relatedModuleKeys: ["customers", "operations"],
+    lastSync: null,
+  },
+  {
+    id: "INTEG-6",
+    key: "bexio",
+    systemName: "Bexio",
+    category: "accounting",
+    status: "demo",
+    direction: "bidirectional",
+    dataFlowKeys: ["invoices", "payments", "vatData"],
+    usedByAutomationIds: ["AUTO-2", "AUTO-1", "AUTO-7"],
+    relatedModuleKeys: ["finance", "automations"],
+    lastSync: { kind: "today", time: "10:48" },
+  },
+  {
+    id: "INTEG-7",
+    key: "stripe",
+    systemName: "Stripe",
+    category: "payments",
+    status: "demo",
+    direction: "inbound",
+    dataFlowKeys: ["payments", "references", "settlementStatus"],
+    usedByAutomationIds: ["AUTO-2"],
+    relatedModuleKeys: ["finance", "automations"],
+    lastSync: { kind: "today", time: "09:58" },
+  },
+  {
+    id: "INTEG-8",
+    key: "shopify",
+    systemName: "Shopify",
+    category: "ecommerce",
+    status: "ready",
+    direction: "inbound",
+    dataFlowKeys: ["orders", "customers", "products"],
+    relatedModuleKeys: ["operations", "customers"],
+    lastSync: null,
+  },
+  {
+    id: "INTEG-9",
+    key: "microsoft365",
+    systemName: "Microsoft 365",
+    category: "email",
+    status: "ready",
+    direction: "outbound",
+    dataFlowKeys: ["followUpMessages", "notifications", "approvalRequests"],
+    usedByAutomationIds: ["AUTO-1", "AUTO-6"],
+    relatedModuleKeys: ["automations", "finance"],
+    lastSync: null,
+  },
+  {
+    id: "INTEG-10",
+    key: "internalApi",
+    category: "internal",
+    status: "notConnected",
+    direction: "bidirectional",
+    dataFlowKeys: ["operationalEvents", "customRecords", "statusUpdates"],
+    relatedModuleKeys: ["automations", "operations"],
+    lastSync: null,
+  },
+];
+
+if (process.env.NODE_ENV !== "production") {
+  const automationIds = new Set(AUTOMATION_DEFINITIONS.map((automation) => automation.id));
+  for (const integration of INTEGRATION_DEFINITIONS) {
+    for (const automationId of integration.usedByAutomationIds ?? []) {
+      if (!automationIds.has(automationId)) {
+        throw new Error(`INTEGRATION_DEFINITIONS["${integration.id}"] references unknown automation id "${automationId}"`);
+      }
+    }
+  }
+}
+
+export function getIntegrationCounts(): { connected: number; ready: number; demo: number; notConnected: number; total: number } {
+  const counts = { connected: 0, ready: 0, demo: 0, notConnected: 0, total: INTEGRATION_DEFINITIONS.length };
+  for (const integration of INTEGRATION_DEFINITIONS) counts[integration.status] += 1;
+  return counts;
 }
