@@ -22,8 +22,8 @@ export default function DashboardSidebar({ activeItem = "commandCenter" }: { act
       </Link>
 
       <nav className="flex flex-1 flex-col gap-4 overflow-y-auto">
-        <button
-          type="button"
+        <Link
+          href="/demo"
           aria-current={activeItem === "commandCenter" ? "page" : undefined}
           className={`flex items-center justify-center gap-2.5 rounded-lg p-2 text-xs font-medium transition-colors @3xl:justify-start @3xl:px-3 @3xl:py-2 ${
             activeItem === "commandCenter" ? "bg-white/10 text-white" : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
@@ -31,7 +31,7 @@ export default function DashboardSidebar({ activeItem = "commandCenter" }: { act
         >
           <NavIcon name="grid" className="h-4 w-4 shrink-0" />
           <span className="hidden truncate @3xl:inline">{t("commandCenter")}</span>
-        </button>
+        </Link>
 
         {NAV_SECTIONS.map((section) => (
           <div key={section.key}>

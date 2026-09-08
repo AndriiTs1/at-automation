@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import InventoryWorkspace from "@/components/demo/inventory/InventoryWorkspace";
 
@@ -5,5 +6,9 @@ export default async function InventoryPage(props: PageProps<"/[locale]/demo/inv
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  return <InventoryWorkspace />;
+  return (
+    <Suspense fallback={null}>
+      <InventoryWorkspace />
+    </Suspense>
+  );
 }

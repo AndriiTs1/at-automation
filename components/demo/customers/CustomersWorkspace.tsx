@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { SearchIcon } from "@/components/dashboard/icons";
+import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import { CUSTOMERS_ROWS, CUSTOMERS_SUMMARY } from "@/lib/demo-data";
 import CustomerDetailMobile from "./CustomerDetailMobile";
 import CustomerFilterDropdown from "./CustomerFilterDropdown";
@@ -47,7 +48,16 @@ function SummaryGrid() {
  */
 export default function CustomersWorkspace() {
   const t = useTranslations("Dashboard.Customers");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Stage 2J.2 — record-level deep link (e.g. from the Scenario page). Resolved against the full
+  // CUSTOMERS_ROWS dataset, never the filtered list, so an incoming link opens the exact customer
+  // regardless of the current (default, unrelated) filter/search state. selectedId's own lazy
+  // initializer picks this up on first mount (a direct page load); the prevCustomerParam diff
+  // below catches later changes (client-side navigation while already mounted). Applied during
+  // render rather than in an effect, since setState-in-effect causes an avoidable extra render pass.
+  const [customerParam, clearCustomerParam] = useQuerySelection("customer");
+  const [selectedId, setSelectedId] = useState<string | null>(() =>
+    customerParam && CUSTOMERS_ROWS.some((row) => row.id === customerParam) ? customerParam : null,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [segmentFilter, setSegmentFilter] = useState<SegmentFilterValue>("all");
   const [healthFilter, setHealthFilter] = useState<HealthFilterValue>("all");
@@ -55,6 +65,12 @@ export default function CustomersWorkspace() {
   // the Escape handler below can tell a dropdown is open and let its own Escape close it first,
   // instead of closing the Customer Detail overlay in the same keypress.
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
+
+  const [prevCustomerParam, setPrevCustomerParam] = useState(customerParam);
+  if (customerParam !== prevCustomerParam) {
+    setPrevCustomerParam(customerParam);
+    if (customerParam && CUSTOMERS_ROWS.some((row) => row.id === customerParam)) setSelectedId(customerParam);
+  }
 
   const filteredCustomers = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -79,8 +95,19 @@ export default function CustomersWorkspace() {
     setPrevFilterKey(filterKey);
     if (selectedId && !filteredCustomers.some((row) => row.id === selectedId)) {
       setSelectedId(null);
+      clearCustomerParam();
     }
   }
+
+  // Closes the detail AND clears any deep-link query param at the same time, so the URL never
+  // keeps a stale ?customer= after the panel it opened is gone (Escape, X button, or scrim).
+  // useCallback keeps this reference stable across renders (as long as clearCustomerParam itself
+  // stays stable, which useQuerySelection already guarantees) so the Escape effect below can
+  // safely list it as a dependency without re-attaching its listener every render.
+  const closeDetail = useCallback(() => {
+    setSelectedId(null);
+    clearCustomerParam();
+  }, [clearCustomerParam]);
 
   useEffect(() => {
     if (!selectedId) return;
@@ -90,11 +117,11 @@ export default function CustomersWorkspace() {
       // keypress. Skip closing the detail overlay so the two layers close one at a time:
       // dropdown first, detail on the next Escape.
       if (openFilter) return;
-      setSelectedId(null);
+      closeDetail();
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId, openFilter]);
+  }, [selectedId, openFilter, closeDetail]);
 
   const hasActiveFilters = searchQuery.trim() !== "" || segmentFilter !== "all" || healthFilter !== "all";
 
@@ -104,7 +131,9 @@ export default function CustomersWorkspace() {
     setHealthFilter("all");
   };
 
-  const selectedCustomer = filteredCustomers.find((row) => row.id === selectedId) ?? null;
+  // Resolved from the full dataset (not filteredCustomers) so a deep-linked customer always opens
+  // even if it wouldn't currently match the active filter/search — see spec 2J.2 section 8.
+  const selectedCustomer = CUSTOMERS_ROWS.find((row) => row.id === selectedId) ?? null;
   const { segmentOptions, healthOptions } = buildCustomerFilterOptions(t);
 
   return (
@@ -169,7 +198,7 @@ export default function CustomersWorkspace() {
           onClearFilters={handleClearFilters}
         />
 
-        {selectedCustomer && <CustomerDetailMobile customer={selectedCustomer} onClose={() => setSelectedId(null)} />}
+        {selectedCustomer && <CustomerDetailMobile customer={selectedCustomer} onClose={closeDetail} />}
       </div>
 
       {/* Tablet workspace (@lg to below @5xl) */}
@@ -242,7 +271,7 @@ export default function CustomersWorkspace() {
           onClearFilters={handleClearFilters}
         />
 
-        {selectedCustomer && <CustomerDetailMobile customer={selectedCustomer} onClose={() => setSelectedId(null)} />}
+        {selectedCustomer && <CustomerDetailMobile customer={selectedCustomer} onClose={closeDetail} />}
       </div>
 
       {/* Desktop workspace (@5xl and up) — unchanged since the column-alignment polish stage */}
@@ -261,7 +290,7 @@ export default function CustomersWorkspace() {
         selectedId={selectedId}
         onSelectRow={setSelectedId}
         selectedCustomer={selectedCustomer}
-        onCloseDetail={() => setSelectedId(null)}
+        onCloseDetail={closeDetail}
       />
     </>
   );

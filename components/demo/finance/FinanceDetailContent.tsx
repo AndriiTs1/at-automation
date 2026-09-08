@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { CloseIcon } from "@/components/dashboard/icons";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
 import {
   getFinanceCustomer,
   getFinanceOperation,
@@ -83,6 +84,7 @@ export default function FinanceDetailContent({
 
   return (
     <>
+      <ScenarioReturnLink />
       <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border p-3.5">
         <div className="min-w-0">
           <p className="text-base font-semibold text-foreground">{invoice.id}</p>

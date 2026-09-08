@@ -2,7 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { formatLastActivity } from "./CustomersTable";
-import type { CustomerRow } from "@/lib/demo-data";
+import { getCustomerOutstanding, type CustomerRow } from "@/lib/demo-data";
+
+function formatChf(amount: number) {
+  return `CHF ${amount.toLocaleString("en-US")}`;
+}
 
 const HEALTH_TONE: Record<string, string> = {
   healthy: "bg-success/10 text-success",
@@ -101,9 +105,9 @@ export default function CustomersMobileList({
                 <div className="min-w-0">
                   <p className="truncate text-[11px] text-neutral-400">{t("table.outstanding")}</p>
                   <p
-                    className={`mt-0.5 truncate ${row.outstanding === "CHF 0" ? "text-neutral-400" : "font-medium text-foreground"}`}
+                    className={`mt-0.5 truncate ${getCustomerOutstanding(row.id) === 0 ? "text-neutral-400" : "font-medium text-foreground"}`}
                   >
-                    {row.outstanding}
+                    {formatChf(getCustomerOutstanding(row.id))}
                   </p>
                 </div>
               </div>

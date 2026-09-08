@@ -1,7 +1,12 @@
 import { useTranslations } from "next-intl";
 import { CloseIcon } from "@/components/dashboard/icons";
 import { ActivityLabel } from "@/components/demo/operations/OperationDetailContent";
-import { getCustomerActivity, getOperationsForCustomer, type CustomerRow } from "@/lib/demo-data";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
+import { getCustomerActivity, getCustomerOutstanding, getOperationsForCustomer, type CustomerRow } from "@/lib/demo-data";
+
+function formatChf(amount: number) {
+  return `CHF ${amount.toLocaleString("en-US")}`;
+}
 
 const HEALTH_TONE: Record<string, string> = {
   healthy: "bg-success/10 text-success",
@@ -46,11 +51,13 @@ export default function CustomerDetailContent({
 
   const relatedOperations = getOperationsForCustomer(customer.id);
   const recentActivity = getCustomerActivity(customer.id);
-  const hasOutstanding = customer.outstanding !== "CHF 0";
+  const outstanding = getCustomerOutstanding(customer.id);
+  const hasOutstanding = outstanding !== 0;
   const isMobile = variant === "mobile";
 
   return (
     <>
+      <ScenarioReturnLink />
       <div
         className={`flex shrink-0 items-start justify-between gap-3 border-b border-border ${isMobile ? "p-4" : "p-3.5"}`}
       >
@@ -160,7 +167,7 @@ export default function CustomerDetailContent({
             <div>
               <p className="text-xs text-neutral-500">{t("table.outstanding")}</p>
               <p className={`${isMobile ? "mt-1" : "mt-0.5"} text-sm font-semibold text-foreground`}>
-                {customer.outstanding}
+                {formatChf(outstanding)}
               </p>
             </div>
           </div>

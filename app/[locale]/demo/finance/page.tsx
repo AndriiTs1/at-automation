@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import FinanceWorkspace from "@/components/demo/finance/FinanceWorkspace";
 
@@ -5,5 +6,9 @@ export default async function FinancePage(props: PageProps<"/[locale]/demo/finan
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  return <FinanceWorkspace />;
+  return (
+    <Suspense fallback={null}>
+      <FinanceWorkspace />
+    </Suspense>
+  );
 }

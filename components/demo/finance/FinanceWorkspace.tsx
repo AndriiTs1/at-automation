@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import CustomerFilterDropdown from "@/components/demo/customers/CustomerFilterDropdown";
 import { SearchIcon } from "@/components/dashboard/icons";
+import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import {
   FINANCE_INVOICES,
   getFinanceCustomer,
@@ -73,7 +74,17 @@ function SummaryGrid() {
  */
 export default function FinanceWorkspace() {
   const t = useTranslations("Dashboard.Finance");
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(null);
+  // Stage 2J.2 — record-level deep link (e.g. from the Scenario page). Resolved against the full
+  // FINANCE_INVOICES dataset, never the filtered list, so an incoming link opens the exact
+  // invoice regardless of the current (default, unrelated) filter/search state.
+  // selectedInvoiceId's own lazy initializer picks this up on first mount (a direct page load);
+  // the prevInvoiceParam diff below catches later changes (client-side navigation while already
+  // mounted). Applied during render rather than in an effect, since setState-in-effect causes an
+  // avoidable extra render pass.
+  const [invoiceParam, clearInvoiceParam] = useQuerySelection("invoice");
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(() =>
+    invoiceParam && FINANCE_INVOICES.some((invoice) => invoice.id === invoiceParam) ? invoiceParam : null,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
   const [customerFilter, setCustomerFilter] = useState<CustomerFilterValue>("all");
@@ -82,6 +93,14 @@ export default function FinanceWorkspace() {
   // inside a toolbar so the Escape handler below can tell a dropdown is open and let its own
   // Escape close it first, instead of closing the Finance Detail overlay in the same keypress.
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
+
+  const [prevInvoiceParam, setPrevInvoiceParam] = useState(invoiceParam);
+  if (invoiceParam !== prevInvoiceParam) {
+    setPrevInvoiceParam(invoiceParam);
+    if (invoiceParam && FINANCE_INVOICES.some((invoice) => invoice.id === invoiceParam)) {
+      setSelectedInvoiceId(invoiceParam);
+    }
+  }
 
   const filteredInvoices = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -114,8 +133,19 @@ export default function FinanceWorkspace() {
     setPrevFilterKey(filterKey);
     if (selectedInvoiceId && !filteredInvoices.some((invoice) => invoice.id === selectedInvoiceId)) {
       setSelectedInvoiceId(null);
+      clearInvoiceParam();
     }
   }
+
+  // Closes the detail AND clears any deep-link query param at the same time, so the URL never
+  // keeps a stale ?invoice= after the panel it opened is gone (Escape, X button, or scrim).
+  // useCallback keeps this reference stable across renders (as long as clearInvoiceParam itself
+  // stays stable, which useQuerySelection already guarantees) so the Escape effect below can
+  // safely list it as a dependency without re-attaching its listener every render.
+  const closeDetail = useCallback(() => {
+    setSelectedInvoiceId(null);
+    clearInvoiceParam();
+  }, [clearInvoiceParam]);
 
   useEffect(() => {
     if (!selectedInvoiceId) return;
@@ -125,11 +155,11 @@ export default function FinanceWorkspace() {
       // keypress. Skip closing the detail overlay so the two layers close one at a time:
       // dropdown first, detail on the next Escape.
       if (openFilter) return;
-      setSelectedInvoiceId(null);
+      closeDetail();
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedInvoiceId, openFilter]);
+  }, [selectedInvoiceId, openFilter, closeDetail]);
 
   const hasActiveFilters =
     searchQuery.trim() !== "" || statusFilter !== "all" || customerFilter !== "all" || reconciliationFilter !== "all";
@@ -141,7 +171,9 @@ export default function FinanceWorkspace() {
     setReconciliationFilter("all");
   };
 
-  const selectedInvoice = filteredInvoices.find((invoice) => invoice.id === selectedInvoiceId) ?? null;
+  // Resolved from the full dataset (not filteredInvoices) so a deep-linked invoice always opens
+  // even if it wouldn't currently match the active filter/search — see spec 2J.2 section 8.
+  const selectedInvoice = FINANCE_INVOICES.find((invoice) => invoice.id === selectedInvoiceId) ?? null;
   const { statusOptions, customerOptions, reconciliationOptions } = buildFinanceFilterOptions(t);
 
   return (
@@ -218,7 +250,7 @@ export default function FinanceWorkspace() {
         />
 
         {selectedInvoice && (
-          <FinanceDetailMobile invoice={selectedInvoice} onClose={() => setSelectedInvoiceId(null)} />
+          <FinanceDetailMobile invoice={selectedInvoice} onClose={closeDetail} />
         )}
       </div>
 
@@ -304,7 +336,7 @@ export default function FinanceWorkspace() {
         />
 
         {selectedInvoice && (
-          <FinanceDetailMobile invoice={selectedInvoice} onClose={() => setSelectedInvoiceId(null)} />
+          <FinanceDetailMobile invoice={selectedInvoice} onClose={closeDetail} />
         )}
       </div>
 
@@ -326,7 +358,7 @@ export default function FinanceWorkspace() {
         selectedId={selectedInvoiceId}
         onSelectRow={setSelectedInvoiceId}
         selectedInvoice={selectedInvoice}
-        onCloseDetail={() => setSelectedInvoiceId(null)}
+        onCloseDetail={closeDetail}
       />
     </>
   );

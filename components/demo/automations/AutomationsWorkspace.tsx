@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import {
   AUTOMATION_DEFINITIONS,
   getActiveAutomationCount,
@@ -63,19 +64,43 @@ function SummaryGrid() {
  */
 export default function AutomationsWorkspace() {
   const t = useTranslations("Dashboard.Automations");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Stage 2J.2 — record-level deep link (e.g. from the Scenario page). This module has no
+  // filters, so AUTOMATION_DEFINITIONS is already the full dataset selection always resolves
+  // against — nothing else to change beyond reading the param. selectedId's own lazy initializer
+  // picks this up on first mount (a direct page load); the prevAutomationParam diff below catches
+  // later changes (client-side navigation while already mounted). Applied during render rather
+  // than in an effect, since setState-in-effect causes an avoidable extra render pass.
+  const [automationParam, clearAutomationParam] = useQuerySelection("automation");
+  const [selectedId, setSelectedId] = useState<string | null>(() =>
+    automationParam && AUTOMATION_DEFINITIONS.some((automation) => automation.id === automationParam)
+      ? automationParam
+      : null,
+  );
+  const [prevAutomationParam, setPrevAutomationParam] = useState(automationParam);
+  if (automationParam !== prevAutomationParam) {
+    setPrevAutomationParam(automationParam);
+    if (automationParam && AUTOMATION_DEFINITIONS.some((automation) => automation.id === automationParam)) {
+      setSelectedId(automationParam);
+    }
+  }
+
+  const selectedAutomation = AUTOMATION_DEFINITIONS.find((automation) => automation.id === selectedId) ?? null;
+  // useCallback keeps this reference stable across renders (as long as clearAutomationParam
+  // itself stays stable, which useQuerySelection already guarantees) so the Escape effect below
+  // can safely list it as a dependency without re-attaching its listener every render.
+  const closeDetail = useCallback(() => {
+    setSelectedId(null);
+    clearAutomationParam();
+  }, [clearAutomationParam]);
 
   useEffect(() => {
     if (!selectedId) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedId(null);
+      if (event.key === "Escape") closeDetail();
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId]);
-
-  const selectedAutomation = AUTOMATION_DEFINITIONS.find((automation) => automation.id === selectedId) ?? null;
-  const closeDetail = () => setSelectedId(null);
+  }, [selectedId, closeDetail]);
 
   return (
     <>

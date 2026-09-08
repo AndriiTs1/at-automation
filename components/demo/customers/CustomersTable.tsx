@@ -2,7 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import type { KeyboardEvent } from "react";
-import type { CustomerRow } from "@/lib/demo-data";
+import { getCustomerOutstanding, type CustomerRow } from "@/lib/demo-data";
+
+function formatChf(amount: number) {
+  return `CHF ${amount.toLocaleString("en-US")}`;
+}
 
 const HEALTH_TONE: Record<string, string> = {
   healthy: "bg-success/10 text-success",
@@ -148,9 +152,9 @@ export default function CustomersTable({
                   </td>
                   <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">{row.revenue}</td>
                   <td
-                    className={`px-4 py-3 text-right whitespace-nowrap ${row.outstanding === "CHF 0" ? "text-neutral-400" : "font-medium text-foreground"}`}
+                    className={`px-4 py-3 text-right whitespace-nowrap ${getCustomerOutstanding(row.id) === 0 ? "text-neutral-400" : "font-medium text-foreground"}`}
                   >
-                    {row.outstanding}
+                    {formatChf(getCustomerOutstanding(row.id))}
                   </td>
                   <td className="truncate px-4 py-3 text-center text-neutral-600">{row.owner}</td>
                   <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">

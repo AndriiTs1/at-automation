@@ -815,6 +815,40 @@
         "active": "Активен",
         "away": "Отсутствует"
       }
+    },
+    "Scenario": {
+      "entryPoint": "Посмотреть связанный процесс",
+      "title": "Связанный бизнес-процесс",
+      "description": "Проследите один бизнес-процесс через операции, склад, финансы, автоматизацию и управление.",
+      "openModule": "Открыть {module}",
+      "sections": {
+        "primaryFlow": "Бизнес-цепочка",
+        "controlLayer": "Контроль и видимость AT"
+      },
+      "steps": {
+        "customer": "Клиент",
+        "operation": "Операция",
+        "inventory": "Склад",
+        "finance": "Финансы",
+        "automation": "Автоматизация",
+        "approval": "Согласование",
+        "management": "Управление"
+      },
+      "ownerLabel": "Ответственный: {name}",
+      "reservedFor": "{count} зарезервировано для {operationId}",
+      "onHandAt": "{count} на складе · {location}",
+      "outstandingAmount": "{amount} к оплате",
+      "dueDate": "Срок оплаты {date}",
+      "automationConfiguredFor": "Настроено для {item}",
+      "noApprovalRequired": "Согласование не требуется",
+      "noApprovalExplanation": "Этот процесс продолжается без ожидающего согласования.",
+      "contributesTo": "Учитывается в",
+      "viewCustomer": "Посмотреть клиента",
+      "viewOperation": "Посмотреть операцию",
+      "viewInventoryItem": "Посмотреть складскую позицию",
+      "viewInvoice": "Посмотреть счёт",
+      "viewAutomation": "Посмотреть автоматизацию",
+      "backToScenario": "Назад к связанному процессу"
     }
   }
 }

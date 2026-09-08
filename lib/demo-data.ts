@@ -80,10 +80,17 @@ export const LIVE_OPERATIONS = [
     steps: [{ key: "inventoryReserved" }, { key: "invoiceGenerated" }, { key: "customerNotified" }],
   },
   {
+    // Stage 2J.1A: was { amount: "CHF 8,450", company: "Northstar Systems" } / id "#849" — a
+    // fictional invoice id that matched no FINANCE_INVOICES record, whose amount coincidentally
+    // equalled INV-2026-2005's total (the real, still-unpaid invoice the Scenario page traces for
+    // Northstar's operation #10348). That coincidence visually implied a payment had already
+    // settled #10348's invoice, contradicting Finance's own authoritative "sent"/paidAmount 0
+    // state. Corrected to a real, fully-paid, matched invoice: INV-2026-2011 (Solterra Group,
+    // CHF 15,300, status "paid", backed by FINANCE_PAYMENTS' PAY-2026-3002).
     time: "10:38",
     titleKey: "paymentReceived",
-    titleParams: { amount: "CHF 8,450", company: "Northstar Systems" },
-    steps: [{ key: "invoiceMarkedPaid", params: { id: "#849" } }],
+    titleParams: { amount: "CHF 15,300", company: "Solterra Group" },
+    steps: [{ key: "invoiceMarkedPaid", params: { id: "INV-2026-2011" } }],
   },
   {
     time: "10:31",
@@ -446,7 +453,6 @@ export type CustomerRow = {
   /** Count of that customer's OPERATIONS_ROWS entries with status !== "completed". */
   openOperations: number;
   revenue: string;
-  outstanding: string;
   owner: string;
   lastActivity: CustomerLastActivity;
 };
@@ -466,7 +472,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "healthy",
     openOperations: 2,
     revenue: "CHF 184,200",
-    outstanding: "CHF 0",
     owner: "Sarah M.",
     lastActivity: { kind: "today", time: "10:42" },
   },
@@ -477,7 +482,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "watch",
     openOperations: 1,
     revenue: "CHF 142,800",
-    outstanding: "CHF 9,100",
     owner: "Jonas R.",
     lastActivity: { kind: "today", time: "08:05" },
   },
@@ -488,7 +492,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "watch",
     openOperations: 2,
     revenue: "CHF 42,500",
-    outstanding: "CHF 4,200",
     owner: "Sarah M.",
     lastActivity: { kind: "today", time: "09:40" },
   },
@@ -499,7 +502,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "atRisk",
     openOperations: 2,
     revenue: "CHF 96,800",
-    outstanding: "CHF 21,600",
     owner: "Jonas R.",
     lastActivity: { kind: "today", time: "09:15" },
   },
@@ -510,7 +512,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "healthy",
     openOperations: 0,
     revenue: "CHF 78,300",
-    outstanding: "CHF 0",
     owner: "Sarah M.",
     lastActivity: { kind: "yesterday", time: "16:20" },
   },
@@ -521,7 +522,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "healthy",
     openOperations: 0,
     revenue: "CHF 156,400",
-    outstanding: "CHF 0",
     owner: "Marc T.",
     lastActivity: { kind: "yesterday", time: "11:15" },
   },
@@ -532,7 +532,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "watch",
     openOperations: 0,
     revenue: "CHF 58,900",
-    outstanding: "CHF 12,300",
     owner: "Marc T.",
     lastActivity: { kind: "date", date: "2 Sep", time: "09:30" },
   },
@@ -543,7 +542,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "healthy",
     openOperations: 0,
     revenue: "CHF 34,600",
-    outstanding: "CHF 0",
     owner: "Sarah M.",
     lastActivity: { kind: "date", date: "1 Sep", time: "15:50" },
   },
@@ -554,7 +552,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "healthy",
     openOperations: 0,
     revenue: "CHF 18,000",
-    outstanding: "CHF 0",
     owner: "Marc T.",
     lastActivity: { kind: "yesterday", time: "09:05" },
   },
@@ -565,7 +562,6 @@ export const CUSTOMERS_ROWS: CustomerRow[] = [
     health: "atRisk",
     openOperations: 0,
     revenue: "CHF 9,600",
-    outstanding: "CHF 6,400",
     owner: "Jonas R.",
     lastActivity: { kind: "date", date: "28 Aug", time: "13:20" },
   },
@@ -1141,6 +1137,25 @@ export function getFinanceOperation(operationId: string | null): OperationRow | 
 /** Sum of outstanding across all real receivables (sent + overdue) — must equal CHF 86,400. */
 export function getTotalOutstanding(): number {
   return FINANCE_INVOICES.filter((invoice) => RECEIVABLE_STATUSES.includes(invoice.status)).reduce(
+    (sum, invoice) => sum + getInvoiceOutstanding(invoice),
+    0,
+  );
+}
+
+/**
+ * One customer's own outstanding receivables, summed live from their FINANCE_INVOICES entries
+ * (Stage 2J.2) — replaces a static per-row `outstanding` field that CUSTOMERS_ROWS used to carry.
+ * That field was audited and found stale for 7 of the 10 sampled customers (e.g. Northstar showed
+ * "CHF 0" while its two real invoices total CHF 15,200 outstanding) — a pre-existing authoring
+ * drift, not a different concept: the field's own read sites (CustomersTable/CustomersMobileList/
+ * CustomerDetailContent) already treated "CHF 0" as a literal zero-balance check, confirming it
+ * always meant "this customer's current receivables," the exact fact Finance already owns. Rather
+ * than re-type 10 corrected literals (which would drift stale again the next time an invoice
+ * changes), Customers now derives this the same way Reports/Scenario already do for the
+ * company-wide total — Finance stays the single authoritative source.
+ */
+export function getCustomerOutstanding(customerId: string): number {
+  return FINANCE_INVOICES.filter((invoice) => invoice.customerId === customerId).reduce(
     (sum, invoice) => sum + getInvoiceOutstanding(invoice),
     0,
   );
@@ -2225,4 +2240,78 @@ export function getPendingApprovalsValue(): number {
  * approvals count, giving a company-wide "how much open responsibility exists" figure. */
 export function getTotalOpenResponsibilities(): number {
   return TEAM_MEMBERS.reduce((sum, member) => sum + member.openItems, 0);
+}
+
+/**
+ * Cross-module scenario (Stage 2J.1) — a single guided trace through EXISTING demo truth, proving
+ * one real business process moves through Customers → Operations → Inventory → Finance →
+ * Automations → (Approvals) → management visibility, rather than a second parallel dataset.
+ * Stores IDs only; getCrossModuleScenario() below resolves every fact live from the same arrays
+ * every other module already reads.
+ *
+ * Every link here was verified against the existing dataset before being chosen, not assumed:
+ *   - Operation #10348 (Northstar Systems) really does reserve 2 units of Industrial Sensor A
+ *     (INV-2048) via INVENTORY_RESERVATIONS' RES-1, and really is the operationId on
+ *     INV-2026-2005 (CHF 8,450, "sent").
+ *   - No AUTOMATION_DEFINITIONS entry references #10348, INV-2026-2005, or Northstar directly.
+ *     AUTO-4 "operationToInvoice" is explicitly tied to a DIFFERENT Northstar operation (#10344),
+ *     not this one — using it here would misattribute an unrelated automation. AUTO-3
+ *     "lowStockReplenishment" IS explicitly tied to INV-2048 (Industrial Sensor A) via its own
+ *     relatedEntityIds, and that item is genuinely the one #10348 reserved — a real two-hop
+ *     relationship (operation → inventory item → the automation configured for that item), so
+ *     that is the automation used, deliberately framed as "configured for this item" rather than
+ *     "ran for this operation" (no run log ties AUTO-3's executions to #10348 specifically).
+ *   - No entry in APPROVALS references #10348, INV-2026-2005, or Northstar in any form (APPROVALS
+ *     has no relatedOperationId/relatedInvoiceId/customerId field at all). The scenario's Approval
+ *     step must therefore show "no approval required" rather than borrow one of the three
+ *     unrelated pending approvals.
+ *   - CUSTOMERS_ROWS' own `outstanding: "CHF 0"` field for Northstar is NOT surfaced by this
+ *     scenario: it visibly disagrees with the real FINANCE_INVOICES tied to this customer (two
+ *     sent invoices totalling CHF 15,200 outstanding, confirmed via getInvoiceOutstanding). That
+ *     mismatch is a pre-existing inconsistency in CUSTOMERS_ROWS, not something to paper over by
+ *     re-deriving a "correct" figure here — this scenario simply never shows that field, and shows
+ *     only Finance's own authoritative getInvoiceOutstanding(invoice) for INV-2026-2005 instead.
+ */
+export const CROSS_MODULE_SCENARIO = {
+  customerId: "CUS-1048",
+  operationId: "#10348",
+  inventoryItemId: "INV-2048",
+  invoiceId: "INV-2026-2005",
+  automationId: "AUTO-3",
+} as const;
+
+export type CrossModuleScenario = {
+  customer: CustomerRow;
+  operation: OperationRow;
+  inventoryItem: InventoryItem;
+  reservedQuantity: number;
+  invoice: FinanceInvoice;
+  invoiceOutstanding: number;
+  automation: AutomationDefinition;
+};
+
+/** Resolves CROSS_MODULE_SCENARIO's IDs against the real datasets — returns null only if the
+ * underlying records were ever removed/renamed, so the page can fail safely instead of rendering
+ * with missing data. */
+export function getCrossModuleScenario(): CrossModuleScenario | null {
+  const customer = CUSTOMERS_ROWS.find((row) => row.id === CROSS_MODULE_SCENARIO.customerId);
+  const operation = OPERATIONS_ROWS.find((row) => row.id === CROSS_MODULE_SCENARIO.operationId);
+  const inventoryItem = INVENTORY_ROWS.find((item) => item.id === CROSS_MODULE_SCENARIO.inventoryItemId);
+  const invoice = FINANCE_INVOICES.find((row) => row.id === CROSS_MODULE_SCENARIO.invoiceId);
+  const automation = AUTOMATION_DEFINITIONS.find((row) => row.id === CROSS_MODULE_SCENARIO.automationId);
+  if (!customer || !operation || !inventoryItem || !invoice || !automation) return null;
+
+  const reservation = INVENTORY_RESERVATIONS.find(
+    (row) => row.operationId === operation.id && row.inventoryItemId === inventoryItem.id,
+  );
+
+  return {
+    customer,
+    operation,
+    inventoryItem,
+    reservedQuantity: reservation?.quantity ?? 0,
+    invoice,
+    invoiceOutstanding: getInvoiceOutstanding(invoice),
+    automation,
+  };
 }

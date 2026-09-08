@@ -815,6 +815,40 @@
         "active": "Активний",
         "away": "Відсутній"
       }
+    },
+    "Scenario": {
+      "entryPoint": "Переглянути пов’язаний процес",
+      "title": "Пов’язаний бізнес-процес",
+      "description": "Простежте один бізнес-процес через операції, склад, фінанси, автоматизацію та управління.",
+      "openModule": "Відкрити {module}",
+      "sections": {
+        "primaryFlow": "Бізнес-ланцюжок",
+        "controlLayer": "Контроль і видимість AT"
+      },
+      "steps": {
+        "customer": "Клієнт",
+        "operation": "Операція",
+        "inventory": "Склад",
+        "finance": "Фінанси",
+        "automation": "Автоматизація",
+        "approval": "Погодження",
+        "management": "Управління"
+      },
+      "ownerLabel": "Відповідальний: {name}",
+      "reservedFor": "{count} зарезервовано для {operationId}",
+      "onHandAt": "{count} на складі · {location}",
+      "outstandingAmount": "{amount} до сплати",
+      "dueDate": "Термін сплати {date}",
+      "automationConfiguredFor": "Налаштовано для {item}",
+      "noApprovalRequired": "Погодження не потрібне",
+      "noApprovalExplanation": "Цей процес наразі триває без очікуваного погодження.",
+      "contributesTo": "Враховується в",
+      "viewCustomer": "Переглянути клієнта",
+      "viewOperation": "Переглянути операцію",
+      "viewInventoryItem": "Переглянути складську позицію",
+      "viewInvoice": "Переглянути рахунок",
+      "viewAutomation": "Переглянути автоматизацію",
+      "backToScenario": "Назад до пов’язаного процесу"
     }
   }
 }

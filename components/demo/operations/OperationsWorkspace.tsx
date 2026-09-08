@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
+import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import { OPERATIONS_ROWS, OPERATIONS_SUMMARY, OPERATION_OWNERS, type OperationStatus } from "@/lib/demo-data";
 import OperationDetailMobile from "./OperationDetailMobile";
 import OperationsDesktop, { type StatusFilterValue } from "./OperationsDesktop";
@@ -46,10 +47,26 @@ function SummaryGrid() {
  */
 export default function OperationsWorkspace() {
   const t = useTranslations("Dashboard.Operations");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Stage 2J.2 — record-level deep link (e.g. from the Scenario page). Resolved against the full
+  // OPERATIONS_ROWS dataset, never the filtered list, so an incoming link opens the exact
+  // operation regardless of the current (default, unrelated) filter/search state. selectedId's
+  // own lazy initializer picks this up on first mount (a direct page load); the
+  // prevOperationParam diff below catches later changes (client-side navigation while already
+  // mounted). Applied during render rather than in an effect, since setState-in-effect causes an
+  // avoidable extra render pass.
+  const [operationParam, clearOperationParam] = useQuerySelection("operation");
+  const [selectedId, setSelectedId] = useState<string | null>(() =>
+    operationParam && OPERATIONS_ROWS.some((row) => row.id === operationParam) ? operationParam : null,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");
+
+  const [prevOperationParam, setPrevOperationParam] = useState(operationParam);
+  if (operationParam !== prevOperationParam) {
+    setPrevOperationParam(operationParam);
+    if (operationParam && OPERATIONS_ROWS.some((row) => row.id === operationParam)) setSelectedId(operationParam);
+  }
 
   const filteredOperations = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -76,17 +93,28 @@ export default function OperationsWorkspace() {
     setPrevFilterKey(filterKey);
     if (selectedId && !filteredOperations.some((row) => row.id === selectedId)) {
       setSelectedId(null);
+      clearOperationParam();
     }
   }
+
+  // Closes the detail AND clears any deep-link query param at the same time, so the URL never
+  // keeps a stale ?operation= after the panel it opened is gone (Escape, X button, or scrim).
+  // useCallback keeps this reference stable across renders (as long as clearOperationParam itself
+  // stays stable, which useQuerySelection already guarantees) so the Escape effect below can
+  // safely list it as a dependency without re-attaching its listener every render.
+  const closeDetail = useCallback(() => {
+    setSelectedId(null);
+    clearOperationParam();
+  }, [clearOperationParam]);
 
   useEffect(() => {
     if (!selectedId) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedId(null);
+      if (event.key === "Escape") closeDetail();
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId]);
+  }, [selectedId, closeDetail]);
 
   const hasActiveFilters = searchQuery.trim() !== "" || statusFilter !== "all" || ownerFilter !== "all";
 
@@ -96,7 +124,9 @@ export default function OperationsWorkspace() {
     setOwnerFilter("all");
   };
 
-  const selectedOperation = filteredOperations.find((row) => row.id === selectedId) ?? null;
+  // Resolved from the full dataset (not filteredOperations) so a deep-linked operation always
+  // opens even if it wouldn't currently match the active filter/search — see spec 2J.2 section 8.
+  const selectedOperation = OPERATIONS_ROWS.find((row) => row.id === selectedId) ?? null;
 
   return (
     <>
@@ -177,7 +207,7 @@ export default function OperationsWorkspace() {
           onClearFilters={handleClearFilters}
         />
 
-        {selectedOperation && <OperationDetailMobile operation={selectedOperation} onClose={() => setSelectedId(null)} />}
+        {selectedOperation && <OperationDetailMobile operation={selectedOperation} onClose={closeDetail} />}
       </div>
 
       {/* Tablet workspace (@lg to below @5xl) */}
@@ -267,7 +297,7 @@ export default function OperationsWorkspace() {
           onClearFilters={handleClearFilters}
         />
 
-        {selectedOperation && <OperationDetailMobile operation={selectedOperation} onClose={() => setSelectedId(null)} />}
+        {selectedOperation && <OperationDetailMobile operation={selectedOperation} onClose={closeDetail} />}
       </div>
 
       {/* Desktop workspace (@5xl and up) — unchanged since Stage 2B.3 */}
@@ -284,7 +314,7 @@ export default function OperationsWorkspace() {
         selectedId={selectedId}
         onSelectRow={setSelectedId}
         selectedOperation={selectedOperation}
-        onCloseDetail={() => setSelectedId(null)}
+        onCloseDetail={closeDetail}
       />
     </>
   );

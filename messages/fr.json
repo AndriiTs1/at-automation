@@ -815,6 +815,40 @@
         "active": "Actif",
         "away": "Absent"
       }
+    },
+    "Scenario": {
+      "entryPoint": "Voir le flux connecté",
+      "title": "Flux d'activité connecté",
+      "description": "Suivez un processus métier à travers les opérations, le stock, la finance, l'automatisation et la gestion.",
+      "openModule": "Ouvrir {module}",
+      "sections": {
+        "primaryFlow": "Parcours métier",
+        "controlLayer": "Contrôle et visibilité AT"
+      },
+      "steps": {
+        "customer": "Client",
+        "operation": "Opération",
+        "inventory": "Stock",
+        "finance": "Finance",
+        "automation": "Automatisation",
+        "approval": "Approbation",
+        "management": "Gestion"
+      },
+      "ownerLabel": "Responsable : {name}",
+      "reservedFor": "{count} réservé(s) pour {operationId}",
+      "onHandAt": "{count} en stock · {location}",
+      "outstandingAmount": "{amount} en attente",
+      "dueDate": "Échéance {date}",
+      "automationConfiguredFor": "Configuré pour {item}",
+      "noApprovalRequired": "Aucune approbation requise",
+      "noApprovalExplanation": "Ce flux se poursuit actuellement sans approbation en attente.",
+      "contributesTo": "Contribue à",
+      "viewCustomer": "Voir le client",
+      "viewOperation": "Voir l'opération",
+      "viewInventoryItem": "Voir l'article de stock",
+      "viewInvoice": "Voir la facture",
+      "viewAutomation": "Voir l'automatisation",
+      "backToScenario": "Retour au flux connecté"
     }
   }
 }

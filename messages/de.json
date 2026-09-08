@@ -815,6 +815,40 @@
         "active": "Aktiv",
         "away": "Abwesend"
       }
+    },
+    "Scenario": {
+      "entryPoint": "Vernetzten Ablauf ansehen",
+      "title": "Vernetzter Geschäftsablauf",
+      "description": "Verfolgen Sie einen Geschäftsprozess über Vorgänge, Lager, Finanzen, Automatisierung und Management hinweg.",
+      "openModule": "{module} öffnen",
+      "sections": {
+        "primaryFlow": "Geschäftsverlauf",
+        "controlLayer": "AT-Kontrolle & Sichtbarkeit"
+      },
+      "steps": {
+        "customer": "Kunde",
+        "operation": "Vorgang",
+        "inventory": "Lager",
+        "finance": "Finanzen",
+        "automation": "Automatisierung",
+        "approval": "Genehmigung",
+        "management": "Management"
+      },
+      "ownerLabel": "Verantwortlich: {name}",
+      "reservedFor": "{count} reserviert für {operationId}",
+      "onHandAt": "{count} auf Lager · {location}",
+      "outstandingAmount": "{amount} offen",
+      "dueDate": "Fällig am {date}",
+      "automationConfiguredFor": "Konfiguriert für {item}",
+      "noApprovalRequired": "Keine Genehmigung erforderlich",
+      "noApprovalExplanation": "Dieser Ablauf läuft derzeit ohne ausstehende Genehmigung weiter.",
+      "contributesTo": "Trägt bei zu",
+      "viewCustomer": "Kunde ansehen",
+      "viewOperation": "Vorgang ansehen",
+      "viewInventoryItem": "Lagerartikel ansehen",
+      "viewInvoice": "Rechnung ansehen",
+      "viewAutomation": "Automatisierung ansehen",
+      "backToScenario": "Zurück zum vernetzten Ablauf"
     }
   }
 }

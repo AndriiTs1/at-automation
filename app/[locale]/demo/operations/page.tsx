@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import OperationsWorkspace from "@/components/demo/operations/OperationsWorkspace";
 
@@ -5,5 +6,9 @@ export default async function OperationsPage(props: PageProps<"/[locale]/demo/op
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  return <OperationsWorkspace />;
+  return (
+    <Suspense fallback={null}>
+      <OperationsWorkspace />
+    </Suspense>
+  );
 }

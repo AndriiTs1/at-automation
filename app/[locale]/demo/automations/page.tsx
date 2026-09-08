@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import AutomationsWorkspace from "@/components/demo/automations/AutomationsWorkspace";
 
@@ -5,5 +6,9 @@ export default async function AutomationsPage(props: PageProps<"/[locale]/demo/a
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  return <AutomationsWorkspace />;
+  return (
+    <Suspense fallback={null}>
+      <AutomationsWorkspace />
+    </Suspense>
+  );
 }

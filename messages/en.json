@@ -815,6 +815,40 @@
         "active": "Active",
         "away": "Away"
       }
+    },
+    "Scenario": {
+      "entryPoint": "See connected workflow",
+      "title": "Connected business workflow",
+      "description": "Follow one business process across operations, inventory, finance, automation and management.",
+      "openModule": "Open {module}",
+      "sections": {
+        "primaryFlow": "Business trace",
+        "controlLayer": "AT control & visibility"
+      },
+      "steps": {
+        "customer": "Customer",
+        "operation": "Operation",
+        "inventory": "Inventory",
+        "finance": "Finance",
+        "automation": "Automation",
+        "approval": "Approval",
+        "management": "Management"
+      },
+      "ownerLabel": "Owner {name}",
+      "reservedFor": "{count} reserved for {operationId}",
+      "onHandAt": "{count} on hand · {location}",
+      "outstandingAmount": "{amount} outstanding",
+      "dueDate": "Due {date}",
+      "automationConfiguredFor": "Configured for {item}",
+      "noApprovalRequired": "No approval required",
+      "noApprovalExplanation": "This workflow is currently proceeding without a pending approval.",
+      "contributesTo": "Contributes to",
+      "viewCustomer": "View customer",
+      "viewOperation": "View operation",
+      "viewInventoryItem": "View inventory item",
+      "viewInvoice": "View invoice",
+      "viewAutomation": "View automation",
+      "backToScenario": "Back to connected workflow"
     }
   }
 }

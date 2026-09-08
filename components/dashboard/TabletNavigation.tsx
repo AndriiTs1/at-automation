@@ -64,8 +64,8 @@ export default function TabletNavigation({
         </Link>
 
         <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto @lg:gap-2">
-          <button
-            type="button"
+          <Link
+            href="/demo"
             aria-current={activeItem === "commandCenter" ? "page" : undefined}
             onClick={onClose}
             className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
@@ -74,7 +74,7 @@ export default function TabletNavigation({
           >
             <NavIcon name="grid" className="h-4 w-4 shrink-0" />
             {t("commandCenter")}
-          </button>
+          </Link>
 
           {NAV_SECTIONS.map((section) => (
             <div key={section.key}>

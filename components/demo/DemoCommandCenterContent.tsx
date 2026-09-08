@@ -1,7 +1,9 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { KPI_ITEMS } from "@/lib/demo-data";
 import ApprovalsPanel from "../dashboard/ApprovalsPanel";
 import BusinessPerformance from "../dashboard/BusinessPerformance";
+import { DashboardIcon } from "../dashboard/icons";
 import KpiCard from "../dashboard/KpiCard";
 import LiveOperations from "../dashboard/LiveOperations";
 import MobileApprovalsPanel from "../dashboard/MobileApprovalsPanel";
@@ -11,6 +13,27 @@ import MobileLiveOperations from "../dashboard/MobileLiveOperations";
 import MobileNeedsAttention from "../dashboard/MobileNeedsAttention";
 import NeedsAttention from "../dashboard/NeedsAttention";
 import DynamicGreeting from "./DynamicGreeting";
+
+/**
+ * Compact secondary "action chip" entry point to the guided Scenario trace — a bordered
+ * surface pill (not a filled primary CTA) so it reads as clickable and intentional without
+ * competing with Command Center's own primary content. Reused as-is across all three
+ * breakpoints; only the surrounding block's margin/text-size adapts per breakpoint, so this
+ * single implementation can't visually drift between mobile/tablet/desktop.
+ */
+function ScenarioEntryLink({ className = "" }: { className?: string }) {
+  const tScenario = useTranslations("Dashboard.Scenario");
+  return (
+    <Link
+      href="/demo/scenario"
+      className={`inline-flex w-fit items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 font-medium text-foreground shadow-sm shadow-black/5 transition-colors hover:border-accent/40 hover:bg-accent/5 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:outline-none ${className}`}
+    >
+      <DashboardIcon name="activity" className="h-3.5 w-3.5 shrink-0 text-accent" />
+      <span>{tScenario("entryPoint")}</span>
+      <span aria-hidden="true">→</span>
+    </Link>
+  );
+}
 
 /**
  * Director Command Center workspace content — inserted via {children} into each of
@@ -35,6 +58,7 @@ export default function DemoCommandCenterContent() {
           <DynamicGreeting />
         </p>
         <p className="mt-0.5 text-xs leading-tight text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+        <ScenarioEntryLink className="mt-2 text-xs" />
       </div>
       <div className="mb-2.5 grid shrink-0 grid-cols-2 gap-2 @lg:hidden">
         {KPI_ITEMS.map((item) => (
@@ -70,6 +94,7 @@ export default function DemoCommandCenterContent() {
           <DynamicGreeting />
         </p>
         <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+        <ScenarioEntryLink className="mt-2 text-sm" />
       </div>
       <div className="hidden shrink-0 grid-cols-2 gap-3 @lg:mb-4 @lg:grid @5xl:hidden">
         {KPI_ITEMS.map((item) => (
@@ -106,7 +131,10 @@ export default function DemoCommandCenterContent() {
         <p className="text-sm font-normal text-neutral-500">
           <DynamicGreeting />
         </p>
-        <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm text-neutral-500">{tTopbar("attentionCount", { count: 3 })}</p>
+          <ScenarioEntryLink className="text-sm" />
+        </div>
       </div>
       <div className="hidden shrink-0 grid-cols-2 gap-2 @5xl:mb-3 @5xl:grid @3xl:grid-cols-4 @3xl:gap-3">
         {KPI_ITEMS.map((item) => (

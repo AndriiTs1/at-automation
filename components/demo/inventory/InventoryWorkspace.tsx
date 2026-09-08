@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { SearchIcon } from "@/components/dashboard/icons";
+import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import { INVENTORY_ROWS, INVENTORY_SUMMARY } from "@/lib/demo-data";
 import InventoryDesktop from "./InventoryDesktop";
 import InventoryDetailMobile from "./InventoryDetailMobile";
@@ -53,7 +54,16 @@ function SummaryGrid() {
  */
 export default function InventoryWorkspace() {
   const t = useTranslations("Dashboard.Inventory");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Stage 2J.2 — record-level deep link (e.g. from the Scenario page). Resolved against the full
+  // INVENTORY_ROWS dataset, never the filtered list, so an incoming link opens the exact item
+  // regardless of the current (default, unrelated) filter/search state. selectedId's own lazy
+  // initializer picks this up on first mount (a direct page load); the prevItemParam diff below
+  // catches later changes (client-side navigation while already mounted). Applied during render
+  // rather than in an effect, since setState-in-effect causes an avoidable extra render pass.
+  const [itemParam, clearItemParam] = useQuerySelection("item");
+  const [selectedId, setSelectedId] = useState<string | null>(() =>
+    itemParam && INVENTORY_ROWS.some((row) => row.id === itemParam) ? itemParam : null,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
   const [locationFilter, setLocationFilter] = useState<LocationFilterValue>("all");
@@ -61,6 +71,12 @@ export default function InventoryWorkspace() {
   // the Escape handler below can tell a dropdown is open and let its own Escape close it first,
   // instead of closing the Inventory Detail overlay in the same keypress.
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
+
+  const [prevItemParam, setPrevItemParam] = useState(itemParam);
+  if (itemParam !== prevItemParam) {
+    setPrevItemParam(itemParam);
+    if (itemParam && INVENTORY_ROWS.some((row) => row.id === itemParam)) setSelectedId(itemParam);
+  }
 
   const filteredItems = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -86,8 +102,19 @@ export default function InventoryWorkspace() {
     setPrevFilterKey(filterKey);
     if (selectedId && !filteredItems.some((item) => item.id === selectedId)) {
       setSelectedId(null);
+      clearItemParam();
     }
   }
+
+  // Closes the detail AND clears any deep-link query param at the same time, so the URL never
+  // keeps a stale ?item= after the panel it opened is gone (Escape, X button, or scrim).
+  // useCallback keeps this reference stable across renders (as long as clearItemParam itself
+  // stays stable, which useQuerySelection already guarantees) so the Escape effect below can
+  // safely list it as a dependency without re-attaching its listener every render.
+  const closeDetail = useCallback(() => {
+    setSelectedId(null);
+    clearItemParam();
+  }, [clearItemParam]);
 
   useEffect(() => {
     if (!selectedId) return;
@@ -97,11 +124,11 @@ export default function InventoryWorkspace() {
       // keypress. Skip closing the detail overlay so the two layers close one at a time:
       // dropdown first, detail on the next Escape.
       if (openFilter) return;
-      setSelectedId(null);
+      closeDetail();
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId, openFilter]);
+  }, [selectedId, openFilter, closeDetail]);
 
   const hasActiveFilters = searchQuery.trim() !== "" || statusFilter !== "all" || locationFilter !== "all";
 
@@ -111,7 +138,9 @@ export default function InventoryWorkspace() {
     setLocationFilter("all");
   };
 
-  const selectedItem = filteredItems.find((item) => item.id === selectedId) ?? null;
+  // Resolved from the full dataset (not filteredItems) so a deep-linked item always opens even if
+  // it wouldn't currently match the active filter/search — see spec 2J.2 section 8.
+  const selectedItem = INVENTORY_ROWS.find((item) => item.id === selectedId) ?? null;
   const { statusOptions, locationOptions } = buildInventoryFilterOptions(t);
 
   return (
@@ -177,7 +206,7 @@ export default function InventoryWorkspace() {
           onClearFilters={handleClearFilters}
         />
 
-        {selectedItem && <InventoryDetailMobile item={selectedItem} onClose={() => setSelectedId(null)} />}
+        {selectedItem && <InventoryDetailMobile item={selectedItem} onClose={closeDetail} />}
       </div>
 
       {/* Tablet workspace (@lg to below @5xl) */}
@@ -251,7 +280,7 @@ export default function InventoryWorkspace() {
           onClearFilters={handleClearFilters}
         />
 
-        {selectedItem && <InventoryDetailMobile item={selectedItem} onClose={() => setSelectedId(null)} />}
+        {selectedItem && <InventoryDetailMobile item={selectedItem} onClose={closeDetail} />}
       </div>
 
       {/* Desktop workspace (@5xl and up) — unchanged since Stage 2D.3 */}
@@ -270,7 +299,7 @@ export default function InventoryWorkspace() {
         selectedId={selectedId}
         onSelectRow={setSelectedId}
         selectedItem={selectedItem}
-        onCloseDetail={() => setSelectedId(null)}
+        onCloseDetail={closeDetail}
       />
     </>
   );

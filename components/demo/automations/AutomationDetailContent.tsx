@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
 import {
   APPROVALS,
   CUSTOMERS_ROWS,
@@ -6,6 +7,7 @@ import {
   INVENTORY_ROWS,
   getAutomationRuns,
   getAutomationWorkflowSteps,
+  getCustomerOutstanding,
   getFinanceCustomer,
   getFinanceOperation,
   getOverdueCount,
@@ -99,7 +101,7 @@ function getRelatedFacts(
       if (!customer) return [];
       return [
         { label: tFinance("table.customer"), value: customer.name },
-        { label: tFinance("table.outstanding"), value: customer.outstanding },
+        { label: tFinance("table.outstanding"), value: formatChf(getCustomerOutstanding(customer.id)) },
       ];
     }
     case "approvalRouting":
@@ -145,6 +147,7 @@ export default function AutomationDetailContent({
 
   return (
     <>
+      <ScenarioReturnLink />
       <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border p-3.5">
         <div className="min-w-0">
           <p className="text-base font-semibold text-foreground">{t(`definitions.${automation.key}.name`)}</p>
