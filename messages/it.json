@@ -10,6 +10,18 @@
     "menuClose": "Chiudi il menu",
     "cta": "Parla del tuo progetto"
   },
+  "Footer": {
+    "headlineLine2": "Un livello operativo connesso.",
+    "proposition": "Collega operazioni, finanze, magazzino, clienti e automazione — senza sostituire i sistemi che la tua azienda già utilizza.",
+    "ctaSecondary": "Scopri la demo live",
+    "navLabel": "Navigazione del footer",
+    "capabilities": "Funzionalità",
+    "integrations": "Integrazioni",
+    "liveDemo": "Demo live",
+    "copyright": "© {year} AT Automation",
+    "privacy": "Privacy",
+    "legal": "Note legali"
+  },
   "Hero": {
     "eyebrow": "Automazione aziendale",
     "headlineLine1": "La tua azienda.",
@@ -22,8 +34,8 @@
     "sideLabelLeft2": "Lavoro manuale",
     "sideLabelLeft3": "A progressi reali",
     "sideLabelRight1": "Semplice",
-    "sideLabelRight2": "Potente",
-    "sideLabelRight3": "Pensato per le persone"
+    "sideLabelRight2": "Chiaro",
+    "sideLabelRight3": "Su misura per la tua azienda"
   },
   "Bridge": {
     "title": "Non limitarti a guardarlo. Provalo.",

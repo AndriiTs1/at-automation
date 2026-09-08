@@ -10,6 +10,18 @@
     "menuClose": "Закрыть меню",
     "cta": "Обсудить проект"
   },
+  "Footer": {
+    "headlineLine2": "Единый связанный операционный слой.",
+    "proposition": "Объедините операции, финансы, склад, клиентов и автоматизацию — без замены систем, которые уже использует ваш бизнес.",
+    "ctaSecondary": "Изучить демо",
+    "navLabel": "Навигация в подвале сайта",
+    "capabilities": "Возможности",
+    "integrations": "Интеграции",
+    "liveDemo": "Демо",
+    "copyright": "© {year} AT Automation",
+    "privacy": "Конфиденциальность",
+    "legal": "Правовая информация"
+  },
   "Hero": {
     "eyebrow": "Автоматизация бизнеса",
     "headlineLine1": "Ваш бизнес.",
@@ -22,8 +34,8 @@
     "sideLabelLeft2": "Ручной работы",
     "sideLabelLeft3": "К реальному прогрессу",
     "sideLabelRight1": "Просто",
-    "sideLabelRight2": "Мощно",
-    "sideLabelRight3": "Создано для людей"
+    "sideLabelRight2": "Понятно",
+    "sideLabelRight3": "Под ваш бизнес"
   },
   "Bridge": {
     "title": "Не просто смотрите. Попробуйте.",

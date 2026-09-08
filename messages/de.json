@@ -10,6 +10,18 @@
     "menuClose": "Menü schließen",
     "cta": "Projekt besprechen"
   },
+  "Footer": {
+    "headlineLine2": "Eine vernetzte Betriebsebene.",
+    "proposition": "Verbinden Sie Betrieb, Finanzen, Lager, Kunden und Automatisierung — ohne die Systeme zu ersetzen, die Ihr Unternehmen bereits nutzt.",
+    "ctaSecondary": "Live-Demo entdecken",
+    "navLabel": "Footer-Navigation",
+    "capabilities": "Funktionen",
+    "integrations": "Integrationen",
+    "liveDemo": "Live-Demo",
+    "copyright": "© {year} AT Automation",
+    "privacy": "Datenschutz",
+    "legal": "Rechtliches"
+  },
   "Hero": {
     "eyebrow": "Business-Automatisierung",
     "headlineLine1": "Ihr Unternehmen.",
@@ -22,8 +34,8 @@
     "sideLabelLeft2": "Manueller Aufwand",
     "sideLabelLeft3": "Zu echtem Fortschritt",
     "sideLabelRight1": "Einfach",
-    "sideLabelRight2": "Leistungsstark",
-    "sideLabelRight3": "Für Menschen gemacht"
+    "sideLabelRight2": "Klar",
+    "sideLabelRight3": "Für Ihr Unternehmen gebaut"
   },
   "Bridge": {
     "title": "Nicht nur ansehen. Ausprobieren.",

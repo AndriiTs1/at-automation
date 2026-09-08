@@ -10,6 +10,18 @@
     "menuClose": "Fermer le menu",
     "cta": "Discuter de votre projet"
   },
+  "Footer": {
+    "headlineLine2": "Une couche opérationnelle connectée.",
+    "proposition": "Connectez les opérations, la finance, le stock, les clients et l'automatisation — sans remplacer les systèmes que votre entreprise utilise déjà.",
+    "ctaSecondary": "Découvrir la démo en direct",
+    "navLabel": "Navigation du pied de page",
+    "capabilities": "Fonctionnalités",
+    "integrations": "Intégrations",
+    "liveDemo": "Démo en direct",
+    "copyright": "© {year} AT Automation",
+    "privacy": "Confidentialité",
+    "legal": "Mentions légales"
+  },
   "Hero": {
     "eyebrow": "Automatisation d'entreprise",
     "headlineLine1": "Votre entreprise.",
@@ -22,8 +34,8 @@
     "sideLabelLeft2": "Travail manuel",
     "sideLabelLeft3": "Vers de vrais progrès",
     "sideLabelRight1": "Simple",
-    "sideLabelRight2": "Puissant",
-    "sideLabelRight3": "Conçu pour les gens"
+    "sideLabelRight2": "Clair",
+    "sideLabelRight3": "Conçu pour votre entreprise"
   },
   "Bridge": {
     "title": "Ne vous contentez pas de regarder. Essayez.",

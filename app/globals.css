@@ -9,6 +9,10 @@
   --success: #1a9e6b;
   --warning: #c17a1f;
   --error: #d3453f;
+  /* Marketing-only dark closing surface (Footer) — cool graphite, deliberately lighter than a
+     near-black neutral so it reads as a designed surface rather than pure black. Not consumed
+     by Demo's dashboard sidebar, which owns its own separate dark treatment. */
+  --surface-dark: #25282d;
 }
 
 @theme inline {
@@ -20,6 +24,7 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+  --color-surface-dark: var(--surface-dark);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

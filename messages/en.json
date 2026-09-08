@@ -10,6 +10,18 @@
     "menuClose": "Close menu",
     "cta": "Discuss your project"
   },
+  "Footer": {
+    "headlineLine2": "One connected operating layer.",
+    "proposition": "Connect operations, finance, inventory, customers and automation — without replacing the systems your business already uses.",
+    "ctaSecondary": "Explore the live demo",
+    "navLabel": "Footer navigation",
+    "capabilities": "Capabilities",
+    "integrations": "Integrations",
+    "liveDemo": "Live demo",
+    "copyright": "© {year} AT Automation",
+    "privacy": "Privacy",
+    "legal": "Legal"
+  },
   "Hero": {
     "eyebrow": "Business automation",
     "headlineLine1": "Your business.",
@@ -22,8 +34,8 @@
     "sideLabelLeft2": "Manual work",
     "sideLabelLeft3": "To real progress",
     "sideLabelRight1": "Simple",
-    "sideLabelRight2": "Powerful",
-    "sideLabelRight3": "Built for people"
+    "sideLabelRight2": "Clear",
+    "sideLabelRight3": "Built around your business"
   },
   "Bridge": {
     "title": "Don’t just look at it. Try it.",

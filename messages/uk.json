@@ -10,6 +10,18 @@
     "menuClose": "Закрити меню",
     "cta": "Обговорити проєкт"
   },
+  "Footer": {
+    "headlineLine2": "Єдиний зв'язаний операційний шар.",
+    "proposition": "Об'єднайте операції, фінанси, склад, клієнтів і автоматизацію — без заміни систем, які вже використовує ваш бізнес.",
+    "ctaSecondary": "Ознайомитися з демо",
+    "navLabel": "Навігація у футері",
+    "capabilities": "Можливості",
+    "integrations": "Інтеграції",
+    "liveDemo": "Демо",
+    "copyright": "© {year} AT Automation",
+    "privacy": "Конфіденційність",
+    "legal": "Правова інформація"
+  },
   "Hero": {
     "eyebrow": "Автоматизація бізнесу",
     "headlineLine1": "Ваш бізнес.",
@@ -22,8 +34,8 @@
     "sideLabelLeft2": "Ручної праці",
     "sideLabelLeft3": "До реального прогресу",
     "sideLabelRight1": "Просто",
-    "sideLabelRight2": "Потужно",
-    "sideLabelRight3": "Створено для людей"
+    "sideLabelRight2": "Зрозуміло",
+    "sideLabelRight3": "Під ваш бізнес"
   },
   "Bridge": {
     "title": "Не просто дивіться. Спробуйте.",

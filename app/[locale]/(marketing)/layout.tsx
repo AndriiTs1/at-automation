@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -5,6 +6,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
     <>
       <Header />
       {children}
+      <Footer />
     </>
   );
 }

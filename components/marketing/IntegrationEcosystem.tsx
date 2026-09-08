@@ -18,7 +18,10 @@ export default async function IntegrationEcosystem() {
   const t = await getTranslations("Integrations");
 
   return (
-    <section className="bg-surface px-6 pt-12 pb-16 md:px-8 md:pt-14 md:pb-20 lg:px-12 xl:pt-12 xl:pb-16">
+    <section
+      id="integrations"
+      className="scroll-mt-16 bg-surface px-6 pt-12 pb-16 md:px-8 md:pt-14 md:pb-20 lg:px-12 xl:pt-12 xl:pb-16"
+    >
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-3">
