@@ -17,6 +17,7 @@ export default function Header() {
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileMenuHeight, setMobileMenuHeight] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   const langMenuRef = useRef<HTMLDivElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
@@ -48,6 +49,14 @@ export default function Header() {
 
     return () => observer.disconnect();
   }, [mobileMenuOpen]);
+
+  // Track scroll position to switch the header into its frosted-glass state.
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 4);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close dropdowns/panels when clicking outside of them.
   useEffect(() => {
@@ -89,7 +98,13 @@ export default function Header() {
     <>
       <header className="fixed inset-x-0 top-5 z-50 bg-transparent px-4 md:px-6">
       <div ref={mobilePanelRef} className="relative mx-auto w-full max-w-[1320px] bg-transparent">
-        <div className="flex h-[74px] items-center justify-between gap-3 rounded-2xl border border-black/8 bg-white/95 px-4 shadow-md shadow-black/8 backdrop-blur-2xl backdrop-saturate-150">
+        <div
+          className={`flex h-[74px] items-center justify-between gap-3 rounded-2xl px-4 backdrop-saturate-150 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none ${
+            scrolled
+              ? "border border-white/50 bg-white/[0.76] shadow-sm shadow-black/5 backdrop-blur-[20px]"
+              : "border border-black/8 bg-white/95 shadow-md shadow-black/8 backdrop-blur-2xl"
+          }`}
+        >
           {/* Logo */}
           <Link href="/" onClick={handleLogoClick} className="my-[13px] mr-4 ml-0 flex shrink-0 items-center">
             <Image
