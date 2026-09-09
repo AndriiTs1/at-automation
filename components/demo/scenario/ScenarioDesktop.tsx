@@ -37,6 +37,15 @@ const INVENTORY_STATUS_TONE: Record<string, string> = {
   critical: "bg-error/10 text-error",
   outOfStock: "bg-neutral-200 text-neutral-600",
 };
+// Solid-fill counterpart of INVENTORY_STATUS_TONE above, used only for the small status dot inside
+// the Automation card that echoes this item's real status (see the Automation block below) — same
+// tone semantics as the Inventory row's own pill, not a new color system.
+const INVENTORY_STATUS_DOT: Record<string, string> = {
+  healthy: "bg-success",
+  low: "bg-warning",
+  critical: "bg-error",
+  outOfStock: "bg-neutral-400",
+};
 const FINANCE_STATUS_TONE: Record<string, string> = {
   draft: "bg-neutral-200 text-neutral-600",
   sent: "bg-accent/10 text-accent",
@@ -77,15 +86,15 @@ function TraceRow({ icon, moduleLabel, title, statusLabel, statusTone, facts, li
           </span>
         </div>
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1 px-4 py-3">
+      <div className="flex flex-1 flex-col justify-center gap-1 px-4 py-3">
         {facts.map((fact) => (
           <p key={fact} className="text-xs break-words text-neutral-600">
             {fact}
           </p>
         ))}
       </div>
-      <div className="flex shrink-0 items-center border-t border-border/70 px-3.5 py-2.5 @5xl:border-t-0 @5xl:border-l @5xl:py-0">
-        <Link href={linkHref} className="text-xs font-medium whitespace-nowrap text-accent hover:underline">
+      <div className="flex items-center border-t border-border/70 px-3.5 py-2.5 @5xl:border-t-0 @5xl:border-l @5xl:py-0">
+        <Link href={linkHref} className="text-xs font-medium text-accent hover:underline">
           {linkLabel} <span aria-hidden="true">→</span>
         </Link>
       </div>
@@ -164,6 +173,7 @@ export default function ScenarioDesktop() {
       <div className="mb-1 shrink-0">
         <h1 className="text-xl font-semibold text-foreground">{t("title")}</h1>
         <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
+        <p className="mt-0.5 text-sm text-neutral-500">{t("leftRightHint")}</p>
       </div>
 
       {/* Scenario identity — a plain context line, not another card competing with the trace below. */}
@@ -252,8 +262,13 @@ export default function ScenarioDesktop() {
                 {tAutomations(`definitions.${automation.key}.trigger`)}
               </p>
               <div className="mt-1.5 flex items-center gap-1.5">
-                <DashboardIcon name="box" className="h-3 w-3 shrink-0 text-neutral-400" />
-                <p className="text-xs break-words text-neutral-500">{t("automationConfiguredFor", { item: inventoryItem.name })}</p>
+                <span
+                  aria-hidden="true"
+                  className={`h-1.5 w-1.5 shrink-0 rounded-full ${INVENTORY_STATUS_DOT[inventoryItem.status]}`}
+                />
+                <p className="text-xs break-words text-neutral-500">
+                  {t("automationTrigger", { item: inventoryItem.name, status: tInventory(`status.${inventoryItem.status}`) })}
+                </p>
               </div>
               <Link
                 href={{ pathname: "/demo/automations", query: { automation: automation.id, from: "scenario" } }}
@@ -276,7 +291,7 @@ export default function ScenarioDesktop() {
 
             <div className="flex flex-1 flex-col rounded-xl border border-border bg-surface p-3.5 shadow-sm shadow-black/5">
               <p className="text-[10px] font-semibold tracking-wide text-neutral-500 uppercase">{t("steps.management")}</p>
-              <p className="mt-1.5 text-[10px] font-medium tracking-wide text-neutral-400 uppercase">{t("contributesTo")}</p>
+              <p className="mt-1.5 text-[10px] font-medium tracking-wide text-neutral-400 uppercase">{t("companyContext")}</p>
               <div className="mt-1 grid grid-cols-2 gap-3">
                 <div>
                   <p className="text-[11px] break-words text-neutral-500">{tKpi("items.openOperations")}</p>
