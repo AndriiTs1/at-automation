@@ -6,7 +6,7 @@ import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
 import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import { OPERATIONS_ROWS, OPERATIONS_SUMMARY, OPERATION_OWNERS, type OperationStatus } from "@/lib/demo-data";
 import OperationDetailMobile from "./OperationDetailMobile";
-import OperationsDesktop, { type StatusFilterValue } from "./OperationsDesktop";
+import OperationsDesktop, { type OpenFilter, type StatusFilterValue } from "./OperationsDesktop";
 import OperationsMobileList from "./OperationsMobileList";
 
 const STATUS_OPTIONS: OperationStatus[] = ["inProgress", "waiting", "attention", "completed"];
@@ -61,6 +61,10 @@ export default function OperationsWorkspace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");
+  // Which Status/Owner dropdown (desktop only, via CustomerFilterDropdown) is open — mirrors
+  // CustomersWorkspace's identical `openFilter` pattern. Mobile/tablet still use native <select>
+  // here and don't read this state.
+  const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
 
   const [prevOperationParam, setPrevOperationParam] = useState(operationParam);
   if (operationParam !== prevOperationParam) {
@@ -110,11 +114,17 @@ export default function OperationsWorkspace() {
   useEffect(() => {
     if (!selectedId) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeDetail();
+      if (event.key !== "Escape") return;
+      // A dropdown owns this Escape if one is open — its own handler closes it on this same
+      // keypress (CustomerFilterDropdown, now used for Status/Owner on desktop). Skip closing
+      // the detail overlay so the two layers close one at a time, matching CustomersWorkspace's
+      // identical guard.
+      if (openFilter) return;
+      closeDetail();
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedId, closeDetail]);
+  }, [selectedId, openFilter, closeDetail]);
 
   const hasActiveFilters = searchQuery.trim() !== "" || statusFilter !== "all" || ownerFilter !== "all";
 
@@ -310,6 +320,8 @@ export default function OperationsWorkspace() {
         onOwnerChange={setOwnerFilter}
         hasActiveFilters={hasActiveFilters}
         onClearFilters={handleClearFilters}
+        openFilter={openFilter}
+        onOpenFilterChange={setOpenFilter}
         filteredOperations={filteredOperations}
         selectedId={selectedId}
         onSelectRow={setSelectedId}

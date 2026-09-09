@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
+import { SearchIcon } from "@/components/dashboard/icons";
+import CustomerFilterDropdown from "@/components/demo/customers/CustomerFilterDropdown";
 import { OPERATIONS_SUMMARY, OPERATION_OWNERS, type OperationRow, type OperationStatus } from "@/lib/demo-data";
 import OperationDetailPanel from "./OperationDetailPanel";
 import OperationsTable from "./OperationsTable";
@@ -20,6 +21,25 @@ const TONE_TEXT: Record<string, string> = {
 const STATUS_OPTIONS: OperationStatus[] = ["inProgress", "waiting", "attention", "completed"];
 
 export type StatusFilterValue = OperationStatus | "all";
+export type OpenFilter = "status" | "owner" | null;
+
+/**
+ * Status/Owner dropdown option lists — mirrors CustomersToolbar's buildCustomerFilterOptions
+ * (the "all" + translated-option construction lives in one place). Operations has no separate
+ * Toolbar file, so this lives alongside the desktop markup that's currently its only consumer.
+ */
+function buildOperationsFilterOptions(t: ReturnType<typeof useTranslations>) {
+  return {
+    statusOptions: [
+      { value: "all" as const, label: t("toolbar.allStatuses") },
+      ...STATUS_OPTIONS.map((status) => ({ value: status, label: t(`status.${status}`) })),
+    ],
+    ownerOptions: [
+      { value: "all", label: t("toolbar.allOwners") },
+      ...OPERATION_OWNERS.map((owner) => ({ value: owner, label: owner })),
+    ],
+  };
+}
 
 /**
  * Desktop-only Operations workspace. Hidden below the @5xl container-query breakpoint —
@@ -35,6 +55,8 @@ export default function OperationsDesktop({
   onOwnerChange,
   hasActiveFilters,
   onClearFilters,
+  openFilter,
+  onOpenFilterChange,
   filteredOperations,
   selectedId,
   onSelectRow,
@@ -49,6 +71,10 @@ export default function OperationsDesktop({
   onOwnerChange: (value: string) => void;
   hasActiveFilters: boolean;
   onClearFilters: () => void;
+  /** Which Status/Owner dropdown (if any) is open — owned by OperationsWorkspace, mirroring
+   * CustomersWorkspace's identical pattern. */
+  openFilter: OpenFilter;
+  onOpenFilterChange: (value: OpenFilter) => void;
   filteredOperations: OperationRow[];
   selectedId: string | null;
   onSelectRow: (id: string) => void;
@@ -56,6 +82,7 @@ export default function OperationsDesktop({
   onCloseDetail: () => void;
 }) {
   const t = useTranslations("Dashboard.Operations");
+  const { statusOptions, ownerOptions } = buildOperationsFilterOptions(t);
 
   return (
     <div className="hidden min-h-0 flex-1 @5xl:flex @5xl:flex-col">
@@ -96,39 +123,23 @@ export default function OperationsDesktop({
           />
         </div>
 
-        <div className="relative flex shrink-0 items-center">
-          <select
-            value={statusFilter}
-            onChange={(event) => onStatusChange(event.target.value as StatusFilterValue)}
-            aria-label={t("toolbar.allStatuses")}
-            className="appearance-none rounded-full border border-border bg-surface py-2 pr-8 pl-3 text-sm text-neutral-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-          >
-            <option value="all">{t("toolbar.allStatuses")}</option>
-            {STATUS_OPTIONS.map((status) => (
-              <option key={status} value={status}>
-                {t(`status.${status}`)}
-              </option>
-            ))}
-          </select>
-          <ChevronDownIcon className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-neutral-400" />
-        </div>
+        <CustomerFilterDropdown
+          value={statusFilter}
+          options={statusOptions}
+          onChange={onStatusChange}
+          ariaLabel={t("toolbar.allStatuses")}
+          open={openFilter === "status"}
+          onOpenChange={(isOpen) => onOpenFilterChange(isOpen ? "status" : null)}
+        />
 
-        <div className="relative flex shrink-0 items-center">
-          <select
-            value={ownerFilter}
-            onChange={(event) => onOwnerChange(event.target.value)}
-            aria-label={t("toolbar.allOwners")}
-            className="appearance-none rounded-full border border-border bg-surface py-2 pr-8 pl-3 text-sm text-neutral-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-          >
-            <option value="all">{t("toolbar.allOwners")}</option>
-            {OPERATION_OWNERS.map((owner) => (
-              <option key={owner} value={owner}>
-                {owner}
-              </option>
-            ))}
-          </select>
-          <ChevronDownIcon className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-neutral-400" />
-        </div>
+        <CustomerFilterDropdown
+          value={ownerFilter}
+          options={ownerOptions}
+          onChange={onOwnerChange}
+          ariaLabel={t("toolbar.allOwners")}
+          open={openFilter === "owner"}
+          onOpenChange={(isOpen) => onOpenFilterChange(isOpen ? "owner" : null)}
+        />
 
         {hasActiveFilters && (
           <div className="ml-auto flex shrink-0 items-center gap-3">
