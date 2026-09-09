@@ -227,3 +227,172 @@ export default function FinanceDetailContent({
     </>
   );
 }
+
+/**
+ * Desktop inspector header (DetailInspectorShell migration). Composed directly by
+ * FinanceDetailPanel into the shell's `header` slot; intentionally NOT part of the default
+ * FinanceDetailContent export above, which stays untouched and keeps serving the approved
+ * mobile/tablet full-screen overlay exactly as before. Keeps the colored status pill (unlike
+ * Customers/Inventory's plain-text header line) — Finance's status semantics/colors are
+ * explicitly preserved, only the shell chrome and header type scale are unified.
+ */
+export function FinanceInspectorHeader({ invoice }: { invoice: FinanceInvoice }) {
+  const t = useTranslations("Dashboard.Finance");
+  const customer = getFinanceCustomer(invoice.customerId);
+  const operation = getFinanceOperation(invoice.operationId);
+  return (
+    <>
+      <p className="truncate text-lg font-semibold text-foreground">{invoice.id}</p>
+      <p className="mt-0.5 truncate text-xs text-neutral-400">
+        {customer?.name ?? invoice.customerId}
+        {operation ? ` · ${operation.id}` : ""}
+      </p>
+      <span
+        className={`mt-1.5 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONE[invoice.status]}`}
+      >
+        {t(`status.${invoice.status}`)}
+      </span>
+    </>
+  );
+}
+
+/**
+ * Desktop inspector body. Composed directly by FinanceDetailPanel into the shell's `children`
+ * slot — same underlying facts/data helpers as the default export above (nothing new is computed
+ * or fetched), re-hosted in the shell's spacing rhythm (mt-6 between sections instead of mb-4).
+ * Unlike Customers/Inventory, Finance's section content is NOT flattened to match their unboxed
+ * philosophy — Finance keeps its own uppercase section labels throughout, and:
+ *   - Amounts keeps its bordered container (a real financial calculation, not a list — a subtle
+ *     hairline-border grouping is the right call here, not card-in-card for its own sake);
+ *   - Connected operation drops its box in favor of a plain row, matching how Customers/Invenтory
+ *     show a single related record;
+ *   - Payment activity drops its outer card but keeps the divide-y row separators.
+ * Only the shell (position/width/border-left/no-shadow) and the table are unified — see the
+ * module docstring above for why Finance's own content model isn't reinterpreted as Customers'.
+ */
+export function FinanceInspectorBody({ invoice }: { invoice: FinanceInvoice }) {
+  const t = useTranslations("Dashboard.Finance");
+  const tOps = useTranslations("Dashboard.Operations");
+
+  const operation = getFinanceOperation(invoice.operationId);
+  const outstanding = getInvoiceOutstanding(invoice);
+  const reconciliationState = getInvoiceReconciliationState(invoice.id);
+  const activity = getInvoiceActivity(invoice.id);
+  const isDraft = invoice.status === "draft";
+  const noteKey = getPaymentNoteKey(invoice, reconciliationState);
+
+  return (
+    <>
+      {/* Invoice overview */}
+      <div>
+        <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+          {t("detail.invoiceOverview")}
+        </p>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-xs text-neutral-500">{t("table.issued")}</p>
+            <p className="mt-1 text-sm font-semibold text-foreground">{invoice.issueDate}</p>
+          </div>
+          <div>
+            <p className="text-xs text-neutral-500">{t("table.due")}</p>
+            <p className="mt-1 text-sm font-semibold text-foreground">{invoice.dueDate}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Amounts — deliberately keeps its bordered container; see module docstring. */}
+      <div className="mt-6">
+        <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("detail.amounts")}</p>
+        <div className="flex flex-col gap-1.5 rounded-lg border border-border px-3 py-2.5">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-neutral-500">{t("detail.subtotal")}</span>
+            <span className="text-foreground">{formatChf(invoice.subtotal)}</span>
+          </div>
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-neutral-500">{t("detail.vat", { rate: invoice.vatRate })}</span>
+            <span className="text-foreground">{formatChf(invoice.vatAmount)}</span>
+          </div>
+          <div className="flex items-center justify-between border-t border-border pt-1.5 text-sm font-semibold">
+            <span className="text-foreground">{t("table.total")}</span>
+            <span className="text-foreground">{formatChf(invoice.total)}</span>
+          </div>
+          {!isDraft && (
+            <>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-neutral-500">{t("summary.paid")}</span>
+                <span className="text-success">{formatChf(invoice.paidAmount)}</span>
+              </div>
+              <div className="flex items-center justify-between text-sm font-semibold">
+                <span className="text-foreground">{t("table.outstanding")}</span>
+                <span className={outstanding === 0 ? "text-neutral-400" : "text-accent"}>{formatChf(outstanding)}</span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Payment status */}
+      <div className="mt-6">
+        <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+          {t("detail.paymentStatus")}
+        </p>
+        {!isDraft && (
+          <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
+            <span className="text-xs text-neutral-500">{t("detail.reconciliation")}</span>
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${RECONCILIATION_TONE[reconciliationState]}`}
+            >
+              {t(`detail.reconciliationState.${reconciliationState}`)}
+            </span>
+          </div>
+        )}
+        <p className="text-sm text-neutral-600">
+          {noteKey === "overdue" ? t("detail.note.overdue", { date: invoice.dueDate }) : t(`detail.note.${noteKey}`)}
+        </p>
+      </div>
+
+      {/* Connected operation — plain row, no box; see module docstring. */}
+      <div className="mt-6">
+        <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+          {t("detail.connectedOperation")}
+        </p>
+        {operation ? (
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-foreground">{operation.id}</span>
+                <span
+                  className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${OPERATION_STATUS_TONE[operation.status]}`}
+                >
+                  {tOps(`status.${operation.status}`)}
+                </span>
+              </div>
+              <p className="mt-0.5 truncate text-xs text-neutral-500">{operation.customer}</p>
+              <p className="truncate text-xs text-neutral-400">{tOps(`stage.${operation.stage}`)}</p>
+            </div>
+            <p className="shrink-0 text-sm font-medium text-foreground">{operation.value}</p>
+          </div>
+        ) : (
+          <p className="text-sm text-neutral-400">{t("detail.noConnectedOperation")}</p>
+        )}
+      </div>
+
+      {/* Payment activity — divide-y rows kept, outer card dropped; see module docstring. */}
+      {activity.length > 0 && (
+        <div className="mt-6">
+          <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+            {t("detail.paymentActivity")}
+          </p>
+          <div className="divide-y divide-border/70">
+            {activity.map((entry, index) => (
+              <div key={index} className="flex items-center justify-between gap-3 py-2 text-sm">
+                <span className="text-neutral-600">{t(`detail.activity.${entry.key}`, entry.params)}</span>
+                <span className="shrink-0 text-xs text-neutral-400">{entry.date}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

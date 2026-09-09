@@ -1,11 +1,15 @@
+import { useTranslations } from "next-intl";
+import DetailInspectorShell from "@/components/demo/DetailInspectorShell";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
 import type { FinanceInvoice } from "@/lib/demo-data";
-import FinanceDetailContent from "./FinanceDetailContent";
+import { FinanceInspectorBody, FinanceInspectorHeader } from "./FinanceDetailContent";
 
 /**
- * Desktop-only right-side overlay drawer — mirrors CustomerDetailPanel/InventoryDetailPanel's
- * proven architecture exactly (absolutely positioned against FinanceWorkspace's `relative`
- * wrapper rather than participating in flex layout, so the Finance table underneath never
- * resizes or drops columns when an invoice is selected).
+ * Desktop-only inspector — migrated to the shared DetailInspectorShell (Customers/Inventory
+ * reference implementation). Composes the shell with the new FinanceInspectorHeader/
+ * FinanceInspectorBody instead of the original FinanceDetailContent default export, which stays
+ * untouched and keeps serving FinanceDetailMobile exactly as before — this migration is
+ * desktop-only; Finance mobile is approved and unchanged.
  */
 export default function FinanceDetailPanel({
   invoice,
@@ -14,9 +18,17 @@ export default function FinanceDetailPanel({
   invoice: FinanceInvoice;
   onClose: () => void;
 }) {
+  const t = useTranslations("Dashboard.Finance");
+
   return (
-    <div className="absolute inset-y-0 right-0 z-20 flex w-[420px] flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-[-4px_0_16px_-8px_rgba(0,0,0,0.1)]">
-      <FinanceDetailContent invoice={invoice} onClose={onClose} />
-    </div>
+    <DetailInspectorShell
+      variant="desktop"
+      onClose={onClose}
+      closeLabel={t("detail.close")}
+      scenarioSlot={<ScenarioReturnLink className="shrink-0 px-5 pt-5" />}
+      header={<FinanceInspectorHeader invoice={invoice} />}
+    >
+      <FinanceInspectorBody invoice={invoice} />
+    </DetailInspectorShell>
   );
 }
