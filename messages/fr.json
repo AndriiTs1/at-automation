@@ -788,7 +788,18 @@
           "waitingSince": "En attente depuis"
         },
         "status": {
-          "pending": "En attente"
+          "pending": "En attente",
+          "approved": "Approuvé",
+          "rejected": "Rejeté"
+        }
+      },
+      "detail": {
+        "close": "Fermer",
+        "approve": "Approuver",
+        "reject": "Rejeter",
+        "decided": {
+          "approved": "Vous avez approuvé cette demande.",
+          "rejected": "Vous avez rejeté cette demande."
         }
       },
       "team": {

@@ -788,7 +788,18 @@
           "waitingSince": "Ожидает с"
         },
         "status": {
-          "pending": "Ожидает"
+          "pending": "Ожидает",
+          "approved": "Одобрено",
+          "rejected": "Отклонено"
+        }
+      },
+      "detail": {
+        "close": "Закрыть",
+        "approve": "Одобрить",
+        "reject": "Отклонить",
+        "decided": {
+          "approved": "Вы одобрили этот запрос.",
+          "rejected": "Вы отклонили этот запрос."
         }
       },
       "team": {

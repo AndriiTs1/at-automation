@@ -788,7 +788,18 @@
           "waitingSince": "Wartet seit"
         },
         "status": {
-          "pending": "Ausstehend"
+          "pending": "Ausstehend",
+          "approved": "Genehmigt",
+          "rejected": "Abgelehnt"
+        }
+      },
+      "detail": {
+        "close": "Schließen",
+        "approve": "Genehmigen",
+        "reject": "Ablehnen",
+        "decided": {
+          "approved": "Sie haben diese Anfrage genehmigt.",
+          "rejected": "Sie haben diese Anfrage abgelehnt."
         }
       },
       "team": {

@@ -788,7 +788,18 @@
           "waitingSince": "Waiting since"
         },
         "status": {
-          "pending": "Pending"
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        }
+      },
+      "detail": {
+        "close": "Close",
+        "approve": "Approve",
+        "reject": "Reject",
+        "decided": {
+          "approved": "You approved this request.",
+          "rejected": "You rejected this request."
         }
       },
       "team": {

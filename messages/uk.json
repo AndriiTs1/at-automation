@@ -788,7 +788,18 @@
           "waitingSince": "Очікує з"
         },
         "status": {
-          "pending": "Очікує"
+          "pending": "Очікує",
+          "approved": "Схвалено",
+          "rejected": "Відхилено"
+        }
+      },
+      "detail": {
+        "close": "Закрити",
+        "approve": "Схвалити",
+        "reject": "Відхилити",
+        "decided": {
+          "approved": "Ви схвалили цей запит.",
+          "rejected": "Ви відхилили цей запит."
         }
       },
       "team": {
