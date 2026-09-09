@@ -11,13 +11,11 @@
     "cta": "Parla del tuo progetto"
   },
   "Footer": {
-    "headlineLine2": "Un livello operativo connesso.",
-    "proposition": "Collega operazioni, finanze, magazzino, clienti e automazione — senza sostituire i sistemi che la tua azienda già utilizza.",
-    "ctaSecondary": "Scopri la demo live",
     "navLabel": "Navigazione del footer",
     "capabilities": "Funzionalità",
     "integrations": "Integrazioni",
     "liveDemo": "Demo live",
+    "systemTypesLabel": "Tipi di sistemi",
     "copyright": "© {year} AT Automation",
     "privacy": "Privacy",
     "legal": "Note legali"
@@ -91,8 +89,8 @@
   "Integrations": {
     "eyebrow": "LIVELLO DI INTEGRAZIONE",
     "headline": "Mantieni i sistemi che già fanno funzionare la tua azienda.",
-    "body": "AT può collegare i flussi operativi tra il tuo ERP, CRM, la contabilità, l'e-commerce, la comunicazione e i sistemi interni esistenti.",
-    "exampleNote": "Esempi di sistemi con cui AT può integrarsi:",
+    "body": "AT funziona sopra la tua infrastruttura esistente, collegando ERP, CRM, finanza, comunicazione e sistemi interni in un unico livello operativo.",
+    "exampleNote": "Funziona con la tua infrastruttura esistente",
     "categories": {
       "erp": "ERP",
       "crm": "CRM",
@@ -101,19 +99,19 @@
       "communication": "Comunicazione",
       "data": "Dati",
       "payments": "Pagamenti",
-      "customSystems": "Sistemi personalizzati"
+      "customSystems": "Sistemi aziendali"
     },
     "generic": {
       "otherAccountingSystems": "altri sistemi contabili",
       "otherPaymentProviders": "altri fornitori di pagamento",
-      "internalExistingSystems": "sistemi interni ed esistenti"
+      "internalExistingSystems": "sistemi interni e specializzati"
     },
-    "flow": {
-      "systemsLabel": "Sistemi esistenti",
-      "systemsExamples": "ERP · CRM · Finanza · Magazzino",
-      "atExamples": "Integrazione · Flussi di lavoro · Regole · AI",
-      "teamsLabel": "I tuoi team",
-      "teamsExamples": "Operazioni · Finanza · Magazzino · Gestione"
+    "architecture": {
+      "systemsLabel": "I tuoi sistemi",
+      "systemsItems": ["ERP", "CRM", "Finanza", "E-commerce", "Comunicazione", "Dati"],
+      "centerTagline": "Integrazione · Flussi di lavoro · Regole · AI",
+      "teamLabel": "Il tuo team",
+      "teamItems": ["Operazioni", "Finanza", "Vendite", "Gestione"]
     }
   },
   "Dashboard": {

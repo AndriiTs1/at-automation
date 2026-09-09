@@ -11,13 +11,11 @@
     "cta": "Projekt besprechen"
   },
   "Footer": {
-    "headlineLine2": "Eine vernetzte Betriebsebene.",
-    "proposition": "Verbinden Sie Betrieb, Finanzen, Lager, Kunden und Automatisierung — ohne die Systeme zu ersetzen, die Ihr Unternehmen bereits nutzt.",
-    "ctaSecondary": "Live-Demo entdecken",
     "navLabel": "Footer-Navigation",
     "capabilities": "Funktionen",
     "integrations": "Integrationen",
     "liveDemo": "Live-Demo",
+    "systemTypesLabel": "Systemtypen",
     "copyright": "© {year} AT Automation",
     "privacy": "Datenschutz",
     "legal": "Rechtliches"
@@ -91,8 +89,8 @@
   "Integrations": {
     "eyebrow": "INTEGRATIONSEBENE",
     "headline": "Behalten Sie die Systeme, die Ihr Unternehmen bereits am Laufen halten.",
-    "body": "AT kann operative Abläufe über Ihr bestehendes ERP, CRM, Ihre Buchhaltung, Ihren Handel, Ihre Kommunikation und interne Systeme hinweg verbinden.",
-    "exampleNote": "Beispiele für Systeme, mit denen AT sich verbinden lässt:",
+    "body": "AT setzt auf Ihrer bestehenden Infrastruktur auf und verbindet ERP, CRM, Finanzen, Kommunikation und interne Systeme zu einer einzigen operativen Ebene.",
+    "exampleNote": "Funktioniert mit Ihrer bestehenden Infrastruktur",
     "categories": {
       "erp": "ERP",
       "crm": "CRM",
@@ -101,19 +99,19 @@
       "communication": "Kommunikation",
       "data": "Daten",
       "payments": "Zahlungen",
-      "customSystems": "Individuelle Systeme"
+      "customSystems": "Unternehmenssysteme"
     },
     "generic": {
       "otherAccountingSystems": "weitere Buchhaltungssysteme",
       "otherPaymentProviders": "weitere Zahlungsanbieter",
-      "internalExistingSystems": "interne und bestehende Systeme"
+      "internalExistingSystems": "interne und spezialisierte Systeme"
     },
-    "flow": {
-      "systemsLabel": "Bestehende Systeme",
-      "systemsExamples": "ERP · CRM · Finanzen · Lager",
-      "atExamples": "Integration · Workflows · Regeln · KI",
-      "teamsLabel": "Ihre Teams",
-      "teamsExamples": "Betrieb · Finanzen · Lager · Management"
+    "architecture": {
+      "systemsLabel": "Ihre Systeme",
+      "systemsItems": ["ERP", "CRM", "Finanzen", "Handel", "Kommunikation", "Daten"],
+      "centerTagline": "Integration · Workflows · Regeln · KI",
+      "teamLabel": "Ihr Team",
+      "teamItems": ["Betrieb", "Finanzen", "Vertrieb", "Management"]
     }
   },
   "Dashboard": {

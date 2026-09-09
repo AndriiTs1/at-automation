@@ -11,13 +11,11 @@
     "cta": "Discuss your project"
   },
   "Footer": {
-    "headlineLine2": "One connected operating layer.",
-    "proposition": "Connect operations, finance, inventory, customers and automation — without replacing the systems your business already uses.",
-    "ctaSecondary": "Explore the live demo",
     "navLabel": "Footer navigation",
     "capabilities": "Capabilities",
     "integrations": "Integrations",
     "liveDemo": "Live demo",
+    "systemTypesLabel": "System types",
     "copyright": "© {year} AT Automation",
     "privacy": "Privacy",
     "legal": "Legal"
@@ -91,8 +89,8 @@
   "Integrations": {
     "eyebrow": "INTEGRATION LAYER",
     "headline": "Keep the systems that already run your business.",
-    "body": "AT can connect operational workflows across your existing ERP, CRM, accounting, commerce, communication and internal systems.",
-    "exampleNote": "Examples of systems AT can integrate with:",
+    "body": "AT runs on top of your existing infrastructure, connecting ERP, CRM, finance, communication and internal systems into a single operational layer.",
+    "exampleNote": "Works with your existing infrastructure",
     "categories": {
       "erp": "ERP",
       "crm": "CRM",
@@ -101,19 +99,19 @@
       "communication": "Communication",
       "data": "Data",
       "payments": "Payments",
-      "customSystems": "Custom systems"
+      "customSystems": "Enterprise systems"
     },
     "generic": {
       "otherAccountingSystems": "other accounting systems",
       "otherPaymentProviders": "other payment providers",
-      "internalExistingSystems": "internal and existing systems"
+      "internalExistingSystems": "internal and specialized systems"
     },
-    "flow": {
-      "systemsLabel": "Existing systems",
-      "systemsExamples": "ERP · CRM · Finance · Warehouse",
-      "atExamples": "Integration · Workflows · Rules · AI",
-      "teamsLabel": "Your teams",
-      "teamsExamples": "Operations · Finance · Inventory · Management"
+    "architecture": {
+      "systemsLabel": "Your systems",
+      "systemsItems": ["ERP", "CRM", "Finance", "Commerce", "Communication", "Data"],
+      "centerTagline": "Integration · Workflows · Rules · AI",
+      "teamLabel": "Your team",
+      "teamItems": ["Operations", "Finance", "Sales", "Management"]
     }
   },
   "Dashboard": {

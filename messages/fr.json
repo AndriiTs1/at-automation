@@ -11,13 +11,11 @@
     "cta": "Discuter de votre projet"
   },
   "Footer": {
-    "headlineLine2": "Une couche opérationnelle connectée.",
-    "proposition": "Connectez les opérations, la finance, le stock, les clients et l'automatisation — sans remplacer les systèmes que votre entreprise utilise déjà.",
-    "ctaSecondary": "Découvrir la démo en direct",
     "navLabel": "Navigation du pied de page",
     "capabilities": "Fonctionnalités",
     "integrations": "Intégrations",
     "liveDemo": "Démo en direct",
+    "systemTypesLabel": "Types de systèmes",
     "copyright": "© {year} AT Automation",
     "privacy": "Confidentialité",
     "legal": "Mentions légales"
@@ -91,8 +89,8 @@
   "Integrations": {
     "eyebrow": "COUCHE D'INTÉGRATION",
     "headline": "Gardez les systèmes qui font déjà tourner votre entreprise.",
-    "body": "AT peut connecter les flux opérationnels de votre ERP, CRM, comptabilité, e-commerce, communication et systèmes internes existants.",
-    "exampleNote": "Exemples de systèmes avec lesquels AT peut s'intégrer :",
+    "body": "AT s'appuie sur votre infrastructure existante et relie ERP, CRM, finance, communication et systèmes internes au sein d'une seule couche opérationnelle.",
+    "exampleNote": "Fonctionne avec votre infrastructure existante",
     "categories": {
       "erp": "ERP",
       "crm": "CRM",
@@ -101,19 +99,19 @@
       "communication": "Communication",
       "data": "Données",
       "payments": "Paiements",
-      "customSystems": "Systèmes sur mesure"
+      "customSystems": "Systèmes d'entreprise"
     },
     "generic": {
       "otherAccountingSystems": "d'autres systèmes comptables",
       "otherPaymentProviders": "d'autres prestataires de paiement",
-      "internalExistingSystems": "systèmes internes et existants"
+      "internalExistingSystems": "systèmes internes et spécialisés"
     },
-    "flow": {
-      "systemsLabel": "Systèmes existants",
-      "systemsExamples": "ERP · CRM · Finance · Entrepôt",
-      "atExamples": "Intégration · Flux de travail · Règles · IA",
-      "teamsLabel": "Vos équipes",
-      "teamsExamples": "Opérations · Finance · Stock · Pilotage"
+    "architecture": {
+      "systemsLabel": "Vos systèmes",
+      "systemsItems": ["ERP", "CRM", "Finance", "E-commerce", "Communication", "Données"],
+      "centerTagline": "Intégration · Flux de travail · Règles · IA",
+      "teamLabel": "Votre équipe",
+      "teamItems": ["Opérations", "Finance", "Ventes", "Pilotage"]
     }
   },
   "Dashboard": {

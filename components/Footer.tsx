@@ -1,55 +1,44 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { INTEGRATION_CATEGORIES } from "@/lib/marketing-data";
 import { routing } from "@/i18n/routing";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 type LanguageCode = (typeof routing.locales)[number];
 
+function chunk<T>(items: T[], size: number): T[][] {
+  const groups: T[][] = [];
+  for (let i = 0; i < items.length; i += size) groups.push(items.slice(i, i + size));
+  return groups;
+}
+
 /**
- * Marketing Footer — a wide graphite closing surface (approved design direction: see the
- * Stage 3A → 3A-final review). Two structural ideas distinguish this from a generic dark
- * footer:
+ * Marketing Footer — a light, full-width closing utility strip, not a floating card and not a
+ * second marketing section. It's a direct continuation of IntegrationEcosystem's own `bg-surface`
+ * white (same color, no card, no negative-margin trick), so it reads as the tail of the same
+ * surface Architecture card sits on rather than a separate block appended below it.
  *
- * 1. SURFACE width is decoupled from Header's width. Header stays a compact `max-w-[1320px]`
- *    floating pill; Footer's graphite surface is nearly viewport-wide (outer margin only:
- *    12px mobile → 16px tablet → 24px at 1280 → 28px at 1440+), because a tall opaque surface
- *    at Header's narrower width reads as "a large card," not "a closing surface." CONTENT
- *    inside stays constrained to `max-w-6xl` — the same width AutomationCapabilities and
- *    IntegrationEcosystem already use — so typography never stretches to the wide surface.
+ * Two layers, one hairline between them:
+ *   Row 1 (primary) — brand/owner identity (real person + location, no logo icon: the mark
+ *   already appears in Header and functionally in Architecture card) and real navigation
+ *   (Capabilities/Integrations/Demo — the only page nav anywhere on the site, since Header has
+ *   none).
+ *   Row 2+3 (secondary/quietest, separated from Row 1 by the one hairline, from each other by
+ *   spacing only) — System Types (a short reference list of the real Integrations.categories
+ *   labels, deliberately grouped into rows via chunk() rather than one flowing wrapped
+ *   paragraph or a bordered grid/table) and the copyright/legal/languages utility line.
  *
- * 2. The lower area is ONE navigation band (brand left, product nav + language codes sharing
- *    a right-aligned cluster/baseline) rather than brand/nav/languages/legal as separate
- *    islands. Only the copyright/Privacy/Legal line is demoted to its own quieter row below,
- *    separated by spacing only (no second divider).
+ * No marketing headline, no CTA: Architecture card already closes the story; repeating it here
+ * would be the same idea a third time on an already-short page.
  *
- * Brand mark reuses the exact dark-surface "AT" badge + wordmark already established in
- * DashboardSidebar/TabletNavigation (not a new logo): the raw `/logo.png` mark is dark ink on
- * a transparent background, so it has too little contrast against a dark surface.
- *
- * Nav destinations are all real: Capabilities → #capabilities, Integrations → #integrations
- * (a semantic id on IntegrationEcosystem's existing section), Demo → /demo. "Platform" stays
- * omitted: nothing on the current Landing truthfully represents it.
- *
- * The primary CTA ("Discuss your project →") reuses Header's own current `href="#contact"`
- * behavior verbatim — Header has no working contact destination yet either (no `id="contact"`
- * exists anywhere on the site), so this is a known, pre-existing, shared conversion dependency,
- * not something new introduced here.
- *
- * Primary CTA stays a WHITE pill, not AT blue: the design review measured AT blue's contrast
- * against this graphite (~2.1:1 surface-to-surface) versus against Header's white background
- * (~7:1) and rejected the blue-on-graphite option as a real loss of "obvious primary action"
- * authority, not a style preference. White-on-graphite is a deliberate inversion of Header's
- * blue-on-white, not an inconsistency.
- *
- * Privacy/Legal have no implemented destination pages yet, so they render as plain,
- * non-interactive muted labels (no href, no hover state, no pointer cursor) rather than
- * placeholder `href="#"` links.
+ * KNOWN BLOCKER (unrelated to this component, not fixed here): Header's primary CTA still links
+ * to `#contact`, and no `id="contact"` exists anywhere on the site — tracked separately.
  */
 export default function Footer() {
   const t = useTranslations("Footer");
-  const tHero = useTranslations("Hero");
   const tHeader = useTranslations("Header");
+  const tIntegrations = useTranslations("Integrations");
   const currentLang = useLocale() as LanguageCode;
   const router = useRouter();
   const pathname = usePathname();
@@ -58,107 +47,88 @@ export default function Footer() {
     router.replace(pathname, { locale: lang });
   };
 
-  return (
-    <footer className="-mt-4 px-3 pb-6 md:-mt-6 md:px-4 md:pb-8 xl:px-6 min-[1440px]:px-7">
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-dark shadow-md shadow-black/10 xl:rounded-3xl">
-        <div className="mx-auto max-w-6xl">
-          {/* LAYER A — closing message: closes the product story. */}
-          <div className="grid grid-cols-1 gap-8 px-6 py-9 md:grid-cols-[65fr_35fr] md:items-center md:px-10 md:py-10 lg:px-14 lg:py-12">
-            <div className="min-w-0">
-              <h2 className="max-w-[640px] text-3xl leading-[1.15] font-bold tracking-tight text-white md:text-4xl">
-                <span className="block">{tHero("headlineLine1")}</span>
-                <span className="block">{t("headlineLine2")}</span>
-              </h2>
-              <p className="mt-4 max-w-lg text-base text-white/60 md:text-lg">{t("proposition")}</p>
-            </div>
+  const categoryLabels = INTEGRATION_CATEGORIES.map((category) => tIntegrations(`categories.${category.key}`));
+  const categoryLinesMobile = chunk(categoryLabels, 2).map((group) => group.join(" · "));
+  const categoryLinesDesktop = chunk(categoryLabels, 4).map((group) => group.join(" · "));
 
-            <div className="flex flex-col items-start gap-3">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition-colors hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none sm:w-auto"
-              >
-                {tHeader("cta")} <span aria-hidden="true">→</span>
-              </a>
-              <Link
-                href="/demo"
-                className="text-sm font-medium text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:text-white focus-visible:underline focus-visible:outline-none"
-              >
-                {t("ctaSecondary")}
-              </Link>
-            </div>
+  return (
+    <footer className="bg-[#F7F8FA]">
+      <div className="mx-auto max-w-6xl px-6 pt-6 pb-12 md:px-8 lg:px-12">
+        {/* Row 1 — identity + navigation (primary layer) */}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-1">
+            <p className="text-sm font-semibold tracking-wide text-foreground">AT AUTOMATION</p>
+            <p className="text-sm text-neutral-600">Tsiurupa Andrii</p>
+            <p className="text-sm text-neutral-500">Lugano, Switzerland</p>
+            <a
+              href="https://www.linkedin.com/in/andrii-tsiurupa-ch/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit text-sm text-neutral-600 transition-colors hover:text-foreground"
+            >
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
           </div>
 
-          <div className="border-t border-white/10" />
+          <nav aria-label={t("navLabel")} className="flex flex-wrap items-center gap-x-6 gap-y-1">
+            <a href="#capabilities" className="text-sm text-neutral-600 transition-colors hover:text-foreground">
+              {t("capabilities")}
+            </a>
+            <a href="#integrations" className="text-sm text-neutral-600 transition-colors hover:text-foreground">
+              {t("integrations")}
+            </a>
+            <Link href="/demo" className="text-sm text-neutral-600 transition-colors hover:text-foreground">
+              {t("liveDemo")}
+            </Link>
+          </nav>
+        </div>
 
-          {/* LAYER B — one footer navigation system: brand left, product nav + languages
-              sharing a right-aligned cluster/baseline, with the quiet legal line below
-              separated by spacing only (no second divider). */}
-          <div className="flex flex-col gap-3 px-6 py-6 md:px-10 lg:px-14">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <Link href="/" className="flex shrink-0 items-center gap-2">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-white">
-                  AT
-                </div>
-                <span className="text-sm font-semibold tracking-wide text-white/90">AUTOMATION</span>
-              </Link>
+        {/* Row 2+3 — reference + utility (secondary/quietest layer), one hairline above, no
+            second divider between the two rows below it. */}
+        <div className="mt-6 border-t border-border pt-6">
+          <p className="text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("systemTypesLabel")}</p>
 
-              <div className="flex flex-wrap items-center gap-4 md:gap-5">
-                <nav aria-label={t("navLabel")} className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <a
-                    href="#capabilities"
-                    className="rounded-full px-3 py-1.5 text-sm text-white/60 transition-colors hover:bg-white/5 hover:text-white focus-visible:bg-white/10 focus-visible:text-white focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:outline-none"
-                  >
-                    {t("capabilities")}
-                  </a>
-                  <a
-                    href="#integrations"
-                    className="rounded-full px-3 py-1.5 text-sm text-white/60 transition-colors hover:bg-white/5 hover:text-white focus-visible:bg-white/10 focus-visible:text-white focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:outline-none"
-                  >
-                    {t("integrations")}
-                  </a>
-                  <Link
-                    href="/demo"
-                    className="rounded-full px-3 py-1.5 text-sm text-white/60 transition-colors hover:bg-white/5 hover:text-white focus-visible:bg-white/10 focus-visible:text-white focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:outline-none"
-                  >
-                    {t("liveDemo")}
-                  </Link>
-                </nav>
+          <div className="mt-3 flex flex-col gap-1.5 md:hidden">
+            {categoryLinesMobile.map((line) => (
+              <p key={line} className="text-sm text-neutral-700">
+                {line}
+              </p>
+            ))}
+          </div>
+          <div className="mt-3 hidden flex-col gap-1.5 md:flex">
+            {categoryLinesDesktop.map((line) => (
+              <p key={line} className="text-sm text-neutral-700">
+                {line}
+              </p>
+            ))}
+          </div>
 
-                <ul
-                  role="listbox"
-                  aria-label={tHeader("languageSwitcherLabel")}
-                  className="flex flex-wrap items-center gap-1 sm:border-l sm:border-white/10 sm:pl-4"
-                >
-                  {routing.locales.map((lang) => (
-                    <li key={lang}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={lang === currentLang}
-                        onClick={() => selectLanguage(lang)}
-                        className={`rounded-lg px-2 py-1 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:outline-none ${
-                          lang === currentLang ? "bg-white/10 text-white" : "text-white/60 hover:bg-white/5 hover:text-white/80"
-                        }`}
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-neutral-500">
+              <span>{t("copyright", { year: new Date().getFullYear() })}</span>
+              <div className="flex flex-wrap items-center gap-x-4">
+                <span>{t("privacy")}</span>
+                <span>{t("legal")}</span>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 text-xs text-white/60">
-              <span>{t("copyright", { year: new Date().getFullYear() })}</span>
-              <span aria-hidden="true" className="text-white/20">
-                ·
-              </span>
-              <span>{t("privacy")}</span>
-              <span aria-hidden="true" className="text-white/20">
-                ·
-              </span>
-              <span>{t("legal")}</span>
-            </div>
+            <ul role="listbox" aria-label={tHeader("languageSwitcherLabel")} className="flex flex-wrap items-center gap-1">
+              {routing.locales.map((lang) => (
+                <li key={lang}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={lang === currentLang}
+                    onClick={() => selectLanguage(lang)}
+                    className={`rounded-md px-2 py-1.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none ${
+                      lang === currentLang ? "bg-black/5 text-foreground" : "text-neutral-500 hover:text-neutral-700"
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
