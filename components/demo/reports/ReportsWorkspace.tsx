@@ -52,12 +52,12 @@ function KpiGrid({ columns }: { columns: 2 | 4 }) {
  * stage still has no drill-down, so there is nothing to lift or share across branches beyond the
  * read-only report helpers all three already call directly.
  *
- * Mobile deliberately reorders content relative to desktop (KPIs → Operational Health →
- * Management Highlights → Business Performance, chart last) rather than copying desktop's
- * vertical order — on a phone the Managing Director should see "what needs attention" before
- * reaching the larger historical chart (see spec section 3). Tablet keeps the chart in strong
- * visual priority (full width, near the top) with Health + Highlights sharing the row below,
- * rather than force-fitting desktop's 65/35 composition into a narrower, taller viewport.
+ * Mobile order is KPIs → Business Performance → Operational Health → Management Highlights: the
+ * chart is the primary reporting element (same priority desktop/tablet already give it), so it
+ * follows the KPI row directly rather than appearing after both text-heavy sections. Tablet keeps
+ * the chart in strong visual priority (full width, near the top) with Health + Highlights sharing
+ * the row below, rather than force-fitting desktop's 65/35 composition into a narrower, taller
+ * viewport.
  *
  * Desktop is untouched from Stage 2H.1 (ReportsDesktop is self-gated behind `@5xl:flex` and
  * rendered unconditionally here, exactly like AutomationsDesktop/IntegrationsDesktop).
@@ -76,13 +76,13 @@ export default function ReportsWorkspace() {
         </span>
         <KpiGrid columns={2} />
         <div className="h-64 shrink-0">
+          <ReportsBusinessPerformance compact />
+        </div>
+        <div className="h-64 shrink-0">
           <ReportsOperationalHealth />
         </div>
         <div className="h-56 shrink-0">
           <ReportsManagementHighlights />
-        </div>
-        <div className="h-64 shrink-0">
-          <ReportsBusinessPerformance compact />
         </div>
       </div>
 
