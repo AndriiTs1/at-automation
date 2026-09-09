@@ -93,8 +93,8 @@ function TraceRow({ icon, moduleLabel, title, statusLabel, statusTone, facts, li
           </p>
         ))}
       </div>
-      <div className="flex items-center border-t border-border/70 px-3.5 py-2.5 @5xl:border-t-0 @5xl:border-l @5xl:py-0">
-        <Link href={linkHref} className="text-xs font-medium text-accent hover:underline">
+      <div className="flex items-center border-t border-border/70 px-3.5 py-2.5 @5xl:w-56 @5xl:justify-center @5xl:border-t-0 @5xl:border-l @5xl:py-0">
+        <Link href={linkHref} className="text-xs font-medium text-accent hover:underline @5xl:text-center">
           {linkLabel} <span aria-hidden="true">→</span>
         </Link>
       </div>

@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { DEMO_USER, NAV_SECTIONS } from "@/lib/demo-data";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeftIcon, DashboardIcon, NavIcon } from "./icons";
@@ -15,9 +16,7 @@ export default function DashboardSidebar({ activeItem = "commandCenter" }: { act
         aria-label={tHeader("logoAlt")}
         className="mb-5 flex items-center justify-center gap-2 px-2 @3xl:justify-start @3xl:px-0"
       >
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-white">
-          AT
-        </div>
+        <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7 shrink-0 object-contain" />
         <span className="hidden text-xs font-semibold tracking-wide text-white/90 @3xl:inline">AUTOMATION</span>
       </Link>
 

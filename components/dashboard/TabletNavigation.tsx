@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { DEMO_USER, NAV_SECTIONS } from "@/lib/demo-data";
 import { Link } from "@/i18n/navigation";
@@ -57,9 +58,7 @@ export default function TabletNavigation({
           aria-label={tHeader("logoAlt")}
           className="mb-2 flex shrink-0 items-center gap-2 @lg:mb-4"
         >
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-white">
-            AT
-          </div>
+          <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7 shrink-0 object-contain" />
           <span className="text-xs font-semibold tracking-wide text-white/90">AUTOMATION</span>
         </Link>
 
