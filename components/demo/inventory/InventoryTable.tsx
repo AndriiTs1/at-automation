@@ -54,12 +54,17 @@ const TABLE_COLUMN_COUNT = 9;
 export default function InventoryTable({
   rows,
   selectedId,
+  highlightedId = null,
   onSelect,
   hasActiveFilters,
   onClearFilters,
 }: {
   rows: InventoryItem[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — gets its own, visibly stronger
+   * tint (bg-accent/10) than `selectedId`'s open-detail state (bg-accent/5), since it has no
+   * side panel or scrim to read against; see the render-time comment below. */
+  highlightedId?: string | null;
   onSelect: (id: string) => void;
   hasActiveFilters?: boolean;
   onClearFilters?: () => void;
@@ -119,6 +124,13 @@ export default function InventoryTable({
               const available = getAvailableUnits(item);
               const value = item.onHand * item.unitValue;
               const isSelected = item.id === selectedId;
+              // Open detail (isSelected) keeps the same bg-accent/5 every other table in the app
+              // uses for its selected row — that state also has the side panel and its workspace
+              // scrim for contrast, so it doesn't need extra strength. A Scenario-context row with
+              // no open panel has neither of those cues, so it gets a visibly stronger tint
+              // (bg-accent/10 — already an established opacity step in this app, just previously
+              // only used on status badges) so it reads at a glance without a side-by-side panel.
+              const isContextHighlighted = !isSelected && item.id === highlightedId;
               return (
                 <tr
                   key={item.id}
@@ -127,7 +139,7 @@ export default function InventoryTable({
                   onClick={() => onSelect(item.id)}
                   onKeyDown={(event) => handleRowKeyDown(event, item.id)}
                   className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
-                    isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                    isSelected ? "bg-accent/5" : isContextHighlighted ? "bg-accent/10" : "hover:bg-black/[0.02]"
                   }`}
                 >
                   <td className="px-4 py-3">

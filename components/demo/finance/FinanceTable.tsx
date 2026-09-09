@@ -55,12 +55,16 @@ const TABLE_COLUMN_COUNT = 9;
 export default function FinanceTable({
   rows,
   selectedId,
+  highlightedId = null,
   onSelect,
   hasActiveFilters,
   onClearFilters,
 }: {
   rows: FinanceInvoice[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — visually treated the same as
+   * `selectedId` (open detail), just a different reason a row earns the accent tint. */
+  highlightedId?: string | null;
   onSelect: (id: string) => void;
   hasActiveFilters?: boolean;
   onClearFilters?: () => void;
@@ -121,6 +125,7 @@ export default function FinanceTable({
               const operation = getFinanceOperation(invoice.operationId);
               const outstanding = getInvoiceOutstanding(invoice);
               const isSelected = invoice.id === selectedId;
+              const isHighlighted = isSelected || invoice.id === highlightedId;
               return (
                 <tr
                   key={invoice.id}
@@ -129,7 +134,7 @@ export default function FinanceTable({
                   onClick={() => onSelect(invoice.id)}
                   onKeyDown={(event) => handleRowKeyDown(event, invoice.id)}
                   className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
-                    isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                    isHighlighted ? "bg-accent/5" : "hover:bg-black/[0.02]"
                   }`}
                 >
                   <td className="truncate px-4 py-3 font-semibold text-foreground">{invoice.id}</td>

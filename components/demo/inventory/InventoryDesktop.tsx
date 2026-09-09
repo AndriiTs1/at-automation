@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { INVENTORY_SUMMARY, type InventoryItem } from "@/lib/demo-data";
 import InventoryDetailPanel from "./InventoryDetailPanel";
 import InventoryTable from "./InventoryTable";
@@ -37,9 +38,11 @@ export default function InventoryDesktop({
   onOpenFilterChange,
   filteredItems,
   selectedId,
+  highlightedId = null,
   onSelectRow,
   selectedItem,
   onCloseDetail,
+  fromScenario = false,
 }: {
   searchQuery: string;
   onSearchChange: (value: string) => void;
@@ -53,11 +56,17 @@ export default function InventoryDesktop({
   onOpenFilterChange: (value: OpenFilter) => void;
   filteredItems: InventoryItem[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — highlight only, independent of
+   * selectedId (which detail, if any, is open). */
+  highlightedId?: string | null;
   onSelectRow: (id: string) => void;
   selectedItem: InventoryItem | null;
   onCloseDetail: () => void;
+  /** Shows the compact page-level "Back to connected workflow" link when true. */
+  fromScenario?: boolean;
 }) {
   const t = useTranslations("Dashboard.Inventory");
+  const tScenario = useTranslations("Dashboard.Scenario");
 
   return (
     <div className="hidden min-h-0 flex-1 @5xl:flex @5xl:flex-col">
@@ -66,6 +75,14 @@ export default function InventoryDesktop({
         <div className="min-w-0">
           <h1 className="text-xl font-semibold text-foreground">{t("title")}</h1>
           <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
+          {fromScenario && (
+            <Link
+              href="/demo/scenario"
+              className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline"
+            >
+              <span aria-hidden="true">←</span> {tScenario("backToScenario")}
+            </Link>
+          )}
         </div>
         <button
           type="button"
@@ -102,6 +119,7 @@ export default function InventoryDesktop({
         <InventoryTable
           rows={filteredItems}
           selectedId={selectedId}
+          highlightedId={highlightedId}
           onSelect={onSelectRow}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={onClearFilters}

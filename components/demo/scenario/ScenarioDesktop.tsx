@@ -224,7 +224,7 @@ export default function ScenarioDesktop() {
                 t("reservedFor", { count: reservedQuantity, operationId: operation.id }),
                 t("onHandAt", { count: inventoryItem.onHand, location: inventoryItem.location }),
               ]}
-              linkHref={{ pathname: "/demo/inventory", query: { item: inventoryItem.id, from: "scenario" } }}
+              linkHref={{ pathname: "/demo/inventory", query: { contextItem: inventoryItem.id, from: "scenario" } }}
               linkLabel={t("viewInventoryItem")}
             />
             <TraceConnector />
@@ -235,7 +235,7 @@ export default function ScenarioDesktop() {
               statusLabel={tFinance(`status.${invoice.status}`)}
               statusTone={FINANCE_STATUS_TONE[invoice.status]}
               facts={[t("outstandingAmount", { amount: formatChf(invoiceOutstanding) }), t("dueDate", { date: invoice.dueDate })]}
-              linkHref={{ pathname: "/demo/finance", query: { invoice: invoice.id, from: "scenario" } }}
+              linkHref={{ pathname: "/demo/finance", query: { contextInvoice: invoice.id, from: "scenario" } }}
               linkLabel={t("viewInvoice")}
             />
           </div>

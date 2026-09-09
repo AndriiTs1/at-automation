@@ -36,12 +36,16 @@ function formatChf(amount: number) {
 export default function FinanceMobileList({
   rows,
   selectedId,
+  highlightedId = null,
   onSelect,
   hasActiveFilters,
   onClearFilters,
 }: {
   rows: FinanceInvoice[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — visually treated the same as
+   * `selectedId` (open detail), just a different reason a row earns the accent tint. */
+  highlightedId?: string | null;
   onSelect: (id: string) => void;
   hasActiveFilters?: boolean;
   onClearFilters?: () => void;
@@ -71,6 +75,7 @@ export default function FinanceMobileList({
         const reconciliationState = getInvoiceReconciliationState(invoice.id);
         const isDraft = invoice.status === "draft";
         const isSelected = invoice.id === selectedId;
+        const isHighlighted = isSelected || invoice.id === highlightedId;
         // A matched partial payment on a still-open invoice (Harborline) — never shown for a
         // fully paid invoice (already communicated via Outstanding = 0) or a Draft (no payments
         // are possible before it's issued).
@@ -83,7 +88,7 @@ export default function FinanceMobileList({
               onClick={() => onSelect(invoice.id)}
               aria-current={isSelected ? "true" : undefined}
               className={`flex w-full flex-col gap-1.5 rounded-xl border px-3 py-2.5 text-left transition-colors ${
-                isSelected ? "border-accent/40 bg-accent/5" : "border-border bg-surface hover:bg-black/[0.02]"
+                isHighlighted ? "border-accent/40 bg-accent/5" : "border-border bg-surface hover:bg-black/[0.02]"
               }`}
             >
               <div className="flex items-start justify-between gap-2">
