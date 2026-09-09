@@ -161,7 +161,7 @@ export default function Header() {
 
             {/* Desktop CTA */}
             <a
-              href="#contact"
+              href="mailto:info@andrii-tsiurupa.ch"
               className="hidden items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent/90 md:inline-flex"
             >
               {t("cta")}
@@ -206,7 +206,7 @@ export default function Header() {
             </ul>
 
             <a
-              href="#contact"
+              href="mailto:info@andrii-tsiurupa.ch"
               onClick={() => setMobileMenuOpen(false)}
               className="mt-1.5 flex w-full items-center justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent/90"
             >
