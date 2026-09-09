@@ -720,6 +720,9 @@
       "noLastSync": "—",
       "detail": {
         "close": "Chiudi",
+        "connection": "Connessione",
+        "lastSync": "Ultimo sync",
+        "usedAcrossAt": "Utilizzato in AT",
         "connectionStatus": "Stato della connessione",
         "dataFlow": "Flusso dati",
         "moduleUsage": "Utilizzato da AT",

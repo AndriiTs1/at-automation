@@ -720,6 +720,9 @@
       "noLastSync": "—",
       "detail": {
         "close": "Закрити",
+        "connection": "Підключення",
+        "lastSync": "Остання синхронізація",
+        "usedAcrossAt": "Використовується в AT",
         "connectionStatus": "Статус підключення",
         "dataFlow": "Потік даних",
         "moduleUsage": "Використовується в AT",
