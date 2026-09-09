@@ -1,11 +1,15 @@
+import { useTranslations } from "next-intl";
+import DetailInspectorShell from "@/components/demo/DetailInspectorShell";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
 import type { InventoryItem } from "@/lib/demo-data";
-import InventoryDetailContent from "./InventoryDetailContent";
+import { InventoryInspectorBody, InventoryInspectorHeader } from "./InventoryDetailContent";
 
 /**
- * Desktop-only right-side overlay drawer — mirrors CustomerDetailPanel's proven architecture
- * exactly (absolutely positioned against InventoryWorkspace's `relative` wrapper rather than
- * participating in flex layout, so the Inventory table underneath never resizes or drops
- * columns when an item is selected).
+ * Desktop-only inspector — migrated to the shared DetailInspectorShell (Customers reference
+ * implementation). Composes the shell with the new restrained Inventory header/body
+ * (InventoryInspectorHeader/InventoryInspectorBody) instead of the original
+ * InventoryDetailContent default export, which stays untouched and keeps serving
+ * InventoryDetailMobile exactly as before — this redesign is desktop-only.
  */
 export default function InventoryDetailPanel({
   item,
@@ -14,9 +18,17 @@ export default function InventoryDetailPanel({
   item: InventoryItem;
   onClose: () => void;
 }) {
+  const t = useTranslations("Dashboard.Inventory");
+
   return (
-    <div className="absolute inset-y-0 right-0 z-20 flex w-[420px] flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-[-4px_0_16px_-8px_rgba(0,0,0,0.1)]">
-      <InventoryDetailContent item={item} onClose={onClose} />
-    </div>
+    <DetailInspectorShell
+      variant="desktop"
+      onClose={onClose}
+      closeLabel={t("detail.close")}
+      scenarioSlot={<ScenarioReturnLink className="shrink-0 px-5 pt-5" />}
+      header={<InventoryInspectorHeader item={item} />}
+    >
+      <InventoryInspectorBody item={item} />
+    </DetailInspectorShell>
   );
 }

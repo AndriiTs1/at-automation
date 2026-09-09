@@ -41,6 +41,21 @@ function formatValue(amount: number) {
 const MIN_TABLE_WIDTH = 1190;
 const COLUMN_WIDTHS = ["16%", "14%", "9%", "8%", "9%", "13%", "12%", "8%", "11%"];
 const TABLE_COLUMN_COUNT = 9;
+const TABLE_COLUMN_COUNT_COMPACT = 5;
+// Comfortably fits Item/Status/On hand/Reserved/Available at their own measured minimums (see
+// COLUMN_WIDTHS_COMPACT below) well under the ~776px the workspace leaves once the 420px
+// inspector is open — the table stretches to fill that real width via `w-full`, so this is a
+// floor, not the rendered width (mirrors CustomersTable's identical inspector-open pattern).
+const MIN_TABLE_WIDTH_COMPACT = 600;
+
+/**
+ * Compact 5-column set used only while the desktop inspector is open. Reorder point/Location/
+ * Value/Updated drop out — they're secondary context already visible inside the open inspector
+ * for that item — and Item gets significantly more width (38% vs 16% full-width) since it's the
+ * primary identifier. Status gets extra room too (22% vs 14%) since its longest measured badge
+ * ("Немає в наявності", uk, ~155px) needs real space now that it's one of only five columns.
+ */
+const COLUMN_WIDTHS_COMPACT = ["38%", "22%", "12%", "12%", "16%"];
 
 /**
  * Selectable, filterable Inventory table (Stage 2D.3) — mirrors CustomersTable's row-selection
@@ -70,6 +85,9 @@ export default function InventoryTable({
   onClearFilters?: () => void;
 }) {
   const t = useTranslations("Dashboard.Inventory");
+  // The desktop inspector is open exactly when an item is selected — reusing that existing state
+  // rather than adding a new prop, mirroring CustomersTable's identical pattern.
+  const isInspectorOpen = selectedId !== null;
 
   const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, id: string) => {
     if (event.key === "Enter" || event.key === " ") {
@@ -82,10 +100,10 @@ export default function InventoryTable({
     <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
       <table
         className="w-full table-fixed border-collapse text-left text-sm"
-        style={{ minWidth: `${MIN_TABLE_WIDTH}px` }}
+        style={{ minWidth: `${isInspectorOpen ? MIN_TABLE_WIDTH_COMPACT : MIN_TABLE_WIDTH}px` }}
       >
         <colgroup>
-          {COLUMN_WIDTHS.map((width, index) => (
+          {(isInspectorOpen ? COLUMN_WIDTHS_COMPACT : COLUMN_WIDTHS).map((width, index) => (
             <col key={index} style={{ width }} />
           ))}
         </colgroup>
@@ -96,16 +114,25 @@ export default function InventoryTable({
             <th className="px-4 py-3 text-center font-medium whitespace-nowrap">{t("table.onHand")}</th>
             <th className="px-4 py-3 text-center font-medium whitespace-nowrap">{t("table.reserved")}</th>
             <th className="px-4 py-3 text-center font-medium whitespace-nowrap">{t("table.available")}</th>
-            <th className="px-4 py-3 text-center font-medium leading-tight break-words">{t("table.reorderPoint")}</th>
-            <th className="px-4 py-3 text-center font-medium leading-tight break-words">{t("table.location")}</th>
-            <th className="px-4 py-3 text-right font-medium whitespace-nowrap">{t("table.value")}</th>
-            <th className="px-4 py-3 text-right font-medium">{t("table.updated")}</th>
+            {!isInspectorOpen && (
+              <th className="px-4 py-3 text-center font-medium leading-tight break-words">{t("table.reorderPoint")}</th>
+            )}
+            {!isInspectorOpen && (
+              <th className="px-4 py-3 text-center font-medium leading-tight break-words">{t("table.location")}</th>
+            )}
+            {!isInspectorOpen && (
+              <th className="px-4 py-3 text-right font-medium whitespace-nowrap">{t("table.value")}</th>
+            )}
+            {!isInspectorOpen && <th className="px-4 py-3 text-right font-medium">{t("table.updated")}</th>}
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
           {rows.length === 0 ? (
             <tr>
-              <td colSpan={TABLE_COLUMN_COUNT} className="px-4 py-12 text-center">
+              <td
+                colSpan={isInspectorOpen ? TABLE_COLUMN_COUNT_COMPACT : TABLE_COLUMN_COUNT}
+                className="px-4 py-12 text-center"
+              >
                 <p className="text-sm text-neutral-500">{t("toolbar.noResults")}</p>
                 <p className="mt-1 text-xs text-neutral-400">{t("toolbar.noResultsHint")}</p>
                 {hasActiveFilters && onClearFilters && (
@@ -160,14 +187,22 @@ export default function InventoryTable({
                   >
                     {available}
                   </td>
-                  <td className="px-4 py-3 text-center whitespace-nowrap text-neutral-500">{item.reorderPoint}</td>
-                  <td className="truncate px-4 py-3 text-center text-neutral-600">{item.location}</td>
-                  <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
-                    {formatValue(value)}
-                  </td>
-                  <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">
-                    {formatUpdated(item.updated, t)}
-                  </td>
+                  {!isInspectorOpen && (
+                    <td className="px-4 py-3 text-center whitespace-nowrap text-neutral-500">{item.reorderPoint}</td>
+                  )}
+                  {!isInspectorOpen && (
+                    <td className="truncate px-4 py-3 text-center text-neutral-600">{item.location}</td>
+                  )}
+                  {!isInspectorOpen && (
+                    <td className="px-4 py-3 text-right font-medium text-foreground whitespace-nowrap">
+                      {formatValue(value)}
+                    </td>
+                  )}
+                  {!isInspectorOpen && (
+                    <td className="truncate px-4 py-3 text-right text-xs text-neutral-400">
+                      {formatUpdated(item.updated, t)}
+                    </td>
+                  )}
                 </tr>
               );
             })
