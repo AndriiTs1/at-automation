@@ -218,3 +218,132 @@ export default function CustomerDetailContent({
     </>
   );
 }
+
+/** Health → small status-dot color, reusing the same success/warning/error tokens HEALTH_TONE
+ * already uses for the (now-retired-on-desktop) badge — never a new color. */
+const HEALTH_DOT: Record<string, string> = {
+  healthy: "bg-success",
+  watch: "bg-warning",
+  atRisk: "bg-error",
+};
+
+/**
+ * Desktop inspector header (Stage 1 — DetailInspectorShell reference implementation). Composed
+ * directly by CustomerDetailPanel into the shell's `header` slot; intentionally NOT part of the
+ * default CustomerDetailContent export above, which stays untouched and keeps serving the
+ * mobile/tablet full-screen overlay exactly as before. Plain text status line (no colored pill)
+ * per the approved ChatGPT-inspired direction — name is the dominant element, health/segment are
+ * a quiet supporting line, not a second visual weight competing with it.
+ */
+export function CustomerInspectorHeader({ customer }: { customer: CustomerRow }) {
+  const t = useTranslations("Dashboard.Customers");
+  return (
+    <>
+      <p className="truncate text-lg font-semibold text-foreground">{customer.name}</p>
+      <p className="mt-0.5 text-xs text-neutral-400">{customer.id}</p>
+      <p className="mt-1.5 text-xs text-neutral-500">
+        {t(`health.${customer.health}`)} · {t(`segment.${customer.segment}`)}
+      </p>
+    </>
+  );
+}
+
+/**
+ * Desktop inspector body (Stage 1). Composed directly by CustomerDetailPanel into the shell's
+ * `children` slot — same underlying facts/data helpers as the default export above (nothing new
+ * is computed or fetched), reorganized per the approved direction: Account overview and
+ * Commercial merge into one unlabeled 2×2 grid; Account health collapses from a labeled block
+ * into one quiet dot + sentence; Related operations loses its nested `rounded-lg border` box in
+ * favor of plain hover-able rows separated only by a light divider — the primary interactive
+ * section, not one card among five. Only "Related operations" and "Recent activity" keep section
+ * labels, since they're lists that benefit from a heading; the grid and health line don't.
+ */
+export function CustomerInspectorBody({ customer }: { customer: CustomerRow }) {
+  const t = useTranslations("Dashboard.Customers");
+  const tOps = useTranslations("Dashboard.Operations");
+
+  const relatedOperations = getOperationsForCustomer(customer.id);
+  const recentActivity = getCustomerActivity(customer.id);
+  const outstanding = getCustomerOutstanding(customer.id);
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+        <div>
+          <p className="text-xs text-neutral-500">{t("table.owner")}</p>
+          <p className="mt-0.5 text-sm font-semibold text-foreground">{customer.owner}</p>
+        </div>
+        <div>
+          <p className="text-xs text-neutral-500">{t("table.openOperations")}</p>
+          <p className="mt-0.5 text-sm font-semibold text-foreground">{customer.openOperations}</p>
+        </div>
+        <div>
+          <p className="text-xs text-neutral-500">{t("table.revenue")}</p>
+          <p className="mt-0.5 text-sm font-semibold text-foreground">{customer.revenue}</p>
+        </div>
+        <div>
+          <p className="text-xs text-neutral-500">{t("table.outstanding")}</p>
+          <p className="mt-0.5 text-sm font-semibold text-foreground">{formatChf(outstanding)}</p>
+        </div>
+      </div>
+
+      <p className="mt-4 flex items-center gap-1.5 text-xs text-neutral-600">
+        <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${HEALTH_DOT[customer.health]}`} aria-hidden="true" />
+        {t(`detail.healthNote.${customer.health}`)}
+      </p>
+
+      <div className="mt-6">
+        <p className="mb-2 text-xs font-semibold text-neutral-500">{t("detail.relatedOperations")}</p>
+        {relatedOperations.length === 0 ? (
+          <p className="text-sm text-neutral-400">{t("detail.noOperations")}</p>
+        ) : (
+          <div className="divide-y divide-border/70">
+            {relatedOperations.map((operation) => (
+              <div
+                key={operation.id}
+                className="flex items-center justify-between gap-3 py-2.5 transition-colors hover:bg-black/[0.02]"
+              >
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-foreground">{operation.id}</span>
+                    <span
+                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${OPERATION_STATUS_TONE[operation.status]}`}
+                    >
+                      {tOps(`status.${operation.status}`)}
+                    </span>
+                  </div>
+                  <p className="mt-0.5 truncate text-xs text-neutral-500">{tOps(`stage.${operation.stage}`)}</p>
+                </div>
+                <div className="shrink-0 text-right">
+                  <p className="text-sm font-medium text-foreground">{operation.value}</p>
+                  <p className="mt-0.5 text-xs text-neutral-400">
+                    {tOps("table.updated")} {operation.updated}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="mt-6">
+        <p className="mb-2 text-xs font-semibold text-neutral-500">{t("detail.recentActivity")}</p>
+        {recentActivity.length === 0 ? (
+          <p className="text-sm text-neutral-400">{t("detail.noActivity")}</p>
+        ) : (
+          <div className="flex flex-col gap-1.5">
+            {recentActivity.map((entry, index) => (
+              <div key={`${entry.operationId}-${entry.key}-${entry.time}-${index}`} className="flex gap-2 text-xs">
+                <span className="shrink-0 font-mono text-neutral-400">{entry.time}</span>
+                <span className="text-neutral-600">
+                  <span className="font-medium text-neutral-500">{entry.operationId}</span>{" "}
+                  <ActivityLabel entry={entry} />
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
+  );
+}

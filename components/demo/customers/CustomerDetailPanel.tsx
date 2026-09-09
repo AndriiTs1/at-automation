@@ -1,13 +1,15 @@
+import { useTranslations } from "next-intl";
+import DetailInspectorShell from "@/components/demo/DetailInspectorShell";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
 import type { CustomerRow } from "@/lib/demo-data";
-import CustomerDetailContent from "./CustomerDetailContent";
+import { CustomerInspectorBody, CustomerInspectorHeader } from "./CustomerDetailContent";
 
 /**
- * Desktop-only 420px right-side overlay drawer. Absolutely positioned against
- * CustomersWorkspace's `relative` wrapper rather than participating in flex layout, so the
- * Customers table underneath keeps its exact normal-state column geometry — it never resizes
- * or drops columns when a customer is selected. Separation from the table comes from the
- * drawer's own border + a tight, restrained left-edge shadow rather than a heavy backdrop —
- * the drawer should read as attached to the workspace, not floating above it.
+ * Desktop-only inspector — Stage 1 reference implementation of DetailInspectorShell (the shared
+ * ChatGPT-inspired inspector shell). Composes the shell directly with the new restrained
+ * Customer header/body (CustomerInspectorHeader/CustomerInspectorBody) instead of the original
+ * CustomerDetailContent default export, which stays untouched and keeps serving
+ * CustomerDetailMobile exactly as before — this redesign is desktop-only for Stage 1.
  */
 export default function CustomerDetailPanel({
   customer,
@@ -16,9 +18,17 @@ export default function CustomerDetailPanel({
   customer: CustomerRow;
   onClose: () => void;
 }) {
+  const t = useTranslations("Dashboard.Customers");
+
   return (
-    <div className="absolute inset-y-0 right-0 z-20 flex w-[420px] flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-[-4px_0_16px_-8px_rgba(0,0,0,0.1)]">
-      <CustomerDetailContent customer={customer} onClose={onClose} />
-    </div>
+    <DetailInspectorShell
+      variant="desktop"
+      onClose={onClose}
+      closeLabel={t("detail.close")}
+      scenarioSlot={<ScenarioReturnLink className="shrink-0 px-5 pt-5" />}
+      header={<CustomerInspectorHeader customer={customer} />}
+    >
+      <CustomerInspectorBody customer={customer} />
+    </DetailInspectorShell>
   );
 }
