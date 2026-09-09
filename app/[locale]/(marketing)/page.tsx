@@ -4,6 +4,7 @@ import TabletFrame from "@/components/dashboard/TabletFrame";
 import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
 import IntegrationEcosystem from "@/components/marketing/IntegrationEcosystem";
 import { Link } from "@/i18n/navigation";
+import { buildHomepageJsonLd } from "@/lib/structured-data";
 
 export default async function Home(props: PageProps<"/[locale]">) {
   const { locale } = await props.params;
@@ -11,9 +12,15 @@ export default async function Home(props: PageProps<"/[locale]">) {
 
   const tHero = await getTranslations("Hero");
   const tBridge = await getTranslations("Bridge");
+  const tMetadata = await getTranslations("Metadata");
+  const jsonLd = buildHomepageJsonLd(locale, tMetadata("description"));
 
   return (
     <main className="flex-1">
+      {/* Organization/ProfessionalService + WebSite structured data — homepage only, rendered
+          exactly once here (see lib/structured-data.ts for what's included and why). */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
       {/* Hero */}
       <section className="relative px-6 pt-30 pb-10 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
         {/* Decorative side labels */}

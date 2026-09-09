@@ -1,0 +1,29 @@
+# AT Automation
+
+AT Automation is a business automation and systems integration service based in Lugano, Switzerland.
+
+It helps companies connect existing business systems and coordinate processes across operations, finance, sales, inventory, customers and management.
+
+Core capabilities:
+- Business process automation
+- ERP and CRM integration
+- Finance and operations workflows
+- Inventory and order automation
+- API and webhook integrations
+- Internal and specialized business systems
+- Business rules and AI-assisted workflows
+
+Languages:
+English, German, Italian, French, Russian, Ukrainian
+
+Main website:
+https://at-automation-ai.vercel.app
+
+Live demo:
+https://at-automation-ai.vercel.app/demo
+
+Contact:
+info@andrii-tsiurupa.ch
+
+LinkedIn:
+https://www.linkedin.com/in/andrii-tsiurupa-ch/

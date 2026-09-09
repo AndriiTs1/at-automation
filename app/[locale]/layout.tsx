@@ -4,6 +4,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { homepageLanguageAlternates, localePath, OG_LOCALE_MAP, SITE_URL } from "@/lib/site-config";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -42,14 +43,24 @@ export async function generateMetadata({
     alt: title,
   };
 
+  const canonicalPath = localePath(locale);
+  const alternateLocales = routing.locales.filter((candidate) => candidate !== locale).map((candidate) => OG_LOCALE_MAP[candidate]);
+
   return {
-    metadataBase: new URL("https://at-automation-ai.vercel.app"),
+    metadataBase: new URL(SITE_URL),
     title,
     description,
+    alternates: {
+      canonical: canonicalPath,
+      languages: homepageLanguageAlternates(),
+    },
     openGraph: {
       title,
       description,
+      url: canonicalPath,
       siteName: "AT Automation",
+      locale: OG_LOCALE_MAP[locale] ?? "en_US",
+      alternateLocale: alternateLocales,
       type: "website",
       images: [ogImage],
     },
