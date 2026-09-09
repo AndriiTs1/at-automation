@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { CUSTOMERS_SUMMARY, type CustomerRow } from "@/lib/demo-data";
 import CustomerDetailPanel from "./CustomerDetailPanel";
 import CustomersTable from "./CustomersTable";
@@ -36,9 +37,11 @@ export default function CustomersDesktop({
   onOpenFilterChange,
   filteredCustomers,
   selectedId,
+  highlightedId = null,
   onSelectRow,
   selectedCustomer,
   onCloseDetail,
+  fromScenario = false,
 }: {
   searchQuery: string;
   onSearchChange: (value: string) => void;
@@ -52,11 +55,17 @@ export default function CustomersDesktop({
   onOpenFilterChange: (value: OpenFilter) => void;
   filteredCustomers: CustomerRow[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — highlight only, independent of
+   * selectedId (which detail, if any, is open). */
+  highlightedId?: string | null;
   onSelectRow: (id: string) => void;
   selectedCustomer: CustomerRow | null;
   onCloseDetail: () => void;
+  /** Shows the compact page-level "Back to connected workflow" link when true. */
+  fromScenario?: boolean;
 }) {
   const t = useTranslations("Dashboard.Customers");
+  const tScenario = useTranslations("Dashboard.Scenario");
 
   return (
     <div className="hidden min-h-0 flex-1 @5xl:flex @5xl:flex-col">
@@ -65,6 +74,14 @@ export default function CustomersDesktop({
         <div className="min-w-0">
           <h1 className="text-xl font-semibold text-foreground">{t("title")}</h1>
           <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
+          {fromScenario && (
+            <Link
+              href="/demo/scenario"
+              className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline"
+            >
+              <span aria-hidden="true">←</span> {tScenario("backToScenario")}
+            </Link>
+          )}
         </div>
         <button
           type="button"
@@ -101,6 +118,7 @@ export default function CustomersDesktop({
         <CustomersTable
           rows={filteredCustomers}
           selectedId={selectedId}
+          highlightedId={highlightedId}
           onSelect={onSelectRow}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={onClearFilters}

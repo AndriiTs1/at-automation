@@ -199,7 +199,7 @@ export default function ScenarioDesktop() {
               statusLabel={tCustomers(`health.${customer.health}`)}
               statusTone={CUSTOMER_HEALTH_TONE[customer.health]}
               facts={[tCustomers(`segment.${customer.segment}`), t("ownerLabel", { name: customer.owner })]}
-              linkHref={{ pathname: "/demo/customers", query: { customer: customer.id, from: "scenario" } }}
+              linkHref={{ pathname: "/demo/customers", query: { contextCustomer: customer.id, from: "scenario" } }}
               linkLabel={t("viewCustomer")}
             />
             <TraceConnector />

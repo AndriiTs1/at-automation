@@ -1,9 +1,11 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SearchIcon } from "@/components/dashboard/icons";
 import { useQuerySelection } from "@/components/demo/useQuerySelection";
+import { Link } from "@/i18n/navigation";
 import { CUSTOMERS_ROWS, CUSTOMERS_SUMMARY } from "@/lib/demo-data";
 import CustomerDetailMobile from "./CustomerDetailMobile";
 import CustomerFilterDropdown from "./CustomerFilterDropdown";
@@ -41,6 +43,21 @@ function SummaryGrid() {
 }
 
 /**
+ * Compact "Back to connected workflow" text link — the page-level counterpart to
+ * ScenarioReturnLink (which only renders inside an open detail). Deliberately just a single
+ * inline link, no banner/card, since Scenario context (`from=scenario`) is now independent of
+ * whether any detail panel happens to be open (Stage 2J.3) and must stay reachable either way.
+ */
+function ScenarioContextLink() {
+  const t = useTranslations("Dashboard.Scenario");
+  return (
+    <Link href="/demo/scenario" className="inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline">
+      <span aria-hidden="true">←</span> {t("backToScenario")}
+    </Link>
+  );
+}
+
+/**
  * Top-level Customers workspace — owns all filter/selection state and derives
  * filteredCustomers once, then fans it out to three breakpoint-gated presentations
  * (mobile / tablet / desktop), mirroring OperationsWorkspace's container-query gating
@@ -48,16 +65,23 @@ function SummaryGrid() {
  */
 export default function CustomersWorkspace() {
   const t = useTranslations("Dashboard.Customers");
-  // Stage 2J.2 — record-level deep link (e.g. from the Scenario page). Resolved against the full
-  // CUSTOMERS_ROWS dataset, never the filtered list, so an incoming link opens the exact customer
-  // regardless of the current (default, unrelated) filter/search state. selectedId's own lazy
-  // initializer picks this up on first mount (a direct page load); the prevCustomerParam diff
-  // below catches later changes (client-side navigation while already mounted). Applied during
-  // render rather than in an effect, since setState-in-effect causes an avoidable extra render pass.
-  const [customerParam, clearCustomerParam] = useQuerySelection("customer");
-  const [selectedId, setSelectedId] = useState<string | null>(() =>
-    customerParam && CUSTOMERS_ROWS.some((row) => row.id === customerParam) ? customerParam : null,
-  );
+  const searchParams = useSearchParams();
+  // Two independent URL-derived states (Stage 2J.3): `contextCustomer` marks a row as connected
+  // to the Scenario trace (highlight only, never auto-opens anything); `customer` is the single
+  // source of truth for which detail panel — if any — is open. A Scenario deep-link sets only
+  // `contextCustomer` (+`from`), so arriving from /demo/scenario highlights the row without
+  // popping the panel; only an explicit click ever writes `customer`. Both are resolved against
+  // the full CUSTOMERS_ROWS dataset, never the filtered list, so neither depends on the current
+  // (default, unrelated) filter/search state.
+  const contextCustomerParam = searchParams.get("contextCustomer");
+  const highlightedId =
+    contextCustomerParam && CUSTOMERS_ROWS.some((row) => row.id === contextCustomerParam) ? contextCustomerParam : null;
+  const isFromScenario = searchParams.get("from") === "scenario";
+  // `dropFromOnClear: false` — closing the detail must not clear `from`/`contextCustomer`: the
+  // highlight and the Back-to-Scenario link are page-level Scenario context, not a side effect of
+  // whichever detail happened to be open (see useQuerySelection's docstring).
+  const [customerParam, clearCustomerParam, selectCustomer] = useQuerySelection("customer", { dropFromOnClear: false });
+  const selectedId = customerParam && CUSTOMERS_ROWS.some((row) => row.id === customerParam) ? customerParam : null;
   const [searchQuery, setSearchQuery] = useState("");
   const [segmentFilter, setSegmentFilter] = useState<SegmentFilterValue>("all");
   const [healthFilter, setHealthFilter] = useState<HealthFilterValue>("all");
@@ -65,12 +89,6 @@ export default function CustomersWorkspace() {
   // the Escape handler below can tell a dropdown is open and let its own Escape close it first,
   // instead of closing the Customer Detail overlay in the same keypress.
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
-
-  const [prevCustomerParam, setPrevCustomerParam] = useState(customerParam);
-  if (customerParam !== prevCustomerParam) {
-    setPrevCustomerParam(customerParam);
-    if (customerParam && CUSTOMERS_ROWS.some((row) => row.id === customerParam)) setSelectedId(customerParam);
-  }
 
   const filteredCustomers = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -93,21 +111,13 @@ export default function CustomersWorkspace() {
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   if (filterKey !== prevFilterKey) {
     setPrevFilterKey(filterKey);
-    if (selectedId && !filteredCustomers.some((row) => row.id === selectedId)) {
-      setSelectedId(null);
-      clearCustomerParam();
-    }
+    if (selectedId && !filteredCustomers.some((row) => row.id === selectedId)) clearCustomerParam();
   }
 
-  // Closes the detail AND clears any deep-link query param at the same time, so the URL never
-  // keeps a stale ?customer= after the panel it opened is gone (Escape, X button, or scrim).
-  // useCallback keeps this reference stable across renders (as long as clearCustomerParam itself
-  // stays stable, which useQuerySelection already guarantees) so the Escape effect below can
-  // safely list it as a dependency without re-attaching its listener every render.
-  const closeDetail = useCallback(() => {
-    setSelectedId(null);
-    clearCustomerParam();
-  }, [clearCustomerParam]);
+  // Closing the detail is just clearing the URL param — selectedId (derived above) follows
+  // automatically. clearCustomerParam is already a stable reference (useQuerySelection), so the
+  // Escape effect below can safely list it as a dependency without re-attaching every render.
+  const closeDetail = clearCustomerParam;
 
   useEffect(() => {
     if (!selectedId) return;
@@ -140,7 +150,10 @@ export default function CustomersWorkspace() {
     <>
       {/* Mobile workspace (below @lg) */}
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
-        <p className="text-base font-semibold text-foreground">{t("title")}</p>
+        <div className="flex flex-col gap-0.5">
+          <p className="text-base font-semibold text-foreground">{t("title")}</p>
+          {isFromScenario && <ScenarioContextLink />}
+        </div>
         <SummaryGrid />
 
         <div className="flex flex-col gap-2">
@@ -193,7 +206,8 @@ export default function CustomersWorkspace() {
         <CustomersMobileList
           rows={filteredCustomers}
           selectedId={selectedId}
-          onSelect={setSelectedId}
+          highlightedId={highlightedId}
+          onSelect={selectCustomer}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={handleClearFilters}
         />
@@ -207,6 +221,11 @@ export default function CustomersWorkspace() {
           <div className="min-w-0">
             <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
             <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
+            {isFromScenario && (
+              <p className="mt-1">
+                <ScenarioContextLink />
+              </p>
+            )}
           </div>
           <button
             type="button"
@@ -266,7 +285,8 @@ export default function CustomersWorkspace() {
         <CustomersMobileList
           rows={filteredCustomers}
           selectedId={selectedId}
-          onSelect={setSelectedId}
+          highlightedId={highlightedId}
+          onSelect={selectCustomer}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={handleClearFilters}
         />
@@ -288,9 +308,11 @@ export default function CustomersWorkspace() {
         onOpenFilterChange={setOpenFilter}
         filteredCustomers={filteredCustomers}
         selectedId={selectedId}
-        onSelectRow={setSelectedId}
+        highlightedId={highlightedId}
+        onSelectRow={selectCustomer}
         selectedCustomer={selectedCustomer}
         onCloseDetail={closeDetail}
+        fromScenario={isFromScenario}
       />
     </>
   );

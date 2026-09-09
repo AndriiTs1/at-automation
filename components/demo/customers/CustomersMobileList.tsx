@@ -30,12 +30,16 @@ const SEGMENT_TONE: Record<string, string> = {
 export default function CustomersMobileList({
   rows,
   selectedId,
+  highlightedId = null,
   onSelect,
   hasActiveFilters,
   onClearFilters,
 }: {
   rows: CustomerRow[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — visually treated the same as
+   * `selectedId` (open detail), just a different reason a row earns the accent tint. */
+  highlightedId?: string | null;
   onSelect: (id: string) => void;
   hasActiveFilters?: boolean;
   onClearFilters?: () => void;
@@ -60,6 +64,7 @@ export default function CustomersMobileList({
     <ul className="flex flex-col gap-2">
       {rows.map((row) => {
         const isSelected = row.id === selectedId;
+        const isHighlighted = isSelected || row.id === highlightedId;
         return (
           <li key={row.id}>
             <button
@@ -67,7 +72,7 @@ export default function CustomersMobileList({
               onClick={() => onSelect(row.id)}
               aria-current={isSelected ? "true" : undefined}
               className={`flex w-full flex-col gap-1.5 rounded-xl border px-3 py-2.5 text-left transition-colors ${
-                isSelected ? "border-accent/40 bg-accent/5" : "border-border bg-surface hover:bg-black/[0.02]"
+                isHighlighted ? "border-accent/40 bg-accent/5" : "border-border bg-surface hover:bg-black/[0.02]"
               }`}
             >
               <div className="flex items-start justify-between gap-2">

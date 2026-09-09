@@ -57,12 +57,16 @@ const COLUMN_WIDTHS = ["18%", "13%", "10%", "6%", "11%", "13%", "12%", "17%"];
 export default function CustomersTable({
   rows,
   selectedId,
+  highlightedId = null,
   onSelect,
   hasActiveFilters,
   onClearFilters,
 }: {
   rows: CustomerRow[];
   selectedId: string | null;
+  /** Row connected to the active Scenario trace (Stage 2J.3) — visually treated the same as
+   * `selectedId` (open detail), just a different reason a row earns the accent tint. */
+  highlightedId?: string | null;
   onSelect: (id: string) => void;
   hasActiveFilters?: boolean;
   onClearFilters?: () => void;
@@ -116,6 +120,7 @@ export default function CustomersTable({
           ) : (
             rows.map((row) => {
               const isSelected = row.id === selectedId;
+              const isHighlighted = isSelected || row.id === highlightedId;
               return (
                 <tr
                   key={row.id}
@@ -124,7 +129,7 @@ export default function CustomersTable({
                   onClick={() => onSelect(row.id)}
                   onKeyDown={(event) => handleRowKeyDown(event, row.id)}
                   className={`cursor-pointer transition-colors focus-visible:bg-accent/10 focus-visible:outline-none ${
-                    isSelected ? "bg-accent/5" : "hover:bg-black/[0.02]"
+                    isHighlighted ? "bg-accent/5" : "hover:bg-black/[0.02]"
                   }`}
                 >
                   <td className="px-4 py-3">
