@@ -1,12 +1,15 @@
+import { useTranslations } from "next-intl";
+import DetailInspectorShell from "@/components/demo/DetailInspectorShell";
+import ScenarioReturnLink from "@/components/demo/scenario/ScenarioReturnLink";
 import type { AutomationDefinition } from "@/lib/demo-data";
-import AutomationDetailContent from "./AutomationDetailContent";
+import { AutomationInspectorBody, AutomationInspectorHeader } from "./AutomationDetailContent";
 
 /**
- * Desktop-only right-side overlay drawer (Stage 2F.2) — mirrors InventoryDetailPanel/
- * CustomerDetailPanel's proven architecture exactly: absolutely positioned against
- * AutomationsDesktop's `relative` wrapper rather than participating in flex layout, so the
- * automation table (and the Recent Activity aside) underneath never resize when a row is
- * selected.
+ * Desktop-only inspector — migrated to the shared DetailInspectorShell (Customers/Inventory/
+ * Finance reference implementation). Composes the shell with AutomationInspectorHeader/
+ * AutomationInspectorBody instead of the original AutomationDetailContent default export, which
+ * stays untouched and keeps serving AutomationDetailMobile exactly as before — this migration is
+ * desktop-only; Automations mobile/tablet-list is untouched.
  */
 export default function AutomationDetailPanel({
   automation,
@@ -15,9 +18,17 @@ export default function AutomationDetailPanel({
   automation: AutomationDefinition;
   onClose: () => void;
 }) {
+  const t = useTranslations("Dashboard.Automations");
+
   return (
-    <div className="absolute inset-y-0 right-0 z-20 flex w-[420px] flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-[-4px_0_16px_-8px_rgba(0,0,0,0.1)]">
-      <AutomationDetailContent automation={automation} onClose={onClose} />
-    </div>
+    <DetailInspectorShell
+      variant="desktop"
+      onClose={onClose}
+      closeLabel={t("detail.close")}
+      scenarioSlot={<ScenarioReturnLink className="shrink-0 px-5 pt-5" />}
+      header={<AutomationInspectorHeader automation={automation} />}
+    >
+      <AutomationInspectorBody automation={automation} />
+    </DetailInspectorShell>
   );
 }

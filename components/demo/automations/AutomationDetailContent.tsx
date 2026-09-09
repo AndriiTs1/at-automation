@@ -256,3 +256,138 @@ export default function AutomationDetailContent({
     </>
   );
 }
+
+/**
+ * Desktop inspector header — composed directly by AutomationDetailPanel into
+ * DetailInspectorShell's `header` slot; mirrors CustomerInspectorHeader's plain-text status line
+ * (no colored pill) rather than the default export's pill-based header above, which stays
+ * untouched and keeps serving AutomationDetailMobile exactly as before. Not part of the default
+ * AutomationDetailContent export.
+ */
+export function AutomationInspectorHeader({ automation }: { automation: AutomationDefinition }) {
+  const t = useTranslations("Dashboard.Automations");
+  return (
+    <>
+      <p className="truncate text-lg font-semibold text-foreground">{t(`definitions.${automation.key}.name`)}</p>
+      <p className="mt-1.5 text-xs text-neutral-500">
+        {t(`status.${automation.status}`)} · {t(`category.${automation.category}`)}
+      </p>
+    </>
+  );
+}
+
+/**
+ * Desktop inspector body — composed directly by AutomationDetailPanel into DetailInspectorShell's
+ * `children` slot. Same underlying data/helpers as the default export above (getRelatedFacts,
+ * getAutomationWorkflowSteps, getAutomationRuns — nothing new computed), and the Trigger/Workflow/
+ * Current outcome/Related/Recent executions sections are reused verbatim, unflattened: the
+ * workflow timeline in particular is meaningful automation content and stays exactly as designed,
+ * unlike Customers/Inventory's flattened body sections.
+ */
+export function AutomationInspectorBody({ automation }: { automation: AutomationDefinition }) {
+  const t = useTranslations("Dashboard.Automations");
+  const tFinance = useTranslations("Dashboard.Finance");
+  const tApprovals = useTranslations("Dashboard.Approvals");
+
+  const workflowSteps = [
+    { id: "trigger", label: t(`definitions.${automation.key}.trigger`), status: "completed" as const },
+    ...getAutomationWorkflowSteps(automation.key).map((step) => ({
+      id: step.id,
+      label: t(`workflowSteps.${step.labelKey}`),
+      status: step.status,
+    })),
+  ];
+
+  const outcomeParams = automation.key === "overdueInvoiceFollowUp" ? { count: getOverdueCount() } : undefined;
+  const relatedFacts = getRelatedFacts(automation, t, tFinance);
+  const runs = getAutomationRuns(automation.id);
+
+  const stepStatusLabel = (status: string) =>
+    status === "completed" ? t("runStatus.completed") : status === "attention" ? t("status.needsAttention") : t("workflowStepStatus.pending");
+
+  return (
+    <>
+      {/* Trigger */}
+      <div className="mb-4">
+        <p className="mb-1.5 text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("detail.trigger")}</p>
+        <p className="text-sm break-words text-foreground">{t(`definitions.${automation.key}.trigger`)}</p>
+      </div>
+
+      {/* Workflow */}
+      <div className="mb-4">
+        <p className="mb-1.5 text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("detail.workflow")}</p>
+        <div className="flex flex-col">
+          {workflowSteps.map((step, index) => (
+            <div key={step.id} className="relative flex gap-3 pb-3.5 last:pb-0">
+              {index < workflowSteps.length - 1 && (
+                <span className="absolute top-3 left-[4.5px] h-full w-px bg-border" aria-hidden="true" />
+              )}
+              <span
+                className={`relative z-10 mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${STEP_DOT_TONE[step.status]}`}
+                aria-hidden="true"
+              />
+              <p className="min-w-0 flex-1 text-sm break-words text-foreground">{step.label}</p>
+              <span className={`shrink-0 text-xs whitespace-nowrap ${STEP_TEXT_TONE[step.status]}`}>
+                {stepStatusLabel(step.status)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Current outcome */}
+      <div className="mb-4">
+        <p className="mb-1.5 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+          {t("detail.currentOutcome")}
+        </p>
+        <p className="text-sm break-words text-foreground">{t(`currentOutcome.${automation.key}`, outcomeParams)}</p>
+      </div>
+
+      {/* Related business context */}
+      {relatedFacts.length > 0 && (
+        <div className="mb-4">
+          <p className="mb-1.5 text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("detail.related")}</p>
+          <div className="grid grid-cols-2 gap-3">
+            {relatedFacts.map((fact) => (
+              <div key={fact.label} className="min-w-0">
+                <p className="break-words text-xs text-neutral-500">{fact.label}</p>
+                <p className="mt-0.5 text-sm font-semibold break-words text-foreground">{fact.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Recent executions */}
+      <div>
+        <p className="mb-1.5 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+          {t("detail.recentExecutions")}
+        </p>
+        {runs.length === 0 ? (
+          <p className="text-sm text-neutral-400">{t("detail.noRecentExecutions")}</p>
+        ) : (
+          <div className="flex flex-col divide-y divide-border rounded-lg border border-border">
+            {runs.map((run) => {
+              const entityLabel = getAutomationRunEntityLabel(run, tApprovals);
+              return (
+                <div key={run.id} className="flex items-center justify-between gap-3 px-3 py-2">
+                  <div className="min-w-0">
+                    {entityLabel && <p className="break-words text-sm text-foreground">{entityLabel}</p>}
+                    <span
+                      className={`text-xs ${run.status === "attention" ? "font-medium text-warning" : "text-neutral-500"}`}
+                    >
+                      {run.status === "attention" ? t("status.needsAttention") : t("runStatus.completed")}
+                    </span>
+                  </div>
+                  <p className="shrink-0 text-xs whitespace-nowrap text-neutral-400">
+                    {formatAutomationTimestamp(run.timestamp, t)}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
