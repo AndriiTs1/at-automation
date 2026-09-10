@@ -59,7 +59,7 @@ export default function Footer() {
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold tracking-wide text-foreground">AT AUTOMATION</p>
             <p className="text-sm text-neutral-600">Tsiurupa Andrii</p>
-            <p className="text-sm text-neutral-500">Lugano, Switzerland</p>
+            <p className="text-sm text-neutral-600">Lugano, Switzerland</p>
             <a
               href="https://www.linkedin.com/in/andrii-tsiurupa-ch/"
               target="_blank"
@@ -86,7 +86,7 @@ export default function Footer() {
         {/* Row 2+3 — reference + utility (secondary/quietest layer), one hairline above, no
             second divider between the two rows below it. */}
         <div className="mt-6 border-t border-border pt-6">
-          <p className="text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("systemTypesLabel")}</p>
+          <p className="text-xs font-semibold tracking-wide text-neutral-600 uppercase">{t("systemTypesLabel")}</p>
 
           <div className="mt-3 flex flex-col gap-1.5 md:hidden">
             {categoryLinesMobile.map((line) => (
@@ -104,7 +104,7 @@ export default function Footer() {
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-neutral-500">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-neutral-600">
               <span>{t("copyright", { year: new Date().getFullYear() })}</span>
               <div className="flex flex-wrap items-center gap-x-4">
                 <span>{t("privacy")}</span>
@@ -112,23 +112,22 @@ export default function Footer() {
               </div>
             </div>
 
-            <ul role="listbox" aria-label={tHeader("languageSwitcherLabel")} className="flex flex-wrap items-center gap-1">
+            <div role="listbox" aria-label={tHeader("languageSwitcherLabel")} className="flex flex-wrap items-center gap-1">
               {routing.locales.map((lang) => (
-                <li key={lang}>
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={lang === currentLang}
-                    onClick={() => selectLanguage(lang)}
-                    className={`rounded-md px-2 py-1.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none ${
-                      lang === currentLang ? "bg-black/5 text-foreground" : "text-neutral-500 hover:text-neutral-700"
-                    }`}
-                  >
-                    {lang.toUpperCase()}
-                  </button>
-                </li>
+                <button
+                  key={lang}
+                  type="button"
+                  role="option"
+                  aria-selected={lang === currentLang}
+                  onClick={() => selectLanguage(lang)}
+                  className={`rounded-md px-2 py-1.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none ${
+                    lang === currentLang ? "bg-black/5 text-foreground" : "text-neutral-600 hover:text-neutral-700"
+                  }`}
+                >
+                  {lang.toUpperCase()}
+                </button>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>

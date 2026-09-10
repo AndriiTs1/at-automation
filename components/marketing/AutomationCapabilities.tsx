@@ -23,12 +23,12 @@ export default async function AutomationCapabilities() {
             const examples = t.raw(`categories.${key}.examples`) as string[];
             return (
               <div key={key} className="flex flex-col gap-1 bg-[#F7F8FA] px-4 py-3 sm:gap-1.5 sm:p-4 md:p-5">
-                <p className="font-mono text-xs text-neutral-400">{String(index + 1).padStart(2, "0")}</p>
+                <p className="font-mono text-xs text-neutral-600">{String(index + 1).padStart(2, "0")}</p>
                 <h3 className="text-base font-semibold text-foreground">{t(`categories.${key}.title`)}</h3>
                 <p className="text-sm leading-snug text-neutral-600">{t(`categories.${key}.description`)}</p>
                 <ul className="mt-0.5 flex flex-col gap-0.5">
                   {examples.map((example) => (
-                    <li key={example} className="flex items-baseline gap-2 text-sm leading-snug text-neutral-500">
+                    <li key={example} className="flex items-baseline gap-2 text-sm leading-snug text-neutral-600">
                       <span aria-hidden="true" className="text-accent">
                         ·
                       </span>

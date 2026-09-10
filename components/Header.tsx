@@ -136,26 +136,25 @@ export default function Header() {
               </button>
 
               {langMenuOpen && (
-                <ul
+                <div
                   role="listbox"
                   className="absolute right-0 mt-2 grid w-44 grid-cols-2 gap-1 rounded-2xl border border-black/5 bg-white/70 p-2 shadow-sm shadow-black/5 backdrop-blur-2xl backdrop-saturate-150"
                 >
                   {routing.locales.map((lang) => (
-                    <li key={lang}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={lang === currentLang}
-                        onClick={() => selectLanguage(lang)}
-                        className={`w-full rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
-                          lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
-                        }`}
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    </li>
+                    <button
+                      key={lang}
+                      type="button"
+                      role="option"
+                      aria-selected={lang === currentLang}
+                      onClick={() => selectLanguage(lang)}
+                      className={`w-full rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
+                        lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
+                      }`}
+                    >
+                      {lang.toUpperCase()}
+                    </button>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
 
@@ -187,23 +186,22 @@ export default function Header() {
             className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden"
           >
             {/* Mobile language switcher */}
-            <ul role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5 pb-1">
+            <div role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5 pb-1">
               {routing.locales.map((lang) => (
-                <li key={lang}>
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={lang === currentLang}
-                    onClick={() => selectLanguage(lang)}
-                    className={`flex w-full items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
-                      lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
-                    }`}
-                  >
-                    {lang.toUpperCase()}
-                  </button>
-                </li>
+                <button
+                  key={lang}
+                  type="button"
+                  role="option"
+                  aria-selected={lang === currentLang}
+                  onClick={() => selectLanguage(lang)}
+                  className={`flex w-full items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
+                    lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
+                  }`}
+                >
+                  {lang.toUpperCase()}
+                </button>
               ))}
-            </ul>
+            </div>
 
             <a
               href="mailto:info@andrii-tsiurupa.ch"

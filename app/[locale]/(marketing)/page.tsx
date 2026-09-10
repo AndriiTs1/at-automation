@@ -24,12 +24,12 @@ export default async function Home(props: PageProps<"/[locale]">) {
       {/* Hero */}
       <section className="relative px-6 pt-30 pb-10 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
         {/* Decorative side labels */}
-        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase min-[1400px]:block min-[1400px]:left-10">
+        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-500 uppercase min-[1400px]:block min-[1400px]:left-10">
           <span className="block">{tHero("sideLabelLeft1")}</span>
           <span className="block">{tHero("sideLabelLeft2")}</span>
           <span className="block">{tHero("sideLabelLeft3")}</span>
         </div>
-        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-400 uppercase min-[1400px]:block min-[1400px]:right-10">
+        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-500 uppercase min-[1400px]:block min-[1400px]:right-10">
           <span className="block">{tHero("sideLabelRight1")}</span>
           <span className="block">{tHero("sideLabelRight2")}</span>
           <span className="block">{tHero("sideLabelRight3")}</span>
@@ -73,8 +73,15 @@ export default async function Home(props: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* Product showcase */}
-      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
+      {/* Product showcase — decorative marketing preview, not real page UX: the live interactive
+          DemoDashboard is reused here purely as a visual, so it's excluded from the accessibility
+          tree and keyboard tab order (aria-hidden + inert) rather than treated as reachable
+          content. Purely visual — inert does not alter rendering. */}
+      <section
+        aria-hidden="true"
+        inert
+        className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24"
+      >
         <TabletFrame>
           <DemoDashboard />
         </TabletFrame>
