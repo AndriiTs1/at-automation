@@ -17,13 +17,13 @@ Languages:
 English, German, Italian, French, Russian, Ukrainian
 
 Main website:
-https://at-automation-ai.vercel.app
+[AT Automation](https://at-automation-ai.vercel.app)
 
 Live demo:
-https://at-automation-ai.vercel.app/demo
+[Live demo](https://at-automation-ai.vercel.app/demo)
 
 Contact:
 info@andrii-tsiurupa.ch
 
 LinkedIn:
-https://www.linkedin.com/in/andrii-tsiurupa-ch/
+[LinkedIn](https://www.linkedin.com/in/andrii-tsiurupa-ch/)
