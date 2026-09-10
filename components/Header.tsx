@@ -76,7 +76,22 @@ export default function Header() {
   const selectLanguage = (lang: LanguageCode) => {
     setLangMenuOpen(false);
     setMobileMenuOpen(false);
-    router.replace(pathname, { locale: lang });
+    if (lang === routing.defaultLocale) {
+      // next-intl's router.replace(path, { locale }) unconditionally forces
+      // a locale prefix onto the href whenever an explicit locale is passed
+      // — even for the default locale under localePrefix: "as-needed",
+      // where it should stay unprefixed, leaving "/en" visible. Routing
+      // around that via the raw Next.js client router avoided "/en" but
+      // left a stale RSC prefetch reference that surfaced as a background
+      // 404. A full browser navigation sidesteps the client router (and its
+      // prefetch cache) entirely — language switching is infrequent, so the
+      // reload cost is a non-issue, and this is the only mechanism proven
+      // to be both correct and silent in a production build. `pathname` is
+      // already the locale-agnostic logical path (e.g. "/demo").
+      window.location.assign(`${pathname}${window.location.search}${window.location.hash}`);
+    } else {
+      router.replace(pathname, { locale: lang });
+    }
   };
 
   const handleMobileMenuToggle = () => {

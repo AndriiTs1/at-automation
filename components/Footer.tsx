@@ -44,7 +44,17 @@ export default function Footer() {
   const pathname = usePathname();
 
   const selectLanguage = (lang: LanguageCode) => {
-    router.replace(pathname, { locale: lang });
+    if (lang === routing.defaultLocale) {
+      // See Header.tsx's identical comment: a full browser navigation for
+      // the "switch to English" case, since next-intl's router.replace
+      // forces a visible "/en" prefix, and bypassing it via the raw
+      // Next.js client router left a stale RSC prefetch reference that
+      // surfaced as a background 404. `pathname` is already the
+      // locale-agnostic logical path.
+      window.location.assign(`${pathname}${window.location.search}${window.location.hash}`);
+    } else {
+      router.replace(pathname, { locale: lang });
+    }
   };
 
   const categoryLabels = INTEGRATION_CATEGORIES.map((category) => tIntegrations(`categories.${category.key}`));
