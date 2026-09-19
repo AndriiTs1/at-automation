@@ -8,6 +8,7 @@ import DashboardTopbar from "./DashboardTopbar";
 import KpiCard from "./KpiCard";
 import LiveOperations from "./LiveOperations";
 import MobileCommandCenter from "./MobileCommandCenter";
+import NeedsAttention from "./NeedsAttention";
 import OperationsStatusCard from "./OperationsStatusCard";
 import TabletCommandCenter from "./TabletCommandCenter";
 
@@ -96,8 +97,13 @@ export default function DemoDashboard() {
             </div>
           </div>
 
-          <div className="hidden h-72 shrink-0 @6xl:block">
-            <LiveOperations />
+          <div className="hidden h-72 shrink-0 gap-3 @6xl:flex">
+            <div className="min-w-0 flex-[2]">
+              <LiveOperations />
+            </div>
+            <div className="min-w-0 flex-1">
+              <NeedsAttention />
+            </div>
           </div>
         </div>
       </div>

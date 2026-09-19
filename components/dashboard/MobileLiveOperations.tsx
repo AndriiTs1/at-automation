@@ -1,8 +1,9 @@
 import { useTranslations } from "next-intl";
 import { LIVE_OPERATIONS } from "@/lib/demo-data";
 
-export default function MobileLiveOperations() {
+export default function MobileLiveOperations({ limit }: { limit?: number }) {
   const t = useTranslations("Dashboard.LiveOperations");
+  const events = limit ? LIVE_OPERATIONS.slice(0, limit) : LIVE_OPERATIONS;
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-2.5 shadow-demo-card">
@@ -15,7 +16,7 @@ export default function MobileLiveOperations() {
       </div>
 
       <div className="flex flex-1 flex-col gap-1 overflow-y-auto">
-        {LIVE_OPERATIONS.map((event) => (
+        {events.map((event) => (
           <div key={event.time + event.titleKey} className="flex gap-2 text-[11px]">
             <span className="shrink-0 pt-0.5 font-mono text-[10px] text-slate-400">{event.time}</span>
             <div className="min-w-0 flex-1">
