@@ -88,6 +88,7 @@ export default function Header() {
       // reload cost is a non-issue, and this is the only mechanism proven
       // to be both correct and silent in a production build. `pathname` is
       // already the locale-agnostic logical path (e.g. "/demo").
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- intentional full reload; see rationale above
       window.location.assign(`${pathname}${window.location.search}${window.location.hash}`);
     } else {
       router.replace(pathname, { locale: lang });

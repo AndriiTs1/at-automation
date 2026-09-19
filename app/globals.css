@@ -13,6 +13,17 @@
      near-black neutral so it reads as a designed surface rather than pure black. Not consumed
      by Demo's dashboard sidebar, which owns its own separate dark treatment. */
   --surface-dark: #25282d;
+
+  /* Germes Design Transfer, Phase 1 (Live Demo shell + Command Center only). Deliberately kept
+     separate from the tokens above — nothing in Header/Footer/components/marketing reads these,
+     so restyling the demo app can never shift the public marketing site. Slate/blue/emerald/
+     amber/rose hues used elsewhere in the demo restyle come directly from Tailwind's built-in
+     palette (no token needed); these two are the only values reused often enough, and absent
+     from Tailwind's defaults, to earn a token instead of being repeated inline. */
+  --demo-background: #f7f8fa;
+  --demo-card-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
 @theme inline {
@@ -25,6 +36,8 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-surface-dark: var(--surface-dark);
+  --color-demo-background: var(--demo-background);
+  --shadow-demo-card: var(--demo-card-shadow);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

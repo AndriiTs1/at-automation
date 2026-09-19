@@ -50,7 +50,7 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
     <div className="@container flex h-full w-full">
       {/* Mobile shell (below @lg) */}
       <div className="relative flex min-w-0 flex-1 @lg:hidden">
-        <div className="flex h-full w-full flex-col overflow-y-auto bg-neutral-50 px-3 pt-1 pb-3">
+        <div className="flex h-full w-full flex-col overflow-y-auto bg-demo-background px-3 pt-1 pb-3">
           <MobileTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
           {children}
         </div>
@@ -64,7 +64,7 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
 
       {/* Tablet shell (@lg to below @5xl) */}
       <div className="relative hidden min-w-0 flex-1 @lg:flex @5xl:hidden">
-        <div className="flex h-full w-full flex-col overflow-y-auto bg-neutral-50 p-4">
+        <div className="flex h-full w-full flex-col overflow-y-auto bg-demo-background p-4">
           <TabletTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
           {children}
         </div>
@@ -74,7 +74,7 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
       {/* Desktop shell (@5xl and up) */}
       <div className="hidden w-full @5xl:flex">
         <DashboardSidebar activeItem={activeItem} />
-        <div className="flex min-w-0 flex-1 flex-col overflow-y-auto bg-neutral-50 p-3 @lg:p-4 @3xl:p-2.5">
+        <div className="flex min-w-0 flex-1 flex-col overflow-y-auto bg-demo-background p-3 @lg:p-4 @3xl:p-2.5">
           <DashboardTopbar />
           {children}
         </div>

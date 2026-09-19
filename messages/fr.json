@@ -229,6 +229,16 @@
         "supplierPayment": "Paiement fournisseur"
       }
     },
+    "AutomationImpact": {
+      "title": "Impact de l'automatisation",
+      "subtitle": "Exécutions du jour par domaine"
+    },
+    "OperationsStatus": {
+      "title": "État des opérations"
+    },
+    "ActionRequired": {
+      "title": "Actions requises"
+    },
     "Teams": {
       "finance": "Finances",
       "financeTeam": "Équipe finance",

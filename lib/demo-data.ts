@@ -400,6 +400,23 @@ export const OPERATIONS_ROWS: OperationRow[] = [
 export const OPERATION_OWNERS = Array.from(new Set(OPERATIONS_ROWS.map((row) => row.owner)));
 
 /**
+ * Command Center "Operations Status" executive card — a deterministic status breakdown of the
+ * existing OPERATIONS_ROWS sample (not a projection onto OPERATIONS_SUMMARY.active's full count,
+ * which has no per-status split available). Fixed key order (inProgress, waiting, attention,
+ * completed) matches Dashboard.Operations.status so the legend never reorders between renders.
+ * Percentages are rounded independently per segment (not adjusted to force an exact 100% sum),
+ * consistent with how the rest of the demo already presents rounded, human-readable figures.
+ */
+export function getOperationsStatusBreakdown(): { status: OperationStatus; count: number; pct: number }[] {
+  const total = OPERATIONS_ROWS.length;
+  const order: OperationStatus[] = ["inProgress", "waiting", "attention", "completed"];
+  return order.map((status) => {
+    const count = OPERATIONS_ROWS.filter((row) => row.status === status).length;
+    return { status, count, pct: Math.round((count / total) * 100) };
+  });
+}
+
+/**
  * Operations belonging to a customer, linked via the stable customerId (not name matching).
  * Open (non-completed) operations are surfaced first; sort is stable so relative order within
  * each group matches OPERATIONS_ROWS.
@@ -1641,6 +1658,28 @@ export function getActiveAutomationCount(): number {
 
 export function getAutomationsNeedingAttentionCount(): number {
   return AUTOMATION_DEFINITIONS.filter((automation) => automation.status === "needsAttention").length;
+}
+
+/**
+ * Command Center "Automation Impact" executive card — today's automation runs grouped by the
+ * category they belong to, summed straight from each definition's own existing `runsToday` (the
+ * same figures already relied on elsewhere; see AUTO-1..AUTO-7 above). This is a distinct figure
+ * from getAutomatedTodayStats()'s 186-run/14.2h totals — a by-category runs count, not a
+ * second attempt at the same daily total — so the two can never contradict each other. Sorted by
+ * runsToday descending, which is a presentation choice only and doesn't change any underlying
+ * value.
+ */
+export function getAutomationRunsByCategory(): { category: AutomationCategory; runsToday: number }[] {
+  const categories: AutomationCategory[] = ["finance", "operations", "inventory", "customers"];
+  return categories
+    .map((category) => ({
+      category,
+      runsToday: AUTOMATION_DEFINITIONS.filter((automation) => automation.category === category).reduce(
+        (sum, automation) => sum + automation.runsToday,
+        0,
+      ),
+    }))
+    .sort((a, b) => b.runsToday - a.runsToday);
 }
 
 /**

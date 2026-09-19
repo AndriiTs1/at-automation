@@ -51,6 +51,7 @@ export default function Footer() {
       // Next.js client router left a stale RSC prefetch reference that
       // surfaced as a background 404. `pathname` is already the
       // locale-agnostic logical path.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- intentional full reload; see rationale above
       window.location.assign(`${pathname}${window.location.search}${window.location.hash}`);
     } else {
       router.replace(pathname, { locale: lang });

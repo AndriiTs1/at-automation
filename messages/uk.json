@@ -229,6 +229,16 @@
         "supplierPayment": "Оплата постачальнику"
       }
     },
+    "AutomationImpact": {
+      "title": "Ефект автоматизації",
+      "subtitle": "Запуски сьогодні за напрямками"
+    },
+    "OperationsStatus": {
+      "title": "Статус операцій"
+    },
+    "ActionRequired": {
+      "title": "Потрібна дія"
+    },
     "Teams": {
       "finance": "Фінанси",
       "financeTeam": "Фінансова команда",

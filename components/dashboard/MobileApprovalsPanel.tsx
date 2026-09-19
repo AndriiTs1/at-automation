@@ -6,8 +6,8 @@ export default function MobileApprovalsPanel() {
   const tTeams = useTranslations("Dashboard.Teams");
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
-      <h4 className="mb-1 shrink-0 truncate text-xs font-semibold text-foreground">{t("title")}</h4>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-2.5 shadow-demo-card">
+      <h4 className="mb-1 shrink-0 truncate text-xs font-semibold tracking-tight text-slate-900">{t("title")}</h4>
 
       <div className="flex flex-col gap-1.5 overflow-y-auto">
         {APPROVALS.map((item) => {
@@ -17,17 +17,17 @@ export default function MobileApprovalsPanel() {
           return (
             <div
               key={item.key}
-              className="flex items-center justify-between gap-2 rounded-lg border border-border/60 px-2.5 py-1.5 text-[11px]"
+              className="flex items-center justify-between gap-2 rounded-xl border border-slate-100 px-2.5 py-1.5 text-[11px]"
             >
               <div className="min-w-0">
-                <p className="truncate font-semibold text-foreground">{t(`items.${item.key}`)}</p>
-                <p className="text-neutral-500">
-                  <span className="font-semibold text-foreground">{item.amount}</span> · {requester}
+                <p className="truncate font-semibold text-slate-900">{t(`items.${item.key}`)}</p>
+                <p className="text-slate-500">
+                  <span className="font-semibold text-slate-900">{item.amount}</span> · {requester}
                 </p>
               </div>
               <button
                 type="button"
-                className="shrink-0 rounded-full border border-accent/30 px-3 py-2 text-[10px] font-medium text-accent transition-colors hover:bg-accent/10"
+                className="shrink-0 rounded-full border border-blue-600/20 px-3 py-2 text-[10px] font-medium text-blue-600 transition-colors hover:bg-blue-50"
               >
                 {t("review")}
               </button>
@@ -36,7 +36,7 @@ export default function MobileApprovalsPanel() {
         })}
       </div>
 
-      <p className="mt-1.5 shrink-0 truncate text-[10px] text-neutral-400">{t("awaitingApproval", { count: APPROVALS.length })}</p>
+      <p className="mt-1.5 shrink-0 truncate text-[10px] text-slate-400">{t("awaitingApproval", { count: APPROVALS.length })}</p>
     </div>
   );
 }

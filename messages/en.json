@@ -229,6 +229,16 @@
         "supplierPayment": "Supplier payment"
       }
     },
+    "AutomationImpact": {
+      "title": "Automation Impact",
+      "subtitle": "Runs today by area"
+    },
+    "OperationsStatus": {
+      "title": "Operations Status"
+    },
+    "ActionRequired": {
+      "title": "Action Required"
+    },
     "Teams": {
       "finance": "Finance",
       "financeTeam": "Finance Team",
