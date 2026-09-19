@@ -164,7 +164,7 @@ export default function CustomersWorkspace() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder={t("toolbar.searchPlaceholder")}
-              className="w-full min-w-0 bg-transparent text-sm text-foreground placeholder:text-neutral-400 focus:outline-none"
+              className="w-full min-w-0 bg-transparent text-base text-foreground placeholder:text-neutral-400 focus:outline-none @5xl:text-sm"
             />
           </div>
 
@@ -245,7 +245,7 @@ export default function CustomersWorkspace() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder={t("toolbar.searchPlaceholder")}
-              className="w-full min-w-0 bg-transparent text-sm text-foreground placeholder:text-neutral-400 focus:outline-none"
+              className="w-full min-w-0 bg-transparent text-base text-foreground placeholder:text-neutral-400 focus:outline-none @5xl:text-sm"
             />
           </div>
 
