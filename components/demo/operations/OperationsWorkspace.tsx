@@ -1,8 +1,10 @@
 "use client";
 
+import CustomerFilterDropdown from "@/components/demo/customers/CustomerFilterDropdown";
+
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ChevronDownIcon, SearchIcon } from "@/components/dashboard/icons";
+import { SearchIcon } from "@/components/dashboard/icons";
 import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import { OPERATIONS_ROWS, OPERATIONS_SUMMARY, OPERATION_OWNERS, type OperationStatus } from "@/lib/demo-data";
 import OperationDetailMobile from "./OperationDetailMobile";
@@ -61,9 +63,7 @@ export default function OperationsWorkspace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");
-  // Which Status/Owner dropdown (desktop only, via CustomerFilterDropdown) is open — mirrors
-  // CustomersWorkspace's identical `openFilter` pattern. Mobile/tablet still use native <select>
-  // here and don't read this state.
+  // Only one Status/Owner dropdown may be open at a time across the responsive workspace.
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
 
   const [prevOperationParam, setPrevOperationParam] = useState(operationParam);
@@ -153,44 +153,36 @@ export default function OperationsWorkspace() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder={t("toolbar.searchPlaceholder")}
-              className="w-full min-w-0 bg-transparent text-sm text-foreground placeholder:text-neutral-400 focus:outline-none"
+              className="w-full min-w-0 bg-transparent text-base text-foreground placeholder:text-neutral-400 focus:outline-none @lg:text-sm"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div className="relative flex items-center">
-              <select
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value as StatusFilterValue)}
-                aria-label={t("toolbar.allStatuses")}
-                className="w-full appearance-none rounded-full border border-border bg-surface py-2 pr-7 pl-3 text-xs text-neutral-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-              >
-                <option value="all">{t("toolbar.allStatuses")}</option>
-                {STATUS_OPTIONS.map((status) => (
-                  <option key={status} value={status}>
-                    {t(`status.${status}`)}
-                  </option>
-                ))}
-              </select>
-              <ChevronDownIcon className="pointer-events-none absolute right-2.5 h-3 w-3 text-neutral-400" />
-            </div>
+            <CustomerFilterDropdown
+              value={statusFilter}
+              options={[
+                { value: "all", label: t("toolbar.allStatuses") },
+                ...STATUS_OPTIONS.map((status) => ({ value: status, label: t(`status.${status}`) })),
+              ]}
+              onChange={setStatusFilter}
+              ariaLabel={t("toolbar.allStatuses")}
+              open={openFilter === "status"}
+              onOpenChange={(open) => setOpenFilter(open ? "status" : null)}
+              className="w-full min-w-0 [&>button]:w-full"
+            />
 
-            <div className="relative flex items-center">
-              <select
-                value={ownerFilter}
-                onChange={(event) => setOwnerFilter(event.target.value)}
-                aria-label={t("toolbar.allOwners")}
-                className="w-full appearance-none rounded-full border border-border bg-surface py-2 pr-7 pl-3 text-xs text-neutral-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-              >
-                <option value="all">{t("toolbar.allOwners")}</option>
-                {OPERATION_OWNERS.map((owner) => (
-                  <option key={owner} value={owner}>
-                    {owner}
-                  </option>
-                ))}
-              </select>
-              <ChevronDownIcon className="pointer-events-none absolute right-2.5 h-3 w-3 text-neutral-400" />
-            </div>
+            <CustomerFilterDropdown
+              value={ownerFilter}
+              options={[
+                { value: "all", label: t("toolbar.allOwners") },
+                ...OPERATION_OWNERS.map((owner) => ({ value: owner, label: owner })),
+              ]}
+              onChange={setOwnerFilter}
+              ariaLabel={t("toolbar.allOwners")}
+              open={openFilter === "owner"}
+              onOpenChange={(open) => setOpenFilter(open ? "owner" : null)}
+              className="w-full min-w-0 [&>button]:w-full"
+            />
           </div>
 
           {hasActiveFilters && (
@@ -249,39 +241,29 @@ export default function OperationsWorkspace() {
             />
           </div>
 
-          <div className="relative flex shrink-0 items-center">
-            <select
-              value={statusFilter}
-              onChange={(event) => setStatusFilter(event.target.value as StatusFilterValue)}
-              aria-label={t("toolbar.allStatuses")}
-              className="appearance-none rounded-full border border-border bg-surface py-2 pr-8 pl-3 text-sm text-neutral-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-            >
-              <option value="all">{t("toolbar.allStatuses")}</option>
-              {STATUS_OPTIONS.map((status) => (
-                <option key={status} value={status}>
-                  {t(`status.${status}`)}
-                </option>
-              ))}
-            </select>
-            <ChevronDownIcon className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-neutral-400" />
-          </div>
+          <CustomerFilterDropdown
+            value={statusFilter}
+            options={[
+              { value: "all", label: t("toolbar.allStatuses") },
+              ...STATUS_OPTIONS.map((status) => ({ value: status, label: t(`status.${status}`) })),
+            ]}
+            onChange={setStatusFilter}
+            ariaLabel={t("toolbar.allStatuses")}
+            open={openFilter === "status"}
+            onOpenChange={(open) => setOpenFilter(open ? "status" : null)}
+          />
 
-          <div className="relative flex shrink-0 items-center">
-            <select
-              value={ownerFilter}
-              onChange={(event) => setOwnerFilter(event.target.value)}
-              aria-label={t("toolbar.allOwners")}
-              className="appearance-none rounded-full border border-border bg-surface py-2 pr-8 pl-3 text-sm text-neutral-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30"
-            >
-              <option value="all">{t("toolbar.allOwners")}</option>
-              {OPERATION_OWNERS.map((owner) => (
-                <option key={owner} value={owner}>
-                  {owner}
-                </option>
-              ))}
-            </select>
-            <ChevronDownIcon className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-neutral-400" />
-          </div>
+          <CustomerFilterDropdown
+            value={ownerFilter}
+            options={[
+              { value: "all", label: t("toolbar.allOwners") },
+              ...OPERATION_OWNERS.map((owner) => ({ value: owner, label: owner })),
+            ]}
+            onChange={setOwnerFilter}
+            ariaLabel={t("toolbar.allOwners")}
+            open={openFilter === "owner"}
+            onOpenChange={(open) => setOpenFilter(open ? "owner" : null)}
+          />
 
           {hasActiveFilters && (
             <div className="flex shrink-0 items-center gap-3">

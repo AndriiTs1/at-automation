@@ -28,6 +28,7 @@ export default function CustomerFilterDropdown<T extends string>({
   ariaLabel,
   open,
   onOpenChange,
+  className = "",
 }: {
   value: T;
   options: FilterDropdownOption<T>[];
@@ -35,6 +36,7 @@ export default function CustomerFilterDropdown<T extends string>({
   ariaLabel: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  className?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const listboxId = useId();
@@ -94,7 +96,7 @@ export default function CustomerFilterDropdown<T extends string>({
   };
 
   return (
-    <div ref={containerRef} className="relative shrink-0">
+    <div ref={containerRef} className={`relative shrink-0 ${className}`}>
       <button
         type="button"
         onClick={() => onOpenChange(!open)}
