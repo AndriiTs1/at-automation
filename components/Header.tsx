@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
-import { routing } from "@/i18n/routing";
+import { localeLabel, routing } from "@/i18n/routing";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 type LanguageCode = (typeof routing.locales)[number];
@@ -147,7 +147,7 @@ export default function Header() {
                 onClick={() => setLangMenuOpen((open) => !open)}
                 className="flex items-center gap-1 rounded-full py-1 pr-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-black/5"
               >
-                <span className="rounded-lg bg-black/[0.03] px-3 py-1.5">{currentLang.toUpperCase()}</span>
+                <span className="rounded-lg bg-black/[0.03] px-3 py-1.5">{localeLabel(currentLang)}</span>
                 <ChevronIcon open={langMenuOpen} />
               </button>
 
@@ -167,7 +167,7 @@ export default function Header() {
                         lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
                       }`}
                     >
-                      {lang.toUpperCase()}
+                      {localeLabel(lang)}
                     </button>
                   ))}
                 </div>
@@ -214,7 +214,7 @@ export default function Header() {
                     lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
                   }`}
                 >
-                  {lang.toUpperCase()}
+                  {localeLabel(lang)}
                 </button>
               ))}
             </div>

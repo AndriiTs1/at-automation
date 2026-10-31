@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { INTEGRATION_CATEGORIES } from "@/lib/marketing-data";
-import { routing } from "@/i18n/routing";
+import { localeLabel, routing } from "@/i18n/routing";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 type LanguageCode = (typeof routing.locales)[number];
@@ -135,7 +135,7 @@ export default function Footer() {
                     lang === currentLang ? "bg-black/5 text-foreground" : "text-neutral-600 hover:text-neutral-700"
                   }`}
                 >
-                  {lang.toUpperCase()}
+                  {localeLabel(lang)}
                 </button>
               ))}
             </div>

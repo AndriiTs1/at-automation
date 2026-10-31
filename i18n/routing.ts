@@ -13,3 +13,9 @@ export const routing = defineRouting({
 });
 
 export type AppLocale = (typeof routing.locales)[number];
+
+// Display label for the language switcher: Ukrainian is shown as "UA" while
+// the locale code (and URL prefix) stays the ISO 639-1 "uk".
+export function localeLabel(locale: AppLocale): string {
+  return locale === "uk" ? "UA" : locale.toUpperCase();
+}
