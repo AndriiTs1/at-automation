@@ -81,8 +81,8 @@
       },
       "aiAutomation": {
         "title": "Automatisation par l'IA",
-        "description": "L'IA classe, extrait et recommande — les décisions restent validées par des personnes.",
-        "examples": ["Compréhension des documents", "Classification & extraction", "Décisions assistées par l'IA"]
+        "description": "IA privée intégrée à votre système — les données de l'entreprise n'en sortent jamais. Chaque décision est validée par une personne.",
+        "examples": ["Compréhension & extraction de documents", "Décisions assistées par l'IA", "Les données restent dans l'entreprise"]
       }
     }
   },

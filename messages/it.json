@@ -81,8 +81,8 @@
       },
       "aiAutomation": {
         "title": "Automazione AI",
-        "description": "L'AI classifica, estrae e consiglia — le persone approvano il risultato.",
-        "examples": ["Comprensione dei documenti", "Classificazione & estrazione", "Decisioni assistite dall'AI"]
+        "description": "AI privata integrata nel tuo sistema — i dati aziendali non escono mai. Le persone approvano ogni risultato.",
+        "examples": ["Comprensione & estrazione dei documenti", "Decisioni assistite dall'AI", "I dati restano in azienda"]
       }
     }
   },

@@ -81,8 +81,8 @@
       },
       "aiAutomation": {
         "title": "KI-Automatisierung",
-        "description": "KI klassifiziert, extrahiert und empfiehlt — Menschen genehmigen das Ergebnis.",
-        "examples": ["Dokumentenverständnis", "Klassifizierung & Extraktion", "KI-gestützte Entscheidungen"]
+        "description": "Private KI direkt in Ihrem System — Unternehmensdaten verlassen es nie. Menschen genehmigen jedes Ergebnis.",
+        "examples": ["Dokumentenverständnis & Extraktion", "KI-gestützte Entscheidungen", "Daten bleiben im Unternehmen"]
       }
     }
   },

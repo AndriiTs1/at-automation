@@ -81,8 +81,8 @@
       },
       "aiAutomation": {
         "title": "AI Automation",
-        "description": "Apply AI to classify, extract and recommend — with people approving the outcome.",
-        "examples": ["Document understanding", "Classification & extraction", "AI-assisted decisions"]
+        "description": "Private AI built into your own system — company data never leaves it. People approve every outcome.",
+        "examples": ["Document understanding & extraction", "AI-assisted decisions", "Data stays inside your company"]
       }
     }
   },
