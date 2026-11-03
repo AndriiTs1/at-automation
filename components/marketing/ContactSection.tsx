@@ -4,8 +4,8 @@ import ContactIntro from "@/components/marketing/ContactIntro";
 /**
  * Closing consultation block — the page's conversion endpoint, placed after IntegrationEcosystem
  * and directly before the Footer. `id="contact"` (on the content grid, see --anchor-offset in
- * globals.css) is the no-JS fallback target of the Hero and Header CTAs, which otherwise open the
- * same form in ContactModal; this section stays for visitors who scroll down to it. The border-t
+ * globals.css) is the no-JS fallback target of the Header CTAs, which otherwise open the same
+ * form in ContactModal; this section stays for visitors who scroll down to it. The border-t
  * separates it from IntegrationEcosystem's white surface, since the background tokens alone are
  * too close in tone to read as two sections.
  */

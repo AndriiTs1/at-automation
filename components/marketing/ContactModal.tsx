@@ -9,12 +9,12 @@ import ContactIntro from "@/components/marketing/ContactIntro";
 export const CONTACT_TRIGGER_ATTR = "data-contact-trigger";
 
 /**
- * Consultation request dialog — the Header CTAs and the Hero's primary CTA open it instead of
- * scrolling to #contact. Mounted once in the marketing layout.
+ * Consultation request dialog — the Header CTAs (desktop and mobile) open it instead of scrolling
+ * to #contact. Mounted once in the marketing layout.
  *
  * Triggers are plain `<a href="#contact" data-contact-trigger>` links, picked up by one delegated
- * click listener here: the Hero stays a server component, and without JS the links still scroll
- * to the on-page ContactSection.
+ * click listener here, so any link can become a trigger without wiring state through to it, and
+ * without JS the links still scroll to the on-page ContactSection.
  *
  * Built on the native <dialog> + showModal(), which already provides role="dialog",
  * aria-modal, Escape to close, focus returned to the trigger on close, and an inert page behind
