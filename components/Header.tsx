@@ -177,6 +177,7 @@ export default function Header() {
             {/* Desktop CTA */}
             <a
               href="#contact"
+              data-contact-trigger
               className="hidden items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent/90 md:inline-flex"
             >
               {t("cta")}
@@ -186,6 +187,7 @@ export default function Header() {
                 dropdown; a shorter label so it fits beside the logo at 360px. */}
             <a
               href="#contact"
+              data-contact-trigger
               onClick={() => setMobileMenuOpen(false)}
               className="inline-flex items-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent/90 md:hidden"
             >

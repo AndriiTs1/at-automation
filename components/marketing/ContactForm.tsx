@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { CONTACT_LIMITS, contactFieldErrors, contactSchema, type ContactField, type ContactFieldErrors } from "@/lib/validation/contact";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -28,6 +28,10 @@ const FIELD_ORDER: ContactField[] = ["name", "email", "company", "message"];
 export default function ContactForm() {
   const t = useTranslations("Contact.form");
   const locale = useLocale();
+  // The form renders twice on the page (ContactSection and ContactModal), so error ids must be
+  // unique per instance for aria-describedby to point at the right message.
+  const uid = useId();
+  const errorId = (field: ContactField) => `${uid}-${field}-error`;
   const [status, setStatus] = useState<Status>("idle");
   const submitting = status === "submitting";
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
@@ -84,13 +88,13 @@ export default function ContactForm() {
     name: field,
     disabled: submitting,
     "aria-invalid": fieldErrors[field] ? true : undefined,
-    "aria-describedby": fieldErrors[field] ? `contact-${field}-error` : undefined,
+    "aria-describedby": fieldErrors[field] ? errorId(field) : undefined,
     onChange: () => clearError(field),
   });
 
   const fieldError = (field: ContactField) =>
     fieldErrors[field] ? (
-      <span id={`contact-${field}-error`} className="text-center text-sm text-balance text-error">
+      <span id={errorId(field)} className="text-center text-sm text-balance text-error">
         {t(`errors.${fieldErrors[field]}`)}
       </span>
     ) : null;

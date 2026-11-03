@@ -42,6 +42,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#contact"
+              data-contact-trigger
               className="rounded-full bg-accent px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-accent/90"
             >
               {tHero("ctaPrimary")}

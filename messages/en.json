@@ -115,6 +115,9 @@
     }
   },
   "Contact": {
+    "modal": {
+      "close": "Close"
+    },
     "eyebrow": "FREE CONSULTATION",
     "headline": "Tell us what slows your team down.",
     "body": "Describe the process you want to automate. We'll review it and come back with a concrete next step — no sales pitch.",

@@ -115,6 +115,9 @@
     }
   },
   "Contact": {
+    "modal": {
+      "close": "Chiudi"
+    },
     "eyebrow": "CONSULENZA GRATUITA",
     "headline": "Raccontaci cosa rallenta il tuo team.",
     "body": "Descrivi il processo che vuoi automatizzare. Lo analizziamo e ti proponiamo un passo successivo concreto, senza discorsi di vendita.",

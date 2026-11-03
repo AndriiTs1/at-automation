@@ -115,6 +115,9 @@
     }
   },
   "Contact": {
+    "modal": {
+      "close": "Schließen"
+    },
     "eyebrow": "KOSTENLOSE BERATUNG",
     "headline": "Erzählen Sie uns, was Ihr Team ausbremst.",
     "body": "Beschreiben Sie den Prozess, den Sie automatisieren möchten. Wir prüfen ihn und melden uns mit einem konkreten nächsten Schritt – ohne Verkaufsgespräch.",
