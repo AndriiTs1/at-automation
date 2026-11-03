@@ -145,7 +145,7 @@ export default function Header() {
                 aria-haspopup="listbox"
                 aria-expanded={langMenuOpen}
                 onClick={() => setLangMenuOpen((open) => !open)}
-                className="flex items-center gap-1 rounded-full py-1 pr-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-black/5"
+                className="flex cursor-pointer items-center gap-1 rounded-full py-1 pr-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-black/5"
               >
                 <span className="rounded-lg bg-black/[0.03] px-3 py-1.5">{localeLabel(currentLang)}</span>
                 <ChevronIcon open={langMenuOpen} />
@@ -163,7 +163,7 @@ export default function Header() {
                       role="option"
                       aria-selected={lang === currentLang}
                       onClick={() => selectLanguage(lang)}
-                      className={`w-full rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
+                      className={`w-full cursor-pointer rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
                         lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
                       }`}
                     >
@@ -220,7 +220,7 @@ export default function Header() {
                   role="option"
                   aria-selected={lang === currentLang}
                   onClick={() => selectLanguage(lang)}
-                  className={`flex w-full items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
+                  className={`flex w-full cursor-pointer items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
                     lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
                   }`}
                 >

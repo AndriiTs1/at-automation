@@ -127,7 +127,7 @@ export default function Footer() {
                   role="option"
                   aria-selected={lang === currentLang}
                   onClick={() => selectLanguage(lang)}
-                  className={`rounded-md px-2 py-1.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none ${
+                  className={`cursor-pointer rounded-md px-2 py-1.5 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none ${
                     lang === currentLang ? "bg-black/5 text-foreground" : "text-neutral-600 hover:text-neutral-700"
                   }`}
                 >
