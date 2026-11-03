@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import DemoDashboard from "@/components/dashboard/DemoDashboard";
 import TabletFrame from "@/components/dashboard/TabletFrame";
+import { DashboardIcon } from "@/components/dashboard/icons";
 import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
 import ContactSection from "@/components/marketing/ContactSection";
 import IntegrationEcosystem from "@/components/marketing/IntegrationEcosystem";
@@ -24,17 +25,19 @@ export default async function Home(props: PageProps<"/[locale]">) {
 
       {/* Hero */}
       <section className="relative px-6 pt-30 pb-10 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
-        {/* Decorative side labels */}
-        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-500 uppercase min-[1400px]:block min-[1400px]:left-10">
-          <span className="block">{tHero("sideLabelLeft1")}</span>
-          <span className="block">{tHero("sideLabelLeft2")}</span>
-          <span className="block">{tHero("sideLabelLeft3")}</span>
-        </div>
-        <div className="absolute top-1/2 hidden -translate-y-1/2 text-xs font-medium tracking-wider text-neutral-500 uppercase min-[1400px]:block min-[1400px]:right-10">
-          <span className="block">{tHero("sideLabelRight1")}</span>
-          <span className="block">{tHero("sideLabelRight2")}</span>
-          <span className="block">{tHero("sideLabelRight3")}</span>
-        </div>
+        {/* Highlights, wide screens: two concrete facts on each side of the headline. Below
+            1400px there's no room beside the hero, so the same four render as a strip under the
+            trust line instead (see HeroHighlights below). */}
+        <ul className="absolute top-1/2 left-10 hidden w-52 -translate-y-1/2 flex-col gap-5 min-[1400px]:flex">
+          {HIGHLIGHTS.slice(0, 2).map((item) => (
+            <HeroHighlight key={item.key} icon={item.icon} label={tHero(`highlights.${item.key}`)} />
+          ))}
+        </ul>
+        <ul className="absolute top-1/2 right-10 hidden w-52 -translate-y-1/2 flex-col gap-5 min-[1400px]:flex">
+          {HIGHLIGHTS.slice(2).map((item) => (
+            <HeroHighlight key={item.key} icon={item.icon} label={tHero(`highlights.${item.key}`)} />
+          ))}
+        </ul>
 
         <div className="mx-auto max-w-4xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-accent md:mb-4">{tHero("eyebrow")}</p>
@@ -62,6 +65,15 @@ export default async function Home(props: PageProps<"/[locale]">) {
           </div>
 
           <p className="mt-4 text-sm text-neutral-500">{tHero("trustLine")}</p>
+
+          {/* Separate wrapper for the 1400px hide: on the list itself it would lose to sm:flex. */}
+          <div className="min-[1400px]:hidden">
+            <ul className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-x-4 gap-y-3 sm:max-w-none sm:flex sm:flex-wrap sm:justify-center sm:gap-x-8">
+              {HIGHLIGHTS.map((item) => (
+                <HeroHighlight key={item.key} icon={item.icon} label={tHero(`highlights.${item.key}`)} />
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -74,17 +86,27 @@ export default async function Home(props: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* Product showcase — decorative marketing preview, not real page UX: the live interactive
-          DemoDashboard is reused here purely as a visual, so it's excluded from the accessibility
-          tree and keyboard tab order (aria-hidden + inert) rather than treated as reachable
-          content. Purely visual — inert does not alter rendering. */}
-      <section
-        aria-hidden="true"
-        inert
-        className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24"
-      >
-        <TabletFrame>
-          <DemoDashboard />
+      {/* Product showcase — the DemoDashboard is reused here as a picture of the product, so its
+          own UI stays out of the accessibility tree and tab order (aria-hidden + inert). The whole
+          screen is instead one link to the real /demo, laid over the preview inside the frame, so
+          "Try it" above is a promise the page actually keeps. */}
+      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
+        <TabletFrame
+          overlay={
+            <Link
+              href="/demo"
+              className="group absolute inset-0 z-10 flex items-center justify-center bg-foreground/0 transition-colors hover:bg-foreground/10 focus-visible:bg-foreground/10 focus-visible:outline-none motion-reduce:transition-none"
+            >
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-lg transition-opacity md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 motion-reduce:transition-none">
+                {tBridge("openDemo")}
+                <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+          }
+        >
+          <div aria-hidden="true" inert className="h-full w-full">
+            <DemoDashboard />
+          </div>
         </TabletFrame>
       </section>
 
@@ -97,6 +119,26 @@ export default async function Home(props: PageProps<"/[locale]">) {
       {/* Consultation request — the page's conversion endpoint */}
       <ContactSection />
     </main>
+  );
+}
+
+/** Hero highlight facts, in display order: the first two sit left of the headline, the last two
+ * right of it. Icons come from the dashboard icon set (components/dashboard/icons.tsx). */
+const HIGHLIGHTS = [
+  { key: "launch", icon: "bolt" },
+  { key: "integrations", icon: "plug" },
+  { key: "custom", icon: "wrench" },
+  { key: "unified", icon: "chart" },
+] as const;
+
+function HeroHighlight({ icon, label }: { icon: string; label: string }) {
+  return (
+    <li className="flex items-center gap-2.5 text-left text-sm leading-snug text-neutral-600">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+        <DashboardIcon name={icon} className="h-4 w-4" />
+      </span>
+      <span>{label}</span>
+    </li>
   );
 }
 

@@ -29,16 +29,17 @@
     "ctaPrimary": "Consultation gratuite",
     "ctaSecondary": "Essayer la démo en direct",
     "trustLine": "Gratuit · Sans engagement · Démo sans inscription",
-    "sideLabelLeft1": "De",
-    "sideLabelLeft2": "Travail manuel",
-    "sideLabelLeft3": "Vers de vrais progrès",
-    "sideLabelRight1": "Simple",
-    "sideLabelRight2": "Clair",
-    "sideLabelRight3": "Conçu pour votre entreprise"
+    "highlights": {
+      "launch": "Lancement dès 2 à 3 semaines",
+      "integrations": "Intégration avec CRM, banques et stock",
+      "custom": "Conçu pour votre processus",
+      "unified": "Du travail manuel à un système unique"
+    }
   },
   "Bridge": {
     "title": "Ne vous contentez pas de regarder. Essayez.",
-    "subtitle": "Découvrez comment commandes, stocks et finances fonctionnent ensemble dans un seul système connecté."
+    "subtitle": "Découvrez comment commandes, stocks et finances fonctionnent ensemble dans un seul système connecté.",
+    "openDemo": "Ouvrir la démo en direct"
   },
   "Capabilities": {
     "eyebrow": "CE QU'AT PEUT AUTOMATISER",

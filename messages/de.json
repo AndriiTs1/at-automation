@@ -29,16 +29,17 @@
     "ctaPrimary": "Kostenlose Beratung",
     "ctaSecondary": "Live-Demo testen",
     "trustLine": "Kostenlos · Unverbindlich · Demo ohne Registrierung",
-    "sideLabelLeft1": "Von",
-    "sideLabelLeft2": "Manueller Aufwand",
-    "sideLabelLeft3": "Zu echtem Fortschritt",
-    "sideLabelRight1": "Einfach",
-    "sideLabelRight2": "Klar",
-    "sideLabelRight3": "Für Ihr Unternehmen gebaut"
+    "highlights": {
+      "launch": "Start ab 2–3 Wochen",
+      "integrations": "Anbindung an CRM, Banken und Lager",
+      "custom": "Entwickelt für Ihren Prozess",
+      "unified": "Von Handarbeit zum einheitlichen System"
+    }
   },
   "Bridge": {
     "title": "Nicht nur ansehen. Ausprobieren.",
-    "subtitle": "Entdecken Sie, wie Aufträge, Lagerbestand und Finanzen in einem vernetzten System zusammenspielen."
+    "subtitle": "Entdecken Sie, wie Aufträge, Lagerbestand und Finanzen in einem vernetzten System zusammenspielen.",
+    "openDemo": "Live-Demo öffnen"
   },
   "Capabilities": {
     "eyebrow": "WAS AT AUTOMATISIEREN KANN",
