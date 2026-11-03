@@ -2,7 +2,13 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useId, useState, type FormEvent } from "react";
-import { CONTACT_LIMITS, contactFieldErrors, contactSchema, type ContactField, type ContactFieldErrors } from "@/lib/validation/contact";
+import {
+  CONTACT_LIMITS,
+  contactFieldErrors,
+  contactSchema,
+  type ContactField,
+  type ContactFieldErrors,
+} from "@/lib/validation/contact";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -40,11 +46,15 @@ export default function ContactForm() {
     setFieldErrors(errors);
     const first = FIELD_ORDER.find((field) => errors[field]);
     // Next frame: after a server-side 400 the fields are still `disabled` until React re-renders.
-    if (first) requestAnimationFrame(() => (form.elements.namedItem(first) as HTMLElement | null)?.focus());
+    if (first)
+      requestAnimationFrame(() =>
+        (form.elements.namedItem(first) as HTMLElement | null)?.focus(),
+      );
   };
 
   const clearError = (field: ContactField) => {
-    if (fieldErrors[field]) setFieldErrors((errors) => ({ ...errors, [field]: undefined }));
+    if (fieldErrors[field])
+      setFieldErrors((errors) => ({ ...errors, [field]: undefined }));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -68,14 +78,17 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       });
       if (response.status === 400) {
-        const result = (await response.json().catch(() => null)) as { fieldErrors?: ContactFieldErrors } | null;
+        const result = (await response.json().catch(() => null)) as {
+          fieldErrors?: ContactFieldErrors;
+        } | null;
         if (result?.fieldErrors && Object.keys(result.fieldErrors).length > 0) {
           setStatus("idle");
           showErrors(form, result.fieldErrors);
           return;
         }
       }
-      if (!response.ok) throw new Error(`Contact request failed: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`Contact request failed: ${response.status}`);
       form.reset();
       setStatus("success");
     } catch {
@@ -94,19 +107,29 @@ export default function ContactForm() {
 
   const fieldError = (field: ContactField) =>
     fieldErrors[field] ? (
-      <span id={errorId(field)} className="text-center text-sm text-balance text-error">
+      <span
+        id={errorId(field)}
+        className="text-center text-sm text-balance text-error"
+      >
         {t(`errors.${fieldErrors[field]}`)}
       </span>
     ) : null;
 
   if (status === "success") {
     return (
-      <div role="status" className="flex flex-col items-center gap-3 py-10 text-center">
+      <div
+        role="status"
+        className="flex flex-col items-center gap-3 py-10 text-center"
+      >
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-success/10 text-success">
           <CheckIcon className="h-6 w-6" />
         </span>
-        <p className="text-xl font-semibold text-foreground">{t("successTitle")}</p>
-        <p className="max-w-sm text-base text-neutral-600">{t("successBody")}</p>
+        <p className="text-xl font-semibold text-foreground">
+          {t("successTitle")}
+        </p>
+        <p className="max-w-sm text-base text-neutral-600">
+          {t("successBody")}
+        </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
@@ -122,27 +145,54 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-foreground">{t("nameLabel")}</span>
-          <input {...fieldProps("name")} type="text" required maxLength={CONTACT_LIMITS.name} autoComplete="name" className={fieldClassName} />
+          <span className="text-sm font-medium text-foreground">
+            {t("nameLabel")}
+          </span>
+          <input
+            {...fieldProps("name")}
+            type="text"
+            required
+            maxLength={CONTACT_LIMITS.name}
+            autoComplete="name"
+            className={fieldClassName}
+          />
           {fieldError("name")}
         </label>
         <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-foreground">{t("emailLabel")}</span>
-          <input {...fieldProps("email")} type="email" required maxLength={CONTACT_LIMITS.email} autoComplete="email" className={fieldClassName} />
+          <span className="text-sm font-medium text-foreground">
+            {t("emailLabel")}
+          </span>
+          <input
+            {...fieldProps("email")}
+            type="email"
+            required
+            maxLength={CONTACT_LIMITS.email}
+            autoComplete="email"
+            className={fieldClassName}
+          />
           {fieldError("email")}
         </label>
       </div>
 
       <label className="flex flex-col gap-1.5">
         <span className="text-sm font-medium text-foreground">
-          {t("companyLabel")} <span className="font-normal text-neutral-500">{t("optional")}</span>
+          {t("companyLabel")}{" "}
+          <span className="font-normal text-neutral-500">{t("optional")}</span>
         </span>
-        <input {...fieldProps("company")} type="text" maxLength={CONTACT_LIMITS.company} autoComplete="organization" className={fieldClassName} />
+        <input
+          {...fieldProps("company")}
+          type="text"
+          maxLength={CONTACT_LIMITS.company}
+          autoComplete="organization"
+          className={fieldClassName}
+        />
         {fieldError("company")}
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-foreground">{t("messageLabel")}</span>
+        <span className="text-sm font-medium text-foreground">
+          {t("messageLabel")}
+        </span>
         <textarea
           {...fieldProps("message")}
           required
@@ -156,7 +206,10 @@ export default function ContactForm() {
 
       {/* Honeypot — hidden from people and assistive tech; bots that fill every field get dropped
           server-side (see app/api/contact/route.ts). */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-px w-px overflow-hidden"
+      >
         <label>
           Website
           <input name="website" type="text" tabIndex={-1} autoComplete="off" />
@@ -164,9 +217,15 @@ export default function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p role="alert" className="rounded-xl bg-error/10 px-4 py-3 text-sm text-error">
+        <p
+          role="alert"
+          className="rounded-xl bg-error/10 px-4 py-3 text-sm text-error"
+        >
           {t("error")}{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold underline underline-offset-2">
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="font-semibold underline underline-offset-2"
+          >
             {CONTACT_EMAIL}
           </a>
         </p>
@@ -183,15 +242,28 @@ export default function ContactForm() {
         <p className="text-sm text-neutral-500">{t("responseNote")}</p>
       </div>
 
-      <p className="text-center text-xs text-neutral-500 sm:text-left">{t("privacyNote")}</p>
+      <p className="text-center text-xs text-neutral-500 sm:text-left">
+        {t("privacyNote")}
+      </p>
     </form>
   );
 }
 
 function CheckIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12.5l4.5 4.5L19 7.5" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M5 12.5l4.5 4.5L19 7.5"
+      />
     </svg>
   );
 }

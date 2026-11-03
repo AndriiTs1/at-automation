@@ -2,7 +2,12 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import { localeLabel, routing } from "@/i18n/routing";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
@@ -61,10 +66,16 @@ export default function Header() {
   // Close dropdowns/panels when clicking outside of them.
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
+      if (
+        langMenuRef.current &&
+        !langMenuRef.current.contains(event.target as Node)
+      ) {
         setLangMenuOpen(false);
       }
-      if (mobilePanelRef.current && !mobilePanelRef.current.contains(event.target as Node)) {
+      if (
+        mobilePanelRef.current &&
+        !mobilePanelRef.current.contains(event.target as Node)
+      ) {
         setMobileMenuOpen(false);
       }
     };
@@ -89,7 +100,9 @@ export default function Header() {
       // to be both correct and silent in a production build. `pathname` is
       // already the locale-agnostic logical path (e.g. "/demo").
       // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- intentional full reload; see rationale above
-      window.location.assign(`${pathname}${window.location.search}${window.location.hash}`);
+      window.location.assign(
+        `${pathname}${window.location.search}${window.location.hash}`,
+      );
     } else {
       router.replace(pathname, { locale: lang });
     }
@@ -105,134 +118,156 @@ export default function Header() {
   const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/") {
       event.preventDefault();
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
     }
   };
 
   return (
     <>
       <header className="fixed inset-x-0 top-5 z-50 bg-transparent px-4 md:px-6">
-      <div ref={mobilePanelRef} className="relative mx-auto w-full max-w-[1440px] bg-transparent">
         <div
-          className={`flex h-[74px] items-center justify-between gap-3 rounded-2xl px-4 backdrop-saturate-150 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none ${
-            scrolled
-              ? "border border-white/50 bg-white/[0.76] shadow-sm shadow-black/5 backdrop-blur-[20px]"
-              : "border border-black/8 bg-white/95 shadow-md shadow-black/8 backdrop-blur-2xl"
-          }`}
+          ref={mobilePanelRef}
+          className="relative mx-auto w-full max-w-360 bg-transparent"
         >
-          {/* Logo */}
-          <Link href="/" onClick={handleLogoClick} className="my-[13px] mr-2 ml-0 flex shrink-0 items-center md:mr-4">
-            <Image
-              src="/logo.png"
-              alt={t("logoAlt")}
-              width={48}
-              height={48}
-              preload
-              style={{ height: "48px", width: "auto", objectFit: "contain" }}
-            />
-            <span className="ml-1.5 inline-block text-xs font-bold tracking-normal text-foreground sm:text-sm md:text-base">
-              AUTOMATION
-            </span>
-          </Link>
+          <div
+            className={`flex h-18.5 items-center justify-between gap-3 rounded-2xl px-4 backdrop-saturate-150 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none ${
+              scrolled
+                ? "border border-white/50 bg-white/76 shadow-sm shadow-black/5 backdrop-blur-[20px]"
+                : "border border-black/8 bg-white/95 shadow-md shadow-black/8 backdrop-blur-2xl"
+            }`}
+          >
+            {/* Logo */}
+            <Link
+              href="/"
+              onClick={handleLogoClick}
+              className="my-3.25 mr-2 ml-0 flex shrink-0 items-center md:mr-4"
+            >
+              <Image
+                src="/logo.png"
+                alt={t("logoAlt")}
+                width={48}
+                height={48}
+                preload
+                style={{ height: "48px", width: "auto", objectFit: "contain" }}
+              />
+              <span className="ml-1.5 inline-block text-xs font-bold tracking-normal text-foreground sm:text-sm md:text-base">
+                AUTOMATION
+              </span>
+            </Link>
 
-          <div className="flex items-center gap-2 md:gap-3">
-            {/* Desktop language switcher */}
-            <div className="relative hidden md:block" ref={langMenuRef}>
+            <div className="flex items-center gap-2 md:gap-3">
+              {/* Desktop language switcher */}
+              <div className="relative hidden md:block" ref={langMenuRef}>
+                <button
+                  type="button"
+                  aria-label={t("languageSwitcherLabel")}
+                  aria-haspopup="listbox"
+                  aria-expanded={langMenuOpen}
+                  onClick={() => setLangMenuOpen((open) => !open)}
+                  className="flex cursor-pointer items-center gap-1 rounded-full py-1 pr-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-black/5"
+                >
+                  <span className="rounded-lg bg-black/3 px-3 py-1.5">
+                    {localeLabel(currentLang)}
+                  </span>
+                  <ChevronIcon open={langMenuOpen} />
+                </button>
+
+                {langMenuOpen && (
+                  <div
+                    role="listbox"
+                    className="absolute right-0 mt-2 grid w-44 grid-cols-2 gap-1 rounded-2xl border border-black/5 bg-white/70 p-2 shadow-sm shadow-black/5 backdrop-blur-2xl backdrop-saturate-150"
+                  >
+                    {routing.locales.map((lang) => (
+                      <button
+                        key={lang}
+                        type="button"
+                        role="option"
+                        aria-selected={lang === currentLang}
+                        onClick={() => selectLanguage(lang)}
+                        className={`w-full cursor-pointer rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
+                          lang === currentLang
+                            ? "bg-black/5 font-semibold text-neutral-900"
+                            : "font-medium text-neutral-600"
+                        }`}
+                      >
+                        {localeLabel(lang)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Desktop CTA */}
+              <a
+                href="#contact"
+                data-contact-trigger
+                className="hidden items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent/90 md:inline-flex"
+              >
+                {t("cta")}
+              </a>
+
+              {/* Mobile CTA — always visible next to the menu toggle, never hidden inside the
+                dropdown; a shorter label so it fits beside the logo at 360px. */}
+              <a
+                href="#contact"
+                data-contact-trigger
+                onClick={() => setMobileMenuOpen(false)}
+                className="inline-flex items-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent/90 md:hidden"
+              >
+                {t("ctaShort")}
+              </a>
+
+              {/* Hamburger / close toggle */}
               <button
                 type="button"
-                aria-label={t("languageSwitcherLabel")}
-                aria-haspopup="listbox"
-                aria-expanded={langMenuOpen}
-                onClick={() => setLangMenuOpen((open) => !open)}
-                className="flex cursor-pointer items-center gap-1 rounded-full py-1 pr-2 text-sm font-semibold text-neutral-700 transition-colors hover:bg-black/5"
+                aria-label={mobileMenuOpen ? t("menuClose") : t("menuOpen")}
+                aria-expanded={mobileMenuOpen}
+                onClick={handleMobileMenuToggle}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-700 transition-colors hover:bg-black/5 md:hidden"
               >
-                <span className="rounded-lg bg-black/[0.03] px-3 py-1.5">{localeLabel(currentLang)}</span>
-                <ChevronIcon open={langMenuOpen} />
+                {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
               </button>
-
-              {langMenuOpen && (
-                <div
-                  role="listbox"
-                  className="absolute right-0 mt-2 grid w-44 grid-cols-2 gap-1 rounded-2xl border border-black/5 bg-white/70 p-2 shadow-sm shadow-black/5 backdrop-blur-2xl backdrop-saturate-150"
-                >
-                  {routing.locales.map((lang) => (
-                    <button
-                      key={lang}
-                      type="button"
-                      role="option"
-                      aria-selected={lang === currentLang}
-                      onClick={() => selectLanguage(lang)}
-                      className={`w-full cursor-pointer rounded-lg px-4 py-2.5 text-center text-sm transition-colors hover:bg-black/5 ${
-                        lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
-                      }`}
-                    >
-                      {localeLabel(lang)}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
-
-            {/* Desktop CTA */}
-            <a
-              href="#contact"
-              data-contact-trigger
-              className="hidden items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent/90 md:inline-flex"
-            >
-              {t("cta")}
-            </a>
-
-            {/* Mobile CTA — always visible next to the menu toggle, never hidden inside the
-                dropdown; a shorter label so it fits beside the logo at 360px. */}
-            <a
-              href="#contact"
-              data-contact-trigger
-              onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent/90 md:hidden"
-            >
-              {t("ctaShort")}
-            </a>
-
-            {/* Hamburger / close toggle */}
-            <button
-              type="button"
-              aria-label={mobileMenuOpen ? t("menuClose") : t("menuOpen")}
-              aria-expanded={mobileMenuOpen}
-              onClick={handleMobileMenuToggle}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-700 transition-colors hover:bg-black/5 md:hidden"
-            >
-              {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
           </div>
+
+          {/* Mobile dropdown panel */}
+          {mobileMenuOpen && (
+            <div
+              ref={mobileDropdownRef}
+              className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden"
+            >
+              {/* Mobile language switcher */}
+              <div
+                role="listbox"
+                aria-label={t("languageSwitcherLabel")}
+                className="grid grid-cols-6 gap-1 px-0.5"
+              >
+                {routing.locales.map((lang) => (
+                  <button
+                    key={lang}
+                    type="button"
+                    role="option"
+                    aria-selected={lang === currentLang}
+                    onClick={() => selectLanguage(lang)}
+                    className={`flex w-full cursor-pointer items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
+                      lang === currentLang
+                        ? "bg-black/5 font-semibold text-neutral-900"
+                        : "font-medium text-neutral-600"
+                    }`}
+                  >
+                    {localeLabel(lang)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* Mobile dropdown panel */}
-        {mobileMenuOpen && (
-          <div
-            ref={mobileDropdownRef}
-            className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden"
-          >
-            {/* Mobile language switcher */}
-            <div role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5">
-              {routing.locales.map((lang) => (
-                <button
-                  key={lang}
-                  type="button"
-                  role="option"
-                  aria-selected={lang === currentLang}
-                  onClick={() => selectLanguage(lang)}
-                  className={`flex w-full cursor-pointer items-center justify-center rounded-lg py-2 text-xs transition-colors hover:bg-black/5 ${
-                    lang === currentLang ? "bg-black/5 font-semibold text-neutral-900" : "font-medium text-neutral-600"
-                  }`}
-                >
-                  {localeLabel(lang)}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
       </header>
       {/* Pushes page content down by the expanded dropdown's height, on mobile only. */}
       <div
@@ -263,7 +298,14 @@ function ChevronIcon({ open }: { open: boolean }) {
 
 function MenuIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden="true" className="h-5 w-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      aria-hidden="true"
+      className="h-5 w-5"
+    >
       <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   );
@@ -271,7 +313,14 @@ function MenuIcon() {
 
 function CloseIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden="true" className="h-5 w-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      aria-hidden="true"
+      className="h-5 w-5"
+    >
       <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
     </svg>
   );
