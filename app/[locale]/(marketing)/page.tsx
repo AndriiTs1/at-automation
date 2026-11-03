@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import DemoDashboard from "@/components/dashboard/DemoDashboard";
 import TabletFrame from "@/components/dashboard/TabletFrame";
 import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
+import ContactSection from "@/components/marketing/ContactSection";
 import IntegrationEcosystem from "@/components/marketing/IntegrationEcosystem";
 import { Link } from "@/i18n/navigation";
 import { buildHomepageJsonLd } from "@/lib/structured-data";
@@ -46,18 +47,18 @@ export default async function Home(props: PageProps<"/[locale]">) {
           <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-600 md:mt-6 md:text-xl">{tHero("subhead")}</p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/demo"
+            <a
+              href="#contact"
               className="rounded-full bg-accent px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-accent/90"
             >
               {tHero("ctaPrimary")}
-            </Link>
-            <a
-              href="#capabilities"
+            </a>
+            <Link
+              href="/demo"
               className="rounded-full border border-black/15 px-8 py-4 text-base font-semibold text-foreground transition-colors hover:bg-black/5"
             >
               {tHero("ctaSecondary")}
-            </a>
+            </Link>
           </div>
 
           <p className="mt-4 text-sm text-neutral-500">{tHero("trustLine")}</p>
@@ -92,6 +93,9 @@ export default async function Home(props: PageProps<"/[locale]">) {
 
       {/* Systems AT can connect with */}
       <IntegrationEcosystem />
+
+      {/* Consultation request — the page's conversion endpoint */}
+      <ContactSection />
     </main>
   );
 }

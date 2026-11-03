@@ -8,7 +8,8 @@
     "languageSwitcherLabel": "Changer de langue",
     "menuOpen": "Ouvrir le menu",
     "menuClose": "Fermer le menu",
-    "cta": "Discuter de votre projet"
+    "cta": "Discuter de votre projet",
+    "ctaShort": "Contact"
   },
   "Footer": {
     "navLabel": "Navigation du pied de page",
@@ -25,9 +26,9 @@
     "headlineLine1": "Votre entreprise.",
     "headlineLine2": "Un seul système.",
     "subhead": "Un logiciel sur mesure qui relie vos clients, commandes, stocks, finances et opérations quotidiennes.",
-    "ctaPrimary": "Essayer la démo en direct",
-    "ctaSecondary": "Que peut automatiser AT ?",
-    "trustLine": "Démo interactive · Aucune inscription",
+    "ctaPrimary": "Consultation gratuite",
+    "ctaSecondary": "Essayer la démo en direct",
+    "trustLine": "Gratuit · Sans engagement · Démo sans inscription",
     "sideLabelLeft1": "De",
     "sideLabelLeft2": "Travail manuel",
     "sideLabelLeft3": "Vers de vrais progrès",
@@ -112,6 +113,34 @@
       "centerTagline": "Intégration · Flux de travail · Règles · IA",
       "teamLabel": "Votre équipe",
       "teamItems": ["Opérations", "Finance", "Ventes", "Pilotage"]
+    }
+  },
+  "Contact": {
+    "eyebrow": "CONSULTATION GRATUITE",
+    "headline": "Dites-nous ce qui ralentit votre équipe.",
+    "body": "Décrivez le processus que vous souhaitez automatiser. Nous l'analysons et revenons vers vous avec une prochaine étape concrète, sans discours commercial.",
+    "points": ["Réponse sous 24 heures", "Gratuit et sans engagement", "Contact direct avec le développeur"],
+    "form": {
+      "nameLabel": "Nom",
+      "emailLabel": "E-mail",
+      "companyLabel": "Entreprise",
+      "optional": "(facultatif)",
+      "messageLabel": "Que souhaitez-vous automatiser ?",
+      "messagePlaceholder": "p. ex. Les commandes arrivent par e-mail et nous les ressaisissons à la main dans l'ERP",
+      "submit": "Demander une consultation",
+      "submitting": "Envoi en cours…",
+      "responseNote": "Réponse sous 24 h · Sans engagement",
+      "privacyNote": "Nous utilisons vos coordonnées uniquement pour répondre à cette demande.",
+      "successTitle": "Merci, votre demande a bien été reçue.",
+      "successBody": "Réponse sous 24 h · Sans engagement. Surveillez votre boîte de réception.",
+      "sendAnother": "Envoyer une autre demande",
+      "error": "Une erreur s'est produite et votre demande n'a pas été envoyée. Réessayez ou écrivez-nous directement :",
+      "errors": {
+        "nameTooShort": "Veuillez indiquer votre nom (au moins 2 caractères).",
+        "emailInvalid": "Veuillez saisir une adresse e-mail valide.",
+        "messageTooShort": "Veuillez décrire la tâche un peu plus en détail (au moins 10 caractères).",
+        "tooLong": "Ce champ est trop long."
+      }
     }
   },
   "Dashboard": {

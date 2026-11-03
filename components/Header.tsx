@@ -122,7 +122,7 @@ export default function Header() {
           }`}
         >
           {/* Logo */}
-          <Link href="/" onClick={handleLogoClick} className="my-[13px] mr-4 ml-0 flex shrink-0 items-center">
+          <Link href="/" onClick={handleLogoClick} className="my-[13px] mr-2 ml-0 flex shrink-0 items-center md:mr-4">
             <Image
               src="/logo.png"
               alt={t("logoAlt")}
@@ -176,10 +176,20 @@ export default function Header() {
 
             {/* Desktop CTA */}
             <a
-              href="mailto:info@andrii-tsiurupa.ch"
+              href="#contact"
               className="hidden items-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent/90 md:inline-flex"
             >
               {t("cta")}
+            </a>
+
+            {/* Mobile CTA — always visible next to the menu toggle, never hidden inside the
+                dropdown; a shorter label so it fits beside the logo at 360px. */}
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="inline-flex items-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-accent/90 md:hidden"
+            >
+              {t("ctaShort")}
             </a>
 
             {/* Hamburger / close toggle */}
@@ -202,7 +212,7 @@ export default function Header() {
             className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-black/5 bg-white/90 p-2.5 shadow-sm shadow-black/5 backdrop-blur-xl md:hidden"
           >
             {/* Mobile language switcher */}
-            <div role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5 pb-1">
+            <div role="listbox" aria-label={t("languageSwitcherLabel")} className="grid grid-cols-6 gap-1 px-0.5">
               {routing.locales.map((lang) => (
                 <button
                   key={lang}
@@ -218,14 +228,6 @@ export default function Header() {
                 </button>
               ))}
             </div>
-
-            <a
-              href="mailto:info@andrii-tsiurupa.ch"
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-1.5 flex w-full items-center justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent/90"
-            >
-              {t("cta")}
-            </a>
           </div>
         )}
       </div>

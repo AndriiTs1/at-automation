@@ -8,7 +8,8 @@
     "languageSwitcherLabel": "Sprache wechseln",
     "menuOpen": "Menü öffnen",
     "menuClose": "Menü schließen",
-    "cta": "Projekt besprechen"
+    "cta": "Projekt besprechen",
+    "ctaShort": "Kontakt"
   },
   "Footer": {
     "navLabel": "Footer-Navigation",
@@ -25,9 +26,9 @@
     "headlineLine1": "Ihr Unternehmen.",
     "headlineLine2": "Ein System.",
     "subhead": "Individuelle Software, die Kunden, Aufträge, Lagerbestand, Finanzen und Arbeitsabläufe miteinander verbindet.",
-    "ctaPrimary": "Live-Demo testen",
-    "ctaSecondary": "Was kann AT automatisieren?",
-    "trustLine": "Interaktive Demo · Keine Registrierung",
+    "ctaPrimary": "Kostenlose Beratung",
+    "ctaSecondary": "Live-Demo testen",
+    "trustLine": "Kostenlos · Unverbindlich · Demo ohne Registrierung",
     "sideLabelLeft1": "Von",
     "sideLabelLeft2": "Manueller Aufwand",
     "sideLabelLeft3": "Zu echtem Fortschritt",
@@ -112,6 +113,34 @@
       "centerTagline": "Integration · Workflows · Regeln · KI",
       "teamLabel": "Ihr Team",
       "teamItems": ["Betrieb", "Finanzen", "Vertrieb", "Management"]
+    }
+  },
+  "Contact": {
+    "eyebrow": "KOSTENLOSE BERATUNG",
+    "headline": "Erzählen Sie uns, was Ihr Team ausbremst.",
+    "body": "Beschreiben Sie den Prozess, den Sie automatisieren möchten. Wir prüfen ihn und melden uns mit einem konkreten nächsten Schritt – ohne Verkaufsgespräch.",
+    "points": ["Antwort innerhalb von 24 Stunden", "Kostenlos und unverbindlich", "Direkter Kontakt zum Entwickler"],
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail",
+      "companyLabel": "Unternehmen",
+      "optional": "(optional)",
+      "messageLabel": "Was möchten Sie automatisieren?",
+      "messagePlaceholder": "z. B. Bestellungen kommen per E-Mail und werden von Hand ins ERP übertragen",
+      "submit": "Beratung anfragen",
+      "submitting": "Wird gesendet…",
+      "responseNote": "Antwort innerhalb von 24 Std. · Unverbindlich",
+      "privacyNote": "Wir verwenden Ihre Angaben nur, um auf diese Anfrage zu antworten.",
+      "successTitle": "Vielen Dank – Ihre Anfrage ist eingegangen.",
+      "successBody": "Antwort innerhalb von 24 Std. · Unverbindlich. Bitte behalten Sie Ihr Postfach im Blick.",
+      "sendAnother": "Weitere Anfrage senden",
+      "error": "Etwas ist schiefgelaufen, Ihre Anfrage wurde nicht gesendet. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt:",
+      "errors": {
+        "nameTooShort": "Bitte geben Sie Ihren Namen ein (mindestens 2 Zeichen).",
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "messageTooShort": "Bitte beschreiben Sie die Aufgabe etwas genauer (mindestens 10 Zeichen).",
+        "tooLong": "Dieses Feld ist zu lang."
+      }
     }
   },
   "Dashboard": {
