@@ -30,10 +30,10 @@
     "ctaSecondary": "Try the live demo",
     "trustLine": "Free · No obligation · Demo without registration",
     "highlights": {
-      "launch": "Launch in as little as 2–3 weeks",
-      "integrations": "Integrates with CRM, banks and inventory",
-      "custom": "Built around your process",
-      "unified": "From manual work to one system"
+      "launch": { "value": "2–3 weeks", "label": "Up and running" },
+      "custom": { "value": "Custom", "label": "Tailored to your workflows" },
+      "integrations": { "value": "CRM · Banks · Stock", "label": "Connects your existing tools" },
+      "unified": { "value": "1 system", "label": "Less manual work" }
     }
   },
   "Preview": {

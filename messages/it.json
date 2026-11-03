@@ -30,10 +30,10 @@
     "ctaSecondary": "Prova la demo live",
     "trustLine": "Gratuita · Senza impegno · Demo senza registrazione",
     "highlights": {
-      "launch": "Avvio in 2–3 settimane",
-      "integrations": "Integrazione con CRM, banche e magazzino",
-      "custom": "Sviluppato sul tuo processo",
-      "unified": "Dal lavoro manuale a un unico sistema"
+      "launch": { "value": "2–3 settimane", "label": "Per essere operativi" },
+      "custom": { "value": "Su misura", "label": "Adattato ai tuoi processi" },
+      "integrations": { "value": "CRM · Banche · Scorte", "label": "Collega gli strumenti che già usi" },
+      "unified": { "value": "1 sistema", "label": "Meno lavoro manuale" }
     }
   },
   "Preview": {

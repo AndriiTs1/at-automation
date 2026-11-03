@@ -1,7 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import DemoDashboard from "@/components/dashboard/DemoDashboard";
 import TabletFrame from "@/components/dashboard/TabletFrame";
-import { DashboardIcon } from "@/components/dashboard/icons";
 import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
 import ContactSection from "@/components/marketing/ContactSection";
 import IntegrationEcosystem from "@/components/marketing/IntegrationEcosystem";
@@ -24,21 +23,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section className="relative px-6 pt-30 pb-10 text-center md:pt-34 md:pb-12 lg:pt-34 lg:pb-8">
-        {/* Highlights, wide screens: two concrete facts on each side of the headline. Below
-            1400px there's no room beside the hero, so the same four render as a strip under the
-            trust line instead (see HeroHighlights below). */}
-        <ul className="absolute top-1/2 left-10 hidden w-52 -translate-y-1/2 flex-col gap-5 min-[1400px]:flex">
-          {HIGHLIGHTS.slice(0, 2).map((item) => (
-            <HeroHighlight key={item.key} icon={item.icon} label={tHero(`highlights.${item.key}`)} />
-          ))}
-        </ul>
-        <ul className="absolute top-1/2 right-10 hidden w-52 -translate-y-1/2 flex-col gap-5 min-[1400px]:flex">
-          {HIGHLIGHTS.slice(2).map((item) => (
-            <HeroHighlight key={item.key} icon={item.icon} label={tHero(`highlights.${item.key}`)} />
-          ))}
-        </ul>
-
+      <section className="relative px-6 pt-30 pb-5 text-center md:pt-34 md:pb-1 lg:pt-34 lg:pb-2">
         <div className="mx-auto max-w-4xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-accent md:mb-4">{tHero("eyebrow")}</p>
 
@@ -65,16 +50,23 @@ export default async function Home(props: PageProps<"/[locale]">) {
           </div>
 
           <p className="mt-4 text-sm text-neutral-500">{tHero("trustLine")}</p>
-
-          {/* Separate wrapper for the 1400px hide: on the list itself it would lose to sm:flex. */}
-          <div className="min-[1400px]:hidden">
-            <ul className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-x-4 gap-y-3 sm:max-w-none sm:flex sm:flex-wrap sm:justify-center sm:gap-x-8">
-              {HIGHLIGHTS.map((item) => (
-                <HeroHighlight key={item.key} icon={item.icon} label={tHero(`highlights.${item.key}`)} />
-              ))}
-            </ul>
-          </div>
         </div>
+
+        {/* Highlights strip — four plain-text facts between the CTAs and the dashboard preview,
+            a little wider than the hero copy. A stacked list on phones, 2×2 from sm, one row of
+            four from lg; the dividers are per-cell borders (see HIGHLIGHT_DIVIDERS) since
+            divide-x/divide-y can't follow those layout switches. */}
+        <ul className="mx-auto mt-9 grid max-w-xs grid-cols-1 sm:mt-8 sm:max-w-5xl sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+          {HIGHLIGHT_KEYS.map((key, index) => (
+            <li key={key} className={`flex flex-col items-center px-3 py-3 sm:py-4 lg:px-4 lg:py-0 ${HIGHLIGHT_DIVIDERS[index]}`}>
+              <span className="inline-flex items-center gap-2 text-base font-semibold text-foreground xl:text-lg">
+                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                {tHero(`highlights.${key}.value`)}
+              </span>
+              <span className="mt-1 text-[13px] text-neutral-600 lg:text-sm">{tHero(`highlights.${key}.label`)}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Product showcase — the DemoDashboard is reused here as a picture of the product, so its
@@ -112,22 +104,15 @@ export default async function Home(props: PageProps<"/[locale]">) {
   );
 }
 
-/** Hero highlight facts, in display order: the first two sit left of the headline, the last two
- * right of it. Icons come from the dashboard icon set (components/dashboard/icons.tsx). */
-const HIGHLIGHTS = [
-  { key: "launch", icon: "bolt" },
-  { key: "integrations", icon: "plug" },
-  { key: "custom", icon: "wrench" },
-  { key: "unified", icon: "chart" },
-] as const;
+/** Hero highlights strip, in display order — each resolves to Hero.highlights.{key}.{value,label}. */
+const HIGHLIGHT_KEYS = ["launch", "custom", "integrations", "unified"] as const;
 
-function HeroHighlight({ icon, label }: { icon: string; label: string }) {
-  return (
-    <li className="flex items-center gap-2.5 text-left text-sm leading-snug text-neutral-600">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
-        <DashboardIcon name={icon} className="h-4 w-4" />
-      </span>
-      <span>{label}</span>
-    </li>
-  );
-}
+/** Divider borders per cell, for all three layouts: stacked (a rule above every cell but the
+ * first), 2×2 from sm (a rule between the columns and above the second row), and one row of
+ * four from lg (a rule left of every cell but the first). */
+const HIGHLIGHT_DIVIDERS = [
+  "border-border",
+  "border-t border-border sm:border-t-0 sm:border-l",
+  "border-t border-border lg:border-t-0 lg:border-l",
+  "border-t border-border sm:border-l lg:border-t-0",
+];
