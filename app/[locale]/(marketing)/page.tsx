@@ -24,10 +24,15 @@ export default async function Home(props: PageProps<"/[locale]">) {
 
       {/* Hero */}
       <section className="relative px-6 pt-30 pb-5 text-center md:pt-34 md:pb-1 lg:pt-34 lg:pb-2">
-        <div className="mx-auto max-w-4xl">
+        {/* One shared 1040px column for the headline, copy, CTAs and the highlights strip; the
+            copy itself stays narrower (max-w-2xl) so lines don't stretch to fill it. */}
+        <div className="mx-auto max-w-[1040px]">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-accent md:mb-4">{tHero("eyebrow")}</p>
 
-          <h1 className="mx-auto max-w-xs text-4xl leading-[1.1] font-bold tracking-tight text-foreground [hyphens:none] md:mx-0 md:max-w-none md:text-7xl md:leading-[0.95] lg:text-8xl">
+          {/* Fluid size instead of breakpoint jumps: up to lg it scales with the phone/tablet
+              viewport (36px at 390px → 68px at ~760px); from lg the wide-screen range takes over
+              (68px → 104px, reached at 2000px). */}
+          <h1 className="mx-auto max-w-xs text-[length:clamp(36px,9vw,68px)] leading-[1.1] font-bold tracking-tight text-foreground [hyphens:none] md:mx-0 md:max-w-none md:leading-[0.95] lg:text-[length:clamp(68px,5.2vw,104px)] lg:leading-[0.98] lg:tracking-[-0.055em]">
             <span className="block">{tHero("headlineLine1")}</span>
             <span className="block">{tHero("headlineLine2")}</span>
           </h1>
@@ -50,23 +55,23 @@ export default async function Home(props: PageProps<"/[locale]">) {
           </div>
 
           <p className="mt-4 text-sm text-neutral-500">{tHero("trustLine")}</p>
-        </div>
 
-        {/* Highlights strip — four plain-text facts between the CTAs and the dashboard preview,
-            a little wider than the hero copy. A stacked list on phones, 2×2 from sm, one row of
-            four from lg; the dividers are per-cell borders (see HIGHLIGHT_DIVIDERS) since
-            divide-x/divide-y can't follow those layout switches. */}
-        <ul className="mx-auto mt-9 grid max-w-xs grid-cols-1 sm:mt-8 sm:max-w-5xl sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
-          {HIGHLIGHT_KEYS.map((key, index) => (
-            <li key={key} className={`flex flex-col items-center px-3 py-3 sm:py-4 lg:px-4 lg:py-0 ${HIGHLIGHT_DIVIDERS[index]}`}>
-              <span className="inline-flex items-center gap-2 text-base font-semibold text-foreground xl:text-lg">
-                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                {tHero(`highlights.${key}.value`)}
-              </span>
-              <span className="mt-1 text-[13px] text-neutral-600 lg:text-sm">{tHero(`highlights.${key}.label`)}</span>
-            </li>
-          ))}
-        </ul>
+          {/* Highlights strip — four plain-text facts between the CTAs and the dashboard preview,
+              the full width of the hero column. A stacked list on phones, 2×2 from sm, one row of
+              four from lg; the dividers are per-cell borders (see HIGHLIGHT_DIVIDERS) since
+              divide-x/divide-y can't follow those layout switches. */}
+          <ul className="mx-auto mt-9 grid max-w-xs grid-cols-1 sm:mt-8 sm:max-w-none sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+            {HIGHLIGHT_KEYS.map((key, index) => (
+              <li key={key} className={`flex flex-col items-center px-3 py-3 sm:py-4 lg:px-4 lg:py-0 ${HIGHLIGHT_DIVIDERS[index]}`}>
+                <span className="inline-flex items-center gap-2 text-base font-semibold text-foreground xl:text-lg">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                  {tHero(`highlights.${key}.value`)}
+                </span>
+                <span className="mt-1 text-[13px] text-neutral-600 lg:text-sm">{tHero(`highlights.${key}.label`)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* Product showcase — the DemoDashboard is reused here as a picture of the product, so its

@@ -113,7 +113,7 @@ export default function Header() {
   return (
     <>
       <header className="fixed inset-x-0 top-5 z-50 bg-transparent px-4 md:px-6">
-      <div ref={mobilePanelRef} className="relative mx-auto w-full max-w-[1320px] bg-transparent">
+      <div ref={mobilePanelRef} className="relative mx-auto w-full max-w-[1440px] bg-transparent">
         <div
           className={`flex h-[74px] items-center justify-between gap-3 rounded-2xl px-4 backdrop-saturate-150 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none ${
             scrolled

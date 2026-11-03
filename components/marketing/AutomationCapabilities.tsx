@@ -11,7 +11,7 @@ export default async function AutomationCapabilities() {
 
   return (
     <section id="capabilities" className="scroll-mt-16 px-6 pt-12 pb-16 md:px-8 md:pt-14 md:pb-20 lg:px-12 xl:pt-12 xl:pb-14">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <div className="max-w-2xl text-center sm:text-left">
           <p className="text-sm font-semibold tracking-widest text-accent uppercase">{t("eyebrow")}</p>
           <h2 className="mt-2.5 text-3xl font-bold tracking-tight text-foreground md:text-4xl">{t("headline")}</h2>
