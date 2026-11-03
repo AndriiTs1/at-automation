@@ -13,7 +13,7 @@ export default async function ContactSection() {
 
   return (
     <section id="contact" className="scroll-mt-28 border-t border-border bg-background px-6 pt-12 pb-16 md:px-8 md:pt-14 md:pb-20 lg:px-12">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
         <div className="text-center sm:text-left">
           <p className="text-sm font-semibold tracking-widest text-accent uppercase">{t("eyebrow")}</p>
           <h2 className="mt-2.5 text-3xl font-bold tracking-tight text-foreground md:text-4xl">{t("headline")}</h2>

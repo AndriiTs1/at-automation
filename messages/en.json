@@ -29,16 +29,15 @@
     "ctaPrimary": "Get a free consultation",
     "ctaSecondary": "Try the live demo",
     "trustLine": "Free · No obligation · Demo without registration",
-    "sideLabelLeft1": "From",
-    "sideLabelLeft2": "Manual work",
-    "sideLabelLeft3": "To real progress",
-    "sideLabelRight1": "Simple",
-    "sideLabelRight2": "Clear",
-    "sideLabelRight3": "Built around your business"
+    "highlights": {
+      "launch": { "value": "2–3 weeks", "label": "Up and running" },
+      "custom": { "value": "Custom", "label": "Tailored to your workflows" },
+      "integrations": { "value": "CRM · Banks · Stock", "label": "Connects your existing tools" },
+      "unified": { "value": "1 system", "label": "Less manual work" }
+    }
   },
-  "Bridge": {
-    "title": "Don’t just look at it. Try it.",
-    "subtitle": "Explore how orders, inventory and finances work together in one connected system."
+  "Preview": {
+    "openDemo": "Open the live demo"
   },
   "Capabilities": {
     "eyebrow": "WHAT AT CAN AUTOMATE",

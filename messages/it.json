@@ -29,16 +29,15 @@
     "ctaPrimary": "Consulenza gratuita",
     "ctaSecondary": "Prova la demo live",
     "trustLine": "Gratuita · Senza impegno · Demo senza registrazione",
-    "sideLabelLeft1": "Da",
-    "sideLabelLeft2": "Lavoro manuale",
-    "sideLabelLeft3": "A progressi reali",
-    "sideLabelRight1": "Semplice",
-    "sideLabelRight2": "Chiaro",
-    "sideLabelRight3": "Su misura per la tua azienda"
+    "highlights": {
+      "launch": { "value": "2–3 settimane", "label": "Per essere operativi" },
+      "custom": { "value": "Su misura", "label": "Adattato ai tuoi processi" },
+      "integrations": { "value": "CRM · Banche · Scorte", "label": "Collega gli strumenti che già usi" },
+      "unified": { "value": "1 sistema", "label": "Meno lavoro manuale" }
+    }
   },
-  "Bridge": {
-    "title": "Non limitarti a guardarlo. Provalo.",
-    "subtitle": "Scopri come ordini, magazzino e finanze lavorano insieme in un unico sistema connesso."
+  "Preview": {
+    "openDemo": "Apri la demo live"
   },
   "Capabilities": {
     "eyebrow": "COSA PUÒ AUTOMATIZZARE AT",

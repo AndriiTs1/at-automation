@@ -75,7 +75,7 @@ export default function DemoDashboard() {
           <DashboardTopbar />
 
           <div className="mb-2 shrink-0">
-            <h1 className="text-lg font-semibold tracking-tight text-slate-900">{t("commandCenter")}</h1>
+            <p className="text-lg font-semibold tracking-tight text-slate-900">{t("commandCenter")}</p>
             <p className="text-sm text-slate-500">
               <DynamicGreeting /> · {tTopbar("attentionCount", { count: 3 })}
             </p>

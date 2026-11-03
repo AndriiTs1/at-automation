@@ -29,16 +29,15 @@
     "ctaPrimary": "Consultation gratuite",
     "ctaSecondary": "Essayer la démo en direct",
     "trustLine": "Gratuit · Sans engagement · Démo sans inscription",
-    "sideLabelLeft1": "De",
-    "sideLabelLeft2": "Travail manuel",
-    "sideLabelLeft3": "Vers de vrais progrès",
-    "sideLabelRight1": "Simple",
-    "sideLabelRight2": "Clair",
-    "sideLabelRight3": "Conçu pour votre entreprise"
+    "highlights": {
+      "launch": { "value": "2–3 semaines", "label": "Pour être opérationnel" },
+      "custom": { "value": "Sur mesure", "label": "Adapté à vos processus" },
+      "integrations": { "value": "CRM · Banques · Stock", "label": "Connecte vos outils existants" },
+      "unified": { "value": "1 système", "label": "Moins de travail manuel" }
+    }
   },
-  "Bridge": {
-    "title": "Ne vous contentez pas de regarder. Essayez.",
-    "subtitle": "Découvrez comment commandes, stocks et finances fonctionnent ensemble dans un seul système connecté."
+  "Preview": {
+    "openDemo": "Ouvrir la démo en direct"
   },
   "Capabilities": {
     "eyebrow": "CE QU'AT PEUT AUTOMATISER",

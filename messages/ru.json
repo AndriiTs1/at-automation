@@ -29,16 +29,15 @@
     "ctaPrimary": "Бесплатная консультация",
     "ctaSecondary": "Попробовать демо",
     "trustLine": "Бесплатно · Без обязательств · Демо без регистрации",
-    "sideLabelLeft1": "От",
-    "sideLabelLeft2": "Ручной работы",
-    "sideLabelLeft3": "К реальному прогрессу",
-    "sideLabelRight1": "Просто",
-    "sideLabelRight2": "Понятно",
-    "sideLabelRight3": "Под ваш бизнес"
+    "highlights": {
+      "launch": { "value": "2–3 недели", "label": "До запуска" },
+      "custom": { "value": "Индивидуально", "label": "Под ваши рабочие процессы" },
+      "integrations": { "value": "CRM · Банки · Склад", "label": "Подключаем ваши инструменты" },
+      "unified": { "value": "1 система", "label": "Меньше ручной работы" }
+    }
   },
-  "Bridge": {
-    "title": "Не просто смотрите. Попробуйте.",
-    "subtitle": "Посмотрите, как заказы, склад и финансы работают вместе в единой системе."
+  "Preview": {
+    "openDemo": "Открыть демо"
   },
   "Capabilities": {
     "eyebrow": "ЧТО МОЖЕТ АВТОМАТИЗИРОВАТЬ AT",

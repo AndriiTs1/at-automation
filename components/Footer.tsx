@@ -60,7 +60,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#F7F8FA]">
-      <div className="mx-auto max-w-6xl px-6 pt-6 pb-12 md:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl px-6 pt-6 pb-12 md:px-8 lg:px-12">
         {/* Row 1 — identity + navigation (primary layer) */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-1">
