@@ -3,8 +3,8 @@ import { CAPABILITY_CATEGORY_KEYS } from "@/lib/marketing-data";
 
 /**
  * "What AT can automate" — a compact capability map, not a feature-dump grid. Sits directly
- * after the Hero in the landing flow (see page.tsx). Server component: no interactivity is
- * needed here, matching the Hero it follows.
+ * after the dashboard preview in the landing flow (see page.tsx). Server component: no
+ * interactivity is needed here, matching the Hero above it.
  */
 export default async function AutomationCapabilities() {
   const t = await getTranslations("Capabilities");

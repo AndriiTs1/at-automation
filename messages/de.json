@@ -36,6 +36,9 @@
       "unified": "Von Handarbeit zum einheitlichen System"
     }
   },
+  "Preview": {
+    "openDemo": "Live-Demo öffnen"
+  },
   "Capabilities": {
     "eyebrow": "WAS AT AUTOMATISIEREN KANN",
     "headline": "Automatisieren Sie die Arbeit zwischen Ihren Systemen.",

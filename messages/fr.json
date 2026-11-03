@@ -36,6 +36,9 @@
       "unified": "Du travail manuel à un système unique"
     }
   },
+  "Preview": {
+    "openDemo": "Ouvrir la démo en direct"
+  },
   "Capabilities": {
     "eyebrow": "CE QU'AT PEUT AUTOMATISER",
     "headline": "Automatisez le travail entre vos systèmes.",

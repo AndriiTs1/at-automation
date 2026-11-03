@@ -1,4 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import DemoDashboard from "@/components/dashboard/DemoDashboard";
+import TabletFrame from "@/components/dashboard/TabletFrame";
 import { DashboardIcon } from "@/components/dashboard/icons";
 import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
 import ContactSection from "@/components/marketing/ContactSection";
@@ -11,6 +13,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
   setRequestLocale(locale);
 
   const tHero = await getTranslations("Hero");
+  const tPreview = await getTranslations("Preview");
   const tMetadata = await getTranslations("Metadata");
   const jsonLd = buildHomepageJsonLd(locale, tMetadata("description"));
 
@@ -72,6 +75,29 @@ export default async function Home(props: PageProps<"/[locale]">) {
             </ul>
           </div>
         </div>
+      </section>
+
+      {/* Product showcase — the DemoDashboard is reused here as a picture of the product, so its
+          own UI stays out of the accessibility tree and tab order (aria-hidden + inert). The whole
+          screen is instead one link to the real /demo, laid over the preview inside the frame. */}
+      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
+        <TabletFrame
+          overlay={
+            <Link
+              href="/demo"
+              className="group absolute inset-0 z-10 flex items-center justify-center bg-foreground/0 transition-colors hover:bg-foreground/10 focus-visible:bg-foreground/10 focus-visible:outline-none motion-reduce:transition-none"
+            >
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-lg transition-opacity md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 motion-reduce:transition-none">
+                {tPreview("openDemo")}
+                <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+          }
+        >
+          <div aria-hidden="true" inert className="h-full w-full">
+            <DemoDashboard />
+          </div>
+        </TabletFrame>
       </section>
 
       {/* What AT can automate */}

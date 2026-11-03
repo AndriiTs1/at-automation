@@ -36,6 +36,9 @@
       "unified": "Dal lavoro manuale a un unico sistema"
     }
   },
+  "Preview": {
+    "openDemo": "Apri la demo live"
+  },
   "Capabilities": {
     "eyebrow": "COSA PUÒ AUTOMATIZZARE AT",
     "headline": "Automatizza il lavoro tra i tuoi sistemi.",

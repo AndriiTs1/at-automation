@@ -36,6 +36,9 @@
       "unified": "From manual work to one system"
     }
   },
+  "Preview": {
+    "openDemo": "Open the live demo"
+  },
   "Capabilities": {
     "eyebrow": "WHAT AT CAN AUTOMATE",
     "headline": "Automate the work between your systems.",
