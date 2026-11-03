@@ -31,8 +31,8 @@ export default async function Home(props: PageProps<"/[locale]">) {
 
           {/* Fluid size instead of breakpoint jumps: up to lg it scales with the phone/tablet
               viewport (36px at 390px → 68px at ~760px); from lg the wide-screen range takes over
-              (68px → 104px, reached at 2000px). */}
-          <h1 className="mx-auto max-w-xs text-[length:clamp(36px,9vw,68px)] leading-[1.1] font-bold tracking-tight text-foreground [hyphens:none] md:mx-0 md:max-w-none md:leading-[0.95] lg:text-[length:clamp(68px,5.2vw,104px)] lg:leading-[0.98] lg:tracking-[-0.055em]">
+              (80px up to ~1430px, then growing to 104px at ~1860px). */}
+          <h1 className="mx-auto max-w-xs text-[length:clamp(36px,9vw,68px)] leading-[1.1] font-bold tracking-tight text-foreground [hyphens:none] md:mx-0 md:max-w-none md:leading-[0.95] lg:text-[length:clamp(80px,5.6vw,104px)] lg:leading-[0.98] lg:tracking-[-0.04em]">
             <span className="block">{tHero("headlineLine1")}</span>
             <span className="block">{tHero("headlineLine2")}</span>
           </h1>
