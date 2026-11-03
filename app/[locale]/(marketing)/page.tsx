@@ -1,6 +1,4 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import DemoDashboard from "@/components/dashboard/DemoDashboard";
-import TabletFrame from "@/components/dashboard/TabletFrame";
 import { DashboardIcon } from "@/components/dashboard/icons";
 import AutomationCapabilities from "@/components/marketing/AutomationCapabilities";
 import ContactSection from "@/components/marketing/ContactSection";
@@ -13,7 +11,6 @@ export default async function Home(props: PageProps<"/[locale]">) {
   setRequestLocale(locale);
 
   const tHero = await getTranslations("Hero");
-  const tBridge = await getTranslations("Bridge");
   const tMetadata = await getTranslations("Metadata");
   const jsonLd = buildHomepageJsonLd(locale, tMetadata("description"));
 
@@ -77,39 +74,6 @@ export default async function Home(props: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* Hero → Demo bridge */}
-      <section className="px-6 text-center">
-        <div className="mx-auto max-w-xl">
-          <h2 className="text-2xl font-semibold text-foreground md:text-3xl">{tBridge("title")}</h2>
-          <p className="mx-auto mt-3 max-w-xl text-base text-neutral-600">{tBridge("subtitle")}</p>
-          <ChevronDownIcon className="mx-auto mt-4 h-5 w-5 text-neutral-400" />
-        </div>
-      </section>
-
-      {/* Product showcase — the DemoDashboard is reused here as a picture of the product, so its
-          own UI stays out of the accessibility tree and tab order (aria-hidden + inert). The whole
-          screen is instead one link to the real /demo, laid over the preview inside the frame, so
-          "Try it" above is a promise the page actually keeps. */}
-      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
-        <TabletFrame
-          overlay={
-            <Link
-              href="/demo"
-              className="group absolute inset-0 z-10 flex items-center justify-center bg-foreground/0 transition-colors hover:bg-foreground/10 focus-visible:bg-foreground/10 focus-visible:outline-none motion-reduce:transition-none"
-            >
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-lg transition-opacity md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 motion-reduce:transition-none">
-                {tBridge("openDemo")}
-                <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-          }
-        >
-          <div aria-hidden="true" inert className="h-full w-full">
-            <DemoDashboard />
-          </div>
-        </TabletFrame>
-      </section>
-
       {/* What AT can automate */}
       <AutomationCapabilities />
 
@@ -139,13 +103,5 @@ function HeroHighlight({ icon, label }: { icon: string; label: string }) {
       </span>
       <span>{label}</span>
     </li>
-  );
-}
-
-function ChevronDownIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden="true" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 7.5l5 5 5-5" />
-    </svg>
   );
 }
