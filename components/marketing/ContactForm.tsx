@@ -179,7 +179,7 @@ export default function ContactForm() {
         <p className="text-sm text-neutral-500">{t("responseNote")}</p>
       </div>
 
-      <p className="text-xs text-neutral-500">{t("privacyNote")}</p>
+      <p className="text-center text-xs text-neutral-500 sm:text-left">{t("privacyNote")}</p>
     </form>
   );
 }
