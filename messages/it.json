@@ -8,7 +8,8 @@
     "languageSwitcherLabel": "Cambia lingua",
     "menuOpen": "Apri il menu",
     "menuClose": "Chiudi il menu",
-    "cta": "Parla del tuo progetto"
+    "cta": "Parla del tuo progetto",
+    "ctaShort": "Contatto"
   },
   "Footer": {
     "navLabel": "Navigazione del footer",
@@ -25,9 +26,9 @@
     "headlineLine1": "La tua azienda.",
     "headlineLine2": "Un solo sistema.",
     "subhead": "Software su misura che collega clienti, ordini, magazzino, finanze e attività quotidiane.",
-    "ctaPrimary": "Prova la demo live",
-    "ctaSecondary": "Cosa può automatizzare AT?",
-    "trustLine": "Demo interattiva · Nessuna registrazione",
+    "ctaPrimary": "Consulenza gratuita",
+    "ctaSecondary": "Prova la demo live",
+    "trustLine": "Gratuita · Senza impegno · Demo senza registrazione",
     "sideLabelLeft1": "Da",
     "sideLabelLeft2": "Lavoro manuale",
     "sideLabelLeft3": "A progressi reali",
@@ -112,6 +113,34 @@
       "centerTagline": "Integrazione · Flussi di lavoro · Regole · AI",
       "teamLabel": "Il tuo team",
       "teamItems": ["Operazioni", "Finanza", "Vendite", "Gestione"]
+    }
+  },
+  "Contact": {
+    "eyebrow": "CONSULENZA GRATUITA",
+    "headline": "Raccontaci cosa rallenta il tuo team.",
+    "body": "Descrivi il processo che vuoi automatizzare. Lo analizziamo e ti proponiamo un passo successivo concreto, senza discorsi di vendita.",
+    "points": ["Risposta entro 24 ore", "Gratuita e senza impegno", "Contatto diretto con lo sviluppatore"],
+    "form": {
+      "nameLabel": "Nome",
+      "emailLabel": "Email",
+      "companyLabel": "Azienda",
+      "optional": "(facoltativo)",
+      "messageLabel": "Cosa vorresti automatizzare?",
+      "messagePlaceholder": "ad es. Gli ordini arrivano via email e li reinseriamo a mano nell'ERP",
+      "submit": "Richiedi la consulenza",
+      "submitting": "Invio in corso…",
+      "responseNote": "Risposta entro 24 h · Senza impegno",
+      "privacyNote": "Usiamo i tuoi dati solo per rispondere a questa richiesta.",
+      "successTitle": "Grazie, abbiamo ricevuto la tua richiesta.",
+      "successBody": "Risposta entro 24 h · Senza impegno. Tieni d'occhio la tua casella email.",
+      "sendAnother": "Invia un'altra richiesta",
+      "error": "Qualcosa è andato storto e la richiesta non è stata inviata. Riprova o scrivici direttamente:",
+      "errors": {
+        "nameTooShort": "Inserisci il tuo nome (almeno 2 caratteri).",
+        "emailInvalid": "Inserisci un indirizzo email valido.",
+        "messageTooShort": "Descrivi l'attività con qualche dettaglio in più (almeno 10 caratteri).",
+        "tooLong": "Questo campo è troppo lungo."
+      }
     }
   },
   "Dashboard": {

@@ -8,7 +8,8 @@
     "languageSwitcherLabel": "Switch language",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
-    "cta": "Discuss your project"
+    "cta": "Discuss your project",
+    "ctaShort": "Contact"
   },
   "Footer": {
     "navLabel": "Footer navigation",
@@ -25,9 +26,9 @@
     "headlineLine1": "Your business.",
     "headlineLine2": "One system.",
     "subhead": "Custom software that connects your clients, orders, inventory, finances and everyday workflows.",
-    "ctaPrimary": "Try the live demo",
-    "ctaSecondary": "What can AT automate?",
-    "trustLine": "Interactive demo · No registration",
+    "ctaPrimary": "Get a free consultation",
+    "ctaSecondary": "Try the live demo",
+    "trustLine": "Free · No obligation · Demo without registration",
     "sideLabelLeft1": "From",
     "sideLabelLeft2": "Manual work",
     "sideLabelLeft3": "To real progress",
@@ -112,6 +113,34 @@
       "centerTagline": "Integration · Workflows · Rules · AI",
       "teamLabel": "Your team",
       "teamItems": ["Operations", "Finance", "Sales", "Management"]
+    }
+  },
+  "Contact": {
+    "eyebrow": "FREE CONSULTATION",
+    "headline": "Tell us what slows your team down.",
+    "body": "Describe the process you want to automate. We'll review it and come back with a concrete next step — no sales pitch.",
+    "points": ["Reply within 24 hours", "Free and without obligation", "Personal contact with the developer"],
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "companyLabel": "Company",
+      "optional": "(optional)",
+      "messageLabel": "What would you like to automate?",
+      "messagePlaceholder": "e.g. Orders arrive by email and we re-type them into the ERP by hand",
+      "submit": "Request consultation",
+      "submitting": "Sending…",
+      "responseNote": "We reply within 24 h · No obligation",
+      "privacyNote": "We only use your details to reply to this request.",
+      "successTitle": "Thank you — your request is in.",
+      "successBody": "We reply within 24 h · No obligation. Keep an eye on your inbox.",
+      "sendAnother": "Send another request",
+      "error": "Something went wrong and your request wasn't sent. Please try again or write to us directly:",
+      "errors": {
+        "nameTooShort": "Please enter your name (at least 2 characters).",
+        "emailInvalid": "Please enter a valid email address.",
+        "messageTooShort": "Please describe the task in a bit more detail (at least 10 characters).",
+        "tooLong": "This field is too long."
+      }
     }
   },
   "Dashboard": {

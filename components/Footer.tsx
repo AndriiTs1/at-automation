@@ -15,9 +15,8 @@ function chunk<T>(items: T[], size: number): T[][] {
 
 /**
  * Marketing Footer — a light, full-width closing utility strip, not a floating card and not a
- * second marketing section. It's a direct continuation of IntegrationEcosystem's own `bg-surface`
- * white (same color, no card, no negative-margin trick), so it reads as the tail of the same
- * surface Architecture card sits on rather than a separate block appended below it.
+ * second marketing section. It follows ContactSection directly, with no card and no
+ * negative-margin trick, so it reads as the quiet tail of the page rather than another block.
  *
  * Two layers, one hairline between them:
  *   Row 1 (primary) — brand/owner identity (real person + location, no logo icon: the mark
@@ -29,11 +28,8 @@ function chunk<T>(items: T[], size: number): T[][] {
  *   labels, deliberately grouped into rows via chunk() rather than one flowing wrapped
  *   paragraph or a bordered grid/table) and the copyright/legal/languages utility line.
  *
- * No marketing headline, no CTA: Architecture card already closes the story; repeating it here
- * would be the same idea a third time on an already-short page.
- *
- * KNOWN BLOCKER (unrelated to this component, not fixed here): Header's primary CTA still links
- * to `#contact`, and no `id="contact"` exists anywhere on the site — tracked separately.
+ * No marketing headline, no CTA: ContactSection directly above already closes the page with
+ * the consultation form; repeating a CTA here would be the same ask twice in a row.
  */
 export default function Footer() {
   const t = useTranslations("Footer");
