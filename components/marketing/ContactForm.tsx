@@ -90,7 +90,7 @@ export default function ContactForm() {
 
   const fieldError = (field: ContactField) =>
     fieldErrors[field] ? (
-      <span id={`contact-${field}-error`} className="text-sm text-error">
+      <span id={`contact-${field}-error`} className="text-center text-sm text-balance text-error">
         {t(`errors.${fieldErrors[field]}`)}
       </span>
     ) : null;
