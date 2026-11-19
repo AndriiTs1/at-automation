@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       from: process.env.CONTACT_FROM_EMAIL ?? "AT Automation <onboarding@resend.dev>",
-      to: [process.env.CONTACT_TO_EMAIL ?? "info@andrii-tsiurupa.ch"],
+      to: [process.env.CONTACT_TO_EMAIL ?? "andrii.tsiurupa1@gmail.com"],
       reply_to: payload.email,
       subject: `New consultation request — ${payload.name}${payload.company ? ` (${payload.company})` : ""}`,
       text,

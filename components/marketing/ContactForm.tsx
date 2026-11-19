@@ -12,7 +12,7 @@ import {
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const CONTACT_EMAIL = "info@andrii-tsiurupa.ch";
+const CONTACT_EMAIL = "andrii.tsiurupa1@gmail.com";
 
 // 16px (text-base) on every field on purpose: anything smaller makes iOS Safari zoom into the
 // page on focus — the same fix the demo's search inputs needed.
