@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { INTEGRATION_CATEGORIES } from "@/lib/marketing-data";
 import { localeLabel, routing } from "@/i18n/routing";
@@ -19,8 +20,7 @@ function chunk<T>(items: T[], size: number): T[][] {
  * negative-margin trick, so it reads as the quiet tail of the page rather than another block.
  *
  * Two layers, one hairline between them:
- *   Row 1 (primary) — brand/owner identity (real person + location, no logo icon: the mark
- *   already appears in Header and functionally in Architecture card) and real navigation
+ *   Row 1 (primary) — brand/owner identity (brand mark, real person + location) and real navigation
  *   (Capabilities/Integrations/Demo — the only page nav anywhere on the site, since Header has
  *   none).
  *   Row 2+3 (secondary/quietest, separated from Row 1 by the one hairline, from each other by
@@ -60,11 +60,14 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#F7F8FA]">
-      <div className="mx-auto max-w-7xl px-6 pt-6 pb-12 md:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl px-6 pt-8 pb-8 text-center md:px-8 md:text-left lg:px-12 xl:px-0">
         {/* Row 1 — identity + navigation (primary layer) */}
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex flex-col gap-1">
-            <p className="text-sm font-semibold tracking-wide text-foreground">AT AUTOMATION</p>
+        <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-between">
+          <div className="flex flex-col items-center gap-1 md:items-start">
+            <div className="mb-2 flex items-center justify-center gap-2.5">
+              <Image src="/logo.png" alt="" width={36} height={36} className="rounded-lg" />
+              <p className="text-sm font-semibold tracking-wide text-foreground">AT AUTOMATION</p>
+            </div>
             <p className="text-sm text-neutral-600">Tsiurupa Andrii</p>
             <p className="text-sm text-neutral-600">Lugano, Switzerland</p>
             <a
@@ -73,11 +76,11 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-fit text-sm text-neutral-600 transition-colors hover:text-foreground"
             >
-              LinkedIn <span aria-hidden="true">↗</span>
+              LinkedIn <span aria-hidden="true">→</span>
             </a>
           </div>
 
-          <nav aria-label={t("navLabel")} className="flex flex-wrap items-center gap-x-6 gap-y-1">
+          <nav aria-label={t("navLabel")} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
             <a href="#capabilities" className="text-sm text-neutral-600 transition-colors hover:text-foreground">
               {t("capabilities")}
             </a>
@@ -110,8 +113,8 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-neutral-600">
+          <div className="mt-6 flex flex-col items-center gap-4 md:flex-row md:flex-wrap md:justify-between">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs md:justify-start text-neutral-600">
               <span>{t("copyright", { year: new Date().getFullYear() })}</span>
               <div className="flex flex-wrap items-center gap-x-4">
                 <span>{t("privacy")}</span>
@@ -119,7 +122,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div role="listbox" aria-label={tHeader("languageSwitcherLabel")} className="flex flex-wrap items-center gap-1">
+            <div role="listbox" aria-label={tHeader("languageSwitcherLabel")} className="flex flex-wrap items-center justify-center gap-1">
               {routing.locales.map((lang) => (
                 <button
                   key={lang}
