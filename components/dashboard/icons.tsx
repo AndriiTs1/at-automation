@@ -7,6 +7,7 @@ const NAV_ICON_PATHS: Record<string, string> = {
   bolt: "M13 2L4 14h6l-1 8 9-12h-6l1-8z",
   activity: "M3 12h4l2-7 4 14 2-7h6",
   receipt: "M6 3h12v18l-3-2-3 2-3-2-3 2V3zM8.5 8h7M8.5 12h7M8.5 16h4",
+  message: "M4 4h16v12H9l-5 4V4zM8 8h8M8 12h5",
   sparkle: "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z",
   check: "M5 13l4 4L19 7",
 };
