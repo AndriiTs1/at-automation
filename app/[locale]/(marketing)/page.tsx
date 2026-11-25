@@ -23,7 +23,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section className="relative px-6 pt-30 pb-5 text-center md:pt-34 md:pb-1 lg:pt-34 lg:pb-2">
+      <section className="relative px-6 pt-30 pb-5 text-center md:pt-34 md:pb-1 lg:pt-30 lg:pb-2">
         {/* One shared 1040px column for the headline, copy, CTAs and the highlights strip; the
             copy itself stays narrower (max-w-2xl) so lines don't stretch to fill it. */}
         <div className="mx-auto max-w-[1040px]">
@@ -60,7 +60,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
               the full width of the hero column. A stacked list on phones, 2×2 from sm, one row of
               four from lg; the dividers are per-cell borders (see HIGHLIGHT_DIVIDERS) since
               divide-x/divide-y can't follow those layout switches. */}
-          <ul className="mx-auto mt-9 grid max-w-xs grid-cols-1 sm:mt-8 sm:max-w-none sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+          <ul className="mx-auto mt-9 grid max-w-xs grid-cols-1 sm:mt-8 sm:max-w-none sm:grid-cols-2 lg:mt-8 lg:grid-cols-4">
             {HIGHLIGHT_KEYS.map((key, index) => (
               <li key={key} className={`flex flex-col items-center px-3 py-3 sm:py-4 lg:px-4 lg:py-0 ${HIGHLIGHT_DIVIDERS[index]}`}>
                 <span className="inline-flex items-center gap-2 text-base font-semibold text-foreground xl:text-lg">
@@ -77,7 +77,7 @@ export default async function Home(props: PageProps<"/[locale]">) {
       {/* Product showcase — the DemoDashboard is reused here as a picture of the product, so its
           own UI stays out of the accessibility tree and tab order (aria-hidden + inert). The whole
           screen is instead one link to the real /demo, laid over the preview inside the frame. */}
-      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-12 lg:pb-24">
+      <section className="relative px-6 pt-6 pb-16 md:px-8 md:pt-10 md:pb-20 lg:px-12 lg:pt-8 lg:pb-24">
         <TabletFrame
           overlay={
             <Link

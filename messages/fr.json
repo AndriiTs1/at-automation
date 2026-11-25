@@ -27,13 +27,13 @@
     "headlineLine2": "Un seul système.",
     "subhead": "Un logiciel sur mesure qui relie vos clients, commandes, stocks, finances et opérations quotidiennes.",
     "ctaPrimary": "Essayer la démo en direct",
-    "ctaSecondary": "Que peut automatiser AT ?",
-    "trustLine": "Gratuit · Sans engagement · Démo sans inscription",
+    "ctaSecondary": "Découvrir les solutions",
+    "trustLine": "Démo interactive gratuite · Sans inscription",
     "highlights": {
-      "launch": { "value": "2–3 semaines", "label": "Pour être opérationnel" },
-      "custom": { "value": "Sur mesure", "label": "Adapté à vos processus" },
-      "integrations": { "value": "CRM · Banques · Stock", "label": "Connecte vos outils existants" },
-      "unified": { "value": "1 système", "label": "Moins de travail manuel" }
+      "launch": { "value": "Mise en œuvre rapide", "label": "De l'idée au lancement" },
+      "custom": { "value": "Sur mesure", "label": "Conçu pour votre entreprise" },
+      "integrations": { "value": "Intégration fluide", "label": "Connectez vos outils existants" },
+      "unified": { "value": "Une seule plateforme", "label": "Moins de travail manuel" }
     }
   },
   "Preview": {

@@ -27,13 +27,13 @@
     "headlineLine2": "One system.",
     "subhead": "Custom software that connects your clients, orders, inventory, finances and everyday workflows.",
     "ctaPrimary": "Try the live demo",
-    "ctaSecondary": "What can AT automate?",
-    "trustLine": "Free · No obligation · Demo without registration",
+    "ctaSecondary": "Explore solutions",
+    "trustLine": "Free interactive demo · No registration required",
     "highlights": {
-      "launch": { "value": "2–3 weeks", "label": "Up and running" },
-      "custom": { "value": "Custom", "label": "Tailored to your workflows" },
-      "integrations": { "value": "CRM · Banks · Stock", "label": "Connects your existing tools" },
-      "unified": { "value": "1 system", "label": "Less manual work" }
+      "launch": { "value": "Fast implementation", "label": "From concept to launch" },
+      "custom": { "value": "Tailor-made", "label": "Built around your business" },
+      "integrations": { "value": "Seamless integration", "label": "Connect your existing tools" },
+      "unified": { "value": "One platform", "label": "Less manual work" }
     }
   },
   "Preview": {

@@ -27,13 +27,13 @@
     "headlineLine2": "Un solo sistema.",
     "subhead": "Software su misura che collega clienti, ordini, magazzino, finanze e attività quotidiane.",
     "ctaPrimary": "Prova la demo live",
-    "ctaSecondary": "Cosa può automatizzare AT?",
-    "trustLine": "Gratuita · Senza impegno · Demo senza registrazione",
+    "ctaSecondary": "Scopri le soluzioni",
+    "trustLine": "Demo interattiva gratuita · Nessuna registrazione richiesta",
     "highlights": {
-      "launch": { "value": "2–3 settimane", "label": "Per essere operativi" },
-      "custom": { "value": "Su misura", "label": "Adattato ai tuoi processi" },
-      "integrations": { "value": "CRM · Banche · Scorte", "label": "Collega gli strumenti che già usi" },
-      "unified": { "value": "1 sistema", "label": "Meno lavoro manuale" }
+      "launch": { "value": "Implementazione rapida", "label": "Dall'idea al lancio" },
+      "custom": { "value": "Su misura", "label": "Per la tua azienda" },
+      "integrations": { "value": "Integrazione fluida", "label": "Collega i tuoi strumenti" },
+      "unified": { "value": "Un'unica piattaforma", "label": "Meno lavoro manuale" }
     }
   },
   "Preview": {

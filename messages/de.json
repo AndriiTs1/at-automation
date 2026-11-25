@@ -27,13 +27,13 @@
     "headlineLine2": "Ein System.",
     "subhead": "Individuelle Software, die Kunden, Aufträge, Lagerbestand, Finanzen und Arbeitsabläufe miteinander verbindet.",
     "ctaPrimary": "Live-Demo testen",
-    "ctaSecondary": "Was kann AT automatisieren?",
-    "trustLine": "Kostenlos · Unverbindlich · Demo ohne Registrierung",
+    "ctaSecondary": "Lösungen entdecken",
+    "trustLine": "Kostenlose interaktive Demo · Keine Registrierung erforderlich",
     "highlights": {
-      "launch": { "value": "2–3 Wochen", "label": "Bis zum Start" },
-      "custom": { "value": "Individuell", "label": "Auf Ihre Abläufe zugeschnitten" },
-      "integrations": { "value": "CRM · Banken · Lager", "label": "Verbindet Ihre bestehenden Tools" },
-      "unified": { "value": "1 System", "label": "Weniger Handarbeit" }
+      "launch": { "value": "Schnelle Umsetzung", "label": "Von der Idee bis zum Start" },
+      "custom": { "value": "Massgeschneidert", "label": "Für Ihr Unternehmen entwickelt" },
+      "integrations": { "value": "Nahtlose Integration", "label": "Bestehende Tools verbinden" },
+      "unified": { "value": "Eine Plattform", "label": "Weniger Handarbeit" }
     }
   },
   "Preview": {

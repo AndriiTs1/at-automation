@@ -136,17 +136,17 @@ export default function Header() {
           className="relative mx-auto w-full max-w-360 bg-transparent"
         >
           <div
-            className={`flex h-18.5 items-center justify-between gap-3 rounded-2xl px-4 backdrop-saturate-150 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none ${
+            className={`flex h-16.5 items-center justify-between gap-3 rounded-2xl px-4 backdrop-saturate-150 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none ${
               scrolled
                 ? "border border-white/50 bg-white/76 shadow-sm shadow-black/5 backdrop-blur-[20px]"
-                : "border border-black/8 bg-white/95 shadow-md shadow-black/8 backdrop-blur-2xl"
+                : "border border-black/8 bg-white/95 shadow-sm shadow-black/5 backdrop-blur-2xl"
             }`}
           >
             {/* Logo */}
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="my-3.25 mr-2 ml-0 flex shrink-0 items-center md:mr-4"
+              className="my-2.25 mr-2 ml-0 flex shrink-0 items-center md:mr-4"
             >
               <Image
                 src="/logo.png"
