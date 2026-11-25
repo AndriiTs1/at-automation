@@ -31,7 +31,7 @@ const FIELD_ORDER: ContactField[] = ["name", "email", "company", "message"];
  * browser tooltips. A field's error clears as soon as it's edited; the server's per-field errors
  * (should the two ever disagree) render the same way.
  */
-export default function ContactForm() {
+export default function ContactForm({ compact = false }: { compact?: boolean }) {
   const t = useTranslations("Contact.form");
   const locale = useLocale();
   // The form renders twice on the page (ContactSection and ContactModal), so error ids must be
@@ -47,9 +47,16 @@ export default function ContactForm() {
     const first = FIELD_ORDER.find((field) => errors[field]);
     // Next frame: after a server-side 400 the fields are still `disabled` until React re-renders.
     if (first)
-      requestAnimationFrame(() =>
-        (form.elements.namedItem(first) as HTMLElement | null)?.focus(),
-      );
+      requestAnimationFrame(() => {
+        const field = form.elements.namedItem(first) as HTMLElement | null;
+        if (!field) return;
+        if (compact) {
+          field.focus({ preventScroll: true });
+          field.scrollIntoView({ block: "center", behavior: "instant" });
+        } else {
+          field.focus();
+        }
+      });
   };
 
   const clearError = (field: ContactField) => {
@@ -109,7 +116,7 @@ export default function ContactForm() {
     fieldErrors[field] ? (
       <span
         id={errorId(field)}
-        className="text-center text-sm text-balance text-error"
+        className={compact ? "text-left text-sm text-error" : "text-center text-sm text-balance text-error"}
       >
         {t(`errors.${fieldErrors[field]}`)}
       </span>
@@ -142,8 +149,8 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} noValidate className={`flex flex-col ${compact ? "gap-3" : "gap-4"}`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${compact ? "gap-3" : "gap-4"}`}>
         <label className="flex flex-col gap-1.5">
           <span className="text-sm font-medium text-foreground">
             {t("nameLabel")}
@@ -196,10 +203,10 @@ export default function ContactForm() {
         <textarea
           {...fieldProps("message")}
           required
-          rows={4}
+          rows={compact ? 3 : 4}
           maxLength={CONTACT_LIMITS.message}
           placeholder={t("messagePlaceholder")}
-          className={`${fieldClassName} resize-y`}
+          className={`${fieldClassName} ${compact ? "resize-none" : "resize-y"}`}
         />
         {fieldError("message")}
       </label>
@@ -235,7 +242,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-full bg-accent px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-accent/90 disabled:opacity-60 sm:w-auto"
+          className={`w-full rounded-full bg-accent px-8 ${compact ? "py-3" : "py-4"} text-base font-semibold text-white transition-colors hover:bg-accent/90 disabled:opacity-60 sm:w-auto`}
         >
           {submitting ? t("submitting") : t("submit")}
         </button>

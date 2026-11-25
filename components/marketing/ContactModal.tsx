@@ -37,7 +37,7 @@ export default function ContactModal() {
       event.preventDefault();
       if (!dialog.open) {
         dialog.showModal();
-        dialog.querySelector<HTMLElement>("input, textarea, button[type=submit]")?.focus();
+        dialog.querySelector<HTMLElement>("input, textarea, button[type=submit]")?.focus({ preventScroll: true });
         document.documentElement.style.overflow = "hidden";
       }
     };
@@ -67,14 +67,13 @@ export default function ContactModal() {
       }}
       className="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-2xl border border-border bg-surface text-foreground shadow-2xl backdrop:bg-foreground/40 backdrop:backdrop-blur-sm"
     >
-      {/* Close button pinned to the dialog's top edge (zero-height sticky row), so it stays
-          reachable when the content is taller than a phone screen and scrolls. */}
-      <div className="sticky top-0 z-10 flex h-0 justify-end">
+      {/* Dedicated sticky close row keeps the button reachable without covering form content. */}
+      <div className="sticky top-0 z-10 flex justify-end rounded-t-2xl bg-surface px-3 pt-2">
         <button
           type="button"
           onClick={close}
           aria-label={t("close")}
-          className="mt-3 mr-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-surface/90 text-neutral-500 backdrop-blur-sm transition-colors hover:bg-black/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none md:mt-5 md:mr-5"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-surface/90 text-neutral-500 backdrop-blur-sm transition-colors hover:bg-black/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:outline-none"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden="true" className="h-5 w-5">
             <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
@@ -82,10 +81,10 @@ export default function ContactModal() {
         </button>
       </div>
 
-      <div className="p-5 md:p-8">
+      <div className="px-5 pt-0 pb-5 md:px-8 md:pb-6">
         <ContactIntro variant="modal" titleId={titleId} />
-        <div className="mt-6 border-t border-border pt-6">
-          <ContactForm />
+        <div className="mt-4 border-t border-border pt-4">
+          <ContactForm compact />
         </div>
       </div>
     </dialog>

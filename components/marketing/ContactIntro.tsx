@@ -19,23 +19,23 @@ export default function ContactIntro({ variant, titleId }: ContactIntroProps) {
   const modal = variant === "modal";
 
   return (
-    <div className={modal ? "pr-8 text-left" : "text-center sm:text-left"}>
+    <div className={modal ? "text-left" : "text-center sm:text-left"}>
       {!modal && <p className="text-sm font-semibold tracking-widest text-accent uppercase">{t("eyebrow")}</p>}
       <h2
         id={titleId}
         className={
           modal
-            ? "text-2xl font-bold tracking-tight text-foreground md:text-3xl"
+            ? "text-xl font-bold tracking-tight text-foreground md:text-2xl"
             : "mt-2.5 text-3xl font-bold tracking-tight text-foreground md:text-4xl"
         }
       >
         {t("headline")}
       </h2>
-      <p className={modal ? "mt-2 text-base text-neutral-600" : "mt-3 text-base text-neutral-600 md:text-lg"}>{t("body")}</p>
+      <p className={modal ? "mt-2 text-sm leading-relaxed text-neutral-600 md:text-base" : "mt-3 text-base text-neutral-600 md:text-lg"}>{t("body")}</p>
       <ul
         className={
           modal
-            ? "mt-4 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:gap-x-5"
+            ? "mt-3 flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-x-5"
             : "mt-6 flex flex-col items-center gap-2 sm:items-start"
         }
       >
