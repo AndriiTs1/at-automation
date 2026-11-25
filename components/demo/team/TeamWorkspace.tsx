@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { DashboardIcon } from "@/components/dashboard/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useQuerySelection } from "@/components/demo/useQuerySelection";
 import {
@@ -56,7 +57,7 @@ function KpiGrid({ columns, pendingCount, pendingValue }: { columns: 2 | 4; pend
   return (
     <div className={`grid shrink-0 gap-2 ${columns === 4 ? "grid-cols-4" : "grid-cols-2"}`}>
       {summaryItems.map((item) => (
-        <div key={item.key} className="min-w-0 rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
+        <div key={item.key} className="min-w-0 rounded-xl border border-border bg-surface p-2.5 text-center shadow-sm shadow-black/5">
           <p className="text-xs leading-tight break-words text-neutral-500">{t(`summary.${item.key}`)}</p>
           <p className="mt-1 text-lg leading-tight font-bold break-words whitespace-nowrap text-foreground">{item.value}</p>
         </div>
@@ -120,16 +121,25 @@ export default function TeamWorkspace() {
       {/* Mobile workspace (below @lg) */}
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
         <div className="shrink-0">
-          <p className="text-base font-semibold text-foreground">{t("title")}</p>
           <p className="mt-0.5 text-xs text-neutral-500">{t("description")}</p>
         </div>
         <KpiGrid columns={2} pendingCount={pendingCount} pendingValue={pendingValue} />
         <div>
-          <h4 className="mb-2 text-sm font-semibold text-foreground">{t("approvals.title")}</h4>
+          <div className="mb-2 flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <DashboardIcon name="rules" className="h-5 w-5" />
+            </span>
+            <h4 className="text-sm font-semibold text-foreground">{t("approvals.title")}</h4>
+          </div>
           <TeamApprovalsMobileList selectedId={selectedId} onSelect={selectApproval} decisions={decisions} />
         </div>
         <div>
-          <h4 className="mb-2 text-sm font-semibold text-foreground">{t("team.title")}</h4>
+          <div className="mb-2 flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <DashboardIcon name="users" className="h-5 w-5" />
+            </span>
+            <h4 className="text-sm font-semibold text-foreground">{t("team.title")}</h4>
+          </div>
           <TeamMembersMobileList />
         </div>
         {selectedApproval && (
@@ -146,13 +156,17 @@ export default function TeamWorkspace() {
       {/* Tablet workspace (@lg to below @5xl) */}
       <div className="hidden min-h-0 flex-1 flex-col gap-3 @lg:flex @5xl:hidden">
         <div className="shrink-0">
-          <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
           <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
         </div>
         <KpiGrid columns={4} pendingCount={pendingCount} pendingValue={pendingValue} />
 
         <div className="shrink-0 rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
-          <h4 className="px-3 pt-3 text-sm font-semibold text-foreground">{t("approvals.title")}</h4>
+          <div className="px-3 pt-3 flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <DashboardIcon name="rules" className="h-5 w-5" />
+            </span>
+            <h4 className="text-sm font-semibold text-foreground">{t("approvals.title")}</h4>
+          </div>
           <div className="mt-2 overflow-auto">
             <table className="w-full border-collapse text-left text-sm">
               <thead>
@@ -224,7 +238,12 @@ export default function TeamWorkspace() {
         </div>
 
         <div className="rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
-          <h4 className="px-3 pt-3 text-sm font-semibold text-foreground">{t("team.title")}</h4>
+          <div className="px-3 pt-3 flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <DashboardIcon name="users" className="h-5 w-5" />
+            </span>
+            <h4 className="text-sm font-semibold text-foreground">{t("team.title")}</h4>
+          </div>
           <table className="mt-2 w-full border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-border text-xs text-neutral-500">

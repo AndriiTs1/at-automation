@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { DashboardIcon } from "@/components/dashboard/icons";
 import type { KeyboardEvent } from "react";
 import { APPROVALS, getTeamMember, getTotalOpenResponsibilities, TEAM_MEMBERS } from "@/lib/demo-data";
 import ApprovalDetailPanel from "./ApprovalDetailPanel";
@@ -93,7 +94,7 @@ export default function TeamDesktop({
       {/* Summary row */}
       <div className="mb-4 grid shrink-0 grid-cols-4 gap-3">
         {summaryItems.map((item) => (
-          <div key={item.key} className="min-w-0 rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
+          <div key={item.key} className="min-w-0 rounded-xl border border-border bg-surface p-3 text-center shadow-sm shadow-black/5">
             <p className="truncate text-xs text-neutral-500">{t(`summary.${item.key}`)}</p>
             <p className="mt-1 text-xl font-bold whitespace-nowrap text-foreground">{item.value}</p>
           </div>
@@ -106,7 +107,12 @@ export default function TeamDesktop({
           whether this row's inspector is open. */}
       <div className="relative mb-4 flex shrink-0">
         <div className="min-h-0 min-w-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
-          <h4 className="px-4 pt-4 text-sm font-semibold text-foreground">{t("approvals.title")}</h4>
+          <div className="px-4 pt-4 flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <DashboardIcon name="rules" className="h-5 w-5" />
+            </span>
+            <h4 className="text-sm font-semibold text-foreground">{t("approvals.title")}</h4>
+          </div>
           <div className="mt-2 overflow-auto">
             {isInspectorOpen && (
               <table
@@ -270,8 +276,13 @@ export default function TeamDesktop({
 
       {/* Team & Responsibility — who owns what. Unchanged: read-only, no selection, always full
           width regardless of the approvals inspector above. */}
-      <div className="min-h-0 flex-1 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
-        <h4 className="px-4 pt-4 text-sm font-semibold text-foreground">{t("team.title")}</h4>
+      <div className="min-h-0 shrink-0 overflow-auto rounded-xl border border-border bg-surface shadow-sm shadow-black/5">
+        <div className="px-4 pt-4 flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <DashboardIcon name="users" className="h-5 w-5" />
+            </span>
+            <h4 className="text-sm font-semibold text-foreground">{t("team.title")}</h4>
+          </div>
         <table className="mt-2 w-full border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-border text-xs text-neutral-500">

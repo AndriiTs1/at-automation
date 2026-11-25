@@ -111,7 +111,7 @@ export default function AutomationsDesktop({
       {/* Summary row */}
       <div className="mb-4 grid shrink-0 grid-cols-4 gap-3">
         {summaryItems.map((item) => (
-          <div key={item.key} className="rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
+          <div key={item.key} className="rounded-xl border border-border bg-surface p-3 text-center shadow-sm shadow-black/5">
             <p className="text-xs text-neutral-500">{t(`summary.${item.key}`)}</p>
             <p className={`mt-1 text-xl font-bold ${item.tone}`}>{item.value}</p>
           </div>

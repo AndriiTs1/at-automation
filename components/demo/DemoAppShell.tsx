@@ -50,9 +50,13 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
     <div className="@container flex h-full w-full">
       {/* Mobile shell (below @lg) */}
       <div className="relative flex min-w-0 flex-1 @lg:hidden">
-        <div className="flex h-full w-full flex-col overflow-y-auto bg-demo-background px-3 pt-1 pb-3">
-          <MobileTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
-          {children}
+        <div className="flex h-full min-h-0 w-full flex-col bg-demo-background">
+          <div className="shrink-0 px-3 pt-1">
+            <MobileTopbar activeItem={activeItem} navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
+          </div>
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-3">
+            {children}
+          </div>
         </div>
         <TabletNavigation
           open={navOpen}
@@ -64,9 +68,13 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
 
       {/* Tablet shell (@lg to below @5xl) */}
       <div className="relative hidden min-w-0 flex-1 @lg:flex @5xl:hidden">
-        <div className="flex h-full w-full flex-col overflow-y-auto bg-demo-background p-4">
-          <TabletTopbar navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
-          {children}
+        <div className="flex h-full min-h-0 w-full flex-col bg-demo-background">
+          <div className="shrink-0 px-4 pt-4">
+            <TabletTopbar activeItem={activeItem} navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
+          </div>
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-4">
+            {children}
+          </div>
         </div>
         <TabletNavigation open={navOpen} onClose={() => setNavOpen(false)} activeItem={activeItem} />
       </div>

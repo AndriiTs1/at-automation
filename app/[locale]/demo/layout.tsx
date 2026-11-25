@@ -24,7 +24,7 @@ export default async function DemoLayout(props: LayoutProps<"/[locale]/demo">) {
   setRequestLocale(locale);
 
   return (
-    <div className="h-screen w-full overflow-hidden bg-neutral-50">
+    <div className="h-dvh w-full overflow-hidden bg-neutral-50">
       <DemoAppShell>{props.children}</DemoAppShell>
     </div>
   );

@@ -1,14 +1,20 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { DashboardIcon } from "@/components/dashboard/icons";
 import { useEffect, useState } from "react";
 import { getIntegrationCounts, INTEGRATION_DEFINITIONS } from "@/lib/demo-data";
 import IntegrationDetailMobile from "./IntegrationDetailMobile";
 import IntegrationsDesktop from "./IntegrationsDesktop";
 import IntegrationsMobileList from "./IntegrationsMobileList";
 
-const CATEGORY_ORDER = ["erp", "crm", "accounting", "warehouse", "payments", "ecommerce", "email", "internal"] as const;
-const MODULE_ORDER = ["operations", "finance", "inventory", "customers", "automations"] as const;
+import {
+  CATEGORY_ORDER,
+  MODULE_ORDER,
+  CATEGORY_ICONS,
+  MODULE_ICONS,
+  LAYER_FEATURES,
+} from "./landscapeConfig";
 
 /**
  * Compact 2x2 (mobile) or 4-column (tablet, where it fits) KPI grid — the same 4 approved
@@ -31,7 +37,7 @@ function SummaryGrid({ columns = 2 }: { columns?: 2 | 4 }) {
   return (
     <div className={`grid shrink-0 gap-2 ${columns === 4 ? "grid-cols-4" : "grid-cols-2"}`}>
       {items.map((item) => (
-        <div key={item.key} className="min-w-0 rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
+        <div key={item.key} className="min-w-0 rounded-xl border border-border bg-surface p-2.5 text-center shadow-sm shadow-black/5">
           <p className="text-xs leading-tight break-words text-neutral-500">{t(`summary.${item.key}`)}</p>
           <p className={`mt-1 text-lg font-bold ${item.tone}`}>{item.value}</p>
         </div>
@@ -51,35 +57,138 @@ function CompactLandscape() {
   const tAutomations = useTranslations("Dashboard.Automations");
   const tSidebar = useTranslations("Dashboard.Sidebar");
 
-  const moduleLabel = (key: string) => (key === "automations" ? tSidebar("items.automations") : tAutomations(`category.${key}`));
+  const moduleLabel = (key: string) =>
+    key === "automations"
+      ? tSidebar("items.automations")
+      : tAutomations(`category.${key}`);
 
   return (
-    <div className="shrink-0 rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
-      <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">{t("landscape.title")}</p>
-      <div className="flex flex-col items-center gap-1.5 text-center">
-        <div>
-          <p className="text-xs text-neutral-500">{t("landscape.businessSystemsLabel")}</p>
-          <p className="mt-0.5 text-sm break-words text-foreground">
-            {CATEGORY_ORDER.map((key) => t(`category.${key}`)).join(" · ")}
-          </p>
-        </div>
-        <span aria-hidden="true" className="text-neutral-300">
-          ↓
-        </span>
-        <span className="rounded-full bg-accent/10 px-3 py-1.5 text-sm font-semibold whitespace-nowrap text-accent">
-          {t("landscape.atLayerLabel")}
-        </span>
-        <span aria-hidden="true" className="text-neutral-300">
-          ↓
-        </span>
-        <div>
-          <p className="text-xs text-neutral-500">{t("landscape.workflowsLabel")}</p>
-          <p className="mt-0.5 text-sm break-words text-foreground">
-            {MODULE_ORDER.map((key) => moduleLabel(key)).join(" · ")}
-          </p>
-        </div>
+    <section className="shrink-0 rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
+
+      <div className="mb-3 text-center">
+        <h2 className="text-base font-semibold text-foreground">
+          {t("landscape.title")}
+        </h2>
+        <p className="mt-1 text-xs leading-relaxed text-neutral-500">
+          {t("landscape.description")}
+        </p>
       </div>
-    </div>
+
+      <div className="rounded-xl border border-border bg-[#F7F9FC] p-2.5">
+
+        {/* Business systems */}
+        <h3 className="mb-2 text-center text-xs font-semibold tracking-wide text-[#39577D] uppercase">
+          {t("landscape.businessSystemsLabel")}
+        </h3>
+
+        <div className="grid grid-cols-2 gap-1.5 @lg:grid-cols-4">
+          {CATEGORY_ORDER.map((key) => (
+            <div
+              key={key}
+              className="flex min-w-0 items-center gap-2 rounded-lg border border-[#DCE3EB] text-center bg-white px-2 py-1.5 @lg:flex-col @lg:justify-center @lg:gap-1 @lg:py-2 @lg:text-center"
+            >
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#EDF2F8]">
+                <DashboardIcon
+                  name={CATEGORY_ICONS[key]}
+                  className="h-4 w-4 text-[#39577D]"
+                />
+              </span>
+              <span className="min-w-0 flex-1 break-words text-center text-xs font-medium text-[#26374A] @lg:flex-none">
+                {t(`category.${key}`)}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Vertical connector */}
+        <div aria-hidden="true" className="flex h-7 items-center justify-center">
+          <svg viewBox="0 0 24 28" fill="none" className="h-7 w-6">
+            <path
+              d="M12 2V24M7 19L12 24L17 19"
+              stroke="#8CA4BF"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+
+        {/* AT Integration Layer */}
+        <div className="mx-auto w-full rounded-xl bg-[#39577D] p-3 text-white shadow-sm @lg:max-w-[85%] @lg:px-4">
+
+          <div className="flex flex-col items-center gap-1.5 @lg:flex-row @lg:justify-center @lg:gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-white/10">
+              <DashboardIcon name="network" className="h-5 w-5" />
+            </span>
+            <h3 className="text-center text-base font-bold @lg:text-lg">
+              {t("landscape.atLayerLabel")}
+            </h3>
+          </div>
+
+          <div className="mt-2 grid grid-cols-2 gap-1.5 border-t border-white/20 pt-2">
+            {LAYER_FEATURES.map(({ key, icon }) => (
+              <div
+                key={key}
+                className="flex min-w-0 items-center gap-1.5 rounded-md bg-white/[0.08] text-center px-1.5 py-2 @lg:justify-center @lg:gap-2 @lg:px-3 @lg:text-center"
+              >
+                <DashboardIcon
+                  name={icon}
+                  className="h-4 w-4 shrink-0 text-[#C4D9F1]"
+                />
+                <span className="min-w-0 flex-1 break-words text-center text-xs leading-snug text-white @lg:flex-none @lg:text-sm">
+                  {t(`landscape.${key}`)}
+                </span>
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Vertical connector */}
+        <div aria-hidden="true" className="flex h-7 items-center justify-center">
+          <svg viewBox="0 0 24 28" fill="none" className="h-7 w-6">
+            <path
+              d="M12 2V24M7 19L12 24L17 19"
+              stroke="#8CA4BF"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+
+        {/* Business workflows */}
+        <h3 className="mb-2 text-center text-xs font-semibold tracking-wide text-[#39577D] uppercase">
+          {t("landscape.workflowsLabel")}
+        </h3>
+
+        <div className="grid grid-cols-2 gap-1.5 @lg:grid-cols-5">
+          {MODULE_ORDER.map((key) => (
+            <div
+              key={key}
+              className={`flex min-w-0 items-center gap-2 rounded-lg border border-[#DCE3EB] text-center bg-white px-2 py-1.5 @lg:flex-col @lg:justify-center @lg:gap-1 @lg:py-2 @lg:text-center ${key === "automations" ? "col-span-2 justify-center @lg:col-span-1" : ""}`}
+            >
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#EDF2F8]">
+                <DashboardIcon
+                  name={MODULE_ICONS[key]}
+                  className="h-4 w-4 text-[#39577D]"
+                />
+              </span>
+              <span className="min-w-0 flex-1 break-words text-center text-xs font-medium text-[#26374A] @lg:flex-none">
+                {moduleLabel(key)}
+              </span>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      <div className="mt-2.5 flex items-center justify-center gap-1.5 text-xs leading-relaxed text-neutral-500">
+        <DashboardIcon name="info" className="h-3.5 w-3.5 shrink-0" />
+        <span className="text-center">{t("landscape.demoNote")}</span>
+      </div>
+
+    </section>
   );
 }
 
@@ -117,7 +226,6 @@ export default function IntegrationsWorkspace() {
     <>
       {/* Mobile workspace (below @lg) */}
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
-        <p className="text-base font-semibold text-foreground">{t("title")}</p>
         <SummaryGrid columns={2} />
         <CompactLandscape />
         <IntegrationsMobileList selectedId={selectedId} onSelect={setSelectedId} />
@@ -127,7 +235,6 @@ export default function IntegrationsWorkspace() {
       {/* Tablet workspace (@lg to below @5xl) */}
       <div className="hidden min-h-0 flex-1 flex-col gap-3 @lg:flex @5xl:hidden">
         <div className="shrink-0">
-          <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
           <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
         </div>
         <SummaryGrid columns={4} />

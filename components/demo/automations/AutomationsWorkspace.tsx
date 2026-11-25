@@ -35,7 +35,7 @@ function SummaryGrid() {
   return (
     <div className="grid shrink-0 grid-cols-2 gap-2">
       {items.map((item) => (
-        <div key={item.key} className="rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
+        <div key={item.key} className="rounded-xl border border-border bg-surface p-2.5 text-center shadow-sm shadow-black/5">
           <p className="text-xs leading-tight text-neutral-500">{t(`summary.${item.key}`)}</p>
           <p className={`mt-1 text-lg font-bold ${item.tone}`}>{item.value}</p>
         </div>
@@ -106,7 +106,6 @@ export default function AutomationsWorkspace() {
     <>
       {/* Mobile workspace (below @lg) */}
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
-        <p className="text-base font-semibold text-foreground">{t("title")}</p>
         <SummaryGrid />
         <AutomationsMobileList selectedId={selectedId} onSelect={setSelectedId} />
         {selectedAutomation && <AutomationDetailMobile automation={selectedAutomation} onClose={closeDetail} />}
@@ -115,7 +114,6 @@ export default function AutomationsWorkspace() {
       {/* Tablet workspace (@lg to below @5xl) */}
       <div className="hidden min-h-0 flex-1 flex-col gap-3 @lg:flex @5xl:hidden">
         <div className="shrink-0">
-          <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
           <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
         </div>
         <SummaryGrid />

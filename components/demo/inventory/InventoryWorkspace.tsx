@@ -38,7 +38,7 @@ function SummaryGrid() {
   return (
     <div className="grid shrink-0 grid-cols-2 gap-2">
       {SUMMARY_ITEMS.map((item) => (
-        <div key={item.key} className="rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
+        <div key={item.key} className="rounded-xl border border-border bg-surface p-2.5 text-center shadow-sm shadow-black/5">
           <p className="text-xs leading-tight text-neutral-500">{t(`summary.${item.key}`)}</p>
           <p className={`mt-1 text-lg font-bold ${TONE_TEXT[item.tone]}`}>{item.value}</p>
         </div>
@@ -158,10 +158,8 @@ export default function InventoryWorkspace() {
     <>
       {/* Mobile workspace (below @lg) */}
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
-        <div className="flex flex-col gap-0.5">
-          <p className="text-base font-semibold text-foreground">{t("title")}</p>
-          {isFromScenario && <ScenarioContextLink />}
-        </div>
+        <h1 className="sr-only">{t("title")}</h1>
+        {isFromScenario && <ScenarioContextLink />}
         <SummaryGrid />
 
         <div className="flex flex-col gap-2">
@@ -177,7 +175,7 @@ export default function InventoryWorkspace() {
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <CustomerFilterDropdown
               value={statusFilter}
               options={statusOptions}
@@ -185,6 +183,7 @@ export default function InventoryWorkspace() {
               ariaLabel={t("toolbar.allStock")}
               open={openFilter === "status"}
               onOpenChange={(isOpen) => setOpenFilter(isOpen ? "status" : null)}
+              className="w-full min-w-0 [&>button]:w-full"
             />
             <CustomerFilterDropdown
               value={locationFilter}
@@ -193,6 +192,7 @@ export default function InventoryWorkspace() {
               ariaLabel={t("toolbar.allLocations")}
               open={openFilter === "location"}
               onOpenChange={(isOpen) => setOpenFilter(isOpen ? "location" : null)}
+              className="w-full min-w-0 [&>button]:w-full"
             />
           </div>
 
@@ -228,7 +228,7 @@ export default function InventoryWorkspace() {
       <div className="hidden min-h-0 flex-1 flex-col gap-3 @lg:flex @5xl:hidden">
         <div className="flex shrink-0 items-start justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
+            <h1 className="sr-only">{t("title")}</h1>
             <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
             {isFromScenario && (
               <p className="mt-1">

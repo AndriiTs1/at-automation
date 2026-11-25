@@ -700,7 +700,13 @@
         "title": "Paysage des systèmes",
         "businessSystemsLabel": "Systèmes métier",
         "atLayerLabel": "Couche d'intégration AT",
-        "workflowsLabel": "Processus métier"
+        "workflowsLabel": "Processus métier",
+        "description": "Relier les systèmes métier aux processus intelligents",
+        "synchronization": "Synchronisation des données",
+        "orchestration": "Orchestration des processus",
+        "businessRules": "Règles métier",
+        "automation": "Automatisation intelligente",
+        "demoNote": "Environnement de démonstration · Exemples d’intégrations et de processus"
       },
       "table": {
         "system": "Système",

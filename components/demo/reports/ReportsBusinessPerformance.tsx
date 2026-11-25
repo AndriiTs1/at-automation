@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
-import { CHART_DATES, CHART_SERIES, CHART_TOOLTIP } from "@/lib/demo-data";
+import { CHART_DATES, CHART_SERIES } from "@/lib/demo-data";
+
+import { DashboardIcon } from "@/components/dashboard/icons";
 
 const GRID_LINES = [
   { y: 20, label: "80K" },
@@ -41,20 +43,98 @@ export default function ReportsBusinessPerformance({ compact = false }: { compac
     <div
       className={`flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-sm shadow-black/5 ${compact ? "p-3" : "p-4"}`}
     >
-      <div className="mb-2 shrink-0">
-        <h4 className="text-sm font-semibold text-foreground">{tReports("performance.title")}</h4>
-        <p className="text-xs text-neutral-500">{tReports("performance.subtitle")}</p>
+      <div className="mb-3 flex shrink-0 items-center gap-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+          <DashboardIcon name="chart" className="h-5 w-5" />
+        </span>
+        <div className="min-w-0">
+          <h4 className="text-sm font-semibold text-foreground">{tReports("performance.title")}</h4>
+          <p className="text-xs text-neutral-500">{tReports("performance.subtitle")}</p>
+        </div>
       </div>
 
       <div className="mb-2 flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1">
         {SERIES_KEYS.map((s) => (
-          <span key={s.key} className="flex items-center gap-1.5 truncate text-xs text-neutral-500">
-            <span className={`h-1.5 w-1.5 shrink-0 rounded-full bg-current ${s.className}`} />
+          <span key={s.key} className="flex items-center gap-1.5 text-xs font-medium text-neutral-600">
+            <span className={`h-2 w-2 shrink-0 rounded-full bg-current ${s.className}`} />
             {t(`series.${s.key}`)}
           </span>
         ))}
       </div>
 
+      {compact ? (
+        <div
+          className="relative min-h-0 flex-1"
+          role="img"
+          aria-label={t("chartAria")}
+        >
+          <div className="absolute inset-y-0 left-0 right-0 bottom-5">
+            {GRID_LINES.map((line) => (
+              <span
+                key={line.label}
+                className="absolute left-0 -translate-y-1/2 text-[10px] leading-none text-neutral-500"
+                style={{ top: `${line.y / 200 * 100}%` }}
+              >
+                {line.label}
+              </span>
+            ))}
+            <svg
+              viewBox="0 0 700 200"
+              preserveAspectRatio="none"
+              className="absolute inset-y-0 left-7 h-full w-[calc(100%-1.75rem)]"
+              aria-hidden="true"
+            >
+              {GRID_LINES.map((line) => (
+                <line
+                  key={line.label}
+                  x1="40"
+                  y1={line.y}
+                  x2="695"
+                  y2={line.y}
+                  stroke="currentColor"
+                  className="text-black/10"
+                  vectorEffect="non-scaling-stroke"
+                />
+              ))}
+              {SERIES_KEYS.map((s) => (
+                <polygon
+                  key={`${s.key}-area`}
+                  points={`${s.points} 680,170 50,170`}
+                  className={s.className}
+                  fill="currentColor"
+                  opacity="0.05"
+                />
+              ))}
+              {SERIES_KEYS.map((s) => (
+                <polyline
+                  key={s.key}
+                  points={s.points}
+                  fill="none"
+                  stroke="currentColor"
+                  className={s.className}
+                  strokeWidth="2.5"
+                  vectorEffect="non-scaling-stroke"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              ))}
+            </svg>
+            <div className="absolute inset-y-0 left-7 right-0">
+              {X_POSITIONS.map((x, i) =>
+                COMPACT_LABEL_INDICES.has(i) ? (
+                  <span
+                    key={CHART_DATES[i]}
+                    className="absolute top-[96%] -translate-x-1/2 whitespace-nowrap text-[10px] leading-none text-neutral-500"
+                    style={{ left: `${x / 700 * 100}%` }}
+                  >
+                    {CHART_DATES[i]}
+                  </span>
+                ) : null
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
       <svg
         viewBox="0 0 700 200"
         className="min-h-0 w-full flex-1"
@@ -64,8 +144,8 @@ export default function ReportsBusinessPerformance({ compact = false }: { compac
       >
         {GRID_LINES.map((line) => (
           <g key={line.label}>
-            <line x1="40" y1={line.y} x2="695" y2={line.y} stroke="currentColor" className="text-black/5" strokeWidth="1" />
-            <text x="0" y={line.y + 3} fontSize="9" className="fill-neutral-400">
+            <line x1="40" y1={line.y} x2="695" y2={line.y} stroke="currentColor" className="text-black/10" strokeWidth="1" />
+            <text x="0" y={line.y + 3} fontSize="11" className="fill-neutral-500">
               {line.label}
             </text>
           </g>
@@ -87,34 +167,22 @@ export default function ReportsBusinessPerformance({ compact = false }: { compac
             fill="none"
             stroke="currentColor"
             className={s.className}
-            strokeWidth="2.25"
+            strokeWidth="2.5"
+            vectorEffect="non-scaling-stroke"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         ))}
 
-        {/* Static tooltip marker for realism — same established decoration as Command Center's
-            own Business Performance chart, not a new interactive feature. */}
-        <circle cx="575" cy="35" r="3.5" className="text-accent" fill="currentColor" />
-        <g transform="translate(500,2)">
-          <rect width="90" height="26" rx="6" className="fill-foreground" opacity="0.92" />
-          <text x="8" y="11" fontSize="8" className="fill-white" opacity="0.7">
-            {CHART_TOOLTIP.date}
-          </text>
-          <text x="8" y="21" fontSize="9" fontWeight="600" className="fill-white">
-            {t("tooltipRevenue", { value: CHART_TOOLTIP.value })}
-          </text>
-        </g>
-
         {X_POSITIONS.map((x, i) => {
-          if (compact && !COMPACT_LABEL_INDICES.has(i)) return null;
           return (
-            <text key={CHART_DATES[i]} x={x} y="192" fontSize="9" textAnchor="middle" className="fill-neutral-400">
+            <text key={CHART_DATES[i]} x={x} y="192" fontSize="11" textAnchor="middle" className="fill-neutral-500">
               {CHART_DATES[i]}
             </text>
           );
         })}
       </svg>
+      )}
     </div>
   );
 }

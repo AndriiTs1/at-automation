@@ -700,7 +700,13 @@
         "title": "Systemlandschaft",
         "businessSystemsLabel": "Business-Systeme",
         "atLayerLabel": "AT-Integrationsebene",
-        "workflowsLabel": "Geschäftsprozesse"
+        "workflowsLabel": "Geschäftsprozesse",
+        "description": "Geschäftssysteme mit intelligenten Arbeitsabläufen verbinden",
+        "synchronization": "Datensynchronisierung",
+        "orchestration": "Prozesskoordination",
+        "businessRules": "Geschäftsregeln",
+        "automation": "Intelligente Automatisierung",
+        "demoNote": "Demo-Umgebung · Beispielhafte Integrationen und Arbeitsabläufe"
       },
       "table": {
         "system": "System",

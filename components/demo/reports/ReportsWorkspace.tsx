@@ -35,7 +35,7 @@ function KpiGrid({ columns }: { columns: 2 | 4 }) {
           kpi.deltaKind === "percent" ? "text-success" : kpi.deltaKind === "overdue" ? "text-error" : "text-neutral-400";
 
         return (
-          <div key={kpi.key} className="min-w-0 rounded-xl border border-border bg-surface p-2.5 shadow-sm shadow-black/5">
+          <div key={kpi.key} className="min-w-0 rounded-xl border border-border bg-surface p-2.5 text-center shadow-sm shadow-black/5">
             <p className="text-xs leading-tight break-words text-neutral-500">{t(`kpi.${kpi.key}`)}</p>
             <p className="mt-1 text-lg leading-tight font-bold break-words text-foreground">{kpi.value}</p>
             {secondary && <p className={`mt-0.5 text-xs leading-tight font-medium break-words ${secondaryTone}`}>{secondary}</p>}
@@ -70,7 +70,6 @@ export default function ReportsWorkspace() {
     <>
       {/* Mobile workspace (below @lg) */}
       <div className="flex min-h-0 flex-1 flex-col gap-3 @lg:hidden">
-        <p className="text-base font-semibold text-foreground">{t("title")}</p>
         <span className="inline-flex w-fit items-center rounded-full border border-border px-2.5 py-1 text-xs text-neutral-500">
           {tPerformance("rangeLabel")}
         </span>
@@ -78,10 +77,10 @@ export default function ReportsWorkspace() {
         <div className="h-64 shrink-0">
           <ReportsBusinessPerformance compact />
         </div>
-        <div className="h-64 shrink-0">
+        <div className="min-h-0 shrink-0">
           <ReportsOperationalHealth />
         </div>
-        <div className="h-56 shrink-0">
+        <div className="min-h-0 shrink-0">
           <ReportsManagementHighlights />
         </div>
       </div>
@@ -89,7 +88,6 @@ export default function ReportsWorkspace() {
       {/* Tablet workspace (@lg to below @5xl) */}
       <div className="hidden min-h-0 flex-1 flex-col gap-3 @lg:flex @5xl:hidden">
         <div className="shrink-0">
-          <h1 className="text-lg font-semibold text-foreground">{t("title")}</h1>
           <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
         </div>
         <span className="inline-flex w-fit items-center rounded-full border border-border px-2.5 py-1 text-xs text-neutral-500">
@@ -100,10 +98,10 @@ export default function ReportsWorkspace() {
           <ReportsBusinessPerformance />
         </div>
         <div className="grid shrink-0 grid-cols-2 gap-3">
-          <div className="h-72">
+          <div className="min-h-0 shrink-0">
             <ReportsOperationalHealth />
           </div>
-          <div className="h-72">
+          <div className="min-h-0 shrink-0">
             <ReportsManagementHighlights />
           </div>
         </div>

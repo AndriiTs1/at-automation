@@ -119,15 +119,21 @@ export default function FinanceDesktop({
       {/* Summary row */}
       <div className="mb-4 grid shrink-0 grid-cols-4 gap-3">
         {summaryItems.map((item) => (
-          <div key={item.key} className="rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
+          <div key={item.key} className="rounded-xl border border-border bg-surface p-3 text-center shadow-sm shadow-black/5">
             <p className="text-xs text-neutral-500">{t(`summary.${item.key}`)}</p>
             <p className={`mt-1 text-xl font-bold ${TONE_TEXT[item.tone]}`}>{item.value}</p>
           </div>
         ))}
       </div>
 
-      <FinanceCashFlowSummary />
-      <FinanceOperationsSummary />
+      <div className="mb-4 grid shrink-0 grid-cols-2 items-stretch gap-3">
+        <div className="@container flex min-w-0 flex-col [&>*]:flex-1">
+          <FinanceCashFlowSummary />
+        </div>
+        <div className="@container flex min-w-0 flex-col [&>*]:flex-1">
+          <FinanceOperationsSummary />
+        </div>
+      </div>
 
       <FinanceToolbar
         searchQuery={searchQuery}

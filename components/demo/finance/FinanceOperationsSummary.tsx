@@ -10,19 +10,32 @@ const HANDOFF_TONE: Record<"ready" | "needsAttention", string> = {
   needsAttention: "bg-warning/10 text-warning",
 };
 
-/**
- * Compact Finance Operations panel (Stage 2E.6) — VAT overview, Reconciliation overview, and
- * Fiduciary/accountant handoff readiness in one small 3-column section, shared by desktop,
- * tablet, and mobile (rendered from FinanceDesktop and from FinanceWorkspace's mobile/tablet
- * branches, immediately after FinanceCashFlowSummary) so this business logic exists in exactly
- * one place. Every value reads a global lib/demo-data.ts helper directly — never
- * filteredInvoices — so, like the KPI row and Cash Flow, it never reacts to the active
- * search/filter state.
- *
- * Unconditional grid-cols-3 (no responsive column-count change) mirrors FinanceCashFlowSummary
- * exactly: 3 narrow columns already proved to fit down to 360px without truncating money values,
- * and keeps this section short instead of stacking to a tall single column on mobile.
- */
+function FinanceIcon({ type }: { type: "vat" | "reconciliation" | "handoff" }) {
+  const paths = {
+    vat: "M6 3h12v18l-3-2-3 2-3-2-3 2V3z M9 8h6 M9 12h6 M9 16h3",
+    reconciliation: "M9 6h11 M9 12h11 M9 18h11 M3 6l1 1 2-2 M3 12l1 1 2-2 M3 18l1 1 2-2",
+    handoff: "M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z M9 12l2 2 4-4",
+  };
+
+  return (
+    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3c587d]/8 text-[#3c587d]">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5"
+        aria-hidden="true"
+      >
+        <path d={paths[type]} />
+      </svg>
+    </span>
+  );
+}
+
+/** Global demo finance overview, independent of active invoice filters. */
 export default function FinanceOperationsSummary() {
   const t = useTranslations("Dashboard.Finance");
   const vat = getFinanceVatOverview();
@@ -30,57 +43,79 @@ export default function FinanceOperationsSummary() {
   const handoff = getFiduciaryHandoffStatus();
 
   return (
-    <div className="mb-4 shrink-0 rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
-      <p className="mb-2 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
-        {t("financeOperations.title")}
-      </p>
-      <div className="grid grid-cols-3 gap-2">
-        {/* VAT overview — invoice-level visibility only, never an official VAT return/liability.
-            Nothing here truncates: labels/amounts wrap instead, since a compound-word locale
-            (e.g. German "MWST", Russian "НДС") can't always be shortened further. */}
-        <div className="min-w-0">
-          <p className="break-words text-xs text-neutral-500">{t("financeOperations.vatRepresented")}</p>
-          <p className="mt-0.5 text-base leading-tight font-bold break-words text-foreground">
+    <div className="shrink-0 rounded-xl border border-border bg-surface p-4 shadow-sm shadow-black/5">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-sm font-semibold text-foreground">
+          {t("financeOperations.title")}
+        </h2>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-5 w-5 shrink-0 text-[#3c587d]"
+          aria-hidden="true"
+        >
+          <path d="M3 9l9-6 9 6H3z M5 11v7 M10 11v7 M14 11v7 M19 11v7 M3 21h18" />
+        </svg>
+      </div>
+
+      <div className="mt-3 flex flex-col divide-y divide-border">
+
+        <div className="flex min-w-0 items-center gap-2.5 py-3">
+          <FinanceIcon type="vat" />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium text-foreground">
+              {t("financeOperations.vatRepresented")}
+            </p>
+            <p className="mt-1 text-xs text-neutral-500">
+              {vat.rate}% · {t("toolbar.resultCount", { count: vat.invoiceCount })}
+            </p>
+          </div>
+          <p className="text-right text-sm font-semibold text-foreground tabular-nums">
             {formatChf(vat.vatAmount)}
           </p>
-          <p className="break-words text-xs text-neutral-400">
-            {vat.rate}% · {t("toolbar.resultCount", { count: vat.invoiceCount })}
-          </p>
         </div>
 
-        {/* Reconciliation overview — Draft excluded, same rule as the Finance filters. */}
-        <div className="min-w-0">
-          <p className="break-words text-xs text-neutral-500">{t("detail.reconciliation")}</p>
-          <p
-            className={`mt-0.5 text-sm leading-tight font-bold break-words ${
-              reconciliation.exception > 0 ? "text-warning" : "text-neutral-400"
-            }`}
-          >
+        <div className="flex min-w-0 items-center gap-2.5 py-3">
+          <FinanceIcon type="reconciliation" />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium text-foreground">
+              {t("detail.reconciliation")}
+            </p>
+            <p className="mt-1 text-xs text-neutral-500">
+              {reconciliation.reconciled} {t("detail.reconciliationState.reconciled")} ·{" "}
+              {reconciliation.pending} {t("detail.reconciliationState.pending")}
+            </p>
+          </div>
+          <p className={`max-w-[40%] text-right text-xs font-medium ${
+            reconciliation.exception > 0 ? "text-warning" : "text-neutral-500"
+          }`}>
             {t("financeOperations.awaitingReview", { count: reconciliation.exception })}
           </p>
-          {/* Never truncate — wrap instead, same rule as the money values above. */}
-          <p className="break-words text-xs text-neutral-400">
-            {reconciliation.reconciled} {t("detail.reconciliationState.reconciled")} ·{" "}
-            {reconciliation.pending} {t("detail.reconciliationState.pending")}
-          </p>
         </div>
 
-        {/* Fiduciary/accountant handoff — deterministic demo readiness, no real integration. */}
-        <div className="min-w-0">
-          <p className="break-words text-xs text-neutral-500">{t("financeOperations.fiduciaryHandoff")}</p>
-          <span
-            className={`mt-0.5 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${HANDOFF_TONE[handoff.status]}`}
-          >
-            {t(handoff.status === "ready" ? "financeOperations.handoffReady" : "financeOperations.handoffNeedsAttention")}
+        <div className="flex min-w-0 items-center gap-2.5 pt-3">
+          <FinanceIcon type="handoff" />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-medium text-foreground">
+              {t("financeOperations.fiduciaryHandoff")}
+            </p>
+            <p className="mt-1 text-xs text-neutral-500">
+              {handoff.status === "needsAttention"
+                ? t("financeOperations.exceptionCount", { count: handoff.exceptionCount })
+                : t("toolbar.resultCount", { count: handoff.issuedInvoiceCount })}
+            </p>
+          </div>
+          <span className={`max-w-[40%] rounded-lg px-2 py-1 text-center text-xs font-medium ${HANDOFF_TONE[handoff.status]}`}>
+            {t(handoff.status === "ready"
+              ? "financeOperations.handoffReady"
+              : "financeOperations.handoffNeedsAttention")}
           </span>
-          {/* The reason when attention is needed; the plain issued-invoice count once ready —
-              never both crammed onto one line, and never truncated. */}
-          <p className="mt-1 break-words text-xs text-neutral-400">
-            {handoff.status === "needsAttention"
-              ? t("financeOperations.exceptionCount", { count: handoff.exceptionCount })
-              : t("toolbar.resultCount", { count: handoff.issuedInvoiceCount })}
-          </p>
         </div>
+
       </div>
     </div>
   );

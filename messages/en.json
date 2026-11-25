@@ -697,10 +697,16 @@
         "businessSystems": "Business systems"
       },
       "landscape": {
-        "title": "System landscape",
+        "title": "System Landscape",
         "businessSystemsLabel": "Business systems",
         "atLayerLabel": "AT Integration Layer",
-        "workflowsLabel": "Business workflows"
+        "workflowsLabel": "Business workflows",
+        "description": "Connecting business systems with intelligent workflows",
+        "synchronization": "Data synchronization",
+        "orchestration": "Workflow orchestration",
+        "businessRules": "Business rules",
+        "automation": "Intelligent automation",
+        "demoNote": "Demo environment · Illustrative integrations and workflows"
       },
       "table": {
         "system": "System",

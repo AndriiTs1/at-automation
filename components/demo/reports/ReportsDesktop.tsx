@@ -49,9 +49,9 @@ export default function ReportsDesktop() {
             kpi.deltaKind === "percent" ? "text-success" : kpi.deltaKind === "overdue" ? "text-error" : "text-neutral-400";
 
           return (
-            <div key={kpi.key} className="min-w-0 rounded-xl border border-border bg-surface p-3 shadow-sm shadow-black/5">
+            <div key={kpi.key} className="min-w-0 rounded-xl border border-border bg-surface p-3 text-center shadow-sm shadow-black/5">
               <p className="truncate text-xs text-neutral-500">{t(`kpi.${kpi.key}`)}</p>
-              <div className="mt-1 flex min-w-0 items-baseline gap-1.5">
+              <div className="mt-1 flex min-w-0 items-baseline justify-center gap-1.5">
                 <p className="shrink-0 text-xl font-bold whitespace-nowrap text-foreground">{kpi.value}</p>
                 {secondary && <span className={`min-w-0 truncate text-xs font-medium ${secondaryTone}`}>{secondary}</span>}
               </div>

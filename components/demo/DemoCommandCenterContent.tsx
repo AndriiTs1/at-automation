@@ -57,7 +57,7 @@ export default function DemoCommandCenterContent() {
     <>
       {/* Mobile workspace (below @lg) */}
       <div className="mb-2.5 shrink-0 @lg:hidden">
-        <h1 className="text-base leading-tight font-semibold tracking-tight text-slate-900">{t("commandCenter")}</h1>
+        <h1 className="sr-only">{t("commandCenter")}</h1>
         <p className="mt-0.5 text-xs leading-tight text-slate-500">
           <DynamicGreeting /> · {tTopbar("attentionCount", { count: 3 })}
         </p>
@@ -104,7 +104,7 @@ export default function DemoCommandCenterContent() {
 
       {/* Tablet workspace (@lg to below @5xl) */}
       <div className="hidden shrink-0 @lg:mb-4 @lg:block @5xl:hidden">
-        <h1 className="text-lg font-semibold tracking-tight text-slate-900">{t("commandCenter")}</h1>
+        <h1 className="sr-only">{t("commandCenter")}</h1>
         <p className="text-sm text-slate-500">
           <DynamicGreeting /> · {tTopbar("attentionCount", { count: 3 })}
         </p>

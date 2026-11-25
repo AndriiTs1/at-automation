@@ -2,9 +2,10 @@ import { useTranslations } from "next-intl";
 import { DEMO_USER } from "@/lib/demo-data";
 import { BellIcon, CloseIcon, MenuIcon } from "./icons";
 
-export default function MobileTopbar({ navOpen, onToggleNav }: { navOpen: boolean; onToggleNav: () => void }) {
+export default function MobileTopbar({ navOpen, onToggleNav, activeItem = "commandCenter" }: { navOpen: boolean; onToggleNav: () => void; activeItem?: string }) {
   const t = useTranslations("Dashboard");
   const tHeader = useTranslations("Header");
+  const tSidebar = useTranslations("Dashboard.Sidebar");
   const tTopbar = useTranslations("Dashboard.Topbar");
 
   return (
@@ -21,7 +22,7 @@ export default function MobileTopbar({ navOpen, onToggleNav }: { navOpen: boolea
           >
             {navOpen ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </button>
-          <span className="truncate text-sm font-semibold text-slate-900">{t("commandCenter")}</span>
+          <span className="truncate text-sm font-semibold text-slate-900">{activeItem === "commandCenter" ? t("commandCenter") : tSidebar(`items.${activeItem}`)}</span>
         </div>
 
         <div className="flex shrink-0 items-center gap-1">

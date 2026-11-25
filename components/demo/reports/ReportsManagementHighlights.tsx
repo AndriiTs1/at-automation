@@ -1,4 +1,13 @@
 import { useTranslations } from "next-intl";
+import { DashboardIcon } from "@/components/dashboard/icons";
+
+const HIGHLIGHT_ICONS: Record<string, string> = {
+  overdueReceivables: "receipt",
+  paymentReconciliationException: "sync",
+  lowStockItems: "box",
+  customersNeedAttention: "users",
+  automationsNeedAttention: "bolt",
+};
 import { getManagementHighlights } from "@/lib/demo-data";
 
 /**
@@ -14,8 +23,13 @@ export default function ReportsManagementHighlights() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border bg-surface p-4 shadow-sm shadow-black/5">
-      <h4 className="mb-2 shrink-0 text-sm font-semibold text-foreground">{t("highlights.title")}</h4>
-      <ul className="flex flex-1 flex-col justify-center gap-2 overflow-y-auto">
+      <div className="mb-3 flex shrink-0 items-center gap-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+          <DashboardIcon name="list" className="h-5 w-5" />
+        </span>
+        <h4 className="text-sm font-semibold text-foreground">{t("highlights.title")}</h4>
+      </div>
+      <ul className="flex flex-1 flex-col divide-y divide-border overflow-y-auto">
         {highlights.map((item) => {
           const text =
             item.key === "overdueReceivables"
@@ -31,8 +45,14 @@ export default function ReportsManagementHighlights() {
                     : t("highlights.automationsNeedAttention", { count: item.count });
 
           return (
-            <li key={item.key} className="flex items-start gap-2 text-sm text-neutral-600">
-              <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-300" />
+            <li key={item.key} className="flex items-center gap-2.5 py-1.5 text-sm text-foreground">
+              <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md ${
+                item.key === "overdueReceivables"
+                  ? "bg-error/10 text-error"
+                  : "bg-warning/10 text-warning"
+              }`}>
+                <DashboardIcon name={HIGHLIGHT_ICONS[item.key] ?? "info"} className="h-4 w-4" />
+              </span>
               <span className="min-w-0 flex-1 break-words">{text}</span>
             </li>
           );

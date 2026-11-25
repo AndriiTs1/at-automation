@@ -700,7 +700,13 @@
         "title": "Panoramica dei sistemi",
         "businessSystemsLabel": "Sistemi aziendali",
         "atLayerLabel": "Livello di integrazione AT",
-        "workflowsLabel": "Processi aziendali"
+        "workflowsLabel": "Processi aziendali",
+        "description": "Collegare i sistemi aziendali ai flussi di lavoro intelligenti",
+        "synchronization": "Sincronizzazione dei dati",
+        "orchestration": "Orchestrazione dei processi",
+        "businessRules": "Regole aziendali",
+        "automation": "Automazione intelligente",
+        "demoNote": "Ambiente demo · Integrazioni e flussi di lavoro illustrativi"
       },
       "table": {
         "system": "Sistema",
