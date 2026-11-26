@@ -36,6 +36,8 @@ function useActiveDemoItem() {
 export default function DemoAppShell({ children }: { children: React.ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
   const activeItem = useActiveDemoItem();
+  const pathname = usePathname();
+  const topbarItem = pathname === "/demo/scenario" ? "scenario" : activeItem;
 
   useEffect(() => {
     if (!navOpen) return;
@@ -52,7 +54,7 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
       <div className="relative flex min-w-0 flex-1 @lg:hidden">
         <div className="flex h-full min-h-0 w-full flex-col bg-demo-background">
           <div className="shrink-0 px-3 pt-1">
-            <MobileTopbar activeItem={activeItem} navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
+            <MobileTopbar demoMode activeItem={topbarItem} navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
           </div>
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-3">
             {children}
@@ -70,7 +72,7 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
       <div className="relative hidden min-w-0 flex-1 @lg:flex @5xl:hidden">
         <div className="flex h-full min-h-0 w-full flex-col bg-demo-background">
           <div className="shrink-0 px-4 pt-4">
-            <TabletTopbar activeItem={activeItem} navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
+            <TabletTopbar demoMode activeItem={topbarItem} navOpen={navOpen} onToggleNav={() => setNavOpen((open) => !open)} />
           </div>
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-4">
             {children}
@@ -83,7 +85,7 @@ export default function DemoAppShell({ children }: { children: React.ReactNode }
       <div className="hidden w-full @5xl:flex">
         <DashboardSidebar activeItem={activeItem} />
         <div className="flex min-w-0 flex-1 flex-col overflow-y-auto bg-demo-background p-3 @lg:p-4 @3xl:p-2.5">
-          <DashboardTopbar />
+          <DashboardTopbar demoMode />
           {children}
         </div>
       </div>

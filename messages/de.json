@@ -177,7 +177,9 @@
       "attentionCount": "{count, plural, one {# Element benötigt Ihre Aufmerksamkeit.} other {# Elemente benötigen Ihre Aufmerksamkeit.}}",
       "searchPlaceholder": "Vorgänge, Kunden, Rechnungen durchsuchen…",
       "systemsOperational": "Alle Systeme betriebsbereit",
-      "notifications": "Benachrichtigungen"
+      "notifications": "Benachrichtigungen",
+      "demoMode": "Demo-Modus",
+      "demoDescription": "Beispieldaten ausschließlich zu Demonstrationszwecken."
     },
     "Kpi": {
       "items": {
@@ -262,10 +264,11 @@
     },
     "AutomationImpact": {
       "title": "Automatisierungseffekt",
-      "subtitle": "Ausführungen heute nach Bereich"
+      "subtitle": "Heutige Beispielausführungen nach Bereich"
     },
     "OperationsStatus": {
-      "title": "Status der Vorgänge"
+      "title": "Status der Vorgänge",
+      "subtitle": "Stichprobe: {count} Vorgänge"
     },
     "ActionRequired": {
       "title": "Handlungsbedarf"

@@ -9,7 +9,7 @@ function formatChf(amount: number) {
 }
 
 function SectionLabel({ children }: { children: ReactNode }) {
-  return <p className="mb-2 text-[11px] font-semibold tracking-wide text-neutral-400 uppercase">{children}</p>;
+  return <p className="mb-2 text-[11px] font-semibold tracking-wide text-slate-500 uppercase">{children}</p>;
 }
 
 function StatusBadge({ tone, children }: { tone: "accent" | "error" | "success"; children: ReactNode }) {
@@ -64,37 +64,30 @@ type TraceRowProps = {
   linkLabel: string;
 };
 
-/**
- * One compact business-object record — a three-zone card (identity / context / action), not a
- * flat three-column text row. The identity zone carries the same small icon glyph its own module
- * uses in the sidebar (users/activity/box/coins) plus that module's own status pill, so each
- * record is recognizable at a glance without colored tiles or a new icon set. A hairline divider
- * separates each zone so the eye reads "one record with parts," not a table row.
- */
 function TraceRow({ icon, moduleLabel, title, statusLabel, statusTone, facts, linkHref, linkLabel }: TraceRowProps) {
   return (
-    <div className="flex flex-col items-stretch rounded-xl border border-border bg-surface shadow-sm shadow-black/5 @5xl:flex-row">
-      <div className="flex items-start gap-2.5 border-b border-border/70 p-3.5 @5xl:w-56 @5xl:shrink-0 @5xl:border-r @5xl:border-b-0">
-        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-neutral-100 text-neutral-500">
-          <DashboardIcon name={icon} className="h-3.5 w-3.5" />
+    <div className="grid min-w-0 grid-cols-1 gap-1 rounded-2xl border border-slate-200/70 bg-white p-3 shadow-demo-card @lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.7fr)] @lg:items-center @lg:gap-3 @lg:p-4">
+      <div className="flex min-w-0 items-start gap-2.5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+          <DashboardIcon name={icon} className="h-[18px] w-[18px]" />
         </div>
-        <div className="min-w-0">
+        <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 @lg:block">
           <p className="text-[10px] font-semibold tracking-wide text-neutral-400 uppercase">{moduleLabel}</p>
-          <p className="mt-0.5 text-sm font-semibold break-words text-foreground">{title}</p>
-          <span className={`mt-1.5 inline-flex w-fit items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${statusTone}`}>
+          <p className="col-start-1 row-start-2 mt-0.5 text-sm font-semibold break-words text-foreground">{title}</p>
+          <span className={`col-start-2 row-start-1 row-span-2 inline-flex w-fit max-w-28 items-center self-start rounded-full px-2 py-0.5 text-[10px] @lg:mt-1.5 font-medium ${statusTone}`}>
             {statusLabel}
           </span>
         </div>
       </div>
-      <div className="flex flex-1 flex-col justify-center gap-1 px-4 py-3">
+      <div className="flex min-w-0 flex-wrap gap-x-3 gap-y-1 pl-[46px] @lg:flex-col @lg:pl-0">
         {facts.map((fact) => (
           <p key={fact} className="text-xs break-words text-neutral-600">
             {fact}
           </p>
         ))}
       </div>
-      <div className="flex items-center border-t border-border/70 px-3.5 py-2.5 @5xl:w-56 @5xl:justify-center @5xl:border-t-0 @5xl:border-l @5xl:py-0">
-        <Link href={linkHref} className="text-xs font-medium text-accent hover:underline @5xl:text-center">
+      <div className="flex min-w-0 items-center justify-end">
+        <Link href={linkHref} className="inline-flex min-h-9 items-center gap-1 text-right text-xs font-semibold text-accent hover:underline">
           {linkLabel} <span aria-hidden="true">→</span>
         </Link>
       </div>
@@ -102,54 +95,18 @@ function TraceRow({ icon, moduleLabel, title, statusLabel, statusTone, facts, li
   );
 }
 
-/** A short vertical line ending in a small chevron, aligned under each row's icon chip (28px in —
- * matching the chip's own center) so the connector visibly originates from each record's identity
- * area rather than floating between two generic boxes. */
 function TraceConnector() {
   return (
-    <div aria-hidden="true" className="flex flex-col items-center pl-7">
-      <span className="h-2.5 w-px bg-neutral-300" />
-      <ChevronDownIcon className="-mt-1 h-3 w-3 text-neutral-300" />
+    <div aria-hidden="true" className="flex h-5 flex-col items-center justify-center">
+      <span className="h-2.5 w-px bg-accent/30" />
+      <ChevronDownIcon className="-mt-1 h-3 w-3 text-accent/60" />
     </div>
   );
 }
 
 /**
- * Cross-module scenario trace (Stage 2J.1, restructured 2J.1A, finalized 2J.2, visually
- * polished 2J.2B/C). Not a business module: no selection state, no filters, no actions — a
- * guided, read-only trace through getCrossModuleScenario(), which resolves every fact live
- * from CUSTOMERS_ROWS/OPERATIONS_ROWS/INVENTORY_ROWS/FINANCE_INVOICES/AUTOMATION_DEFINITIONS.
- * Nothing here is a re-typed literal.
- *
- * Renders at every breakpoint (fixed in a later stage — this component originally rendered
- * nothing below @5xl, matching every other module's own desktop-foundation stage; but once
- * Command Center's "See connected workflow" entry point became reachable from mobile/tablet
- * too, that left a real dead end: tapping it landed on a page with an empty body below the
- * topbar). Below @5xl the trace and the two blocks it's built from collapse to a single
- * column — same content, same tokens, same hierarchy, just stacked instead of side-by-side:
- *   - The outer grid is `grid-cols-1 @5xl:grid-cols-[65fr_35fr]`.
- *   - Each TraceRow is `flex-col @5xl:flex-row` (identity zone on top, then facts, then the
- *     "View X" action, each full-width) instead of a fixed `w-56` left column that would
- *     overflow a ~360px mobile content width.
- * At @5xl+ every class above reduces to the exact same unconditional value this component
- * shipped with before, so the desktop composition is unchanged.
- *
- * Two-column operational trace at @5xl+ (2J.2, layout unchanged in 2J.2B — only the card visual
- * system, connectors and right-column grouping were redesigned):
- *   LEFT (~65%) "Business trace" — Customer → Operation → Inventory → Finance as four compact
- *     three-zone records (identity / context / action) connected by a restrained vertical
- *     connector that starts under each record's own icon chip.
- *   RIGHT (~35%) "AT control & visibility" — held together by a single left-hand accent spine
- *     (not a bulky wrapping card) so Automation / Approval / Management read as one AT layer:
- *     Automation stays the strongest block and cross-references Inventory's own icon+name rather
- *     than drawing a line from Finance or the operation; Approval is a plain, borderless surface
- *     (deliberately lighter than the two bordered cards) reporting a state, not a workflow record;
- *     Management is the closing "Contributes to" summary.
- *
- * Every "View X" link is a REAL record-level deep link (query param + the target module's own
- * existing detail UI — see useQuerySelection and each Workspace's own deep-link handling), not a
- * generic module link — clicking it lands directly on this exact customer/operation/item/invoice/
- * automation, not just "the module."
+ * Responsive, read-only cross-module workflow.
+ * All records and deep links use the existing shared demo data.
  */
 export default function ScenarioDesktop() {
   const t = useTranslations("Dashboard.Scenario");
@@ -170,14 +127,14 @@ export default function ScenarioDesktop() {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       {/* Page header — no greeting: that belongs only to Command Center. */}
-      <div className="mb-1 shrink-0">
+      <div className="hidden shrink-0 @5xl:mb-3 @5xl:block">
         <h1 className="text-xl font-semibold text-foreground">{t("title")}</h1>
         <p className="mt-0.5 text-sm text-neutral-500">{t("description")}</p>
         <p className="mt-0.5 text-sm text-neutral-500">{t("leftRightHint")}</p>
       </div>
 
       {/* Scenario identity — a plain context line, not another card competing with the trace below. */}
-      <div className="mb-4 flex shrink-0 items-center gap-2 text-sm">
+      <div className="mb-3 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-slate-200/70 bg-white px-3 py-2.5 text-sm @lg:px-4">
         <span className="font-semibold text-foreground">{customer.name}</span>
         <span aria-hidden="true" className="text-neutral-300">
           ·
@@ -189,9 +146,9 @@ export default function ScenarioDesktop() {
 
       <div className="grid grid-cols-1 items-stretch gap-5 @5xl:grid-cols-[65fr_35fr]">
         {/* LEFT — Business trace: the real sequential chain, three-zone records, not narrow tiles. */}
-        <div className="min-w-0">
+        <div className="flex min-w-0 flex-col">
           <SectionLabel>{t("sections.primaryFlow")}</SectionLabel>
-          <div className="flex flex-col">
+          <div className="flex flex-1 flex-col @5xl:[&>div:not([aria-hidden])]:flex-1">
             <TraceRow
               icon="users"
               moduleLabel={t("steps.customer")}
@@ -249,9 +206,14 @@ export default function ScenarioDesktop() {
             forcing a false 1:1 card alignment with the left trace. */}
         <div className="flex min-w-0 flex-col">
           <SectionLabel>{t("sections.controlLayer")}</SectionLabel>
-          <div className="flex flex-1 flex-col gap-3 border-l-2 border-border pl-3.5">
-            <div className="rounded-xl border border-border bg-surface p-3.5 shadow-sm shadow-black/5">
-              <p className="text-[10px] font-semibold tracking-wide text-neutral-500 uppercase">{t("steps.automation")}</p>
+          <div className="flex flex-1 flex-col gap-3">
+            <div className="rounded-2xl border border-slate-200/70 bg-white p-3 shadow-demo-card @lg:p-4">
+              <div className="mb-2 flex items-center gap-2">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-accent bg-accent/10">
+                  <DashboardIcon name="bolt" className="h-4 w-4" />
+                </div>
+                <p className="text-xs font-semibold text-slate-700">{t("steps.automation")}</p>
+              </div>
               <p className="mt-1 text-sm font-semibold break-words text-foreground">
                 {tAutomations(`definitions.${automation.key}.name`)}
               </p>
@@ -278,8 +240,13 @@ export default function ScenarioDesktop() {
               </Link>
             </div>
 
-            <div className="rounded-lg bg-neutral-100 px-3 py-2.5">
-              <p className="text-[10px] font-semibold tracking-wide text-neutral-400 uppercase">{t("steps.approval")}</p>
+            <div className="rounded-2xl border border-slate-200/70 bg-white p-3 shadow-demo-card @lg:p-4">
+              <div className="mb-2 flex items-center gap-2">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-success bg-success/10">
+                  <DashboardIcon name="check" className="h-4 w-4" />
+                </div>
+                <p className="text-xs font-semibold text-slate-700">{t("steps.approval")}</p>
+              </div>
               <div className="mt-1.5 flex items-start gap-2">
                 <span aria-hidden="true" className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-success" />
                 <div className="min-w-0">
@@ -289,8 +256,13 @@ export default function ScenarioDesktop() {
               </div>
             </div>
 
-            <div className="flex flex-1 flex-col rounded-xl border border-border bg-surface p-3.5 shadow-sm shadow-black/5">
-              <p className="text-[10px] font-semibold tracking-wide text-neutral-500 uppercase">{t("steps.management")}</p>
+            <div className="flex flex-1 flex-col rounded-2xl border border-slate-200/70 bg-white p-3 shadow-demo-card @lg:p-4">
+              <div className="mb-2 flex items-center gap-2">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-accent bg-accent/10">
+                  <DashboardIcon name="chart" className="h-4 w-4" />
+                </div>
+                <p className="text-xs font-semibold text-slate-700">{t("steps.management")}</p>
+              </div>
               <p className="mt-1.5 text-[10px] font-medium tracking-wide text-neutral-400 uppercase">{t("companyContext")}</p>
               <div className="mt-1 grid grid-cols-2 gap-3">
                 <div>

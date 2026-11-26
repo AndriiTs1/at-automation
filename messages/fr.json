@@ -177,7 +177,9 @@
       "attentionCount": "{count, plural, one {# élément nécessite votre attention.} other {# éléments nécessitent votre attention.}}",
       "searchPlaceholder": "Rechercher opérations, clients, factures…",
       "systemsOperational": "Tous les systèmes opérationnels",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "demoMode": "Mode démo",
+      "demoDescription": "Données fictives à des fins de démonstration uniquement."
     },
     "Kpi": {
       "items": {
@@ -262,10 +264,11 @@
     },
     "AutomationImpact": {
       "title": "Impact de l'automatisation",
-      "subtitle": "Exécutions du jour par domaine"
+      "subtitle": "Exemples d'exécutions du jour par domaine"
     },
     "OperationsStatus": {
-      "title": "État des opérations"
+      "title": "État des opérations",
+      "subtitle": "Échantillon de {count} opérations"
     },
     "ActionRequired": {
       "title": "Actions requises"

@@ -1,8 +1,9 @@
 import { useTranslations } from "next-intl";
+import DemoModeBadge from "./DemoModeBadge";
 import { DEMO_USER } from "@/lib/demo-data";
 import { BellIcon, SearchIcon } from "./icons";
 
-export default function DashboardTopbar() {
+export default function DashboardTopbar({ demoMode = false }: { demoMode?: boolean }) {
   const t = useTranslations("Dashboard");
   const tTopbar = useTranslations("Dashboard.Topbar");
 
@@ -27,6 +28,11 @@ export default function DashboardTopbar() {
       </div>
 
       <div className="mt-1.5 hidden items-center justify-end gap-3 @lg:mt-0 @lg:flex">
+        {demoMode && (
+          <div className="mr-auto shrink-0">
+            <DemoModeBadge />
+          </div>
+        )}
         <div className="flex items-center gap-1.5 rounded-full border border-slate-200/70 bg-slate-50 px-3 py-1.5 text-xs text-slate-400 @3xl:w-56">
           <SearchIcon className="h-3.5 w-3.5 shrink-0" />
           <span className="truncate">{tTopbar("searchPlaceholder")}</span>

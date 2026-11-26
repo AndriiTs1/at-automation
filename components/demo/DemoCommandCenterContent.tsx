@@ -1,19 +1,18 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { KPI_ITEMS } from "@/lib/demo-data";
-import ActionRequired from "../dashboard/ActionRequired";
+import { KPI_ITEMS, NEEDS_ATTENTION } from "@/lib/demo-data";
+import ActionRequired from "./analytics/ActionRequired";
 import ApprovalsPanel from "../dashboard/ApprovalsPanel";
-import AutomationImpact from "../dashboard/AutomationImpact";
-import BusinessPerformanceCompact from "../dashboard/BusinessPerformanceCompact";
+import AutomationImpact from "./analytics/AutomationImpact";
+import BusinessPerformanceCompact from "./analytics/BusinessPerformanceCompact";
 import { DashboardIcon } from "../dashboard/icons";
-import KpiCard from "../dashboard/KpiCard";
+import CommandCenterKpiCard from "./CommandCenterKpiCard";
 import LiveOperations from "../dashboard/LiveOperations";
 import MobileApprovalsPanel from "../dashboard/MobileApprovalsPanel";
-import MobileKpiCard from "../dashboard/MobileKpiCard";
 import MobileLiveOperations from "../dashboard/MobileLiveOperations";
 import MobileNeedsAttention from "../dashboard/MobileNeedsAttention";
 import NeedsAttention from "../dashboard/NeedsAttention";
-import OperationsStatusCard from "../dashboard/OperationsStatusCard";
+import OperationsStatusCard from "./analytics/OperationsStatusCard";
 import DynamicGreeting from "./DynamicGreeting";
 
 /**
@@ -59,13 +58,13 @@ export default function DemoCommandCenterContent() {
       <div className="mb-2.5 shrink-0 @lg:hidden">
         <h1 className="sr-only">{t("commandCenter")}</h1>
         <p className="mt-0.5 text-xs leading-tight text-slate-500">
-          <DynamicGreeting /> · {tTopbar("attentionCount", { count: 3 })}
+          <DynamicGreeting /> · {tTopbar("attentionCount", { count: NEEDS_ATTENTION.length })}
         </p>
         <ScenarioEntryLink className="mt-2 text-xs" />
       </div>
       <div className="mb-2.5 grid shrink-0 grid-cols-2 gap-2 @lg:hidden">
         {KPI_ITEMS.map((item) => (
-          <MobileKpiCard
+          <CommandCenterKpiCard
             key={item.key}
             itemKey={item.key}
             value={item.value}
@@ -79,16 +78,16 @@ export default function DemoCommandCenterContent() {
         ))}
       </div>
       <div className="mb-2.5 grid shrink-0 grid-cols-1 gap-2 @lg:hidden">
-        <div className="h-40">
+        <div className="min-w-0">
           <BusinessPerformanceCompact />
         </div>
-        <div className="h-40">
+        <div className="min-w-0">
           <AutomationImpact />
         </div>
-        <div className="h-40">
+        <div className="min-w-0">
           <OperationsStatusCard />
         </div>
-        <div className="h-40">
+        <div className="min-w-0">
           <ActionRequired />
         </div>
       </div>
@@ -106,13 +105,13 @@ export default function DemoCommandCenterContent() {
       <div className="hidden shrink-0 @lg:mb-4 @lg:block @5xl:hidden">
         <h1 className="sr-only">{t("commandCenter")}</h1>
         <p className="text-sm text-slate-500">
-          <DynamicGreeting /> · {tTopbar("attentionCount", { count: 3 })}
+          <DynamicGreeting /> · {tTopbar("attentionCount", { count: NEEDS_ATTENTION.length })}
         </p>
         <ScenarioEntryLink className="mt-2 text-sm" />
       </div>
-      <div className="hidden shrink-0 grid-cols-2 gap-3 @lg:mb-4 @lg:grid @5xl:hidden">
+      <div className="hidden shrink-0 grid-cols-2 gap-3 @lg:mb-4 @lg:grid @3xl:grid-cols-4 @5xl:hidden">
         {KPI_ITEMS.map((item) => (
-          <KpiCard
+          <CommandCenterKpiCard
             key={item.key}
             itemKey={item.key}
             value={item.value}
@@ -126,16 +125,16 @@ export default function DemoCommandCenterContent() {
         ))}
       </div>
       <div className="hidden shrink-0 grid-cols-2 gap-3 @lg:mb-4 @lg:grid @5xl:hidden">
-        <div className="h-44">
+        <div className="min-w-0">
           <BusinessPerformanceCompact />
         </div>
-        <div className="h-44">
+        <div className="min-w-0">
           <AutomationImpact />
         </div>
-        <div className="h-44">
+        <div className="min-w-0">
           <OperationsStatusCard />
         </div>
-        <div className="h-44">
+        <div className="min-w-0">
           <ActionRequired />
         </div>
       </div>
@@ -143,10 +142,10 @@ export default function DemoCommandCenterContent() {
         <NeedsAttention />
       </div>
       <div className="hidden shrink-0 grid-cols-1 gap-3 @lg:grid @3xl:grid-cols-2 @5xl:hidden">
-        <div className="h-80">
+        <div className="min-w-0 min-h-80">
           <LiveOperations />
         </div>
-        <div className="h-64">
+        <div className="min-w-0 min-h-64 @3xl:min-h-80">
           <ApprovalsPanel />
         </div>
       </div>
@@ -156,14 +155,14 @@ export default function DemoCommandCenterContent() {
         <h1 className="text-lg font-semibold tracking-tight text-slate-900">{t("commandCenter")}</h1>
         <div className="mt-0.5 flex items-center justify-between gap-3">
           <p className="text-sm text-slate-500">
-            <DynamicGreeting /> · {tTopbar("attentionCount", { count: 3 })}
+            <DynamicGreeting /> · {tTopbar("attentionCount", { count: NEEDS_ATTENTION.length })}
           </p>
           <ScenarioEntryLink className="text-sm" />
         </div>
       </div>
       <div className="hidden shrink-0 grid-cols-2 gap-2 @5xl:mb-1.5 @5xl:grid @3xl:grid-cols-4 @3xl:gap-3">
         {KPI_ITEMS.map((item) => (
-          <KpiCard
+          <CommandCenterKpiCard
             key={item.key}
             itemKey={item.key}
             value={item.value}
@@ -176,23 +175,18 @@ export default function DemoCommandCenterContent() {
           />
         ))}
       </div>
-      {/*
-        Executive analytics row (Germes four-card row concept, AT content) — a fixed, modest
-        height shared by all four cards, matching Germes' own AnalyticsCard convention of a fixed
-        row height for compact executive tiles rather than letting them stretch. Sits between the
-        KPI strip and the deeper operational layer below.
-      */}
-      <div className="hidden shrink-0 @5xl:mb-3 @5xl:grid @5xl:grid-cols-4 @5xl:gap-3">
-        <div className="h-44">
+      {/* Responsive executive analytics */}
+      <div className="hidden shrink-0 @5xl:mb-3 @5xl:grid @5xl:grid-cols-2 @5xl:gap-3">
+        <div className="min-w-0">
           <BusinessPerformanceCompact />
         </div>
-        <div className="h-44">
+        <div className="min-w-0">
           <AutomationImpact />
         </div>
-        <div className="h-44">
+        <div className="min-w-0">
           <OperationsStatusCard />
         </div>
-        <div className="h-44">
+        <div className="min-w-0">
           <ActionRequired />
         </div>
       </div>

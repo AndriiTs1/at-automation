@@ -60,7 +60,13 @@ export default function CustomerFilterDropdown<T extends string>({
   useEffect(() => {
     if (!open) return;
     const handlePointerDown = (event: PointerEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      const container = containerRef.current;
+
+      // Hidden responsive instances share the same open state.
+      // Only the visible instance may handle outside interactions.
+      if (!container || container.getClientRects().length === 0) return;
+
+      if (!container.contains(event.target as Node)) {
         onOpenChange(false);
       }
     };

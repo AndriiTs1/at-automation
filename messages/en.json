@@ -177,7 +177,9 @@
       "attentionCount": "{count, plural, one {# item needs your attention.} other {# items need your attention.}}",
       "searchPlaceholder": "Search operations, customers, invoices…",
       "systemsOperational": "All systems operational",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "demoMode": "Demo Mode",
+      "demoDescription": "Illustrative data for demonstration purposes only."
     },
     "Kpi": {
       "items": {
@@ -262,10 +264,11 @@
     },
     "AutomationImpact": {
       "title": "Automation Impact",
-      "subtitle": "Runs today by area"
+      "subtitle": "Sample runs today by area"
     },
     "OperationsStatus": {
-      "title": "Operations Status"
+      "title": "Operations Status",
+      "subtitle": "Sample of {count} operations"
     },
     "ActionRequired": {
       "title": "Action Required"

@@ -1,12 +1,14 @@
 import { useTranslations } from "next-intl";
+import DemoModeBadge from "./DemoModeBadge";
 import { DEMO_USER } from "@/lib/demo-data";
 import { BellIcon, CloseIcon, MenuIcon } from "./icons";
 
-export default function TabletTopbar({ navOpen, onToggleNav, activeItem = "commandCenter" }: { navOpen: boolean; onToggleNav: () => void; activeItem?: string }) {
+export default function TabletTopbar({ navOpen, onToggleNav, activeItem = "commandCenter", demoMode = false }: { navOpen: boolean; onToggleNav: () => void; activeItem?: string; demoMode?: boolean }) {
   const t = useTranslations("Dashboard");
   const tHeader = useTranslations("Header");
   const tSidebar = useTranslations("Dashboard.Sidebar");
   const tTopbar = useTranslations("Dashboard.Topbar");
+  const tScenario = useTranslations("Dashboard.Scenario");
 
   return (
     <div className="mb-4 shrink-0">
@@ -22,7 +24,10 @@ export default function TabletTopbar({ navOpen, onToggleNav, activeItem = "comma
           >
             {navOpen ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </button>
-          <span className="truncate text-base font-semibold text-slate-900">{activeItem === "commandCenter" ? t("commandCenter") : tSidebar(`items.${activeItem}`)}</span>
+          <div className="flex min-w-0 flex-col items-start gap-0.5">
+            <span className="max-w-full truncate text-base font-semibold text-slate-900">{activeItem === "scenario" ? tScenario("title") : activeItem === "commandCenter" ? t("commandCenter") : tSidebar(`items.${activeItem}`)}</span>
+            {demoMode && <DemoModeBadge />}
+          </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
